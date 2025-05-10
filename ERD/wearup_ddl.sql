@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS Comment;
 DROP TABLE IF EXISTS Item;
 DROP TABLE IF EXISTS Payment;
 DROP TABLE IF EXISTS Plan;
+DROP TABLE IF EXISTS Post;
 DROP TABLE IF EXISTS Rental;
 DROP TABLE IF EXISTS User;
 
@@ -16,6 +17,7 @@ CREATE TABLE Attachment
   post_id    INT          NOT NULL,
   sourcename VARCHAR(100) NULL    ,
   filename   VARCHAR(100) NOT NULL,
+  sequence   INT          NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -23,7 +25,7 @@ CREATE TABLE Attachment
 CREATE TABLE Authority
 (
   id    INT  NOT NULL AUTO_INCREMENT,
-  grade ENUM('USER', 'BRAND', 'ADMIN') NOT NULL DEFAULT 'USER',
+  grade ENUM('USER', 'BRAND', 'ADMIN') NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -70,7 +72,7 @@ CREATE TABLE Payment
   user_id INT  NOT NULL,
   plan_id INT  NOT NULL,
   price   INT  NOT NULL,
-  paid_at DATE NULL    ,
+  paid_at DATETIME NOT NULL DEFAULT now(),
   PRIMARY KEY (id)
 ) COMMENT '결제 히스토리';
 
@@ -88,7 +90,7 @@ CREATE TABLE Post
   id         INT           NOT NULL AUTO_INCREMENT,
   user_id    INT           NOT NULL,
   content    VARCHAR(1000) NOT NULL,
-  created_at DATETIME      NOT NULL,
+  created_at DATETIME      NOT NULL DEFAULT now(),
   items      VARCHAR(1000) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -109,7 +111,7 @@ CREATE TABLE User
 (
   id             INT          NOT NULL AUTO_INCREMENT,
   auth_id        INT          NOT NULL,
-  plan_id        INT          NOT NULL,
+  plan_id        INT          NULL,
   username       VARCHAR(100) NOT NULL,
   password       VARCHAR(100) NOT NULL,
   name           VARCHAR(30)  NOT NULL,
@@ -119,7 +121,7 @@ CREATE TABLE User
   address        VARCHAR(100) NULL    ,
   provider       VARCHAR(100) NULL    ,
   provider_id    VARCHAR(100) NULL    ,
-  signedAt       DATETIME     NOT NULL,
+  signed_at      DATETIME     NOT NULL DEFAULT now(),
   paid_at        DATETIME     NULL    ,
   status_plan    ENUM('ACTIVE', 'INACTIVE')         NOT NULL,
   status_account ENUM('ACTIVE', 'INACTIVE', 'DELETED')         NOT NULL DEFAULT 'active' COMMENT '계정 상태',
@@ -130,57 +132,83 @@ CREATE TABLE User
 ALTER TABLE Attachment
     ADD CONSTRAINT FK_Post_TO_Attachment
         FOREIGN KEY (post_id)
-            REFERENCES Post (id);
+            REFERENCES Post (id)
+ON DELETE CASCADE
+;
+
+ALTER TABLE Attachment
+    ADD CONSTRAINT UQ_attachment UNIQUE (post_id, sequence);
 
 ALTER TABLE Brand
-    ADD CONSTRAINT UQ_name UNIQUE (name);
+    ADD CONSTRAINT UQ_brand UNIQUE (name);
 
 ALTER TABLE Comment
     ADD CONSTRAINT FK_User_TO_Comment
         FOREIGN KEY (user_id)
-            REFERENCES User (id);
+            REFERENCES User (id)
+ON DELETE CASCADE
+;
 
 ALTER TABLE Comment
     ADD CONSTRAINT FK_Post_TO_Comment
         FOREIGN KEY (post_id)
-            REFERENCES Post (id);
+            REFERENCES Post (id)
+ON DELETE CASCADE
+;
 
 ALTER TABLE Item
     ADD CONSTRAINT FK_Brand_TO_Item
         FOREIGN KEY (brand_id)
-            REFERENCES Brand (id);
+            REFERENCES Brand (id)
+ON DELETE CASCADE
+;
 
 ALTER TABLE Payment
     ADD CONSTRAINT FK_User_TO_Payment
         FOREIGN KEY (user_id)
-            REFERENCES User (id);
+            REFERENCES User (id)
+ON DELETE CASCADE
+;
 
 ALTER TABLE Payment
     ADD CONSTRAINT FK_Plan_TO_Payment
         FOREIGN KEY (plan_id)
-            REFERENCES Plan (id);
+            REFERENCES Plan (id)
+            ON DELETE CASCADE
+;
 
 ALTER TABLE Post
     ADD CONSTRAINT FK_User_TO_Post
         FOREIGN KEY (user_id)
-            REFERENCES User (id);
+            REFERENCES User (id)
+            ON DELETE CASCADE
+;
+
 
 ALTER TABLE Rental
     ADD CONSTRAINT FK_User_TO_Rental
         FOREIGN KEY (user_id)
-            REFERENCES User (id);
+            REFERENCES User (id)
+ON DELETE CASCADE
+;
 
 ALTER TABLE Rental
     ADD CONSTRAINT FK_Item_TO_Rental
         FOREIGN KEY (item_id)
-            REFERENCES Item (id);
+            REFERENCES Item (id)
+ON DELETE CASCADE
+;
 
 ALTER TABLE User
   ADD CONSTRAINT FK_Authority_TO_User
     FOREIGN KEY (auth_id)
-    REFERENCES Authority (id);
+    REFERENCES Authority (id)
+ON DELETE CASCADE
+;
 
 ALTER TABLE User
     ADD CONSTRAINT FK_Plan_TO_User
         FOREIGN KEY (plan_id)
-            REFERENCES Plan (id);
+            REFERENCES Plan (id)
+ON DELETE CASCADE
+;
