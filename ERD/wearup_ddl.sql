@@ -1,3 +1,14 @@
+SET SESSION FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS Attachment;
+DROP TABLE IF EXISTS Authority;
+DROP TABLE IF EXISTS Brand;
+DROP TABLE IF EXISTS Comment;
+DROP TABLE IF EXISTS Item;
+DROP TABLE IF EXISTS Payment;
+DROP TABLE IF EXISTS Plan;
+DROP TABLE IF EXISTS Rental;
+DROP TABLE IF EXISTS User;
+
 
 CREATE TABLE Attachment
 (
@@ -7,11 +18,6 @@ CREATE TABLE Attachment
   filename   VARCHAR(100) NOT NULL,
   PRIMARY KEY (id)
 );
-
-ALTER TABLE Attachment
-    ADD CONSTRAINT FK_Post_TO_Attachment
-        FOREIGN KEY (post_id)
-            REFERENCES Post (id);
 
 
 CREATE TABLE Authority
@@ -33,10 +39,6 @@ CREATE TABLE Brand
   PRIMARY KEY (id)
 );
 
-ALTER TABLE Brand
-  ADD CONSTRAINT UQ_name UNIQUE (name);
-
-
 CREATE TABLE Comment
 (
   id      INT          NOT NULL AUTO_INCREMENT,
@@ -47,17 +49,6 @@ CREATE TABLE Comment
   PRIMARY KEY (id)
 );
 
-ALTER TABLE Comment
-    ADD CONSTRAINT FK_User_TO_Comment
-        FOREIGN KEY (user_id)
-            REFERENCES User (id);
-
-ALTER TABLE Comment
-    ADD CONSTRAINT FK_Post_TO_Comment
-        FOREIGN KEY (post_id)
-            REFERENCES Post (id);
-
-
 CREATE TABLE Item
 (
   id               INT           NOT NULL AUTO_INCREMENT,
@@ -66,18 +57,12 @@ CREATE TABLE Item
   image_sourcename VARCHAR(100)  NOT NULL,
   image_filename   VARCHAR(100)  NOT NULL,
   category         VARCHAR(20)   NOT NULL,
-  desc             VARCHAR(1000) NULL    ,
+  description      VARCHAR(1000) NULL    ,
   is_available     BOOLEAN       NOT NULL   DEFAULT true,
-  condition        ENUM('A', 'B', 'C')  NOT NULL,
+  status           ENUM('A', 'B', 'C')  NOT NULL,
   created_at       DATETIME      NOT NULL   DEFAULT now(),
   PRIMARY KEY (id)
 );
-
-ALTER TABLE Item
-    ADD CONSTRAINT FK_Brand_TO_Item
-        FOREIGN KEY (brand_id)
-            REFERENCES Brand (id);
-
 
 CREATE TABLE Payment
 (
@@ -89,17 +74,6 @@ CREATE TABLE Payment
   PRIMARY KEY (id)
 ) COMMENT '결제 히스토리';
 
-ALTER TABLE Payment
-    ADD CONSTRAINT FK_User_TO_Payment
-        FOREIGN KEY (user_id)
-            REFERENCES User (id);
-
-ALTER TABLE Payment
-    ADD CONSTRAINT FK_Plan_TO_Payment
-        FOREIGN KEY (plan_id)
-            REFERENCES Plan (id);
-
-
 CREATE TABLE Plan
 (
   id    INT         NOT NULL AUTO_INCREMENT,
@@ -108,7 +82,6 @@ CREATE TABLE Plan
   count INT         NOT NULL COMMENT '대여 가능 총 횟수',
   PRIMARY KEY (id)
 );
-
 
 CREATE TABLE Post
 (
@@ -119,12 +92,6 @@ CREATE TABLE Post
   items      VARCHAR(1000) NOT NULL,
   PRIMARY KEY (id)
 );
-
-ALTER TABLE Post
-    ADD CONSTRAINT FK_User_TO_Post
-        FOREIGN KEY (user_id)
-            REFERENCES User (id);
-
 
 CREATE TABLE Rental
 (
@@ -137,17 +104,6 @@ CREATE TABLE Rental
   status        ENUM('RENTED', 'RETURNED', 'OVERDUE') NOT NULL,
   PRIMARY KEY (id)
 );
-
-ALTER TABLE Rental
-    ADD CONSTRAINT FK_User_TO_Rental
-        FOREIGN KEY (user_id)
-            REFERENCES User (id);
-
-ALTER TABLE Rental
-    ADD CONSTRAINT FK_Item_TO_Rental
-        FOREIGN KEY (item_id)
-            REFERENCES Item (id);
-
 
 CREATE TABLE User
 (
@@ -170,6 +126,54 @@ CREATE TABLE User
   rental_cnt     INT          NOT NULL DEFAULT 0 COMMENT '이번주에 대여한 횟수',
   PRIMARY KEY (id)
 );
+
+ALTER TABLE Attachment
+    ADD CONSTRAINT FK_Post_TO_Attachment
+        FOREIGN KEY (post_id)
+            REFERENCES Post (id);
+
+ALTER TABLE Brand
+    ADD CONSTRAINT UQ_name UNIQUE (name);
+
+ALTER TABLE Comment
+    ADD CONSTRAINT FK_User_TO_Comment
+        FOREIGN KEY (user_id)
+            REFERENCES User (id);
+
+ALTER TABLE Comment
+    ADD CONSTRAINT FK_Post_TO_Comment
+        FOREIGN KEY (post_id)
+            REFERENCES Post (id);
+
+ALTER TABLE Item
+    ADD CONSTRAINT FK_Brand_TO_Item
+        FOREIGN KEY (brand_id)
+            REFERENCES Brand (id);
+
+ALTER TABLE Payment
+    ADD CONSTRAINT FK_User_TO_Payment
+        FOREIGN KEY (user_id)
+            REFERENCES User (id);
+
+ALTER TABLE Payment
+    ADD CONSTRAINT FK_Plan_TO_Payment
+        FOREIGN KEY (plan_id)
+            REFERENCES Plan (id);
+
+ALTER TABLE Post
+    ADD CONSTRAINT FK_User_TO_Post
+        FOREIGN KEY (user_id)
+            REFERENCES User (id);
+
+ALTER TABLE Rental
+    ADD CONSTRAINT FK_User_TO_Rental
+        FOREIGN KEY (user_id)
+            REFERENCES User (id);
+
+ALTER TABLE Rental
+    ADD CONSTRAINT FK_Item_TO_Rental
+        FOREIGN KEY (item_id)
+            REFERENCES Item (id);
 
 ALTER TABLE User
   ADD CONSTRAINT FK_Authority_TO_User
