@@ -90,8 +90,8 @@ CREATE TABLE Post
   id         INT           NOT NULL AUTO_INCREMENT,
   user_id    INT           NOT NULL,
   content    VARCHAR(1000) NOT NULL,
-  created_at DATETIME      NOT NULL DEFAULT now(),
   items      VARCHAR(1000) NOT NULL,
+  created_at DATETIME      NOT NULL DEFAULT now(),
   PRIMARY KEY (id)
 );
 

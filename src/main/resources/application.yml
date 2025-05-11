@@ -11,3 +11,12 @@ spring:
     cache: false
 
 
+app:
+  #페이징 세팅값
+  pagination:
+    write_pages: 10 # 기본 write_pages 값. 한 [페이징] 당 몇개의 페이지가 표시되나
+    page_rows: 10 # 기본 page_rows 값.  한 '페이지'에 몇개의 글을 리스트 할것인가?
+  
+  #파일 업로드 경로
+  upload:
+    path: upload
