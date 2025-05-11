@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.ItemRepository">
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Item" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO Item(brand_id, name, category, description, is_available, status, image_sourcename, image_filename, created_at)
+        VALUES (#{brand_id}, #{name}, #{category}, #{description}, #{is_available}, #{status}, #{image_sourcename}, #{image_filename}, now());
+    </insert>
+
+    <sql id="SELECT_BASE">
+
+    </sql>
+
+</mapper>
