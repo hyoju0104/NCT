@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인</title>
+</head>
+<body>
+<h2>로그인</h2>
+
+<!-- 로그인 실패 메시지 : ?error -->
+<!--Spring Security가 자동으로 주소창에 ?error나 ?logout을 붙여줌-->
+<div th:if="${param.error}">
+  <p>아이디 또는 비밀번호가 틀렸습니다.</p>
+</div>
+
+<!-- 로그인 폼 -->
+<form th:action="@{/user/login}" method="post">
+  <label for="username">아이디</label><br>
+  <input type="text" id="username" name="username" required><br><br>
+
+  <label for="password">비밀번호</label><br>
+  <input type="password" id="password" name="password" required><br><br>
+
+  <button type="submit">로그인</button>
+</form>
+<!-- 소셜 로그인 버튼 -->
+<p> 소셜 계정으로 로그인</p>
+<button>카카오 로그인</button><br>
+<button>네이버 로그인</button><br>
+<button>구글 로그인</button><br>
+
+<!-- 로그아웃 메시지 : ?logout -->
+<div th:if="${param.logout}">
+  <p>로그아웃 되었습니다.</p>
+</div>
+
+<!-- 회원가입 링크 -->
+<p>계정이 없으신가요? <a th:href="@{/user/register}">회원가입</a></p>
+
+</body>
+</html>
