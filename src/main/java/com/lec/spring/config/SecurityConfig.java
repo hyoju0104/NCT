@@ -37,21 +37,21 @@ public class SecurityConfig {
         http
                 //TODO requestmatchers는 html만든 후 수정하기
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/user/login","/user/register/**").permitAll()
+                        .requestMatchers("/login","/register/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // 그 외 모든 주소는 로그인한 사람만 접근
                 )//authorizeHttpRequests
                 .formLogin(form->form //로그인화면을 어떻게 보여줄지
-                        .loginPage("/user/login") //로그인 페이지 설정
-                        .loginProcessingUrl("/user/login") //아이디 비번 입력하고 로그인 버튼 누르면 /login으로 전송
+                        .loginPage("/login") //로그인 페이지 설정
+                        .loginProcessingUrl("/login") //아이디 비번 입력하고 로그인 버튼 누르면 /login으로 전송
                         // ㄴ> 근데 이때 Spring Security가 이 요청을 가로채서 로그인 처리 자동으로 해줌
                         .defaultSuccessUrl("/post/list",true) //로그인 성공하면 /post/list로 이동
-                        .failureUrl("/user/login?error") //로그인 실패하면.
+                        .failureUrl("/login?error") //로그인 실패하면.
                         .permitAll() //위에서 설정한 로그인 관련 URL들은 로그인 안해도 누구나 볼수있게
                 ) //formLogin
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/user/login?logout")
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll() //로그아웃 페이지도 아무나 다 볼수있게~
                 );//logout, 메소드 체이닝 끝
                 return http.build(); //지금까지 설정한 모든 보안 규칙을 하나로 묶어 스프링에 넘겨줌
