@@ -41,7 +41,7 @@ public class RegisterController {
             return "redirect:/register/user";
         }
         //3. 회원가입 처리
-
+        userService.register(user);
         return "redirect:/login";
 
     }

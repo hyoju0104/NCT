@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username.toUpperCase());
+        return userRepository.findByUsername(username);
     }
     /**
      * 회원 가입 전 아이디 중복 확인
@@ -52,20 +52,27 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int register(User user){
-        //아이디 대문자 통일
-        user.setUsername(user.getUsername().toUpperCase());
         //비밀번호 암호화
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //DB에 사용자 저장
-        userRepository.save(user);
+
         // 기본 권한은 ROLE_USER
-        Authority auth = authorityRepository.findByGrade("ROLE_USER");
+        Authority auth = authorityRepository.findByGrade("USER");
+        if (auth != null) {
+            user.setAuthId(auth.getId());  // 권한 ID 설정
+        }
+        user.setStatusPlan("ACTIVE");
+        user.setStatusAccount("ACTIVE");
+        user.setPoint(0);
+        user.setRentalCnt(0);
+        //DB에 사용자 저장
+        int result = userRepository.save(user);
+        System.out.println("INSERT result = " + result);  // 추가: insert가 되었는지 확인
+        System.out.println("user.getId() = " + user.getId()); // 추가: 키가 들어왔는지 확인
 
-        //DB에서 생성된 사용자 id와 권한 id(auto_Increment된 값) 추출
-        Long userId=user.getId();
-        Long authId=auth.getId();
-
-        authorityRepository.addAuthority(userId,authId);
+        if(user.getId() == null) {
+            throw new RuntimeException("회원가입 실패: user.getId()가 null입니다.");
+        }
+        authorityRepository.addAuthority(user.getId(), auth.getId());
         return 1;
     }
     /**

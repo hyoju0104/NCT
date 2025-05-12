@@ -30,11 +30,14 @@
     <insert id="save" parameterType="com.lec.spring.domain.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user (
             username, password, name, email, phone_num, address,
-            auth_id, status_plan, status_account
+            auth_id, status_plan, status_account,
+            point, rental_cnt
         ) VALUES (
                      #{username}, #{password}, #{name}, #{email}, #{phoneNum}, #{address},
-                     #{authId}, #{statusPlan}, #{statusAccount}
+                     #{authId}, #{statusPlan}, #{statusAccount},
+                     #{point}, #{rentalCnt}
                  )
     </insert>
+
 
 </mapper>

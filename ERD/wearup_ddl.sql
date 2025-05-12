@@ -128,7 +128,7 @@ CREATE TABLE User
   signed_at      DATETIME     NOT NULL DEFAULT now(),
   paid_at        DATETIME     NULL    ,
   status_plan    ENUM('ACTIVE', 'INACTIVE')         NOT NULL,
-  status_account ENUM('ACTIVE', 'INACTIVE', 'DELETED')         NOT NULL DEFAULT 'active' COMMENT '계정 상태',
+  status_account ENUM('ACTIVE', 'INACTIVE', 'DELETED')         NOT NULL DEFAULT 'ACTIVE' COMMENT '계정 상태',
   rental_cnt     INT          NOT NULL DEFAULT 0 COMMENT '이번주에 대여한 횟수',
   PRIMARY KEY (id)
 );
