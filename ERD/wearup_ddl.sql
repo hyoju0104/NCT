@@ -34,10 +34,13 @@ CREATE TABLE Brand
 (
   id              INT           NOT NULL AUTO_INCREMENT,
   name            VARCHAR(100)  NOT NULL,
+  username        VARCHAR(100)  NOT NULL,
+  password        VARCHAR(100)  NOT NULL,
   phone_num       VARCHAR(13)   NOT NULL,
   logo_sourcename VARCHAR(100)  NULL    ,
   logo_filename   VARCHAR(100)  NULL    ,
   description     VARCHAR(1000) NULL    ,
+  is_actived      BOOLEAN       NOT NULL default true,
   PRIMARY KEY (id)
 );
 
@@ -61,7 +64,8 @@ CREATE TABLE Item
   category         VARCHAR(20)   NOT NULL,
   description      VARCHAR(1000) NULL    ,
   is_available     BOOLEAN       NOT NULL   DEFAULT true,
-  status           ENUM('A', 'B', 'C')  NOT NULL,
+  item_status      ENUM('A', 'B', 'C')  NOT NULL,
+  is_exist         BOOLEAN       NOT NULL  DEFAULT true,
   created_at       DATETIME      NOT NULL   DEFAULT now(),
   PRIMARY KEY (id)
 );

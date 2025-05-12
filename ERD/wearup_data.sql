@@ -59,16 +59,16 @@ INSERT INTO Comment (Comment.user_id, Comment.post_id, content) VALUES
         (3, 3, 'ㄱㅁㅇㄴㄹㄱㄱㄱㄱㅂㅂㅂ')
 ;
 
-INSERT INTO Brand (name, phone_num) VALUES
-        ('나이키', '031-1234-4321'),
-        ('아디다스', '031-1234-5342'),
-        ('뉴발란스', '031-1234-6757')
+INSERT INTO Brand (name, username, password, phone_num, is_actived) VALUES
+        ('나이키', 'nike', 'nike123', '031-1234-4321', true),
+        ('아디다스', 'adidas', 'adidas123', '031-1234-5342', true),
+        ('뉴발란스', 'newbalance', 'newbalance123', '031-1234-6757', false)
 ;
 
-INSERT INTO Item(Item.brand_id, name, image_sourcename, image_filename, category, is_available, status) VALUES
-        (1, '나이키바지', 'ffdddf', 'dddsadr', '하의', true, 'A'),
-        (1, '나이키상의', 'sdf', 'asdf', '상의', false, 'B'),
-        (2, '아디다스바지', 'qerwq', 'asdfdsa', '하의', true, 'C')
+INSERT INTO Item(Item.brand_id, name, image_sourcename, image_filename, category, is_available, item_status, is_exist) VALUES
+        (1, '나이키바지', 'ffdddf', 'dddsadr', '하의', true, 'A', true),
+        (1, '나이키상의', 'sdf', 'asdf', '상의', false, 'B', false),
+        (2, '아디다스바지', 'qerwq', 'asdfdsa', '하의', true, 'C', true)
 ;
 
 INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status) VALUES
