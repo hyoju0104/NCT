@@ -44,8 +44,8 @@ public class User {
 	
 	private Integer rentalCnt;
 	
-	public enum PlanStatus { SILVER, GOLD, VIP };
-	public enum AccountStatus { ACTIVE, INACTIVE, DELETED };
+	public enum PlanStatus { ACTIVE, INACTIVE }
+	public enum AccountStatus { ACTIVE, INACTIVE, DELETED }
 	// 사용 방법: user.setStatusPlan(PlanStatus.GOLD);
 	
 }

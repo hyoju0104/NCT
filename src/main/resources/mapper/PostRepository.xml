@@ -12,22 +12,63 @@
 
     <sql id="SELECT_BASE">
         SELECT
-            p.id,
-            p.content,
-            p.created_at,
-            p.items,
-            u.id "user_id"
+            p.id "p_id",
+            p.content "p_content",
+            p.items "p_items",
+            p.created_at "p_created_at",
+            u.id "u_id",
+            u.username "u_username",
+            u.password "u_password",
+            u.name "u_name",
+            u.phone_num "u_phone_num",
+            u.email "u_email",
+            u.address "u_address",
+            u.point "u_point",
+            u.provider "u_provider",
+            u.provider_id "u_provider_id",
+            u.signed_at "u_signedAt",
+            u.paid_at "u_paidAt",
+            u.status_plan "u_status_plan",
+            u.status_account "u_status_account",
+            u.rental_cnt "u_rental_cnt"
         FROM
             Post p, User u
         WHERE p.user_id = u.id
     </sql>
 
-    <select id="findAll">
+    <!-- JOIN 문의 결과를 (Java 객체로) 매핑 -->
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="u_id" property="id"/>
+        <result column="u_username" property="username"/>
+        <result column="u_password" property="password"/>
+        <result column="u_name" property="name"/>
+        <result column="u_phone_num" property="phoneNum"/>
+        <result column="u_email" property="email"/>
+        <result column="u_address" property="address"/>
+        <result column="u_point" property="point"/>
+        <result column="u_provider" property="provider"/>
+        <result column="u_provider_id" property="providerId"/>
+        <result column="u_signed_at" property="signedAt"/>
+        <result column="u_paid_at" property="paidAt"/>
+        <result column="u_status_plan" property="statusPlan"/>
+        <result column="u_status_account" property="statusAccount"/>
+        <result column="u_rental_cnt" property="rentalCnt"/>
+    </resultMap>
+
+    <resultMap id="mapPost" type="com.lec.spring.domain.Post">
+        <result column="p_id" property="id"/>
+        <result column="p_content" property="content"/>
+        <result column="p_items" property="items"/>
+        <result column="p_created_at" property="createdAt"/>
+        <association property="user" resultMap="mapUser"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
         ORDER BY p.id DESC
     </select>
 
-    <select id="findById">
+    <select id="findById" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
         AND p.id = #{id}
     </select>
@@ -45,7 +86,7 @@
         WHERE id = #{id}
     </delete>
 
-    <select id="selectFromRow" parameterType="map" resultType="com.lec.spring.domain.Post">
+    <select id="selectFromRow" parameterType="map" resultType="com.lec.spring.domain.Post" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
         ORDER BY p.id DESC
         LIMIT #{rows} OFFSET #{from}

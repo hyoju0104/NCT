@@ -4,12 +4,14 @@ import com.lec.spring.domain.Post;
 import com.lec.spring.repository.PostRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class PostServiceImpl implements PostService {
 	
 	@Value("${app.pagination.write_pages}")
@@ -21,15 +23,15 @@ public class PostServiceImpl implements PostService {
 	
 	private final PostRepository postRepository;
 	
-	public PostServiceImpl(SqlSession sqlSession) {
-		postRepository = sqlSession.getMapper(PostRepository.class);
+	public PostServiceImpl(PostRepository postRepository) {
+		this.postRepository = postRepository;
 		System.out.println("✅ PostService() 생성");
 	}
 	
 	
 	@Override
 	public List<Post> list() {
-		return List.of();
+		return postRepository.findAll();
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@MapperScan("com.lec.spring.repository")
 @SpringBootApplication
 @MapperScan("com.lec.spring.repository")
 public class NctApplication {

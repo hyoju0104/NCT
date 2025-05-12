@@ -18,17 +18,19 @@ public class Item {
     private String name;
     private String category;
     private String description;
-    private Boolean is_available;
+    private Boolean isAvailable;
     
     @JsonIgnore
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    public enum ItemStatus{A, B, C};
-    private ItemStatus statusItem;
+    public enum StatusItem{A, B, C};
+    private StatusItem statusItem;
 
-    private String image_sourcename;
-    private String image_filename;
+    private Boolean isExist;
+
+    private String imageSourcename;
+    private String imageFilename;
 
     private Brand brand;
 

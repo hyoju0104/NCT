@@ -4,9 +4,11 @@ package com.lec.spring.repository;
 // DataSource (DB) 등에 대한 직접적인 접근
 
 import com.lec.spring.domain.Post;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface PostRepository {
 	
 	// 전체 글 목록 : 최신순 (SELECT) -> List<>
