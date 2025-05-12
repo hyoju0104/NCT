@@ -17,8 +17,10 @@ public class Item {
     private String category;
     private String description;
     private boolean is_available;
-    //private enum status{A, B, C};
     private LocalDateTime createdAt;
+
+    public enum ItemStatus{A, B, C};
+    private ItemStatus statusItem;
 
     private String image_sourcename;
     private String image_filename;
