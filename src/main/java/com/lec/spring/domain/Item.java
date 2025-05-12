@@ -1,5 +1,7 @@
 package com.lec.spring.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,9 +18,14 @@ public class Item {
     private String name;
     private String category;
     private String description;
-    private boolean is_available;
-    //private enum status{A, B, C};
+    private Boolean is_available;
+    
+    @JsonIgnore
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
+
+    public enum ItemStatus{A, B, C};
+    private ItemStatus statusItem;
 
     private String image_sourcename;
     private String image_filename;
