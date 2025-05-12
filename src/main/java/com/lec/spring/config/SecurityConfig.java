@@ -14,9 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity // Spring Securirty 보안 기능 켬
 @RequiredArgsConstructor //final 로 선언된 변수를 자동으로 생성자에서 넣어줌
 public class SecurityConfig {
-    //TODO
-    //로그인 시 DB에서 사용자 정보를 찾아오는 데 사용
-    private final PrincipalDetailService principalDetailService;
 
     //비밀번호 암호화
     @Bean

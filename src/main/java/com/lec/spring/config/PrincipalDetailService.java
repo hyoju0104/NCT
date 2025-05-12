@@ -3,7 +3,6 @@ package com.lec.spring.config;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
