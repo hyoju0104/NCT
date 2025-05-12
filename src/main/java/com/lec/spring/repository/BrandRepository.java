@@ -3,6 +3,8 @@ package com.lec.spring.repository;
 import com.lec.spring.domain.Brand;
 import com.lec.spring.domain.User;
 
+import java.util.List;
+
 public interface BrandRepository {
 
     Brand findById(Long id);
@@ -14,4 +16,12 @@ public interface BrandRepository {
     int update(Brand brand);
 
     int delete(Long id);
+
+    //==================================================
+
+    Brand myDetail(Long id);
+
+    int myUpdate(Brand brand);
+
+    int myDelete(Brand brand);
 }
