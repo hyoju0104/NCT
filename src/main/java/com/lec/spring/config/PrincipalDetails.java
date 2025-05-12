@@ -4,6 +4,7 @@ import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
