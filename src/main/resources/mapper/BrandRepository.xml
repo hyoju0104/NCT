@@ -16,14 +16,12 @@
             b.is_actived "b_is_actived"
         FROM
             Brand b
-        WHERE
-            1 = 1
     </sql>
 
     <resultMap id="mapBrand" type="com.lec.spring.domain.Brand">
         <result column="b_id" property="id"/>
         <result column="b_name" property="name"/>
-        <result column="b_phone_num" property="phone_num"/>
+        <result column="b_phone_num" property="phoneNum"/>
         <result column="b_logo_sourcename" property="logoSourcename"/>
         <result column="b_logo_filename" property="logoFilename"/>
         <result column="b_description" property="description"/>
@@ -48,6 +46,23 @@
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Brand">
         UPDATE Brand
         SET password = #{password}, phone_num = #{phone_num}, description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <select id="myDetail" resultMap="mapBrand">
+        <include refid="SELECT_BASE"/>
+            WHERE id = #{id}
+    </select>
+
+    <update id="myUpdate" flushCache="true">
+        UPDATE Brand
+        SET phone_num = #{phone_num}, description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <update id="myDelete" flushCache="true" parameterType="com.lec.spring.domain.Brand">
+        UPDATE Brand
+        SET is_actived = false
         WHERE id = #{id}
     </update>
 
