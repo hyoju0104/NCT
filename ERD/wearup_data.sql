@@ -76,3 +76,7 @@ INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status) VALUES
         (2, 2, '2025-05-13 17:40:00', 'RETURNED'),
         (3, 3, '2025-05-15 17:40:00', 'OVERDUE')
 ;
+
+INSERT INTO Attachment(post_id, sourcename, filename, sequence)
+VALUES (1, 'face20.png', 'face20.png', 1)
+;

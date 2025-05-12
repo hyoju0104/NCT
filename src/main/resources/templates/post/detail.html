@@ -8,8 +8,7 @@
 	history.back();
 </script>
 
-<!--/*<th:block th:if="${post}" th:with="logged_user=${#authentication.principal.user}">*/-->
-<th:block th:if="${post}">
+<th:block th:if="${post}" th:with="logged_user=${#authentication.principal.user}">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,6 +18,10 @@
 <!--		<link rel="stylesheet" th:href="@{/css/common.css}">-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 		<script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
+		
+		<script th:inline="javascript">
+			const logged_id = [[${logged_user.id}]];
+		</script>
 		
 		<script th:src="@{/js/detail.js}"></script>
 		
@@ -48,7 +51,7 @@
 				
 				<div class="mb-3">
 					<label>작성자:</label>
-<!--/*					<div class="border bg-light rounded p-2" th:text="${post.user.username}"></div>*/-->
+					<div class="border bg-light rounded p-2" th:text="${post.user.username}"></div>
 				</div>
 				<div class="mb-3 mt-3">
 					<label>내용:</label>
@@ -59,28 +62,29 @@
 					<div class="border bg-light rounded p-2" th:text="${post.items}"></div>
 				</div>
 				
+				
 				<!-- 첨부파일목록 -->
-				<div class="container mt-3 mb-3 border rounded">
-					<div class="mb-3 mt-3">
-						<label>첨부파일:</label>
-						<!-- 첨부파일 이름, 다운로드 링크 -->
-						<ul class="list-group mb-1">
-							<li class="list-group-item" th:each="attachment : ${post.fileList}">
-								<a th:href="@{/board/download(id=${attachment.id})}" th:text="${attachment.sourcename}"></a>
-							</li>
-						</ul>
-						<!--  이미지인 경우 보여주기 -->
-						<div th:each="attachment : ${post.fileList}" th:if="${attachment.image}">
-							<img th:src="@{'/upload/' + ${attachment.filename}}" class="img-thumbnail" alt="범규">
+				<!-- 이미지 슬라이드 (Carousel) -->
+				<div id="attachmentCarousel" class="carousel slide mt-3" data-bs-ride="carousel" th:if="${#lists.size(post.fileList) > 0}">
+					<div class="carousel-inner">
+						<div class="carousel-item" th:each="attachment, stat : ${post.fileList}" th:classappend="${stat.index == 0} ? ' active'">
+							<img th:src="@{'/upload/' + ${attachment.filename}}" class="d-block w-100 img-thumbnail" alt="이미지">
 						</div>
 					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#attachmentCarousel" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#attachmentCarousel" data-bs-slide="next">
+						<span class="carousel-control-next-icon"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
 				</div>
 				<!-- 첨부파일목록 -->
 				
 				
 				<!-- 하단 링크 -->
 				<div class="d-flex">
-					
 <!--/*					<a class="btn btn-outline-dark" th:href="@{'/post/update/' + ${post.id}}" th:if="${logged_user.id == post.user.id}">수정</a>*/-->
 					<a class="btn btn-outline-dark" th:href="@{'/post/update/' + ${post.id}}">수정</a>
 					<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
@@ -90,6 +94,7 @@
 					<a class="btn btn-outline-dark ms-2" th:href="@{/post/write}">작성</a>
 				</div>
 				<!-- 하단 링크 -->
+				
 				
 				<!-- 댓글 -->
 				<th:block th:insert="~{post/comment::comment}"></th:block>

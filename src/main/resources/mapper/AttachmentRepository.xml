@@ -20,7 +20,7 @@
     </resultMap>
 
     <insert id="insert" parameterType="arrayList" flushCache="true">
-        INSERT INTO wearup(sourcename, filename, post_id)
+        INSERT INTO Attachment(sourcename, filename, post_id)
         VALUES
         <foreach collection="list" item="e" separator=",">
             (#{e.sourcename}, #{e.filename}, #{param2})

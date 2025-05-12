@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AttachmentController {
 	
-	@Value("{app.upload.path}")
+	@Value("${app.upload.path}")
 	public String uploadDir;
 	
 	private final AttachmentService attachmentService;

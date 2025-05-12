@@ -91,6 +91,13 @@ function buildComment(result){
 		let username = comment.user.username;
 		let name = comment.user.name;
 
+		console.log(id);
+		console.log(content);
+		console.log(regdate);
+		console.log(user_id);
+		console.log(username);
+		console.log(name);
+
 		// 삭제 버튼 여부 : 작성자 본인인 경우만 삭제 버튼 보이게 하기.
 		// logged_id가 존재하고, 댓글 작성자와 동일한 경우에만 삭제 버튼 표시
 		const delBtn = (logged_id && logged_id === user_id) ? `
