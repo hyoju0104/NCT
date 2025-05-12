@@ -1,5 +1,7 @@
 package com.lec.spring.config;
 
+import com.lec.spring.domain.Authority;
+import com.lec.spring.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,15 +22,15 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //collect 에는 ROLE_USER, ROLE_ADMIN 같은 권한을 담을 것
-        return Collection<GrantedAuthority> collect = new ArrayList<>();
+        Collection<GrantedAuthority> collect = new ArrayList<>();
         //DB에서 실제로 로그인한 유저의 권한 목록 가져오는 구문
         // e.g. user.getId() → 3 >> selectAuthoritiesById(3) → [Authority(ROLE_USER), Authority(ROLE_ADMIN)]
-        List<Authority> List = userService.selectAuthoritiesById(user.getId());
+        List<Authority> list = userService.selectAuthoritiesById(user.getId());
         for(Authority auth : list){
             collect.add(new GrantedAuthority(){
                 @Override
                 public String getAuthority() { // "GrantedAuthority 인터페이스를 구현한 객체"를 즉석에서 만듦
-                    return auth.getName(); //e.g. "ROLE_USER", 다음엔 "ROLE_ADMIN",..
+                    return auth.getGrade(); //e.g. "USER", 다음엔 "ADMIN",..
                     // ㄴ> 이렇게 하는 이유: Spring Security는 권한을 물을 때 그냥 문자열이 아닌 무조건 GrantedAuthority 타입으로 줘야 함.
                     // 즉, collect에 담는 것은 문자열이 아니고 GrantedAuthority객체
                 }
