@@ -1,0 +1,267 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans', 'Segoe UI', sans-serif;
+    background-color: #ffffff;
+    color: #222222;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 15px 20px;
+    z-index: 100;
+}
+
+.header-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    position: relative; /* 상대적 위치 지정 */
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #222222;
+    text-decoration: none;
+}
+
+.header-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* 정확히 중앙에 위치시키기 */
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #222222;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #666666;
+}
+
+.header-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    margin-top: 60px;
+}
+
+.login-container h2 {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 900;
+    color: #222222;
+    letter-spacing: -2px;
+    margin-bottom: 10px;
+}
+
+.login-container .subheading {
+    text-align: center;
+    font-size: 14px;
+    color: #888888;
+    margin-bottom: 40px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: #888888;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    height: 50px;
+    padding: 0 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #222222;
+    background-color: #ffffff;
+}
+
+.form-group input::placeholder {
+    color: #cccccc;
+}
+
+.login-btn {
+    width: 100%;
+    height: 50px;
+    background-color: #222222;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 24px;
+    transition: all 0.2s ease;
+}
+
+.login-btn:hover {
+    background-color: #000000;
+}
+
+.login-btn:active {
+    transform: translateY(1px);
+}
+
+.social-login {
+    margin-top: 40px;
+}
+
+.social-login p {
+    text-align: center;
+    color: #888888;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.social-btn {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    cursor: pointer;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.social-btn:hover {
+    background-color: #f8f8f8;
+}
+
+.social-btn.kakao {
+    background-color: #ffeb3b;
+    color: #333333;
+    border-color: #ffeb3b;
+}
+
+.social-btn.kakao:hover {
+    background-color: #fff59d;
+}
+
+.social-btn.naver {
+    background-color: #03c75a;
+    color: #ffffff;
+    border-color: #03c75a;
+}
+
+.social-btn.naver:hover {
+    background-color: #02b350;
+}
+
+.social-btn.google {
+    background-color: #ffffff;
+    color: #757575;
+    border-color: #e0e0e0;
+}
+
+.social-btn.google:hover {
+    background-color: #f8f8f8;
+}
+
+.register-link {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.register-link p {
+    text-align: center;
+    color: #888888;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: #222222;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+.alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.alert-error {
+    background-color: #fee;
+    color: #c33;
+    border: 1px solid #fcc;
+}
+
+.alert-success {
+    background-color: #efe;
+    color: #396;
+    border: 1px solid #cfc;
+}
+
+@media (max-width: 768px) {
+    .header-nav {
+        display: none;
+    }
+
+    .login-container {
+        padding: 20px;
+        margin-top: 40px;
+    }
+
+    .login-container h2 {
+        font-size: 36px;
+    }
+}

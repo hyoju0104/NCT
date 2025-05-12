@@ -4,10 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>로그인</title>
+  <link rel="stylesheet" href="/static/css/login.css">
 </head>
 <body>
+<!-- 헤더 추가 -->
+<header class="header">
+  <div class="header-content">
+    <a href="#" class="logo">WearUp</a>
+    <nav class="header-nav">
+      <a href="#" class="nav-link">피드</a>
+      <a href="#" class="nav-link">아이템</a>
+    </nav>
+  </div>
+</header>
+
 <div class="login-container">
-  <h2>로그인</h2>
+  <h2>WearUp</h2>
+  <p class="subheading">WEAR UP TO LEVEL UP</p>
 
   <!-- 로그인 실패 메시지 : ?error -->
   <div th:if="${param.error}" class="alert alert-error">
