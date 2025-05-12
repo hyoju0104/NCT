@@ -2,6 +2,7 @@ package com.lec.spring.config;
 
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.UserRepository;
+import com.lec.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class PrincipalDetailService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final UserService userService;
     public PrincipalDetailService(UserService userService, UserRepository userRepository) {
         this.userRepository = userRepository;
         this.userService = userService;

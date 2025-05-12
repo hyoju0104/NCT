@@ -1,0 +1,82 @@
+package com.lec.spring.service;
+
+import com.lec.spring.domain.Authority;
+import com.lec.spring.domain.User;
+import com.lec.spring.repository.AuthorityRepository;
+import com.lec.spring.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+/**
+ * Service 구현체 클래스
+ * - 실제 서비스 로직을 수행하는 핵심 클래스
+ * - SqlSession을 이용해 Repository(MyBatis Mapper) 주입
+ * - 회원 정보 처리, 권한 연결, 비밀번호 암호화 등 업무 처리 담당
+ */
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+
+    //비밀번호 암호화
+    private final PasswordEncoder passwordEncoder;
+    //DB에서 사용자, 권한 정보 조회
+    private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
+
+    /**
+     * 사용자 아이디로 User 정보 조회 (로그인 시 사용됨)
+     * → DB에서 사용자 검색 (대소문자 구분 막기 위해 대문자로 통일)
+     */
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username.toUpperCase());
+    }
+    /**
+     * 회원 가입 전 아이디 중복 확인
+     * → 아이디가 존재하면 true, 없으면 false
+     */
+    @Override
+    public boolean isExist(String username) {
+        return findByUsername(username) != null;
+    }
+
+    /**
+     * 회원가입 처리
+     * 1) 아이디 대문자로 저장
+     * 2) 비밀번호 암호화해서 저장
+     * 3) DB에 저장 후
+     * 4) 기본 권한(ROLE_USER) 부여
+     */
+    @Override
+    public int register(User user){
+        //아이디 대문자 통일
+        user.setUsername(user.getUsername().toUpperCase());
+        //비밀번호 암호화
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //DB에 사용자 저장
+        userRepository.save(user);
+        // 기본 권한은 ROLE_USER
+        Authority auth = authorityRepository.findByGrade("ROLE_USER");
+
+        //DB에서 생성된 사용자 id와 권한 id(auto_Increment된 값) 추출
+        Long userId=user.getId();
+        Long authId=auth.getId();
+
+        authorityRepository.addAuthority(userId,authId);
+        return 1;
+    }
+    /**
+     * 로그인한 사용자 ID로 권한 목록 조회
+     * → Spring Security에서 로그인 시 getAuthorities() 호출용
+     */
+    @Override
+    public List<Authority> selectAuthoritiesById(Long id) {
+        User user = userRepository.findById(id); // 사용자 조회
+        // 해당 사용자에 연결된 권한 목록 조회
+        return authorityRepository.findByUser(user);
+    }
+
+}
