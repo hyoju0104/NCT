@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.AttachmentRepository">
+
+    <sql id="SELECT_FILE">
+        SELECT id, post_id, sourcename, filename, sequence
+        FROM Attachment
+        WHERE 1 = 1
+    </sql>
+
+    <resultMap id="MapAttachment" type="com.lec.spring.domain.Attachment">
+        <result column="id" property="id"/>
+        <result column="post_id" property="postId"/>
+        <result column="sourcename" property="sourcename"/>
+        <result column="filename" property="filename"/>
+        <result column="sequence" property="sequence"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="arrayList" flushCache="true">
+        INSERT INTO wearup(sourcename, filename, post_id)
+        VALUES
+        <foreach collection="list" item="e" separator=",">
+            (#{e.sourcename}, #{e.filename}, #{param2})
+        </foreach>
+    </insert>
+    
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Attachment">
+        INSERT INTO Attachment(sourcename, filename, post_id)
+        VALUES (#{sourcename}, #{filename}, #{post_id})
+    </insert>
+
+    <select id="findByPostId" resultType="com.lec.spring.domain.Attachment">
+        <include refid="SELECT_FILE"/>
+        AND post_id = #{param1}
+        ORDER BY id ASC
+    </select>
+
+    <select id="findById" resultType="com.lec.spring.domain.Attachment">
+        <include refid="SELECT_FILE"/>
+        AND id = #{id}
+    </select>
+
+    <!-- MyBatis 입장에서는 array 와 ArrayList 를 동일하다고 보고 동작시킴 -->
+    <!-- item = e = Long 타입 -->
+    <!-- open="(" close=")" : ( id, id, ... ) -->
+    <select id="findByIds" resultType="com.lec.spring.domain.Attachment" parameterType="java.util.ArrayList">
+        <include refid="SELECT_FILE"/>
+        AND ID IN
+        <foreach collection="array" item="e" separator="," open="(" close=")">
+            #{e}
+        </foreach>
+        ORDER BY id ASC
+    </select>
+
+    <delete id="deleteByIds" flushCache="true" parameterType="java.util.ArrayList">
+        DELETE FROM Attachment
+        WHERE id IN (<foreach collection="array" item="item" separator=",">#{item}</foreach>)
+    </delete>
+
+    <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.Attachment">
+        DELETE FROM Attachment
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
