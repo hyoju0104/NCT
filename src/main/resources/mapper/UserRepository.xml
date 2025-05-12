@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.UserRepository">
+
+    <select id="findByUsername" resultType="com.lec.spring.domain.User">
+        SELECT
+            id, auth_id AS authId, plan_id AS planId, username, password,
+            name, phone_num AS phoneNum, email, address, point, provider,
+            provider_id AS providerId, signed_at AS signedAt,
+            paid_at AS paidAt, status_plan AS statusPlan,
+            status_account AS statusAccount, rental_cnt AS rentalCnt
+        FROM user
+        WHERE username=#{username}
+
+    </select>
+</mapper>
