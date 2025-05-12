@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<script th:unless="${result > 0}">
+	alert("삭제 실패");
+	history.back();
+</script>
+
+<script th:if="${result > 0}" th:inline="javascript">
+	alert("삭제 성공");
+	location.href = `/board/list?page=[[${session.page}]]`;
+</script>
+
+</html>

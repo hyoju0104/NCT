@@ -20,8 +20,8 @@ public class Post {
 	private User user;
 	
 	// 첨부파일 정보
-//	@ToString.Exclude   // List 객체는 ToString 필요 X (주소값 반환)
-//	@Builder.Default    // 초기값이 주어진 경우, builder 제공 X
-//	private List<Attachment> fileList = new ArrayList<>()
+	@ToString.Exclude   // List 객체는 ToString 필요 X (주소값 반환)
+	@Builder.Default    // 초기값이 주어진 경우, builder 제공 X
+	private List<Attachment> fileList = new ArrayList<>();
 	
 }

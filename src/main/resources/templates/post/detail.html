@@ -1,10 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-</head>
-<body>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-</body>
+<script th:unless="${post}">
+	alert("해당 정보가 삭제되거나 없습니다");
+	history.back();
+</script>
+
+<!--/*<th:block th:if="${post}" th:with="logged_user=${#authentication.principal.user}">*/-->
+<th:block th:if="${post}">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		
+<!--		<link rel="stylesheet" th:href="@{/css/common.css}">-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+		<script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
+		<!--/*
+		<script th:inline="javascript">
+			const logged_id = [[${logged_user.id}]];
+		</script>
+		*/-->
+		<script th:src="@{/js/detail.js}"></script>
+		
+		<title>조회 - [[${post.id}]]</title>
+	</head>
+	
+	<body style="margin-bottom: 200px">
+		
+		<!--/* 인증 헤더 */-->
+<!--/*		<th:block th:insert="~{common/header::header}"></th:block>*/-->
+		
+		<div class="container mt-3">
+			<h2 th:text="'조회 - ' + ${post.id}"></h2>
+			<hr>
+			<div class="mb-3 mt-3 clearfix">
+				<span class="float-start me-2">id: [[${post.id}]]</span>
+				<span class="float-end ms-4">작성일: [[${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+			</div>
+			
+			<section>
+				
+				<!-- 삭제 기능 -->
+				<form name="frmDelete" th:action="@{/post/delete}" method="post">
+					<input type="hidden" name="id" th:value="${post.id}">
+				</form>
+				<!-- 삭제 기능 -->
+				
+				<div class="mb-3">
+					<label>작성자:</label>
+<!--/*					<div class="border bg-light rounded p-2" th:text="${post.user.username}"></div>*/-->
+				</div>
+				<div class="mb-3 mt-3">
+					<label>내용:</label>
+					<div class="border bg-light rounded p-2" th:utext="${post.content}"></div>
+				</div>
+				<div class="mb-3 mt-3">
+					<label>상품:</label>
+					<div class="border bg-light rounded p-2" th:text="${post.items}"></div>
+				</div>
+				
+				<!-- 첨부파일목록 -->
+				<div class="container mt-3 mb-3 border rounded">
+					<div class="mb-3 mt-3">
+						<label>첨부파일:</label>
+						<!-- 첨부파일 이름, 다운로드 링크 -->
+						<ul class="list-group mb-1">
+							<li class="list-group-item" th:each="attachment : ${post.fileList}">
+								<a th:href="@{/board/download(id=${attachment.id})}" th:text="${attachment.sourcename}"></a>
+							</li>
+						</ul>
+						<!--  이미지인 경우 보여주기 -->
+						<div th:each="attachment : ${post.fileList}" th:if="${attachment.image}">
+							<img th:src="@{'/upload/' + ${attachment.filename}}" class="img-thumbnail" alt="범규">
+						</div>
+					</div>
+				</div>
+				<!-- 첨부파일목록 -->
+				
+				
+				<!-- 하단 링크 -->
+				<div class="d-flex">
+					
+<!--/*					<a class="btn btn-outline-dark" th:href="@{'/post/update/' + ${post.id}}" th:if="${logged_user.id == post.user.id}">수정</a>*/-->
+					<a class="btn btn-outline-dark" th:href="@{'/post/update/' + ${post.id}}">수정</a>
+					<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
+<!--/*					<button type="button" class="btn btn-outline-danger ms-2" id="btnDel" th:if="${logged_user.id == post.user.id}">삭제</button>*/-->
+					<button type="button" class="btn btn-outline-danger ms-2" id="btnDel">삭제</button>
+					
+					
+					
+					<a class="btn btn-outline-dark ms-2" th:href="@{/post/write}" sec:authorize="hasAnyRole('USER', 'ADMIN')">작성</a>
+				</div>
+				<!-- 하단 링크 -->
+				
+				<!-- 댓글 -->
+<!--/*				<th:block th:insert="~{board/comment::comment}"></th:block>*/-->
+				<!-- 댓글 -->
+			
+			</section>
+		</div>
+	
+	</body>
+</th:block>
+
 </html>

@@ -1,6 +1,7 @@
 show tables;
 
 SELECT * FROM Authority;
+SELECT * FROM Attachment;
 SELECT * FROM Plan;
 SELECT * FROM User;
 SELECT * FROM Payment;

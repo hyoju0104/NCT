@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Title</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+	
+	<title>작성</title>
 </head>
+
 <body>
+	
+	<!--/* 인증 헤더 */-->
+	
+	<!--/* 인증 헤더 */-->
+	
+	<div class="container mt-3">
+		<h2>작성</h2>
+		<hr>
+		
+		<!-- 본문 -->
+		<!-- 첨부파일 submit 하는 form 은 반드시 ⭐method="post" enctype="multipart/form-data"⭐ 이어야 함!! -->
+		<form th:action="@{/post/write}" method="post" enctype="multipart/form-data">
+			<!--/*
+			<div class="my-3">
+				<label for="user">작성자:</label>
+				<span class="form-control" id="user" th:text="${user.username + ' (' + user.name + ')'}"></span>
+			</div>
+			*/-->
+			<div class="my-3">
+				<label for="content">내용:</label>
+				<textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content" th:utext="${content}"></textarea>
+			</div>
+			
+			<div class="my-3">
+				<label for="items">상품:</label>
+				<textarea class="form-control" rows="5" id="items" placeholder="내용을 입력하세요" name="items" th:utext="${items}"></textarea>
+			</div>
+			<div><span class="text-danger" th:if="${error_items}" th:utext="${error_items}"></span></div>
+			<!-- 본문 -->
+			
+			
+			<!-- 첨부파일 -->
+			<div class="container mt-3 mb-3 border rounded">
+				<div class="mb-3 mt-3">
+					<label>첨부파일:</label>
+					<div id="files">
+					
+					</div>
+					<button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
+				</div>
+			</div>
+			<!-- 첨부파일 -->
+			
+			
+			<button type="submit" class="btn btn-outline-dark">작성완료</button>
+			<a class="btn btn-outline-dark" th:href="@{/post/list(page=${session.page})}">목록</a>
+		</form>
+	
+	</div>
 
 </body>
 </html>
