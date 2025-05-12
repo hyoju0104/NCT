@@ -37,7 +37,7 @@ public class SecurityConfig {
         http
                 //TODO requestmatchers는 html만든 후 수정하기
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/login","/register/**").permitAll()
+                        .requestMatchers("/login", "/register/**", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // 그 외 모든 주소는 로그인한 사람만 접근
                 )//authorizeHttpRequests
