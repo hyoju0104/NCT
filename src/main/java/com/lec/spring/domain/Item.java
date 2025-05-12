@@ -1,5 +1,7 @@
 package com.lec.spring.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,7 +18,10 @@ public class Item {
     private String name;
     private String category;
     private String description;
-    private boolean is_available;
+    private Boolean is_available;
+    
+    @JsonIgnore
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     public enum ItemStatus{A, B, C};
