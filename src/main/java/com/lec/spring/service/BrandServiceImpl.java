@@ -14,23 +14,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
 
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
     private final BrandRepository brandRepository;
 
     @Override
     public int register(Brand brand) {
-//        brand.setUsername(brand.getUsername().toUpperCase());
-//        brand.setPassword(passwordEncoder.encode(brand.getPassword()));
-//
-//        brandRepository.save(brand);
-//
-//        Authority authority = authorityRepository.findByGrade("ROLE_BRAND");
-//
-//        Long brandId = brand.getId();
-//        Long authorityId = authority.getId();
-//
-//        authorityRepository.addAuthority(authorityId, brandId);
+        brand.setUsername(brand.getUsername());
+        brand.setPassword(passwordEncoder.encode(brand.getPassword()));
+
+        brandRepository.save(brand);
+
+        // 권한 부여
+        Authority authority = authorityRepository.findByGrade("BRAND");
+        if (authority != null) {
+            authorityRepository.addAuthority(brand.getId(), authority.getId());
+        }
+
 
         return 1;
     }
