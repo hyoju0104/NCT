@@ -1,5 +1,6 @@
 package com.lec.spring.config;
 
+import com.lec.spring.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
