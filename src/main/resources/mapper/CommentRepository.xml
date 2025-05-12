@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.CommentRepository">
+
+    <!-- JOIN 문의 결과를 (Java 객체로) 매핑 -->
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="u_id" property="id"/>
+        <result column="u_username" property="username"/>
+    </resultMap>
+
+    <resultMap id="mapComment" type="com.lec.spring.domain.Comment">
+        <result column="c_id" property="id"/>
+        <result column="c_post_id" property="postId"/>
+        <result column="c_content" property="content"/>
+        <result column="c_regdate" property="regDate"/>
+        <association property="user" resultMap="mapUser"/>
+    </resultMap>
+
+
+    <select id="findByPost" resultMap="mapComment">
+        SELECT c.id       "c_id",
+               c.post_id  "c_post_id",
+               c.content  "c_content",
+               c.regdate  "c_regdate",
+               u.id       "u_id",
+               u.username "u_username"
+        FROM Comment c
+             JOIN User u
+                 ON c.user_id = u.id
+        WHERE c.post_id = #{post_id}
+        ORDER BY c.id DESC
+    </select>
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Comment" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO Comment(user_id, post_id, content)
+        VALUES (#{user.id}, #{post_id}, #{content})
+    </insert>
+
+    <delete id="deleteById" flushCache="true">
+        DELETE FROM Comment WHERE id = #{id}
+    </delete>
+
+</mapper>

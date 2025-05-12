@@ -12,6 +12,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	
 	public AttachmentServiceImpl(SqlSession sqlSession) {
 		this.attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
+		System.out.println("✅ AttachmentService() 생성");
 	}
 	
 	@Override

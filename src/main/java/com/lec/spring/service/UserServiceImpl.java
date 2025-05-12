@@ -21,7 +21,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     //비밀번호 암호화
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
     //DB에서 사용자, 권한 정보 조회
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
@@ -52,20 +52,20 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int register(User user){
-        //아이디 대문자 통일
-        user.setUsername(user.getUsername().toUpperCase());
-        //비밀번호 암호화
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //DB에 사용자 저장
-        userRepository.save(user);
-        // 기본 권한은 ROLE_USER
-        Authority auth = authorityRepository.findByGrade("ROLE_USER");
-
-        //DB에서 생성된 사용자 id와 권한 id(auto_Increment된 값) 추출
-        Long userId=user.getId();
-        Long authId=auth.getId();
-
-        authorityRepository.addAuthority(userId,authId);
+//        //아이디 대문자 통일
+//        user.setUsername(user.getUsername().toUpperCase());
+//        //비밀번호 암호화
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        //DB에 사용자 저장
+//        userRepository.save(user);
+//        // 기본 권한은 ROLE_USER
+//        Authority auth = authorityRepository.findByGrade("ROLE_USER");
+//
+//        //DB에서 생성된 사용자 id와 권한 id(auto_Increment된 값) 추출
+//        Long userId=user.getId();
+//        Long authId=auth.getId();
+//
+//        authorityRepository.addAuthority(userId,authId);
         return 1;
     }
     /**

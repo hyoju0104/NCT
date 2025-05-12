@@ -9,13 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Plan {
-	
-	private Long id;
-	private Type type;
-	private Integer price;
-	private Integer count;
-	
-	public enum Type { SILVER, GOLD, VIP }
-	
+public class QryResult {
+	int count;
+	String status;
 }
