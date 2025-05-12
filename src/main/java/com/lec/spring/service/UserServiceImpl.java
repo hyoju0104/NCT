@@ -21,7 +21,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     //비밀번호 암호화
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     //DB에서 사용자, 권한 정보 조회
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
