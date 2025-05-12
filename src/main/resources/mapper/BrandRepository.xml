@@ -35,12 +35,15 @@
 
     <select id="findByUsername" resultType="com.lec.spring.domain.Brand">
         <include refid="SELECT_BASE"/>
-        AND username = #{username}
+        <where>
+            username = #{username}
+        </where>
     </select>
+
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Brand" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO Brand(name, username, password, phone_num, logo_sourcename, logo_filename, description)
-        VALUES (#{name}, #{username}, #{password}, #{phone_num}, #{logo_sourcename}, #{logo_filename}, #{description})
+        VALUES (#{name}, #{username}, #{password}, #{phoneNum}, #{logoSourcename}, #{logoFilename}, #{description})
     </insert>
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Brand">
