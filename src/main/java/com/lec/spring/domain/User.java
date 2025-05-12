@@ -31,6 +31,7 @@ public class User {
 	
 	private String provider;
 	private String providerId;
+	private String statusPlan;
 	
 	@JsonIgnore
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -38,14 +39,10 @@ public class User {
 	@JsonIgnore
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime paidAt;
-	
-	private PlanStatus statusPlan;
-	private AccountStatus statusAccount;
+
+	private String statusAccount;
 	
 	private Integer rentalCnt;
-	
-	public enum PlanStatus { ACTIVE, INACTIVE }
-	public enum AccountStatus { ACTIVE, INACTIVE, DELETED }
-	// 사용 방법: user.setStatusPlan(PlanStatus.GOLD);
+
 	
 }

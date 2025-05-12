@@ -25,7 +25,12 @@
 <div class="login-container">
     <h2>회원가입</h2>
     <p class="subheading">WEAR UP TO LEVEL UP</p>
-
+    <div th:if="${param.error == 'password'}" class="alert alert-error">
+        비밀번호가 일치하지 않습니다.
+    </div>
+    <div th:if="${param.error == 'exist'}" class="alert alert-error">
+        이미 존재하는 아이디입니다.
+    </div>
     <!-- 실패 메시지 -->
     <div th:if="${param.error}" class="alert alert-error">
         <p>회원가입에 실패했습니다. 정보를 다시 확인해주세요.</p>

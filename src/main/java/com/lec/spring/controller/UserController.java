@@ -9,13 +9,5 @@ public class UserController {
     @GetMapping("/login")
     public void login() {}
 
-    //회원가입
-    @GetMapping("/register/kind")
-    public void registerKind(){}
 
-    @GetMapping("/register/user")
-    public void registerUser(){}
-
-    @GetMapping("/register/brand")
-    public void registerBrand(){}
 }
