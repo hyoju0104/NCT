@@ -60,10 +60,10 @@ public class RegisterController {
 
     @PostMapping("/brand")
     public String processBrandJoin(
-            @ModelAttribute Brand brand,
-            @RequestParam("logo") MultipartFile logoFile,
-            HttpServletRequest request,
-            RedirectAttributes redirectAttrs
+            @ModelAttribute Brand brand, // form에서 입력한 이름, 아이디, 비번 등을 자동으로 Brand 객체에 담아줌. 예: <input name="username"> → brand.getUsername()
+            @RequestParam("logo") MultipartFile logoFile, //사용자가 첨부한 로고 이미지 파일을 logoFile이라는 변수로 받음. <input type="file" name="logo"> 이거 ㅇㅇ
+            HttpServletRequest request, //사용자가 보낸 모든 요청 직접 확인할 수 있는 객체(rePassword 값 꺼내쓰려고)
+            RedirectAttributes redirectAttrs //회원가입 실패 시 다시 회원가입 페이지로 돌아갈 때 이유를 같이 보내기 위해 사용
     ) {
         // 1. 비밀번호 일치 확인
         String rePassword = request.getParameter("rePassword");
@@ -78,11 +78,12 @@ public class RegisterController {
             return "redirect:/register/brand";
         }
 
-        // 3. 로고 파일 저장 (선택사항. 아래처럼 처리 가능)
+        // 3. 로고 파일 저장
         String originalName = logoFile.getOriginalFilename();
+        //저장할 파일 이름을 고유하게 만듦(중복 방지용)
         String storedFileName = UUID.randomUUID() + "_" + originalName;
 
-        // 예: /uploads 에 저장한다고 가정
+        // /uploads 에 저장
         Path savePath = Paths.get("uploads", storedFileName);
         try {
             Files.copy(logoFile.getInputStream(), savePath);
