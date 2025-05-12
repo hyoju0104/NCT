@@ -19,11 +19,7 @@
 <!--		<link rel="stylesheet" th:href="@{/css/common.css}">-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 		<script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
-		<!--/*
-		<script th:inline="javascript">
-			const logged_id = [[${logged_user.id}]];
-		</script>
-		*/-->
+		
 		<script th:src="@{/js/detail.js}"></script>
 		
 		<title>조회 - [[${post.id}]]</title>
@@ -90,15 +86,13 @@
 					<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
 <!--/*					<button type="button" class="btn btn-outline-danger ms-2" id="btnDel" th:if="${logged_user.id == post.user.id}">삭제</button>*/-->
 					<button type="button" class="btn btn-outline-danger ms-2" id="btnDel">삭제</button>
-					
-					
-					
-					<a class="btn btn-outline-dark ms-2" th:href="@{/post/write}" sec:authorize="hasAnyRole('USER', 'ADMIN')">작성</a>
+<!--/*					<a class="btn btn-outline-dark ms-2" th:href="@{/post/write}" sec:authorize="hasAnyRole('USER', 'ADMIN')">작성</a>*/-->
+					<a class="btn btn-outline-dark ms-2" th:href="@{/post/write}">작성</a>
 				</div>
 				<!-- 하단 링크 -->
 				
 				<!-- 댓글 -->
-<!--/*				<th:block th:insert="~{board/comment::comment}"></th:block>*/-->
+				<th:block th:insert="~{post/comment::comment}"></th:block>
 				<!-- 댓글 -->
 			
 			</section>

@@ -12,9 +12,6 @@ $(function(){
 	loadComment(id);
 
 	// 댓글 작성 버튼 누르면 댓글 등록 하기.
-	// 1. 어느 글에 대한 댓글인지? --> 위에 id 변수에 담겨있다
-	// 2. 어느 사용자가 작성한 댓글인지? --> logged_id 값
-	// 3. 댓글 내용은 무엇인지?  --> 아래 content
 	$("#btn_comment").click(function(){
 		const content = $("#input_comment").val().trim();
 
@@ -22,6 +19,12 @@ $(function(){
 		if(!content){
 			alert("댓글 입력을 하세요");
 			$("#input_comment").focus();
+			return;
+		}
+
+		// 로그인 여부 확인
+		if (!logged_id) {
+			alert("로그인 후 댓글을 작성할 수 있습니다.");
 			return;
 		}
 
@@ -89,10 +92,11 @@ function buildComment(result){
 		let name = comment.user.name;
 
 		// 삭제 버튼 여부 : 작성자 본인인 경우만 삭제 버튼 보이게 하기.
-		const delBtn = (logged_id !== user_id) ? '' : `
-            <i class="btn fa-solid fa-delete-left text-danger" data-bs-toggle="tooltip" 
+		// logged_id가 존재하고, 댓글 작성자와 동일한 경우에만 삭제 버튼 표시
+		const delBtn = (logged_id && logged_id === user_id) ? `
+            <i class="btn fa-solid fa-delete-left text-danger" data-bs-toggle="tooltip"
                 data-cmtdel-id="${id}" title="삭제"></i>
-        `;
+        ` : '';
 
 		const row = `
         <tr>
@@ -102,7 +106,7 @@ function buildComment(result){
                 ${delBtn}
             </td>
             <td><span><small class="text-secondary">${regdate}</small></span></td>
-        </tr>        
+        </tr>
         `;
 
 		out.push(row);
@@ -115,12 +119,17 @@ function buildComment(result){
 
 // 댓글 삭제 버튼이 눌렸을 때. 해당 댓글 삭제하는 이벤트를 삭제 버튼에 등록
 function addDelete(){
-
 	// 현재 글의 id (댓글 삭제 후에 다시 댓글 목록 불러와야 하기 때문에 필요하다)
 	const id = $("input[name='id']").val().trim();
 
 	$("[data-cmtdel-id]").click(function(){
 		if(!confirm("댓글을 삭제하시겠습니까?")) return;
+
+		// 로그인 여부 확인
+		if (!logged_id) {
+			alert("로그인 후 댓글을 삭제할 수 있습니다.");
+			return;
+		}
 
 		// 삭제할 댓글의 id
 		const comment_id = $(this).attr("data-cmtdel-id");
