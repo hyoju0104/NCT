@@ -38,17 +38,9 @@ public class PostServiceImpl implements PostService {
 		return postRepository.findAll();
 	}
 	
-	// pagenation 구현
-	@Override
-	public List<Post> list(Integer page, Model model) {
-		return List.of();
-	}
-	
 	@Override
 	public int write(Post post, Map<String, MultipartFile> files) {
-		
 		return postRepository.save(post);
-		
 	}
 	
 	@Override
@@ -68,15 +60,11 @@ public class PostServiceImpl implements PostService {
 	
 	@Override
 	public int update(Post post, Map<String, MultipartFile> files, Long[] delfile) {
-		
 		return postRepository.update(post);
-		
 	}
 	
 	@Override
 	public int deleteById(Long id) {
-		
 		return postRepository.delete(postRepository.findById(id));
-		
 	}
 }
