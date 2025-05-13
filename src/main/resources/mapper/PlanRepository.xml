@@ -6,7 +6,7 @@
 <mapper namespace="com.lec.spring.repository.PlanRepository">
 
     <!-- planId로 Plan 한 건 조회 -->
-    <select id="findById" resultType="com.lec.spring.domain.Plan">
+    <select id="findByPlanId" resultType="com.lec.spring.domain.Plan">
         SELECT id,type,price,count
         FROM plan
         WHERE id=#{id}

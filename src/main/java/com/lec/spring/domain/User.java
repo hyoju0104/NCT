@@ -45,4 +45,10 @@ public class User {
 	
 	private Integer rentalCnt;
 
+	private Plan plan;
+
+	public Plan getPlan() { return plan; }
+	public void setPlan(Plan plan) { this.plan = plan; }
+
+
 }

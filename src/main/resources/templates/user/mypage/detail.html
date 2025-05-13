@@ -15,7 +15,7 @@
             <a href="/upload" class="nav-link">업로드</a>
             <a href="/item" class="nav-link">아이템</a>
             <a href="/user/mypage/detail" class="nav-link">마이페이지</a>
-            <span class="user-name" th:text="${user.name}">계정명</span>
+            <span class="user-name" th:text="${user.name}">계정명</span> <!-- TODO 오른쪽치우치게-->
             <a href="/logout" class="nav-link">로그아웃</a>
         </nav>
     </div>
@@ -52,19 +52,20 @@
     </section>
 
     <!-- 2. 구독정보 -->
+    <!-- TODO plan에서 받아와서 구독정보 th: 연결하기 -->
     <section class="info-section">
         <h2 class="section-title">구독정보</h2>
         <div class="info-item">
             <span class="info-label">등급:</span>
-            <span class="info-value" th:text="${user.plan.grade}">silver</span>
+            <span class="info-value" >silver</span>
         </div>
         <div class="info-item">
             <span class="info-label">구독시작일:</span>
-            <span class="info-value" th:text="${user.plan.startDate}">2025-05-01</span>
+            <span class="info-value">2025-05-01</span>
         </div>
         <div class="info-item">
             <span class="info-label">구독만료일:</span>
-            <span class="info-value" th:text="${user.plan.endDate}">2025-06-01</span>
+            <span class="info-value">2025-06-01</span>
         </div>
     </section>
 
