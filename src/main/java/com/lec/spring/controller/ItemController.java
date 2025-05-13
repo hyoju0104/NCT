@@ -32,11 +32,9 @@ public class ItemController {
         return "item/list";
     }
 
-//    @GetMapping("/list")
-//    public String list(Model model) {
-//        List<Item> items = itemService.list();
-//        model.addAttribute("items", items);
-//        return "item/list";
-//    }
-
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable Long id, Model model) {
+        model.addAttribute("item", itemService.detail(id));
+        return "item/detail";
+    }
 }

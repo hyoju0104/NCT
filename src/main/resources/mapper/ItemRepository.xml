@@ -17,7 +17,7 @@
             i.category "i_category",
             i.description "i_description",
             i.is_available "i_is_available",
-            i.item_status "i_statusItem",
+            i.item_status "i_item_status",
             i.is_exist "i_is_exist",
             i.created_at "i_created_at",
             i.image_filename "i_image_filename",
@@ -59,7 +59,7 @@
         <association property="brand" resultMap="mapBrand"/>
     </resultMap>
 
-    <select id="findById">
+    <select id="findById" resultMap="mapItem">
         <include refid="SELECT_BASE"/>
         AND i.id = #{id}
     </select>
@@ -93,4 +93,5 @@
             is_exist = #{is_exist}
         WHERE id = #{id}
     </delete>
+
 </mapper>

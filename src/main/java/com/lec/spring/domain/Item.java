@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Data
 @NoArgsConstructor
@@ -25,11 +24,11 @@ public class Item {
     private LocalDateTime createdAt;
 
     private StatusItem statusItem;
-    public StatusItem getstatusItem() {
+    public StatusItem getStatusItem() {
         return statusItem;
     }
 
-    public void setstatusItem(StatusItem statusItem) {
+    public void setStatusItem(StatusItem statusItem) {
         this.statusItem = statusItem;
     }
     public enum StatusItem{A, B, C};
