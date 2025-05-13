@@ -4,12 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lec.spring.repository.PostRepository">
-
-    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Post" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO Post(user_id, content, items, created_at)
-        VALUES (#{user.id}, #{content}, #{items}, now());
-    </insert>
-
     <sql id="SELECT_BASE">
         SELECT
             p.id "p_id",
@@ -62,6 +56,12 @@
         <result column="p_created_at" property="createdAt"/>
         <association property="user" resultMap="mapUser"/>
     </resultMap>
+
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Post" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO Post(user_id, content, items, created_at)
+        VALUES (#{user.id}, #{content}, #{items}, now());
+    </insert>
 
     <select id="findAll" resultMap="mapPost">
         <include refid="SELECT_BASE"/>

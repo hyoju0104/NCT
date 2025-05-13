@@ -10,8 +10,7 @@
 			<label>댓글: <span id="cmt_cnt"></span> 개</label>
 			
 			<!-- ROLE_MEMBER 권한을 가진 사용자만 댓글 작성 가능 -->
-<!--/*			<div class="input-group my-2" sec:authorize="hasAnyRole('USER', 'ADMIN')">*/-->
-			<div class="input-group my-2">
+			<div class="input-group my-2" sec:authorize="hasAnyAuthority('USER', 'ADMIN')">
 				<input type="text" class="form-control" id="input_comment">
 				<button type="button" class="btn btn-outline-primary" id="btn_comment">작성</button>
 			</div>

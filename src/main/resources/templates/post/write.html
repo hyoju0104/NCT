@@ -17,11 +17,7 @@
 </head>
 
 <body>
-	
-	<!--/* 인증 헤더 */-->
-	
-	<!--/* 인증 헤더 */-->
-	
+<th:block th:with="loginUser=${#authentication.principal.user}">
 	<div class="container mt-3">
 		<h2>작성</h2>
 		<hr>
@@ -29,12 +25,12 @@
 		<!-- 본문 -->
 		<!-- 첨부파일 submit 하는 form 은 반드시 ⭐method="post" enctype="multipart/form-data"⭐ 이어야 함!! -->
 		<form th:action="@{/post/write}" method="post" enctype="multipart/form-data">
-			<!--/*
+			
 			<div class="my-3">
 				<label for="user">작성자:</label>
-				<span class="form-control" id="user" th:text="${user.username + ' (' + user.name + ')'}"></span>
+				<span class="form-control" id="user" th:text="${loginUser.username + ' (' + loginUser.name + ')'}"></span>
 			</div>
-			*/-->
+			
 			<div class="my-3">
 				<label for="content">내용:</label>
 				<textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content" th:utext="${content}"></textarea>
@@ -66,6 +62,6 @@
 		</form>
 	
 	</div>
-
+</th:block>
 </body>
 </html>

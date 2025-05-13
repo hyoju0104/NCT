@@ -35,6 +35,8 @@ public class SecurityConfig {
         //SecurityFilterChanin을 반환: 보안 규칙이 담긴 상자를 만들어서 반환
         //HttpSecurity http: 보안 설정 도구. 어떤 페이지에 누가 들어올 수 있는지 설정
         http
+                .csrf(csrf -> csrf.disable()) // CSRF 비활성화
+                
                 //TODO requestmatchers는 html만든 후 수정하기
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/login", "/register/**", "/css/**", "/js/**", "/images/**").permitAll()

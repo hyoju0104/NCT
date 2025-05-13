@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-</head>
-<body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-</body>
+<script th:unless="${result > 0}">
+  alert("수정 실패");
+  history.back();
+</script>
+
+<script th:if="${result > 0}" th:inline="javascript">
+  alert("수정 성공");
+  location.href= "/post/detail/[[${post.id}]]";
+</script>
+
+
 </html>

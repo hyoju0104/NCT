@@ -35,12 +35,14 @@ $(function(){
 			"content": content
 		};
 
+		console.log(data);
+
 		fetch("/comment/write", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",
 			},
-			body: `post_id=${id}&user_id=${logged_id}&content=${content}`,
+			body: `post_id=${id}&user_id=${logged_id}&content=${encodeURIComponent(content)}`,
 		}).then(response => response.json())
 			.then(data => {
 				if(data.status !== "OK"){
@@ -51,6 +53,7 @@ $(function(){
 
 				$("#input_comment").val('');
 			})
+			.catch(err => console.error("fetch 실패:", err))
 		;
 
 	});
@@ -70,6 +73,7 @@ function loadComment(post_id){
 			}
 
 			buildComment(data);   // 댓글 화면 렌더링.
+
 			// ⭐ 댓글 목록을 불러오고 난 뒤에 삭제에 대한 이벤트 리스너를 등록해야 한다
 			addDelete();
 		})
@@ -86,17 +90,10 @@ function buildComment(result){
 		let id = comment.id;
 		let content = comment.content.trim();
 		let regdate = comment.regdate;
-
 		let user_id = parseInt(comment.user.id);
 		let username = comment.user.username;
 		let name = comment.user.name;
 
-		console.log(id);
-		console.log(content);
-		console.log(regdate);
-		console.log(user_id);
-		console.log(username);
-		console.log(name);
 
 		// 삭제 버튼 여부 : 작성자 본인인 경우만 삭제 버튼 보이게 하기.
 		// logged_id가 존재하고, 댓글 작성자와 동일한 경우에만 삭제 버튼 표시

@@ -85,13 +85,10 @@
 				
 				<!-- 하단 링크 -->
 				<div class="d-flex">
-<!--/*					<a class="btn btn-outline-dark" th:href="@{'/post/update/' + ${post.id}}" th:if="${logged_user.id == post.user.id}">수정</a>*/-->
-					<a class="btn btn-outline-dark" th:href="@{'/post/update/' + ${post.id}}">수정</a>
+					<a class="btn btn-outline-dark" th:href="@{'/post/update/' + ${post.id}}" th:if="${logged_user.id == post.user.id}">수정</a>
 					<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
-<!--/*					<button type="button" class="btn btn-outline-danger ms-2" id="btnDel" th:if="${logged_user.id == post.user.id}">삭제</button>*/-->
-					<button type="button" class="btn btn-outline-danger ms-2" id="btnDel">삭제</button>
-<!--/*					<a class="btn btn-outline-dark ms-2" th:href="@{/post/write}" sec:authorize="hasAnyRole('USER', 'ADMIN')">작성</a>*/-->
-					<a class="btn btn-outline-dark ms-2" th:href="@{/post/write}">작성</a>
+					<button type="button" class="btn btn-outline-danger ms-2" id="btnDel" th:if="${logged_user.id == post.user.id}">삭제</button>
+					<a class="btn btn-outline-dark ms-2" th:href="@{/post/write}" sec:authorize="hasAnyRole('USER', 'ADMIN')">작성</a>
 				</div>
 				<!-- 하단 링크 -->
 				

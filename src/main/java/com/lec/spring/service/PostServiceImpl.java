@@ -2,8 +2,8 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Post;
+import com.lec.spring.repository.AttachmentRepository;
 import com.lec.spring.repository.PostRepository;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -23,9 +23,11 @@ public class PostServiceImpl implements PostService {
 	
 	
 	private final PostRepository postRepository;
+	private final AttachmentRepository attachmentRepository;
 	
-	public PostServiceImpl(PostRepository postRepository) {
+	public PostServiceImpl(PostRepository postRepository, AttachmentRepository attachmentRepository) {
 		this.postRepository = postRepository;
+		this.attachmentRepository = attachmentRepository;
 		System.out.println("✅ PostService() 생성");
 	}
 	
@@ -45,37 +47,36 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public int write(Post post, Map<String, MultipartFile> files) {
 		
-		int cnt = postRepository.save(post);
-		
-		return cnt;
+		return postRepository.save(post);
 		
 	}
 	
 	@Override
 	public Post detail(Long id) {
 		Post post = postRepository.findById(id);
-		/*
+		
 		if (post != null) {
 			// 첨부파일(들) 정보 가져오기
-			List<Attachment> fileList = attachmentRepository.findByPost(post.getId());
-			
-			// '이미지 파일 여부' 세팅
-			setImage(fileList);
+			List<Attachment> fileList = attachmentRepository.findByPostId(post.getId());
 			
 			// Post 에 첨부파일 세팅
 			post.setFileList(fileList); // 템플릿 엔진에서 받아서 view 생성
 		}
-		*/
+		
 		return post;
 	}
 	
 	@Override
 	public int update(Post post, Map<String, MultipartFile> files, Long[] delfile) {
-		return 0;
+		
+		return postRepository.update(post);
+		
 	}
 	
 	@Override
 	public int deleteById(Long id) {
-		return 0;
+		
+		return postRepository.delete(postRepository.findById(id));
+		
 	}
 }

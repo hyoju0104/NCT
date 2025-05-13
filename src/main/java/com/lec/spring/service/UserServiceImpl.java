@@ -25,6 +25,11 @@ public class UserServiceImpl implements UserService {
     //DB에서 사용자, 권한 정보 조회
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
+    
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id);
+    }
 
     /**
      * 사용자 아이디로 User 정보 조회 (로그인 시 사용됨)

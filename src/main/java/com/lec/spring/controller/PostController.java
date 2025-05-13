@@ -1,8 +1,13 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.Post;
+import com.lec.spring.domain.User;
 import com.lec.spring.service.PostService;
+import com.lec.spring.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,14 +34,14 @@ public class PostController {
 	@RequestMapping("/list")
 	public void list(Model model) {
 		List<Post> posts = postService.list();
-		System.out.println("조회된 게시글 수: " + (posts != null ? posts.size() : 0));
-		if (posts != null && !posts.isEmpty()) {
-			for (Post post : posts) {
-				System.out.println("Post ID: " + post.getId() +
-						", Content: " + post.getContent() +
-						", User: " + (post.getUser() != null ? post.getUser().getUsername() : "null"));
-			}
-		}
+//		System.out.println("조회된 게시글 수: " + (posts != null ? posts.size() : 0));
+//		if (posts != null && !posts.isEmpty()) {
+//			for (Post post : posts) {
+//				System.out.println("Post ID: " + post.getId() +
+//						", Content: " + post.getContent() +
+//						", User: " + (post.getUser() != null ? post.getUser().getUsername() : "null"));
+//			}
+//		}
 		model.addAttribute("posts", posts);
 	}
 	
@@ -47,22 +52,23 @@ public class PostController {
 	@PostMapping("/write")
 	public String writeOk(
 			@RequestParam Map<String, MultipartFile> files,  // 첨부파일들 <name, file>
-			@Valid Post post,
+			Post post,
 			BindingResult result,   // Validator 가 유효성 검사를 한 결과가 담긴 객체.
 			Model model,    // 매개변수 선언시 BindingResult 보다 Model 을 뒤에 두어야 한다.
-			RedirectAttributes redirectAttributes   // redirect: 시 넘겨줄 값들.
+			RedirectAttributes redirectAttributes,  // redirect: 시 넘겨줄 값들.
+			@AuthenticationPrincipal PrincipalDetails principal   // 로그인된 사용자 정보
 	){
-		// validation 에러가 있었다면 redirect 한다!
+		// 1) 로그인 체크
+		if (principal == null) {
+			redirectAttributes.addFlashAttribute("error", "로그인 후 작성 가능합니다.");
+			return "redirect:/post/list";
+		}
+		// 2) Post 에 User 주입
+		post.setUser(principal.getUser());
+		
+		// 3) 검증 에러 처리 : validation 에러가 있었다면 redirect 한다!
 		if(result.hasErrors()){
 			showErrors(result);
-			
-			// addAttribute(name, value)
-			//    request parameters로 값을 전달. redirect URL에 query string 으로 값이 담김
-			//    request.getParameter에서 해당 값에 액세스 가능
-			// addFlashAttribute(name, value)
-			//    일회성. 한번 사용하면 Redirect 후 값이 소멸
-			//    request parameters로 값을 전달하지 않음
-			//    '객체'로 값을 그대로 전달
 			
 			// redirect 시, 기존에 입력했던 값들은 보이도록 전달해주어야 한다
 			//   전달한 name 들은 => 템플릿에서 사용 가능한 변수!
@@ -78,6 +84,7 @@ public class PostController {
 			return "redirect:/post/write";  // GET
 		}
 		
+		// 4) 저장 호출
 		model.addAttribute("result", postService.write(post, files));
 		return "post/writeOk";  // view
 	}
@@ -89,6 +96,38 @@ public class PostController {
 		return "post/detail";
 	}
 	
+	
+	@GetMapping("/update/{id}")
+	public String update(@PathVariable Long id, Model model){
+		model.addAttribute("post", postService);
+		return "board/update";
+	}
+	
+	@PostMapping("/update")
+	public String updateOk(
+			@RequestParam Map<String, MultipartFile> files, // 새로 추가되는 첨부파일(들) 정보
+			Long[] delfile,     // 삭제될 파일들의 id(들)
+			@Valid Post post,
+			BindingResult result,
+			Model model,
+			RedirectAttributes redirectAttributes
+	){
+		if(result.hasErrors()){
+			showErrors(result);
+			redirectAttributes.addFlashAttribute("user", post.getUser());
+			redirectAttributes.addFlashAttribute("content", post.getContent());
+			redirectAttributes.addFlashAttribute("items", post.getItems());
+			
+			for(FieldError err : result.getFieldErrors()){
+				redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+			}
+			
+			return "redirect:/board/update/" + post.getId();
+		}
+		
+		model.addAttribute("result", postService.update(post, files, delfile));  // <- id, subject, content
+		return "board/updateOk";
+	}
 	
 	
 	@PostMapping("/delete")
@@ -109,7 +148,7 @@ public class PostController {
 				System.out.println("\t" + err.getField() + "\t|" + err.getCode());
 			}
 		} else {
-			System.out.println("✔에러 없슴");
+			System.out.println("✅ 에러 없음");
 		}
 	} // end showErrors()
 

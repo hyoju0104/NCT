@@ -1,102 +1,103 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>개인 회원가입</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>개인 회원가입</title>
+	<link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
-
-<!-- 헤더 -->
-<header class="header">
-    <div class="header-content">
-        <a href="/" class="logo">WearUp</a>
-        <nav class="header-nav">
-            <a href="#" class="nav-link">피드</a>
-            <a href="#" class="nav-link">아이템</a>
-            <a href="/user/login" class="nav-link">로그인</a>
-            <a href="/register/kind" class="nav-link">회원가입</a>
-        </nav>
-    </div>
-</header>
-
-<!-- 회원가입 폼 -->
-<div class="login-container">
-    <h2>회원가입</h2>
-    <p class="subheading">WEAR UP TO LEVEL UP</p>
-    <div th:if="${param.error == 'password'}" class="alert alert-error">
-        비밀번호가 일치하지 않습니다.
-    </div>
-    <div th:if="${param.error == 'exist'}" class="alert alert-error">
-        이미 존재하는 아이디입니다.
-    </div>
-    <!-- 실패 메시지 -->
-    <div th:if="${param.error}" class="alert alert-error">
-        <p>회원가입에 실패했습니다. 정보를 다시 확인해주세요.</p>
-    </div>
-
-    <form th:action="@{/register/user}" method="post">
-        <div class="form-group">
-            <label for="username">아이디 *</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-
-        <div class="form-group">
-            <label for="password">비밀번호 *</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-
-        <div class="form-group">
-            <label for="rePassword">비밀번호 확인 *</label>
-            <input type="password" id="rePassword" name="rePassword" required>
-        </div>
-
-        <div class="form-group">
-            <label for="name">이름 *</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-
-        <div class="form-group">
-            <label for="email">이메일</label>
-            <input type="email" id="email" name="email">
-        </div>
-
-        <div class="form-group">
-            <label for="phoneNum">전화번호 *</label>
-            <input type="tel" id="phoneNum" name="phoneNum" required>
-        </div>
-
-        <div class="form-group" data-type="zipcode">
-            <label for="zipcode">우편번호</label>
-            <input type="text" id="zipcode" name="zipcode" readonly>
-            <button type="button" onclick="searchAddress()">주소 찾기</button>
-        </div>
-
-        <div class="form-group">
-            <label for="address">주소</label>
-            <input type="text" id="address" name="address" readonly>
-        </div>
-
-        <div class="form-group">
-            <label for="addressDetail">상세 주소</label>
-            <input type="text" id="addressDetail" name="addressDetail">
-        </div>
-
-        <button type="submit" class="login-btn">회원가입</button>
-    </form>
-
-    <div class="register-link">
-        <p>이미 계정이 있으신가요? <a th:href="@{/templates/register/login}">로그인</a></p>
-    </div>
-</div>
-
-<!-- 나중에 카카오 주소 API 연결할 script 자리 -->
-<script>
-    function searchAddress() {
-        alert('주소 검색 API 연결 예정');
-    }
-</script>
+	
+	<!-- 헤더 -->
+	<header class="header">
+		<div class="header-content">
+			<a href="/" class="logo">WearUp</a>
+			<nav class="header-nav">
+				<a href="#" class="nav-link">피드</a>
+				<a href="#" class="nav-link">아이템</a>
+				<a href="/user/login" class="nav-link">로그인</a>
+				<a href="/register/kind" class="nav-link">회원가입</a>
+			</nav>
+		</div>
+	</header>
+	
+	<!-- 회원가입 폼 -->
+	<div class="login-container">
+		<h2>회원가입</h2>
+		<p class="subheading">WEAR UP TO LEVEL UP</p>
+		<div th:if="${param.error == 'password'}" class="alert alert-error">
+			비밀번호가 일치하지 않습니다.
+		</div>
+		<div th:if="${param.error == 'exist'}" class="alert alert-error">
+			이미 존재하는 아이디입니다.
+		</div>
+		<!-- 실패 메시지 -->
+		<div th:if="${param.error}" class="alert alert-error">
+			<p>회원가입에 실패했습니다. 정보를 다시 확인해주세요.</p>
+		</div>
+		
+		<form th:action="@{/register/user}" method="post">
+			<div class="form-group">
+				<label for="username">아이디 *</label>
+				<input type="text" id="username" name="username" required>
+			</div>
+			
+			<div class="form-group">
+				<label for="password">비밀번호 *</label>
+				<input type="password" id="password" name="password" required>
+			</div>
+			
+			<div class="form-group">
+				<label for="rePassword">비밀번호 확인 *</label>
+				<input type="password" id="rePassword" name="rePassword" required>
+			</div>
+			
+			<div class="form-group">
+				<label for="name">이름 *</label>
+				<input type="text" id="name" name="name" required>
+			</div>
+			
+			<div class="form-group">
+				<label for="email">이메일</label>
+				<input type="email" id="email" name="email">
+			</div>
+			
+			<div class="form-group">
+				<label for="phoneNum">전화번호 *</label>
+				<input type="tel" id="phoneNum" name="phoneNum" required>
+			</div>
+			
+			<div class="form-group" data-type="zipcode">
+				<label for="zipcode">우편번호</label>
+				<input type="text" id="zipcode" name="zipcode" readonly>
+				<button type="button" onclick="searchAddress()">주소 찾기</button>
+			</div>
+			
+			<div class="form-group">
+				<label for="address">주소</label>
+				<input type="text" id="address" name="address" readonly>
+			</div>
+			
+			<div class="form-group">
+				<label for="addressDetail">상세 주소</label>
+				<input type="text" id="addressDetail" name="addressDetail">
+			</div>
+			
+			<button type="submit" class="login-btn">회원가입</button>
+		</form>
+		
+		<div class="register-link">
+			<p>이미 계정이 있으신가요? <a th:href="@{/templates/register/login}">로그인</a></p>
+		</div>
+	</div>
+	
+	<!-- 나중에 카카오 주소 API 연결할 script 자리 -->
+	<script>
+		function searchAddress() {
+			alert('주소 검색 API 연결 예정');
+		}
+	</script>
 
 </body>
 </html>

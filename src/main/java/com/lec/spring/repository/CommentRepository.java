@@ -1,6 +1,8 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Comment;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 

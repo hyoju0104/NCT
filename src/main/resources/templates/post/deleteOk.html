@@ -8,7 +8,7 @@
 
 <script th:if="${result > 0}" th:inline="javascript">
 	alert("삭제 성공");
-	location.href = `/board/list?page=[[${session.page}]]`;
+	location.href = `/post/list?page=[[${session.page}]]`;
 </script>
 
 </html>
