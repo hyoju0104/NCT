@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class OrderController {
 
     private final ItemService itemService;
-
+    // ====
     public OrderController(ItemService itemService) {
         this.itemService = itemService;
     }
@@ -28,18 +28,24 @@ public class OrderController {
         Item item = itemService.detail(id);
 //        User user = (User) session.getAttribute("user");
         
-        // 1) 로그인 체크
         if (principal == null) {
             redirectAttributes.addFlashAttribute("error", "로그인 후 작성 가능합니다.");
             return "redirect:/post/list";
         }
-        // 2) Post 에 User 주입
+
         User user = principal.getUser();
 
         model.addAttribute("item", item);
         model.addAttribute("user", user);
 
         return "order/detail";
+    }
+
+    @GetMapping("/complete/{id}")
+    public String orderComplete(@PathVariable Long id, Model model) {
+        Item item = itemService.detail(id);
+        model.addAttribute("item", item);
+        return "order/complete";
     }
 
 }
