@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -44,5 +45,10 @@ public class User {
 	
 	private Integer rentalCnt;
 
-	
+	private Plan plan;
+
+	public Plan getPlan() { return plan; }
+	public void setPlan(Plan plan) { this.plan = plan; }
+
+
 }

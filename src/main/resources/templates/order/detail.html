@@ -13,19 +13,15 @@
     </div>
 
     <div class="mb-3 mt-3">
-        <label>연락처:</label>
-        <input type="text" class="form-control"
-               th:if="${user.phoneNum == null}" name="phoneNum" placeholder="연락처를 입력하세요">
-        <span class="form-control"
-              th:if="${user.phoneNum != null}" th:text="${user.phoneNum}"></span>
+        <label for="phoneNum">연락처:</label>
+        <input type="text" id="phoneNum" name="phoneNum" class="form-control" placeholder="연락처를 입력하세요" th:value="${user.phoneNum}">
+        <span class="text-danger" th:if="${error_phoneNum}" th:utext="${error_phoneNum}"></span>
     </div>
 
     <div class="mb-3 mt-3">
-        <label>주소지:</label>
-        <input type="text" class="form-control"
-               th:if="${user.address == null}" name="address" placeholder="주소지를 입력하세요">
-        <span class="form-control"
-              th:if="${user.address != null}" th:text="${user.address}"></span>
+        <label for="address">주소지:</label>
+        <input type="text" id="address" name="address" class="form-control" placeholder="주소지를 입력하세요" th:value="${user.address}">
+        <span class="text-danger" th:if="${error_address}" th:utext="${error_address}"></span>
     </div>
 
     <br>
@@ -34,8 +30,9 @@
         브랜드명 : <div class="border bg-light rounded p-2" th:text="${item.brand.name}"></div>
         상품명 : <div class="border bg-light rounded p-2" th:text="${item.name}"></div>
         카테고리 : <div class="border bg-light rounded p-2" th:text="${item.category}"></div>
-        상세정보 : <div class="border bg-light rounded p-2" th:text="${item.description}"></div>
     </div>
+
+    <a th:href="@{'/order/complete/' + ${item.id}}" class="btn btn-outline-danger ms-2">대여확정하기</a>
 
 </div>
 </body>
