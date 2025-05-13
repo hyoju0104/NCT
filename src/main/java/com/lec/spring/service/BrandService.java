@@ -18,8 +18,10 @@ public interface BrandService {
 
     Brand myDetail(Long id);
 
-    int myUpdate(Brand brand, Long id);
+    Brand selectById(Long id);
 
-    int myDelete(Brand brand, Long id);
+    int myUpdate(Brand brand);
+
+    int myDelete(Long id);
 
 }

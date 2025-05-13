@@ -1,7 +1,9 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.Brand;
+import com.lec.spring.domain.Post;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,14 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
 
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
     private final BrandRepository brandRepository;
 
     @Override
     public int register(Brand brand) {
         brand.setUsername(brand.getUsername());
-        brand.setPassword(passwordEncoder.encode(brand.getPassword()));
+//        brand.setPassword(passwordEncoder.encode(brand.getPassword()));
 
         brandRepository.save(brand);
 
@@ -52,18 +54,24 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand myDetail(Long id) {
-        return brandRepository.myDetail(id);
+    public Brand selectById(Long id) {
+        Brand brand = brandRepository.findById(id);
+        return brand;
     }
 
     @Override
-    public int myUpdate(Brand brand, Long id) {
+    public Brand myDetail(Long id) {
+        return brandRepository.findById(id);
+    }
+
+    @Override
+    public int myUpdate(Brand brand) {
         return brandRepository.myUpdate(brand);
     }
 
     @Override
-    public int myDelete(Brand brand, Long id) {
-        return brandRepository.myDelete(brand);
+    public int myDelete(Long id) {
+        return brandRepository.myDelete(id);
     }
 
 }

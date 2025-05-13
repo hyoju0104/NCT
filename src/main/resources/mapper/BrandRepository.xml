@@ -9,6 +9,7 @@
         SELECT
             b.id "b_id",
             b.name "b_name",
+            b.username "b_username",
             b.phone_num "b_phone_num",
             b.logo_sourcename "b_logo_sourcename",
             b.logo_filename "b_logo_filename",
@@ -21,17 +22,13 @@
     <resultMap id="mapBrand" type="com.lec.spring.domain.Brand">
         <result column="b_id" property="id"/>
         <result column="b_name" property="name"/>
+        <result column="b_username" property="username"/>
         <result column="b_phone_num" property="phoneNum"/>
         <result column="b_logo_sourcename" property="logoSourcename"/>
         <result column="b_logo_filename" property="logoFilename"/>
         <result column="b_description" property="description"/>
         <result column="b_is_actived" property="isActived"/>
     </resultMap>
-
-    <select id="findById" resultType="com.lec.spring.domain.Brand">
-        <include refid="SELECT_BASE"/>
-        AND id = #{id}
-    </select>
 
     <select id="findByUsername" resultType="com.lec.spring.domain.Brand">
         <include refid="SELECT_BASE"/>
@@ -52,14 +49,19 @@
         WHERE id = #{id}
     </update>
 
+    <select id="findById" resultMap="mapBrand">
+        <include refid="SELECT_BASE"/>
+        WHERE id = #{id}
+    </select>
+
     <select id="myDetail" resultMap="mapBrand">
         <include refid="SELECT_BASE"/>
             WHERE id = #{id}
     </select>
 
-    <update id="myUpdate" flushCache="true">
+    <update id="myUpdate" parameterType="com.lec.spring.domain.Brand" flushCache="true">
         UPDATE Brand
-        SET phone_num = #{phone_num}, description = #{description}
+        SET phone_num = #{phoneNum}, description = #{description}
         WHERE id = #{id}
     </update>
 

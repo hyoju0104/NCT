@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface BrandRepository {
 
-    Brand findById(Long id);
-
     Brand findByUsername(String username);
 
     int save(Brand brand);
@@ -19,9 +17,11 @@ public interface BrandRepository {
 
     //==================================================
 
+    Brand findById(Long id);
+
     Brand myDetail(Long id);
 
     int myUpdate(Brand brand);
 
-    int myDelete(Brand brand);
+    int myDelete(Long id);
 }

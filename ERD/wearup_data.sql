@@ -59,10 +59,10 @@ INSERT INTO Comment (Comment.user_id, Comment.post_id, content) VALUES
         (3, 3, 'ㄱㅁㅇㄴㄹㄱㄱㄱㄱㅂㅂㅂ')
 ;
 
-INSERT INTO Brand (name, username, password, phone_num, is_actived) VALUES
-        ('나이키', 'nike', 'nike123', '031-1234-4321', true),
-        ('아디다스', 'adidas', 'adidas123', '031-1234-5342', true),
-        ('뉴발란스', 'newbalance', 'newbalance123', '031-1234-6757', false)
+INSERT INTO Brand (name, username, password, phone_num, is_actived, description) VALUES
+        ('나이키', 'nike', 'nike123', '031-1234-4321', true, '1111'),
+        ('아디다스', 'adidas', 'adidas123', '031-1234-5342', true, 'aaaaaa'),
+        ('뉴발란스', 'newbalance', 'newbalance123', '031-1234-6757', false, 'bbbbbbbb')
 ;
 
 INSERT INTO Item(Item.brand_id, name, image_sourcename, image_filename, category, is_available, item_status, is_exist) VALUES
