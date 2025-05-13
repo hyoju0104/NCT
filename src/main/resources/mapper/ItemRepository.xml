@@ -17,7 +17,7 @@
             i.category "i_category",
             i.description "i_description",
             i.is_available "i_is_available",
-            i.item_status "i_item_status",
+            i.item_status "i_statusItem",
             i.is_exist "i_is_exist",
             i.created_at "i_created_at",
             i.image_filename "i_image_filename",
@@ -38,7 +38,7 @@
     <resultMap id="mapBrand" type="com.lec.spring.domain.Brand">
         <result column="b_id" property="id"/>
         <result column="b_name" property="name"/>
-        <result column="b_phone_num" property="phone_num"/>
+        <result column="b_phone_num" property="phoneNum"/>
         <result column="b_logo_sourcename" property="logoSourcename"/>
         <result column="b_logo_filename" property="logoFilename"/>
         <result column="b_description" property="description"/>
@@ -51,7 +51,7 @@
         <result column="i_category" property="category"/>
         <result column="i_description" property="description"/>
         <result column="i_is_available" property="isAvailable"/>
-        <result column="i_item_status" property="itemStatus"/>
+        <result column="i_item_status" property="statusItem"/>
         <result column="i_is_exist" property="isExist"/>
         <result column="i_image_sourcename" property="imageSourcename"/>
         <result column="i_image_filename" property="imageFilename"/>
@@ -64,8 +64,16 @@
         AND i.id = #{id}
     </select>
 
-    <select id="findAll">
+    <select id="findAll" resultMap="mapItem">
         <include refid="SELECT_BASE"/>
+        AND i.is_exist = true
+        ORDER BY i.id DESC
+    </select>
+
+    <select id="findByCategory" parameterType="string" resultMap="mapItem">
+        <include refid="SELECT_BASE"/>
+        AND i.is_exist = true
+        AND i.category = #{category}
         ORDER BY i.id DESC
     </select>
 

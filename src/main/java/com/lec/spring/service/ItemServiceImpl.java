@@ -21,6 +21,11 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> list() { return itemRepository.findAll(); }
 
     @Override
+    public List<Item> findByCategory(String category) {
+        return itemRepository.findByCategory(category);
+    }
+
+    @Override
     public int write(Item item, Map<String, MultipartFile> files) {
         return 0;
     }

@@ -13,6 +13,8 @@ public interface ItemRepository {
 
     List<Item> findAll();
 
+    List<Item> findByCategory(String category);
+
     int update(Item item);
 
     int delete(Long id);

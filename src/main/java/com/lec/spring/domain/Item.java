@@ -24,8 +24,15 @@ public class Item {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    public enum StatusItem{A, B, C};
     private StatusItem statusItem;
+    public StatusItem getstatusItem() {
+        return statusItem;
+    }
+
+    public void setstatusItem(StatusItem statusItem) {
+        this.statusItem = statusItem;
+    }
+    public enum StatusItem{A, B, C};
 
     private Boolean isExist;
 

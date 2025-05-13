@@ -66,9 +66,16 @@ INSERT INTO Brand (name, username, password, phone_num, is_actived, description)
 ;
 
 INSERT INTO Item(Item.brand_id, name, image_sourcename, image_filename, category, is_available, item_status, is_exist) VALUES
-        (1, '나이키바지', 'ffdddf', 'dddsadr', '하의', true, 'A', true),
-        (1, '나이키상의', 'sdf', 'asdf', '상의', false, 'B', false),
-        (2, '아디다스바지', 'qerwq', 'asdfdsa', '하의', true, 'C', true)
+        (1, 'brand1-바지1', 'ffdddf', 'dddsadr', '하의', true, 'A', true),
+        (1, 'brand1-긴팔1', 'sdf', 'asdf', '상의', false, 'B', false),
+        (2, 'brand2-아우터1', 'qerwq', 'qwer', '아우터', true, 'C', true),
+        (1, 'brand1-신발1', 'asdasf', 'asdfafdsa', '신발', true, 'A', true),
+        (2, 'brand2-잡화1', 'dafadfa', 'asddsfdsa', '잡화', true, 'B', true),
+        (3, 'brand3-아우터1', 'sadsaczx', 'gui', '아우터', true, 'B', true),
+        (3, 'brand3-잡화1', 'qerasfsawq', 'kiugu', '잡화', true, 'B', true),
+        (2, 'brand2-바지1', 'qersdvsdwq', 'asdfdsa', '하의', true, 'A', true),
+        (1, 'brand1-신발2', 'vdfs', 'sazxg', '신발', true, 'C', true),
+        (2, 'brand2-긴팔1', 'qervsdfwq', 'hgfjd', '상의', true, 'B', true)
 ;
 
 INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status) VALUES
