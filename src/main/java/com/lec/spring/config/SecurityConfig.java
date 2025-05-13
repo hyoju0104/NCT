@@ -1,8 +1,11 @@
 package com.lec.spring.config;
 
+import com.lec.spring.config.oauth.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +18,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor //final 로 선언된 변수를 자동으로 생성자에서 넣어줌
 public class SecurityConfig {
 
+    //--------------------------------------------------------
+    // OAuth 로그인
+
+    @Lazy
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
     //비밀번호 암호화
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -55,7 +64,23 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll() //로그아웃 페이지도 아무나 다 볼수있게~
-                );//logout, 메소드 체이닝 끝
+                )//logout
+                .oauth2Login(httpSecurity->httpSecurity
+                        .loginPage("/login") //로그인 페이지를 동일한 url로 지정
+                        .defaultSuccessUrl("/post/list",true) // 로그인 성공 후 이동할 기본 URL
+                        /*
+                         oauth2 로그인 시
+                          → Authorization code 발급 → access token 발급 → 사용자 정보(profiles 등) 요청
+                             ↓
+                        [userInfoEndpoint().userService(...)]
+                          → PrincipalOauth2UserService.loadUser() 실행
+                         */
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                // 인증서버의 userInfo Endpoint(후처리) 설정
+                                // 후처리: 회원가입 + 로그인 진행
+                                .userService(principalOauth2UserService)
+                        )
+                ); //oauth2Login, 메소드 체이닝 끝
                 return http.build(); //지금까지 설정한 모든 보안 규칙을 하나로 묶어 스프링에 넘겨줌
 
     }//SecurityFilterChain

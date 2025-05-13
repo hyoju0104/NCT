@@ -1,10 +1,12 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Attachment;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
+@Mapper
 public interface AttachmentRepository {
 
 	// 특정 게시글(postId)에 첨부파일(들) INSERT

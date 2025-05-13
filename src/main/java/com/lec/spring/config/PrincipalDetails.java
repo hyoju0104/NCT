@@ -7,21 +7,42 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private final User user;
-    private final UserService userService;
+    private UserService userService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
     public User getUser() {
         return user;
     }
-    public PrincipalDetails(User user, UserService userService) {
+
+
+    //OAuth2 관련
+    private Map<String, Object> attributes;
+
+    //일반 로그인용 생성자
+    public PrincipalDetails(User user) {
         this.user = user;
-        this.userService = userService;
+    }
+
+    // OAuth2 로그인용 생성자
+    public PrincipalDetails(User user, Map<String, Object> attributes){
+        this.user = user;
+        this.attributes = attributes;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return this.attributes;
     }
 
     @Override
@@ -95,6 +116,11 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public boolean isAccountNonExpired() {
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return "";
     }
 }
 

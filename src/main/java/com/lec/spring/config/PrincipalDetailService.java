@@ -26,7 +26,7 @@ public class PrincipalDetailService implements UserDetailsService {
         //해당 username의 user가 DB에 있다면 userDetails를 생성해서 리턴..
         if(user!=null){
             //PrincipalDetails : 사용자 정보 객체 > 그 안에 우리가 찾은 user 객체를 넣어서 리턴
-            PrincipalDetails userDetails = new PrincipalDetails(user,userService);
+            PrincipalDetails userDetails = new PrincipalDetails(user);
             return userDetails;
         }
         throw new UsernameNotFoundException(username); //해당 유저가 없다면.
