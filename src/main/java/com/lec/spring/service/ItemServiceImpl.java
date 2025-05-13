@@ -42,6 +42,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public int markAsUnavailable(Long id) {
+        return itemRepository.markAsUnavailable(id);
+    }
+
+    @Override
     public int deleteById(Item item, Map<String, MultipartFile> files, Long[] delfile) {
         return 0;
     }
