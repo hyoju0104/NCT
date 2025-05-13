@@ -30,9 +30,6 @@
 	
 	<body style="margin-bottom: 200px">
 		
-		<!--/* 인증 헤더 */-->
-<!--/*		<th:block th:insert="~{common/header::header}"></th:block>*/-->
-		
 		<div class="container mt-3">
 			<h2 th:text="'조회 - ' + ${post.id}"></h2>
 			<hr>
@@ -65,7 +62,7 @@
 				
 				<!-- 첨부파일목록 -->
 				<!-- 이미지 슬라이드 (Carousel) -->
-				<div id="attachmentCarousel" class="carousel slide mt-3" data-bs-ride="carousel" th:if="${#lists.size(post.fileList) > 0}">
+				<div id="attachmentCarousel" class="carousel mt-3" data-bs-ride="carousel" th:if="${#lists.size(post.fileList) > 0}">
 					<div class="carousel-inner">
 						<div class="carousel-item" th:each="attachment, stat : ${post.fileList}" th:classappend="${stat.index == 0} ? ' active'">
 							<img th:src="@{'/upload/' + ${attachment.filename}}" class="d-block w-100 img-thumbnail" alt="이미지">

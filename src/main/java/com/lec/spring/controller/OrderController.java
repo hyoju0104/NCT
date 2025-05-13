@@ -24,7 +24,13 @@ public class OrderController {
     }
 
     @GetMapping("/detail/{id}")
-    public String orderDetail(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes, HttpSession session, @AuthenticationPrincipal PrincipalDetails principal) {
+    public String orderDetail(
+            @PathVariable Long id,
+            Model model,
+            RedirectAttributes redirectAttributes,
+            HttpSession session,
+            @AuthenticationPrincipal PrincipalDetails principal
+    ) {
         Item item = itemService.detail(id);
 //        User user = (User) session.getAttribute("user");
         
@@ -33,7 +39,7 @@ public class OrderController {
             redirectAttributes.addFlashAttribute("error", "로그인 후 작성 가능합니다.");
             return "redirect:/post/list";
         }
-        // 2) Post 에 User 주입
+        // 2) User 정보 가져오기
         User user = principal.getUser();
 
         model.addAttribute("item", item);
