@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <a href="/" class="logo">WearUp</a>
+        <nav class="header-nav">
+            <a href="/feed" class="nav-link">피드</a>
+            <a href="/upload" class="nav-link">업로드</a>
+            <a href="/item" class="nav-link">아이템</a>
+            <a href="/user/mypage/detail" class="nav-link">마이페이지</a>
+            <span class="user-name" th:text="${user.name}">계정명</span>
+            <a href="/logout" class="nav-link">로그아웃</a>
+        </nav>
+    </div>
+</header>
+
+<main class="mypage-container">
+    <!-- 1. 내정보 -->
+    <section class="info-section">
+        <h2 class="section-title">내정보</h2>
+        <div class="info-item">
+            <span class="info-label">아이디:</span>
+            <span class="info-value" th:text="${user.username}">username</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">이름:</span>
+            <span class="info-value" th:text="${user.name}">name</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">비밀번호:</span>
+            <span class="info-value">********</span>
+        </div>
+        <div class="info-item" th:if="${user.email}">
+            <span class="info-label">이메일:</span>
+            <span class="info-value" th:text="${user.email}">email@example.com</span>
+        </div>
+        <div class="info-item" th:if="${user.address}">
+            <span class="info-label">주소:</span>
+            <span class="info-value" th:text="${user.address}">서울시 강남구...</span>
+        </div>
+        <div class="info-item" th:if="${user.phoneNum}">
+            <span class="info-label">전화번호:</span>
+            <span class="info-value" th:text="${user.phoneNum}">010-0000-0000</span>
+        </div>
+    </section>
+
+    <!-- 2. 구독정보 -->
+    <section class="info-section">
+        <h2 class="section-title">구독정보</h2>
+        <div class="info-item">
+            <span class="info-label">등급:</span>
+            <span class="info-value" th:text="${user.plan.grade}">silver</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">구독시작일:</span>
+            <span class="info-value" th:text="${user.plan.startDate}">2025-05-01</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">구독만료일:</span>
+            <span class="info-value" th:text="${user.plan.endDate}">2025-06-01</span>
+        </div>
+    </section>
+
+    <!-- 3. 포인트 -->
+    <section class="info-section">
+        <h2 class="section-title">포인트</h2>
+        <div class="info-item">
+            <span class="info-label">현재 보유 포인트:</span>
+            <span class="info-value highlight" th:text="${user.point}">1200</span>
+        </div>
+        <form method="post" action="/user/point/refund">
+            <button type="submit" class="login-btn">포인트 반환하기</button>
+        </form>
+    </section>
+</main>
+
+</body>
+</html>

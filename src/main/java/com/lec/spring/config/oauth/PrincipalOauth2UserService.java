@@ -18,6 +18,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
+
 /**
  * OAuth2UserService<OAuth2UserRequest, OAuth2User>(I)
  * └─ DefaultOAuth2UserService
@@ -59,6 +61,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         // 어떤 플랫폼(Google, Naver, Kakao)으로 로그인했는지 확인하기 위해 provider명 추출
         String provider = userRequest.getClientRegistration().getRegistrationId();   // "google"
+        System.out.println("🟨 provider = " + provider);  // 기대값: kakao
 
         // 외부 제공자로부터 받은 사용자 정보를 공통 인터페이스인 OAuth2UserInfo 로 변환
         // 각 플랫폼마다 제공하는 데이터 형식이 다르기 때문에 분기 처리 필요
