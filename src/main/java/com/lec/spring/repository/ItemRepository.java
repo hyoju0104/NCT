@@ -15,6 +15,8 @@ public interface ItemRepository {
 
     List<Item> findByCategory(String category);
 
+    int markAsUnavailable(Long id);
+
     int update(Item item);
 
     int delete(Long id);
