@@ -19,5 +19,7 @@ public interface ItemService {
 
     int update(Item item, Map<String, MultipartFile> files, Long[] delfile);
 
+    int markAsUnavailable(Long id);
+
     int deleteById(Item item, Map<String, MultipartFile> files, Long[] delfile);
 }
