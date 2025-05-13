@@ -21,7 +21,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     //비밀번호 암호화
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     //DB에서 사용자, 권한 정보 조회
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int register(User user){
         //비밀번호 암호화
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // 기본 권한은 ROLE_USER
         Authority auth = authorityRepository.findByGrade("USER");

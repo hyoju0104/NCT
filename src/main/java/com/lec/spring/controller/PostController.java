@@ -100,14 +100,14 @@ public class PostController {
 	@GetMapping("/update/{id}")
 	public String update(@PathVariable Long id, Model model){
 		model.addAttribute("post", postService);
-		return "board/update";
+		return "post/update";
 	}
 	
 	@PostMapping("/update")
 	public String updateOk(
 			@RequestParam Map<String, MultipartFile> files, // 새로 추가되는 첨부파일(들) 정보
 			Long[] delfile,     // 삭제될 파일들의 id(들)
-			@Valid Post post,
+			Post post,
 			BindingResult result,
 			Model model,
 			RedirectAttributes redirectAttributes
@@ -122,11 +122,11 @@ public class PostController {
 				redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
 			}
 			
-			return "redirect:/board/update/" + post.getId();
+			return "redirect:/post/update/" + post.getId();
 		}
 		
 		model.addAttribute("result", postService.update(post, files, delfile));  // <- id, subject, content
-		return "board/updateOk";
+		return "post/updateOk";
 	}
 	
 	
