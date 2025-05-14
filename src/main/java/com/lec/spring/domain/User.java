@@ -44,5 +44,13 @@ public class User {
 	
 	private Integer rentalCnt;
 
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	
 }

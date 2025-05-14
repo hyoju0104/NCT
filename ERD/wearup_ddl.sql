@@ -40,7 +40,7 @@ CREATE TABLE Brand
   logo_sourcename VARCHAR(100)  NULL    ,
   logo_filename   VARCHAR(100)  NULL    ,
   description     VARCHAR(1000) NULL    ,
-  is_actived      BOOLEAN       NOT NULL default true,
+  is_actived      BOOLEAN       NOT NULL DEFAULT TRUE,
   PRIMARY KEY (id)
 );
 

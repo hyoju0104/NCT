@@ -3,6 +3,7 @@ package com.lec.spring.service;
 import com.lec.spring.domain.Item;
 import com.lec.spring.repository.ItemRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -42,6 +43,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public int markAsUnavailable(Long id) {
         return itemRepository.markAsUnavailable(id);
     }
