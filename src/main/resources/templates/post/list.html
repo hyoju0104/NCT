@@ -50,7 +50,7 @@
 				<td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 			</tr>
 			<tr th:if="${posts == null or posts.isEmpty()}">
-				<td colspan="5">No posts found</td>
+				<td colspan="5">게시글이 없습니다.</td>
 			</tr>
 			</tbody>
 		</table>

@@ -84,6 +84,16 @@ function loadComment(post_id){
 function buildComment(result){
 	$("#cmt_cnt").text(result.count);
 
+	// 댓글이 0개면 별도 메시지 출력 후 함수 종료
+	if (result.count === 0) {
+		$("#cmt_list").html(`
+            <tr class="no-hover">
+                <td colspan="3" class="text-center text-secondary">댓글이 없습니다</td>
+            </tr>
+        `);
+		return;
+	}
+
 	const out = [];
 
 	result.data.forEach(comment => {
