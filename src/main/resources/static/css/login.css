@@ -418,6 +418,114 @@ body {
     padding: 0 12px;
 }
 
+/* 테이블 스타일 */
+.table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.rental-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+.rental-table th,
+.rental-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.rental-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #444444;
+    font-size: 14px;
+}
+
+.rental-table td {
+    color: #666666;
+    font-size: 14px;
+}
+
+.rental-table tr:hover {
+    background-color: #fafafa;
+}
+
+.rental-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* 상태 배지 스타일 */
+.status-cell {
+    text-align: center;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.rented {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.status-badge.returned {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+/* 대여 횟수 스타일 */
+.rental-count-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    background-color: #f8f9fa;
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.rental-count-item {
+    text-align: center;
+}
+
+.count-label {
+    display: block;
+    font-size: 12px;
+    color: #888888;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.count-value {
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.count-value.remaining {
+    color: #1976d2;
+}
+
+.count-value.total {
+    color: #666666;
+}
+
+.rental-count-divider {
+    font-size: 24px;
+    color: #cccccc;
+    font-weight: 300;
+}
 
 @media (max-width: 768px) {
     .header-nav {
@@ -446,5 +554,22 @@ body {
     .info-label {
         min-width: auto;
         margin-bottom: 4px;
+    }
+    .rental-table {
+        font-size: 12px;
+    }
+
+    .rental-table th,
+    .rental-table td {
+        padding: 8px 12px;
+    }
+
+    .rental-count-wrapper {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .rental-count-divider {
+        transform: rotate(90deg);
     }
 }

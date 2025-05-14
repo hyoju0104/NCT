@@ -78,40 +78,51 @@
             <button type="submit" class="login-btn">포인트 반환하기</button>
         </form>
     </section>
+
     <!-- 5. 대여 상품 목록 -->
     <section class="info-section">
         <h2 class="section-title">대여 상품 목록</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>상품명</th>
-                <th>대여일</th>
-                <th>반납 예정일</th>
-                <th>반납일</th>
-                <th>상태</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="rental : ${rentals}">
-                <td th:text="${rental.itemName}">코트</td>
-                <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">2025-05-10</td>
-                <td th:text="${#temporals.format(rental.returnDueAt, 'yyyy-MM-dd')}">2025-05-17</td>
-                <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '미반납'}">미반납</td>
-                <td th:text="${rental.status}">RENTED</td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table class="rental-table">
+                <thead>
+                <tr>
+                    <th>상품명</th>
+                    <th>대여일</th>
+                    <th>반납 예정일</th>
+                    <th>반납일</th>
+                    <th>상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="rental : ${rentals}">
+                    <td th:text="${rental.itemName}">코트</td>
+                    <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">2025-05-10</td>
+                    <td th:text="${#temporals.format(rental.returnDueAt, 'yyyy-MM-dd')}">2025-05-17</td>
+                    <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '미반납'}">미반납</td>
+                    <td class="status-cell">
+                        <span class="status-badge" th:text="${rental.status}" th:classappend="${rental.status == 'RENTED' ? 'rented' : (rental.status == 'RETURNED' ? 'returned' : '')}">RENTED</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <!-- 6. 남은 대여 가능 횟수 -->
     <section class="info-section">
         <h2 class="section-title">대여 가능 횟수</h2>
-        <p th:text="'남은 횟수: ' + ((${totalCnt} ?: 0) - (${user.rentalCnt} ?: 0)) + ' / 총 가능 횟수: ' + (${totalCnt} ?: 0)">
-
-        2 / 5
-        </p>
+        <div class="rental-count-wrapper">
+            <div class="rental-count-item">
+                <span class="count-label">남은 횟수</span>
+                <span class="count-value remaining" th:text="${(totalCnt ?: 0) - (user.rentalCnt ?: 0)}">2</span>
+            </div>
+            <div class="rental-count-divider">/</div>
+            <div class="rental-count-item">
+                <span class="count-label">총 가능 횟수</span>
+                <span class="count-value total" th:text="${totalCnt ?: 0}">5</span>
+            </div>
+        </div>
     </section>
-
 
 </main>
 
