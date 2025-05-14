@@ -51,20 +51,19 @@
     </section>
 
     <!-- 2. 구독정보 -->
-    <!-- TODO plan에서 받아와서 구독정보 th: 연결하기 -->
     <section class="info-section">
         <h2 class="section-title">구독정보</h2>
         <div class="info-item">
             <span class="info-label">등급:</span>
-            <span class="info-value" >silver</span>
+            <span class="info-value" th:text="${user.plan.type != null ? user.plan.type : '구독 없음'}" >silver</span>
         </div>
         <div class="info-item">
             <span class="info-label">구독시작일:</span>
-            <span class="info-value">2025-05-01</span>
+            <span class="info-value" th:text="${paidAt != null ? #temporals.format(paidAt, 'yyyy-MM-dd') : '없음'}">2025-05-01</span>
         </div>
         <div class="info-item">
             <span class="info-label">구독만료일:</span>
-            <span class="info-value">2025-06-01</span>
+            <span class="info-value" th:text="${expiredAt != null ? #temporals.format(expiredAt, 'yyyy-MM-dd') : '없음'}" >2025-06-01</span>
         </div>
     </section>
 

@@ -24,5 +24,9 @@ public class Payment {
 	@JsonIgnore
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime paidAt;
+
+	@JsonIgnore
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime expiredAt;
 	
 }
