@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 public class AttachmentController {
 	
 	@Value("${app.upload.path}")
-	public String uploadDir;
+	private String uploadDir;
 	
 	private final AttachmentService attachmentService;
 	
@@ -32,7 +32,7 @@ public class AttachmentController {
 	// id: 첨부파일의 id
 	// ResponseEntity<T> 를 사용하여
 	// '직접' Response data 를 구성
-	@RequestMapping("/board/download")
+	@RequestMapping("/post/download")
 	public ResponseEntity<Object> download(Long id) {
 		
 		if (id == null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);  // 없는 객체 찾는 경우 400 에러 발생
