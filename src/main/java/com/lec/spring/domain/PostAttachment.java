@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Attachment {
+public class PostAttachment {
 	
 	private Long id;
 	private Long postId;

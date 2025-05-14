@@ -1,10 +1,10 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Attachment;
+import com.lec.spring.domain.PostAttachment;
 
 public interface AttachmentService {
 	
 	// 게시판 CRUD 와 같이 기능해야 함
-	Attachment findById(Long id);
+	PostAttachment findById(Long id);
 	
 }

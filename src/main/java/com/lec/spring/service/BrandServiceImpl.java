@@ -1,13 +1,10 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Attachment;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.Brand;
-import com.lec.spring.domain.Post;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

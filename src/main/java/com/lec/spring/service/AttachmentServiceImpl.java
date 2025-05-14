@@ -1,22 +1,22 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Attachment;
-import com.lec.spring.repository.AttachmentRepository;
+import com.lec.spring.domain.PostAttachment;
+import com.lec.spring.repository.PostAttachmentRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AttachmentServiceImpl implements AttachmentService {
 	
-	private final AttachmentRepository attachmentRepository;
+	private final PostAttachmentRepository attachmentRepository;
 	
 	public AttachmentServiceImpl(SqlSession sqlSession) {
-		this.attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
+		this.attachmentRepository = sqlSession.getMapper(PostAttachmentRepository.class);
 		System.out.println("✅ AttachmentService() 생성");
 	}
 	
 	@Override
-	public Attachment findById(Long id) {
+	public PostAttachment findById(Long id) {
 		return attachmentRepository.findById(id);
 	}
 	
