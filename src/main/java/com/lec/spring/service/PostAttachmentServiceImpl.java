@@ -6,11 +6,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AttachmentServiceImpl implements AttachmentService {
+public class PostAttachmentServiceImpl implements PostAttachmentService {
 	
 	private final PostAttachmentRepository attachmentRepository;
 	
-	public AttachmentServiceImpl(SqlSession sqlSession) {
+	public PostAttachmentServiceImpl(SqlSession sqlSession) {
 		this.attachmentRepository = sqlSession.getMapper(PostAttachmentRepository.class);
 		System.out.println("✅ AttachmentService() 생성");
 	}
