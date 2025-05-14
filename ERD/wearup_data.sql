@@ -67,15 +67,16 @@ INSERT INTO Brand (name, username, password, phone_num, is_actived, description)
 
 INSERT INTO Item(Item.brand_id, name, image_sourcename, image_filename, category, is_available, item_status, is_exist, description) VALUES
         (1, 'brand1-바지1', 'ffdddf', 'dddsadr', '하의', true, 'A', true, '"brand1" 브랜드의 "바지1" 상품입니다.'),
-        (1, 'brand1-긴팔1', 'sdf', 'asdf', '상의', false, 'B', false, '"brand1" 브랜드의 "긴팔1" 상품입니다.'),
-        (2, 'brand2-아우터1', 'qerwq', 'qwer', '아우터', true, 'C', true,'"brand2" 브랜드의 "아우터1" 상품입니다.'),
+        (1, 'brand1-긴팔1', 'sdf', 'asdf', '상의', false, 'B', true, '"brand1" 브랜드의 "긴팔1" 상품입니다.'),
         (1, 'brand1-신발1', 'asdasf', 'asdfafdsa', '신발', true, 'A', true,'"brand1" 브랜드의 "신발1" 상품입니다.'),
-        (2, 'brand2-잡화1', 'dafadfa', 'asddsfdsa', '잡화', false, 'B', true,'"brand2" 브랜드의 "잡화1" 상품입니다'),
-        (3, 'brand3-아우터1', 'sadsaczx', 'gui', '아우터', true, 'B', true, '"brand3" 브랜드의 "아우터1" 상품입니다'),
-        (3, 'brand3-잡화1', 'qerasfsawq', 'kiugu', '잡화', true, 'B', true, '"brand3" 브랜드의 "잡화1" 상품입니다'),
-        (2, 'brand2-바지1', 'qersdvsdwq', 'asdfdsa', '하의', false, 'A', true, '"brand2" 브랜드의 "바지1" 상품입니다'),
         (1, 'brand1-신발2', 'vdfs', 'sazxg', '신발', true, 'C', true, '"brand1" 브랜드의 "신발2" 상품입니다'),
-        (2, 'brand2-긴팔1', 'qervsdfwq', 'hgfjd', '상의', false, 'B', true, '"brand2" 브랜드의 "긴팔1" 상품입니다')
+        (2, 'brand2-잡화1', 'dafadfa', 'asddsfdsa', '잡화', false, 'B', true,'"brand2" 브랜드의 "잡화1" 상품입니다'),
+        (2, 'brand2-바지1', 'qersdvsdwq', 'asdfdsa', '하의', false, 'A', true, '"brand2" 브랜드의 "바지1" 상품입니다'),
+        (2, 'brand2-아우터1', 'qerwq', 'qwer', '아우터', true, 'C', true,'"brand2" 브랜드의 "아우터1" 상품입니다.'),
+        (2, 'brand2-긴팔1', 'qervsdfwq', 'hgfjd', '상의', false, 'B', true, '"brand2" 브랜드의 "긴팔1" 상품입니다'),
+        (3, 'brand3-아우터1', 'sadsaczx', 'gui', '아우터', true, 'B', false, '"brand3" 브랜드의 "아우터1" 상품입니다'),
+        (3, 'brand3-잡화1', 'qerasfsawq', 'kiugu', '잡화', true, 'B', false, '"brand3" 브랜드의 "잡화1" 상품입니다'),
+        (3, 'brand4-긴팔1', 'qervsasddfwq', 'hgffggjd', '상의', false, 'B', false, '"brand4" 브랜드의 "긴팔1" 상품입니다')
 ;
 
 INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status) VALUES
