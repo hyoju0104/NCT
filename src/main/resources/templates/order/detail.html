@@ -1,42 +1,87 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Order Detail</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	
+	<title>Order Detail</title>
 </head>
+
 <body>
-<div class="container mt-3">
-
-    <div class="mb-3">
-        <label>이름:</label>
-        <span class="form-control" readonly th:text="${user.name}"></span>
-    </div>
-
-    <div class="mb-3 mt-3">
-        <label>연락처:</label>
-        <input type="text" class="form-control"
-               th:if="${user.phoneNum == null}" name="phoneNum" placeholder="연락처를 입력하세요">
-        <span class="form-control"
-              th:if="${user.phoneNum != null}" th:text="${user.phoneNum}"></span>
-    </div>
-
-    <div class="mb-3 mt-3">
-        <label>주소지:</label>
-        <input type="text" class="form-control"
-               th:if="${user.address == null}" name="address" placeholder="주소지를 입력하세요">
-        <span class="form-control"
-              th:if="${user.address != null}" th:text="${user.address}"></span>
-    </div>
-
-    <br>
-
-    <div class="mb-3">
-        브랜드명 : <div class="border bg-light rounded p-2" th:text="${item.brand.name}"></div>
-        상품명 : <div class="border bg-light rounded p-2" th:text="${item.name}"></div>
-        카테고리 : <div class="border bg-light rounded p-2" th:text="${item.category}"></div>
-        상세정보 : <div class="border bg-light rounded p-2" th:text="${item.description}"></div>
-    </div>
-
-</div>
+	<div class="container mt-3">
+		
+		<!-- 상단 메뉴 -->
+		<header class="header">
+			<div class="header-content">
+				<a href="#" class="logo">WearUp</a>
+				<nav class="header-nav">
+					<!-- 전체 공개 메뉴 -->
+					<a th:href="@{/post/list}" class="nav-link">피드</a>
+					<a th:href="@{/item/list}" class="nav-link">아이템</a>
+					<a sec:authorize="isAnonymous()" th:href="@{/login}" class="nav-link" id="login">로그인</a>
+					<a sec:authorize="isAnonymous()" th:href="@{/register/kind}" class="nav-link" id="register">회원가입</a>
+					
+					<!-- 로그인 사용자 전용 메뉴 -->
+					<a sec:authorize="hasAnyAuthority('USER', 'BRAND', 'ADMIN')" th:href="@{/logout}" class="nav-link" id="logout">로그아웃</a>
+					
+					<!-- USER 전용 메뉴 -->
+					<a sec:authorize="hasAnyAuthority('USER')" th:href="@{/user/mypage/detail}" class="nav-link">마이페이지</a>
+					<div sec:authorize="hasAnyAuthority('USER')"
+						 th:text="${#authentication.principal.username} + ' (' + ${#authentication.principal.name} + ')'"
+						 id="user-username" class="nav-link"></div>
+					
+					<!-- BRAND 전용 메뉴 -->
+					<a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">상품 관리</a>
+					<a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">마이페이지</a>
+					<div sec:authorize="hasAnyAuthority('BRAND')"
+						 th:text="${#authentication.principal.username} + ' (' + ${#authentication.principal.name} + ')'"
+						 id="brand-username" class="nav-link"></div>
+					
+					<!-- ADMIN 전용 메뉴 -->
+					<a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin/sales}" class="nav-link">매출 관리</a>
+					<a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin/users}" class="nav-link">회원 관리</a>
+				</nav>
+			</div>
+		</header>
+		
+		
+		<div class="mb-3">
+			<label>이름:</label>
+			<span class="form-control" readonly th:text="${user.name}"></span>
+		</div>
+		
+		<div class="mb-3 mt-3">
+			<label>연락처:</label>
+			<input type="text" class="form-control"
+				   th:if="${user.phoneNum == null}" name="phoneNum" placeholder="연락처를 입력하세요">
+			<span class="form-control"
+				  th:if="${user.phoneNum != null}" th:text="${user.phoneNum}"></span>
+		</div>
+		
+		<div class="mb-3 mt-3">
+			<label>주소지:</label>
+			<input type="text" class="form-control"
+				   th:if="${user.address == null}" name="address" placeholder="주소지를 입력하세요">
+			<span class="form-control"
+				  th:if="${user.address != null}" th:text="${user.address}"></span>
+		</div>
+		
+		<br>
+		
+		<div class="mb-3">
+			브랜드명 :
+			<div class="border bg-light rounded p-2" th:text="${item.brand.name}"></div>
+			상품명 :
+			<div class="border bg-light rounded p-2" th:text="${item.name}"></div>
+			카테고리 :
+			<div class="border bg-light rounded p-2" th:text="${item.category}"></div>
+			상세정보 :
+			<div class="border bg-light rounded p-2" th:text="${item.description}"></div>
+		</div>
+	
+	</div>
 </body>
 </html>
