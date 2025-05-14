@@ -192,4 +192,9 @@ public class PostServiceImpl implements PostService {
 	public int deleteById(Long id) {
 		return postRepository.delete(postRepository.findById(id));
 	}
+
+	@Override
+	public List<Post> findByUserId(Long userId) {
+		return postRepository.findByUserId(userId);
+	}
 }

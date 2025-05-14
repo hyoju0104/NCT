@@ -21,4 +21,6 @@ public class Rental {
 
     private User user;
     private Item item;
+    private String itemName;  // item 테이블에서 join으로 받아올 상품명
+
 }

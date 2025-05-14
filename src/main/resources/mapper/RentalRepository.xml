@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.RentalRepository">
+
+    <!-- 특정 사용자 대여 내역 전체 조회 -->
+    <select id="findAllByUserId" resultType="com.lec.spring.domain.Rental">
+        SELECT r.*, i.name AS item_name
+        FROM rental r
+                 JOIN item i ON r.item_id = i.id
+        WHERE r.user_id = #{userId}
+        ORDER BY r.rented_at DESC
+    </select>
+
+</mapper>

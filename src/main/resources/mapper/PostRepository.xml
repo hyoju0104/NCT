@@ -97,4 +97,12 @@
         FROM Post
     </select>
 
+    <select id="findByUserId" resultType="com.lec.spring.domain.Post">
+        SELECT *
+        FROM post
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+    </select>
+
+
 </mapper>
