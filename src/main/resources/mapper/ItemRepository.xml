@@ -78,7 +78,6 @@
     <select id="findAll" resultMap="mapItem">
         <include refid="SELECT_BASE"/>
         AND i.is_exist = true
-        AND i.is_available = true
         ORDER BY i.id DESC
     </select>
 
