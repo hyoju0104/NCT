@@ -5,6 +5,7 @@ import com.lec.spring.domain.User;
 import com.lec.spring.service.BrandService;
 import com.lec.spring.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,10 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
+    
+    @Value("${app.upload.path.brand}")
+    private String uploadDir;
+    
     private final UserService userService;
     private final BrandService brandService;
 
@@ -26,6 +31,7 @@ public class RegisterController {
         this.userService = userService;
         this.brandService = brandService;
     }
+    
 
     //회원가입
     @GetMapping("/kind")
@@ -83,8 +89,8 @@ public class RegisterController {
         //저장할 파일 이름을 고유하게 만듦(중복 방지용)
         String storedFileName = UUID.randomUUID() + "_" + originalName;
 
-        // /uploads 에 저장
-        Path savePath = Paths.get("uploads", storedFileName);
+        // /upload/brand 에 저장
+        Path savePath = Paths.get(uploadDir, storedFileName);
         try {
             Files.copy(logoFile.getInputStream(), savePath);
         } catch (IOException e) {

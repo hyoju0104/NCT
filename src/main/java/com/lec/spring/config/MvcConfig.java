@@ -19,7 +19,7 @@ public class MvcConfig implements WebMvcConfigurer {
 //		return new BCryptPasswordEncoder();
 //	}
 	
-	@Value("${app.upload.path}")
+	@Value("${app.upload.path.post}")
 	private String uploadDir;   // "/upload"
 	
 	@Override

@@ -34,14 +34,6 @@ public class PostController {
 	@RequestMapping("/list")
 	public void list(Model model) {
 		List<Post> posts = postService.list();
-//		System.out.println("조회된 게시글 수: " + (posts != null ? posts.size() : 0));
-//		if (posts != null && !posts.isEmpty()) {
-//			for (Post post : posts) {
-//				System.out.println("Post ID: " + post.getId() +
-//						", Content: " + post.getContent() +
-//						", User: " + (post.getUser() != null ? post.getUser().getUsername() : "null"));
-//			}
-//		}
 		model.addAttribute("posts", posts);
 	}
 	

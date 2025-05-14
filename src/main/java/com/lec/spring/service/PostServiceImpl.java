@@ -25,7 +25,7 @@ import java.util.Map;
 @Service
 public class PostServiceImpl implements PostService {
 	
-	@Value("${app.upload.path}")
+	@Value("${app.upload.path.post}")
 	private String uploadDir;
 	
 	@Value("${app.pagination.write_pages}")
