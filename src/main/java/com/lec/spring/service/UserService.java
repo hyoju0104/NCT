@@ -21,5 +21,9 @@ public interface UserService {
     
     //사용자 ID로 권한 목록 조회(Spring Security에서 로그인 시 권한 부여용)
     List<Authority> selectAuthoritiesById(Long id);
-    
+
+    void updateUserInfo(User user);
+
+
+
 }

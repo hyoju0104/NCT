@@ -6,11 +6,14 @@ import com.lec.spring.repository.PlanRepository;
 import com.lec.spring.service.PaymentService;
 import com.lec.spring.service.PostService;
 import com.lec.spring.service.RentalService;
+import com.lec.spring.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -21,16 +24,19 @@ public class UserController {
     private final PaymentService paymentService;
     private final RentalService rentalService;
     private final PostService postService;
+    private final UserService userService;
 
 
     public UserController(PlanRepository planRepository,
                           PaymentService paymentService,
                           RentalService rentalService,
-                          PostService postService) {
+                          PostService postService,
+                          UserService userService) {
         this.planRepository = planRepository;
         this.paymentService = paymentService;
         this.rentalService = rentalService;
         this.postService = postService;
+        this.userService = userService;
     }
 
 
@@ -79,5 +85,22 @@ public class UserController {
 
 
         model.addAttribute("user", user);
+    }
+
+    @GetMapping("/mypage/update")
+    public void updateForm(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
+        User user = userService.findById(principalDetails.getUser().getId());
+        model.addAttribute("user", user);
+    }
+
+    @PostMapping("/mypage/update")
+    public String updateSubmit(User user, RedirectAttributes redirectAttrs) {
+        if (!user.getPassword().equals(user.getRePassword())) {
+            redirectAttrs.addFlashAttribute("error", "비밀번호가 일치하지 않습니다.");
+            return "redirect:/user/mypage/update";
+        }
+
+        userService.updateUserInfo(user);
+        return "redirect:/user/mypage/detail";
     }
 }

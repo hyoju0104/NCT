@@ -299,6 +299,38 @@
     font-weight: 300;
 }
 
+/* readonly 입력 필드 스타일 */
+.readonly-input {
+    background-color: #f8f9fa !important;
+    color: #666666 !important;
+    cursor: not-allowed;
+}
+
+.readonly-input:focus {
+    border-color: #e0e0e0 !important;
+    background-color: #f8f9fa !important;
+}
+
+/* 회원정보 수정 페이지 전용 스타일 */
+.login-container h2 {
+    color: #222222;
+}
+
+/* 필수 항목 표시 개선 */
+.form-group label::after {
+    content: '';
+}
+
+.form-group label[for] {
+    position: relative;
+}
+
+/* 필수 항목에 * 표시가 이미 있는 경우 스타일링 */
+.form-group label:has-text("*")::after {
+    color: #ff4444;
+    font-weight: 600;
+}
+
 @media (max-width: 768px) {
     .header-nav {
         display: none;

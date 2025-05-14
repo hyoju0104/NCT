@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원정보 수정</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <a href="/" class="logo">WearUp</a>
+        <nav class="header-nav">
+            <a href="/feed" class="nav-link">피드</a>
+            <a href="/upload" class="nav-link">업로드</a>
+            <a href="/item" class="nav-link">아이템</a>
+            <a href="/user/mypage/detail" class="nav-link">마이페이지</a>
+            <a href="/logout" class="nav-link">로그아웃</a>
+        </nav>
+    </div>
+</header>
+
+<div class="login-container">
+    <h2>회원정보 수정</h2>
+    <p class="subheading">WEAR UP TO LEVEL UP</p>
+
+    <!-- 실패 메시지 -->
+    <div th:if="${param.error}" class="alert alert-error">
+        <p>정보 수정에 실패했습니다. 입력 정보를 다시 확인해주세요.</p>
+    </div>
+
+    <form th:action="@{/user/mypage/update}" method="post">
+        <!-- 아이디 (readonly) -->
+        <div class="form-group">
+            <label for="username">아이디</label>
+            <input type="text" id="username" name="username" th:value="${user.username}" readonly class="readonly-input">
+        </div>
+
+        <div class="form-group">
+            <label for="name">이름 *</label>
+            <input type="text" id="name" name="name" th:value="${user.name}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">비밀번호 *</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="rePassword">비밀번호 확인 *</label>
+            <input type="password" id="rePassword" name="rePassword" required>
+        </div>
+
+        <!-- 이메일 (수정 가능해야 함) -->
+        <div class="form-group">
+            <label for="email">이메일 *</label>
+            <input type="email" id="email" name="email" th:value="${user.email}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">전화번호 *</label>
+            <input type="tel" id="phone" name="phone" th:value="${user.phoneNum}" required>
+        </div>
+
+        <!-- 주소 입력 -->
+        <div class="form-group">
+            <label for="address">주소 *</label>
+            <input type="text" id="address" name="address" th:value="${user.address}" placeholder="주소를 입력하세요" required>
+        </div>
+
+        <button type="submit" class="login-btn">수정 완료</button>
+    </form>
+
+    <div class="register-link">
+        <p><a th:href="@{/user/mypage/detail}">마이페이지로 돌아가기</a></p>
+    </div>
+</div>
+
+</body>
+</html>
