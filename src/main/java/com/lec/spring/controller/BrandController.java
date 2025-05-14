@@ -67,21 +67,19 @@ public class BrandController {
         Long brandId = principal.getBrand().getId();
         brand.setId(brandId);
 
-        int updated = brandService.myUpdate(brand, logo);
-        model.addAttribute("result", updated);
+        brandService.myUpdate(brand, logo);
 
-        return "brand/mypage/updateOk";
+        return "redirect:/brand/mypage/detail";
     }
 
     @PostMapping("/mypage/delete")
     public String myDeleteOk(@AuthenticationPrincipal BrandDetails principal) {
         Long brandId = principal.getBrand().getId();
         brandService.myDelete(brandId);
-        return "redirect:/login";
+
+        return "brand/mypage/deleteOk";
     }
 
-
-    // ✅ 에러 디버깅 출력
     public void showErrors(Errors errors) {
         if (errors.hasErrors()) {
             System.out.println("💢에러개수: " + errors.getErrorCount());
