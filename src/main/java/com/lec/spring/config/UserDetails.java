@@ -3,25 +3,25 @@ package com.lec.spring.config;
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class PrincipalDetails implements UserDetails {
+public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
     private final User user;
     private final UserService userService;
-    public User getUser() {
-        return user;
-    }
-    public PrincipalDetails(User user, UserService userService) {
+    
+    public UserDetails(User user, UserService userService) {
         this.user = user;
         this.userService = userService;
+    }
+    
+    
+    public User getUser() {
+        return user;
     }
 
     @Override

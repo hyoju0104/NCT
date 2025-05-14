@@ -17,14 +17,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-public class PostAttachmentController {
+public class AttachmentController {
 	
 	@Value("${app.upload.path.post}")
 	private String uploadDir;
 	
 	private final AttachmentService attachmentService;
 	
-	public PostAttachmentController(AttachmentService attachmentService) {
+	public AttachmentController(AttachmentService attachmentService) {
 		this.attachmentService = attachmentService;
 	}
 	

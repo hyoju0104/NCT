@@ -5,6 +5,7 @@ import com.lec.spring.domain.Brand;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,14 +14,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
 
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
     private final BrandRepository brandRepository;
 
     @Override
     public int register(Brand brand) {
         brand.setUsername(brand.getUsername());
-//        brand.setPassword(passwordEncoder.encode(brand.getPassword()));
+        brand.setPassword(passwordEncoder.encode(brand.getPassword()));
 
         brandRepository.save(brand);
 
@@ -29,7 +30,6 @@ public class BrandServiceImpl implements BrandService {
         if (authority != null) {
             authorityRepository.addAuthority(brand.getId(), authority.getId());
         }
-
 
         return 1;
     }
@@ -41,6 +41,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand findByUsername(String username) {
+        System.out.println("brandRepository.findByUsername(username.toUpperCase()) : " + brandRepository.findByUsername(username.toUpperCase()));
         return brandRepository.findByUsername(username.toUpperCase());
     }
 

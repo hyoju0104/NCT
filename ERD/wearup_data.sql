@@ -31,8 +31,8 @@ INSERT INTO Plan(type, price, count) VALUES
 
 INSERT INTO User (user.auth_id, username, password, name, point, status_plan) VALUES
         (1, 'user1', '1111', '안주경', 1000, 'ACTIVE'),
-        (2, 'user2', '1111', '최해훈', 3000, 'INACTIVE'),
-        (3, 'user3', '1111', '이현정', 2000, 'ACTIVE')
+        (1, 'user3', '1111', '이현정', 2000, 'INACTIVE'),
+        (3, 'admin', '1111', '관리자', 0, 'ACTIVE')
 ;
 
 INSERT INTO Payment (Payment.user_id, Payment.plan_id, price) VALUES
@@ -59,10 +59,10 @@ INSERT INTO Comment (Comment.user_id, Comment.post_id, content) VALUES
         (3, 3, 'ㄱㅁㅇㄴㄹㄱㄱㄱㄱㅂㅂㅂ')
 ;
 
-INSERT INTO Brand (name, username, password, phone_num, is_actived, description) VALUES
-        ('나이키', 'nike', 'nike123', '031-1234-4321', true, '1111'),
-        ('아디다스', 'adidas', 'adidas123', '031-1234-5342', true, 'aaaaaa'),
-        ('뉴발란스', 'newbalance', 'newbalance123', '031-1234-6757', false, 'bbbbbbbb')
+INSERT INTO Brand (brand.auth_id, name, username, password, phone_num, is_actived, description) VALUES
+        (2, '나이키', 'nike', 'nike123', '031-1234-4321', true, '1111'),
+        (2, '아디다스', 'adidas', 'adidas123', '031-1234-5342', true, 'aaaaaa'),
+        (2, '뉴발란스', 'newbalance', 'newbalance123', '031-1234-6757', false, 'bbbbbbbb')
 ;
 
 INSERT INTO Item(Item.brand_id, name, image_sourcename, image_filename, category, is_available, item_status, is_exist, description) VALUES
@@ -83,8 +83,4 @@ INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status) VALUES
         (1, 1, '2025-05-10 17:40:00', 'RENTED'),
         (2, 2, '2025-05-13 17:40:00', 'RETURNED'),
         (3, 3, '2025-05-15 17:40:00', 'OVERDUE')
-;
-
-INSERT INTO Attachment(post_id, sourcename, filename, sequence)
-VALUES (1, 'face20.png', 'face20.png', 1)
 ;
