@@ -1,8 +1,11 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.config.BrandDetails;
 import com.lec.spring.domain.Brand;
 import com.lec.spring.service.BrandService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/brand")
@@ -25,25 +27,29 @@ public class BrandController {
         this.brandService = brandService;
     }
 
-    @GetMapping("/mypage/detail/{id}")
-    public String myDetail(@PathVariable Long id, Model model) {
-        model.addAttribute("brand", brandService.myDetail(id));
+    @GetMapping("/mypage/detail")
+    public String mypageDetail(@AuthenticationPrincipal BrandDetails principal, Model model) {
+        Long brandId = principal.getBrand().getId();
+        Brand brand = brandService.myDetail(brandId);
+        model.addAttribute("brand", brand);
         return "brand/mypage/detail";
     }
 
-    @GetMapping("/mypage/update/{id}")
-    public String myUpdate(@PathVariable Long id, Model model) {
-        model.addAttribute("brand", brandService.selectById(id));
+    @GetMapping("/mypage/update")
+    public String myUpdate(@AuthenticationPrincipal BrandDetails principal, Model model) {
+        Long brandId = principal.getBrand().getId();
+        model.addAttribute("brand", brandService.selectById(brandId));
         return "brand/mypage/update";
     }
 
     @PostMapping("/mypage/update")
     public String myUpdateOk(
-            @RequestParam Map<String, MultipartFile> files,  // 첨부파일들 <name, file>
+            @RequestParam(value = "logo", required = false) MultipartFile logo,
             @Valid Brand brand,
-            BindingResult result,   // Validator 가 유효성 검사를 한 결과가 담긴 객체.
-            Model model,    // 매개변수 선언시 BindingResult 보다 Model 을 뒤에 두어야 한다.
-            RedirectAttributes redirectAttributes
+            BindingResult result,
+            @AuthenticationPrincipal BrandDetails principal,
+            RedirectAttributes redirectAttributes,
+            Model model
     ) {
         if (result.hasErrors()) {
             showErrors(result);
@@ -51,36 +57,40 @@ public class BrandController {
             redirectAttributes.addFlashAttribute("phoneNum", brand.getPhoneNum());
             redirectAttributes.addFlashAttribute("description", brand.getDescription());
 
-            for(FieldError err : result.getFieldErrors()) {
+            for (FieldError err : result.getFieldErrors()) {
                 redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
 
-            return "redirect:/brand/mypage/update" + brand.getId();
+            return "redirect:/brand/mypage/update";
         }
-        model.addAttribute("result", brandService.myUpdate(brand));
+
+        Long brandId = principal.getBrand().getId();
+        brand.setId(brandId);
+
+        int updated = brandService.myUpdate(brand, logo);
+        model.addAttribute("result", updated);
+
         return "brand/mypage/updateOk";
     }
 
-    @PostMapping("/mypage/delete/{id}")
-    public String myDeleteOk(@PathVariable Long id) {
-        brandService.myDelete(id);
+    @PostMapping("/mypage/delete")
+    public String myDeleteOk(@AuthenticationPrincipal BrandDetails principal) {
+        Long brandId = principal.getBrand().getId();
+        brandService.myDelete(brandId);
         return "redirect:/login";
     }
 
 
-    // 바인딩 에러 출력 도우미 메소드
-    public void showErrors(Errors errors){
-        if(errors.hasErrors()){
+    // ✅ 에러 디버깅 출력
+    public void showErrors(Errors errors) {
+        if (errors.hasErrors()) {
             System.out.println("💢에러개수: " + errors.getErrorCount());
-            // 어떤 field 에 어떤 에러(code) 가 담겨있는지 확인
             System.out.println("\t[field]\t|[code]");
-            List<FieldError> errList = errors.getFieldErrors();
-            for(FieldError err : errList){
+            for (FieldError err : errors.getFieldErrors()) {
                 System.out.println("\t" + err.getField() + "\t|" + err.getCode());
             }
         } else {
             System.out.println("✔에러 없슴");
         }
-    } // end showErrors()
+    }
 }
-

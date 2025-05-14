@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.Brand;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface BrandService {
 
     Brand selectById(Long id);
 
-    int myUpdate(Brand brand);
+    int myUpdate(Brand brand, MultipartFile logo);
 
     int myDelete(Long id);
 
