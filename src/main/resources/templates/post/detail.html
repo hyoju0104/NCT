@@ -47,14 +47,14 @@
 					<!-- USER 전용 메뉴 -->
 					<a sec:authorize="hasAnyAuthority('USER')" th:href="@{/user/mypage/detail}" class="nav-link">마이페이지</a>
 					<div sec:authorize="hasAnyAuthority('USER')"
-						 th:text="${#authentication.principal.username} + ' (' + ${#authentication.principal.name} + ')'"
+						 th:text="${#authentication.principal.username + ' (' + #authentication.principal.user.name + ')'}"
 						 id="user-username" class="nav-link"></div>
 					
 					<!-- BRAND 전용 메뉴 -->
 					<a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">상품 관리</a>
 					<a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">마이페이지</a>
 					<div sec:authorize="hasAnyAuthority('BRAND')"
-						 th:text="${#authentication.principal.username} + ' (' + ${#authentication.principal.name} + ')'"
+						 th:text="${#authentication.principal.username + ' (' + #authentication.principal.brand.name + ')'}"
 						 id="brand-username" class="nav-link"></div>
 					
 					<!-- ADMIN 전용 메뉴 -->
