@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -46,12 +47,18 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화
                 
-                //TODO requestmatchers는 html만든 후 수정하기
+                //TODO requestmatchers는 html 만든 후 수정하기
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/login", "/register/**", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers(
+                                "/login", "/register/**",
+                                "/css/**", "/js/**", "/images/**", "/upload/**",
+                                "/post/list", "/post/detail", "/post/detail/**",
+                                "/comment/list", "/comment/list/**", "/comment/write",
+                                "/item/list", "/item/detail/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // 그 외 모든 주소는 로그인한 사람만 접근
                 )//authorizeHttpRequests
+                
                 .formLogin(form->form //로그인화면을 어떻게 보여줄지
                         .loginPage("/login") //로그인 페이지 설정
                         .loginProcessingUrl("/login") //아이디 비번 입력하고 로그인 버튼 누르면 /login으로 전송
@@ -60,6 +67,7 @@ public class SecurityConfig {
                         .failureUrl("/login?error") //로그인 실패하면.
                         .permitAll() //위에서 설정한 로그인 관련 URL들은 로그인 안해도 누구나 볼수있게
                 ) //formLogin
+                
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
