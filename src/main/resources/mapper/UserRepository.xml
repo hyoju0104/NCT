@@ -39,5 +39,13 @@
                  )
     </insert>
 
+    <update id="updateUserInfo" parameterType="com.lec.spring.domain.User">
+        UPDATE user
+        SET name = #{name},
+            phone_num = #{phoneNum},
+            password = #{password}
+        WHERE id = #{id}
+    </update>
+
 
 </mapper>

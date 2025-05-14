@@ -91,4 +91,12 @@ public class UserServiceImpl implements UserService {
         return authorityRepository.findByUser(user);
     }
 
+    @Override
+    public void updateUserInfo(User user) {
+        String encPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encPassword);
+        userRepository.updateUserInfo(user);
+    }
+
+
 }

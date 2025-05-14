@@ -8,4 +8,7 @@ public interface UserRepository {
     int save(User user); //사용자 등록
 
     User findById(Long id);
+
+    void updateUserInfo(User user);
+
 }
