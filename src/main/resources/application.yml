@@ -32,7 +32,10 @@ app:
   
   #파일 업로드 경로
   upload:
-    path: upload
+    path:
+      post: upload/post
+      item: upload/item
+      brand: upload/brand
 
 
 # MyBatis 매퍼(mapper) 파일(*.xml) 위치 설정

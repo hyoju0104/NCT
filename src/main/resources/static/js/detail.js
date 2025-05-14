@@ -6,7 +6,7 @@ $(function(){
 	});
 
 	// 현재 글의 id 값
-	const id = $("input[name='id']").val().trim();
+	const id = $("#postId").val().trim();
 
 	// 현재 글의 댓글을 불러온다
 	loadComment(id);
