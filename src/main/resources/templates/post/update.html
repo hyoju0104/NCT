@@ -15,10 +15,11 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		
-<!--		<link rel="stylesheet" th:href="@{/css/common.css}">-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+		<link rel="stylesheet" th:href="@{/css/common.css}">
+		<link rel="stylesheet" th:href="@{/css/header.css}">
 		
 		<script th:src="@{/js/update.js}"></script>
 		
@@ -26,6 +27,41 @@
 	</head>
 	
 	<body style="margin-bottom: 200px">
+		
+		<!-- 상단 메뉴 -->
+		<header class="header">
+			<div class="header-content">
+				<a href="#" class="logo">WearUp</a>
+				<nav class="header-nav">
+					<!-- 전체 공개 메뉴 -->
+					<a th:href="@{/post/list}" class="nav-link">피드</a>
+					<a th:href="@{/item/list}" class="nav-link">아이템</a>
+					<a sec:authorize="isAnonymous()" th:href="@{/login}" class="nav-link" id="login">로그인</a>
+					<a sec:authorize="isAnonymous()" th:href="@{/register/kind}" class="nav-link" id="register">회원가입</a>
+					
+					<!-- 로그인 사용자 전용 메뉴 -->
+					<a sec:authorize="hasAnyAuthority('USER', 'BRAND', 'ADMIN')" th:href="@{/logout}" class="nav-link" id="logout">로그아웃</a>
+					
+					<!-- USER 전용 메뉴 -->
+					<a sec:authorize="hasAnyAuthority('USER')" th:href="@{/user/mypage/detail}" class="nav-link">마이페이지</a>
+					<div sec:authorize="hasAnyAuthority('USER')"
+						 th:text="${#authentication.principal.username} + ' (' + ${#authentication.principal.name} + ')'"
+						 id="user-username" class="nav-link"></div>
+					
+					<!-- BRAND 전용 메뉴 -->
+					<a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">상품 관리</a>
+					<a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">마이페이지</a>
+					<div sec:authorize="hasAnyAuthority('BRAND')"
+						 th:text="${#authentication.principal.username} + ' (' + ${#authentication.principal.name} + ')'"
+						 id="brand-username" class="nav-link"></div>
+					
+					<!-- ADMIN 전용 메뉴 -->
+					<a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin/sales}" class="nav-link">매출 관리</a>
+					<a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin/users}" class="nav-link">회원 관리</a>
+				</nav>
+			</div>
+		</header>
+		
 		
 		<div class="container mt-3">
 			<h2>수정</h2>

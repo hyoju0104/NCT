@@ -45,7 +45,7 @@ public class SecurityConfig {
                                 "/css/**", "/js/**", "/images/**", "/upload/**",
                                 "/post/list", "/post/detail", "/post/detail/**",
                                 "/comment/list", "/comment/list/**", "/comment/write",
-                                "/item/list", "/item/detail/**").permitAll()
+                                "/item/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // 그 외 모든 주소는 로그인한 사람만 접근
                 )//authorizeHttpRequests

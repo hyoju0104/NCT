@@ -1,0 +1,52 @@
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #222222;
+    text-decoration: none;
+}
+
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 15px 20px;
+    z-index: 100;
+}
+
+.header-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    position: relative; /* 상대적 위치 지정 */
+}
+
+.header-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* 정확히 중앙에 위치시키기 */
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #222222;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #666666;
+}
+
+.header-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}

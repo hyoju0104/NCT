@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 @RestController
 public class AttachmentController {
 	
-	@Value("${app.upload.path}")
+	@Value("${app.upload.path.post}")
 	private String uploadDir;
 	
 	private final AttachmentService attachmentService;

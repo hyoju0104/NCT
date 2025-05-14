@@ -19,7 +19,10 @@ public class CommentController {
 	// 특정 글의 댓글 목록 출력
 	@GetMapping("/list/{postId}")
 	public QryCommentList list(@PathVariable Long postId) {
-		return commentService.list(postId);
+		QryCommentList result = commentService.list(postId);
+		result.setStatus("OK");
+		result.setCount(result.getList().size());
+		return result;
 	}
 	
 	@PostMapping("/write")

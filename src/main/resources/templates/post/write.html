@@ -12,56 +12,97 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<link rel="stylesheet" th:href="@{/css/heaeder.css}">
 	
 	<script th:src="@{/js/write.js}"></script>
 	<title>작성</title>
 </head>
 
 <body>
-<th:block th:with="loginUser=${#authentication.principal.user}">
-	<div class="container mt-3">
-		<h2>작성</h2>
-		<hr>
-		
-		<!-- 본문 -->
-		<!-- 첨부파일 submit 하는 form 은 반드시 ⭐method="post" enctype="multipart/form-data"⭐ 이어야 함!! -->
-		<form th:action="@{/post/write}" method="post" enctype="multipart/form-data">
-			
-			<div class="my-3">
-				<label for="user">작성자:</label>
-				<span class="form-control" id="user" th:text="${loginUser.username + ' (' + loginUser.name + ')'}"></span>
-			</div>
-			
-			<div class="my-3">
-				<label for="content">내용:</label>
-				<textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content" th:utext="${content}"></textarea>
-			</div>
-			
-			<div class="my-3">
-				<label for="items">상품:</label>
-				<textarea class="form-control" rows="5" id="items" placeholder="내용을 입력하세요" name="items" th:utext="${items}"></textarea>
-			</div>
-			<div><span class="text-danger" th:if="${error_items}" th:utext="${error_items}"></span></div>
-			<!-- 본문 -->
-			
-			
-			<!-- 첨부파일 -->
-			<div class="container mt-3 mb-3 border rounded">
-				<div class="mb-3 mt-3">
-					<label>첨부파일:</label>
-					<div id="files">
-					</div>
-					<button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
-				</div>
-			</div>
-			<!-- 첨부파일 -->
-			
-			
-			<button type="submit" class="btn btn-outline-dark">작성완료</button>
-			<a class="btn btn-outline-dark" th:href="@{/post/list(page=${session.page})}">목록</a>
-		</form>
 	
-	</div>
-</th:block>
+	<!-- 상단 메뉴 -->
+	<header class="header">
+		<div class="header-content">
+			<a href="#" class="logo">WearUp</a>
+			<nav class="header-nav">
+				<!-- 전체 공개 메뉴 -->
+				<a th:href="@{/post/list}" class="nav-link">피드</a>
+				<a th:href="@{/item/list}" class="nav-link">아이템</a>
+				<a sec:authorize="isAnonymous()" th:href="@{/login}" class="nav-link" id="login">로그인</a>
+				<a sec:authorize="isAnonymous()" th:href="@{/register/kind}" class="nav-link" id="register">회원가입</a>
+				
+				<!-- 로그인 사용자 전용 메뉴 -->
+				<a sec:authorize="hasAnyAuthority('USER', 'BRAND', 'ADMIN')" th:href="@{/logout}" class="nav-link" id="logout">로그아웃</a>
+				
+				<!-- USER 전용 메뉴 -->
+				<a sec:authorize="hasAnyAuthority('USER')" th:href="@{/user/mypage/detail}" class="nav-link">마이페이지</a>
+				<div sec:authorize="hasAnyAuthority('USER')"
+					 th:text="${#authentication.principal.username} + ' (' + ${#authentication.principal.name} + ')'"
+					 id="user-username" class="nav-link"></div>
+				
+				<!-- BRAND 전용 메뉴 -->
+				<a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">상품 관리</a>
+				<a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">마이페이지</a>
+				<div sec:authorize="hasAnyAuthority('BRAND')"
+					 th:text="${#authentication.principal.username} + ' (' + ${#authentication.principal.name} + ')'"
+					 id="brand-username" class="nav-link"></div>
+				
+				<!-- ADMIN 전용 메뉴 -->
+				<a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin/sales}" class="nav-link">매출 관리</a>
+				<a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin/users}" class="nav-link">회원 관리</a>
+			</nav>
+		</div>
+	</header>
+	
+	
+	<th:block th:with="loginUser=${#authentication.principal.user}">
+		<div class="container mt-3">
+			<h2>작성</h2>
+			<hr>
+			
+			<!-- 본문 -->
+			<!-- 첨부파일 submit 하는 form 은 반드시 ⭐method="post" enctype="multipart/form-data"⭐ 이어야 함!! -->
+			<form th:action="@{/post/write}" method="post" enctype="multipart/form-data">
+				
+				<div class="my-3">
+					<label for="user">작성자:</label>
+					<span class="form-control" id="user"
+						  th:text="${loginUser.username + ' (' + loginUser.name + ')'}"></span>
+				</div>
+				
+				<div class="my-3">
+					<label for="content">내용:</label>
+					<textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content"
+							  th:utext="${content}"></textarea>
+				</div>
+				
+				<div class="my-3">
+					<label for="items">상품:</label>
+					<textarea class="form-control" rows="5" id="items" placeholder="내용을 입력하세요" name="items"
+							  th:utext="${items}"></textarea>
+				</div>
+				<div><span class="text-danger" th:if="${error_items}" th:utext="${error_items}"></span></div>
+				<!-- 본문 -->
+				
+				
+				<!-- 첨부파일 -->
+				<div class="container mt-3 mb-3 border rounded">
+					<div class="mb-3 mt-3">
+						<label>첨부파일:</label>
+						<div id="files">
+						</div>
+						<button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
+					</div>
+				</div>
+				<!-- 첨부파일 -->
+				
+				
+				<button type="submit" class="btn btn-outline-dark">작성완료</button>
+				<a class="btn btn-outline-dark" th:href="@{/post/list(page=${session.page})}">목록</a>
+			</form>
+		
+		</div>
+	</th:block>
 </body>
 </html>
