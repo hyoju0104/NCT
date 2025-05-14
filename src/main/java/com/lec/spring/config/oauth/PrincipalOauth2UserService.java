@@ -1,7 +1,7 @@
 package com.lec.spring.config.oauth;
 
 
-import com.lec.spring.config.UserDetails;
+import com.lec.spring.config.PrincipalUserDetails;
 import com.lec.spring.config.oauth.provider.GoogleUserInfo;
 import com.lec.spring.config.oauth.provider.KakaoUserInfo;
 import com.lec.spring.config.oauth.provider.NaverUserInfo;
@@ -17,8 +17,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-
-import java.util.Locale;
 
 /**
  * OAuth2UserService<OAuth2UserRequest, OAuth2User>(I)
@@ -109,12 +107,12 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         }
 
         // Spring Security가 인증된 사용자 정보를 담을 수 있도록 PrincipalDetails 객체에 사용자 정보와 attributes(제공자 정보) 전달
-        UserDetails userDetails = new UserDetails(user, oAuth2User.getAttributes());
+        PrincipalUserDetails principalUserDetails = new PrincipalUserDetails(user, oAuth2User.getAttributes());
         // 내부적으로 필요한 userService 를 PrincipalDetails 에도 주입
-        userDetails.setUserService(userService);
+        principalUserDetails.setUserService(userService);
 
         // 최종적으로 인증된 사용자 객체를 반환
-        return userDetails;
+        return principalUserDetails;
     }
 }
 

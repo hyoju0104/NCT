@@ -1,6 +1,6 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.config.PrincipalUserDetails;
 import com.lec.spring.domain.*;
 import com.lec.spring.repository.PlanRepository;
 import com.lec.spring.service.PaymentService;
@@ -42,11 +42,11 @@ public class UserController {
 
     @GetMapping("/mypage/detail")
     public void showMyPage(
-            @AuthenticationPrincipal PrincipalDetails principalDetails, //로그인한 사용자 정보 가져오기
+            @AuthenticationPrincipal PrincipalUserDetails PrincipalUserDetails, //로그인한 사용자 정보 가져오기
             Model model //뷰에 데이터 넘기기 위함
             ){
         //로그인한 사용자 정보 가져오기
-        User user = principalDetails.getUser();
+        User user = PrincipalUserDetails.getUser();
         //사용자의 구독 정보 설정(silver,gold,vip << Plan)
         if (user.getPlanId() != null) {
             Plan plan = planRepository.findByPlanId(user.getPlanId());
@@ -88,8 +88,8 @@ public class UserController {
     }
 
     @GetMapping("/mypage/update")
-    public void updateForm(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
-        User user = userService.findById(principalDetails.getUser().getId());
+    public void updateForm(@AuthenticationPrincipal PrincipalUserDetails PrincipalUserDetails, Model model) {
+        User user = userService.findById(PrincipalUserDetails.getUser().getId());
         model.addAttribute("user", user);
     }
 

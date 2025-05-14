@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class BrandDetails implements UserDetails {
+public class PrincipalBrandDetails implements UserDetails {
 
     private final Brand brand;
     private final BrandService brandService;
     
-    public BrandDetails(Brand brand, BrandService brandService) {
+    public PrincipalBrandDetails(Brand brand, BrandService brandService) {
 	    this.brand = brand;
 	    this.brandService = brandService;
     }

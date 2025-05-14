@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class UserDetails implements org.springframework.security.core.userdetails.UserDetails, OAuth2User {
+public class PrincipalUserDetails implements org.springframework.security.core.userdetails.UserDetails, OAuth2User {
 
     private final User user;
     private UserService userService;
@@ -29,12 +29,12 @@ public class UserDetails implements org.springframework.security.core.userdetail
  
 	
 	// 일반 로그인용 생성자
-    public UserDetails(User user) {
+    public PrincipalUserDetails(User user) {
         this.user = user;
     }
 	
 	// OAuth2 로그인용 생성자
-	public UserDetails(User user, Map<String, Object> attributes){
+	public PrincipalUserDetails(User user, Map<String, Object> attributes){
 		this.user = user;
 		this.attributes = attributes;
 	}
