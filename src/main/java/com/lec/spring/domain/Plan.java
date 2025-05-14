@@ -12,10 +12,9 @@ import lombok.NoArgsConstructor;
 public class Plan {
 	
 	private Long id;
-	private Type type;
 	private Integer price;
 	private Integer count;
 	
-	public enum Type { SILVER, GOLD, VIP }
+	private String type;
 	
 }

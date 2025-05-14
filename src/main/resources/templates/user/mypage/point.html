@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>포인트 환급</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <a href="/" class="logo">WearUp</a>
+        <nav class="header-nav">
+            <a href="/feed" class="nav-link">피드</a>
+            <a href="/upload" class="nav-link">업로드</a>
+            <a href="/item" class="nav-link">아이템</a>
+            <a href="/user/mypage/detail" class="nav-link">마이페이지</a>
+            <a href="/logout" class="nav-link">로그아웃</a>
+        </nav>
+    </div>
+</header>
+
+<div class="login-container">
+    <h2>포인트 환급</h2>
+    <p class="subheading">WEAR UP TO LEVEL UP</p>
+
+    <!-- 성공 메시지 -->
+    <div th:if="${success}" class="alert alert-success">
+        <p th:text="${success}">환급 요청이 성공적으로 처리되었습니다.</p>
+    </div>
+
+    <!-- 실패 메시지 -->
+    <div th:if="${error}" class="alert alert-error">
+        <p th:text="${error}">환급 요청에 실패했습니다.</p>
+    </div>
+
+    <!-- 현재 포인트 표시 -->
+    <div class="point-info-box">
+        <span class="point-label">현재 보유 포인트</span>
+        <span class="point-amount" th:text="${user.point}">0</span>
+        <span class="point-unit">P</span>
+    </div>
+
+    <form th:action="@{/user/mypage/point}" method="post">
+        <div class="form-group">
+            <label for="amount">환급 금액 *</label>
+            <input type="number" id="amount" name="amount" placeholder="최소 10,000원부터 가능" min="10000" required>
+            <small class="form-help">최소 환급 금액은 10,000원입니다.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="bankName">은행명 *</label>
+            <input type="text" id="bankName" name="bankName" placeholder="은행명을 입력하세요" required>
+        </div>
+
+        <div class="form-group">
+            <label for="holder">예금주 *</label>
+            <input type="text" id="holder" name="holder" placeholder="예금주명을 입력하세요" required>
+        </div>
+
+        <div class="form-group">
+            <label for="accountNumber">계좌번호 *</label>
+            <input type="text" id="accountNumber" name="accountNumber" placeholder="계좌번호를 입력하세요 (- 제외)" required>
+        </div>
+
+        <button type="submit" class="login-btn">환급 요청</button>
+    </form>
+
+    <div class="register-link">
+        <p><a th:href="@{/user/mypage/detail}">마이페이지로 돌아가기</a></p>
+    </div>
+</div>
+
+</body>
+</html>

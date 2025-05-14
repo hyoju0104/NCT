@@ -24,6 +24,13 @@ public interface UserService {
 
     void updateUserInfo(User user);
 
+    void refundPoint(Long userId, Integer amount);
+
+    void createPayment(Long userId);
+
+    void updateUserPlanId(Long id, Long planId);
+
+
 
 
 }

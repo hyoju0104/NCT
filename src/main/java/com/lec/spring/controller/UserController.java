@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -59,9 +61,10 @@ public class UserController {
         // 총 대여 가능 횟수는 Plan type을 기준으로 계산
         if (plan != null && plan.getType() != null) {
             totalCnt = switch (plan.getType()) {
-                case SILVER -> 3;
-                case GOLD -> 5;
-                case VIP -> 7;
+                case "SILVER" -> 3;
+                case "GOLD" -> 5;
+                case "VIP" -> 7;
+                default -> 0;
             };
         }
         //Payment 정보 가져오기
@@ -69,6 +72,10 @@ public class UserController {
         // 💡 payment가 null일 수도 있으니 확인 후 model에 추가
         if (payment != null) {
             model.addAttribute("paidAt", payment.getPaidAt());
+
+            // ✅ 구독 만료일 계산 (30일 후)
+            LocalDateTime expiredAt = payment.getPaidAt().plusDays(30);
+            model.addAttribute("expiredAt", expiredAt);
             model.addAttribute("expiredAt", payment.getExpiredAt());
         } else {
             model.addAttribute("paidAt", null);
@@ -103,4 +110,55 @@ public class UserController {
         userService.updateUserInfo(user);
         return "redirect:/user/mypage/detail";
     }
+
+    @GetMapping("/payment")
+    public void paymentForm() {}
+    @PostMapping("/payment")
+    public String submitPayment(@AuthenticationPrincipal PrincipalUserDetails principalDetails,
+                                @RequestParam("planId") Long planId) {
+        Long id = principalDetails.getUser().getId();
+
+        // 1. planId만 따로 업데이트
+        userService.updateUserPlanId(id, planId);
+
+        // 2. 결제 처리
+        userService.createPayment(id);
+
+        return "redirect:/user/mypage/detail";
+    }
+
+    @GetMapping("/mypage/point")
+    public void pointRefundForm(@AuthenticationPrincipal PrincipalUserDetails principalDetails,
+                                Model model) {
+        User user = userService.findById(principalDetails.getUser().getId());
+        model.addAttribute("user", user);
+    }
+
+    @PostMapping("/mypage/point")
+    public String refundPoint(@AuthenticationPrincipal PrincipalUserDetails principalDetails,
+                              @RequestParam("amount") Integer amount,
+                              RedirectAttributes redirectAttrs) {
+        User user = principalDetails.getUser();
+
+        // 포인트가 부족한 경우
+        if (user.getPoint() == null || user.getPoint() < amount) {
+            redirectAttrs.addFlashAttribute("error", "포인트가 부족합니다.");
+            return "redirect:/user/mypage/point";
+        }
+
+        try {
+            userService.refundPoint(user.getId(), amount);
+            // 사용자 객체 포인트도 차감 (뷰 반영 목적, 실제 DB 반영은 Service에서 수행됨)
+            user.setPoint(user.getPoint() - amount);
+            redirectAttrs.addFlashAttribute("success", "환급 요청이 정상적으로 처리되었습니다.");
+        } catch (IllegalArgumentException e) {
+            redirectAttrs.addFlashAttribute("error", e.getMessage());
+        }
+
+        return "redirect:/user/mypage/point";
+    }
+
+
+
+
 }

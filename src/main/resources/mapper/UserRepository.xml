@@ -62,5 +62,24 @@
         WHERE id = #{id}
     </update>
 
+    <update id="updateUserPlanId">
+        UPDATE user
+        SET plan_id = #{planId}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updatePaidAt" parameterType="long">
+        UPDATE user
+        SET paid_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <update id="refundPoint">
+        UPDATE user
+        SET point = point - #{amount}
+        WHERE id = #{id} AND point >= #{amount}
+    </update>
+
+
 
 </mapper>

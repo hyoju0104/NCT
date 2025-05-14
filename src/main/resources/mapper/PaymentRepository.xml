@@ -13,5 +13,8 @@
         ORDER BY paid_at DESC
         LIMIT 1
     </select>
-
+    <insert id="save" parameterType="com.lec.spring.domain.Payment">
+        INSERT INTO payment (user_id, plan_id, price,paid_at)
+        VALUES (#{userId}, #{planId}, #{price},NOW())
+    </insert>
 </mapper>

@@ -184,3 +184,67 @@ body {
     color: #396;
     border: 1px solid #cfc;
 }
+
+/* 포인트 정보 박스 스타일 */
+.point-info-box {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.point-label {
+    display: block;
+    font-size: 14px;
+    color: #666666;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.point-amount {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1976d2;
+    margin-right: 8px;
+}
+
+.point-unit {
+    font-size: 18px;
+    color: #1976d2;
+    font-weight: 600;
+}
+
+/* 폼 도움말 텍스트 스타일 */
+.form-help {
+    display: block;
+    font-size: 12px;
+    color: #888888;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+/* 숫자 입력 필드 스타일 개선 */
+.form-group input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+.form-group input[type="number"]::-webkit-outer-spin-button,
+.form-group input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* 계좌번호 입력 필드 특별 스타일 */
+.form-group input[type="text"][id="accountNumber"] {
+    font-family: monospace;
+    letter-spacing: 1px;
+}
+
+/* 환급 요청 버튼 호버 효과 강화 */
+.login-btn:hover {
+    background-color: #000000;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

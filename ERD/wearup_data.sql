@@ -85,3 +85,7 @@ INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status) VALUES
         (2, 2, '2025-05-13 17:40:00', 'RETURNED'),
         (3, 3, '2025-05-15 17:40:00', 'OVERDUE')
 ;
+
+UPDATE user
+SET point = 30000
+WHERE username = 'user5';

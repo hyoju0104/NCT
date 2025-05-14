@@ -37,6 +37,7 @@ public class PrincipalService implements UserDetailsService {
         if (user != null) {
             //PrincipalDetails : 사용자 정보 객체 > 그 안에 우리가 찾은 user 객체를 넣어서 리턴
             PrincipalUserDetails principalUserDetails = new PrincipalUserDetails(user);
+            principalUserDetails.setUserService(userService);
             return principalUserDetails;
         }
         

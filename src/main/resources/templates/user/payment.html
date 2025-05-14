@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결제</title>
+</head>
+<body>
+<header>
+    <div>
+        <a href="/">로고</a>
+        <nav>
+            <a href="/feed">피드</a>
+            <a href="/upload">업로드</a>
+            <a href="/item">아이템</a>
+            <a href="/user/mypage/detail">마이페이지</a>
+        </nav>
+        <span>계정명</span>
+        <a href="/logout">로그아웃</a>
+    </div>
+</header>
+
+<main>
+    <h2>구독 등급 선택</h2>
+    <div>
+        <form th:action="@{/user/payment}" method="post">
+            <input type="hidden" name="planId" id="planId">
+
+            <button type="button" onclick="selectPlan(1)">Silver 선택</button>
+            <button type="button" onclick="selectPlan(2)">Gold 선택</button>
+            <button type="button" onclick="selectPlan(3)">VIP 선택</button>
+
+            <div>
+                <button type="submit">결제하기</button>
+            </div>
+        </form>
+
+        <script>
+            function selectPlan(id) {
+                document.getElementById("planId").value = id;
+            }
+        </script>
+
+    </div>
+</main>
+</body>
+</html>

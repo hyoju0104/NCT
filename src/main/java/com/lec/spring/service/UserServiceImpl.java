@@ -1,13 +1,18 @@
 package com.lec.spring.service;
 
 import com.lec.spring.domain.Authority;
+import com.lec.spring.domain.Payment;
+import com.lec.spring.domain.Plan;
 import com.lec.spring.domain.User;
 import com.lec.spring.repository.AuthorityRepository;
+import com.lec.spring.repository.PaymentRepository;
+import com.lec.spring.repository.PlanRepository;
 import com.lec.spring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 /**
@@ -25,6 +30,8 @@ public class UserServiceImpl implements UserService {
     //DB에서 사용자, 권한 정보 조회
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
+    private final PlanRepository planRepository;
+    private final PaymentRepository paymentRepository;
     
     @Override
     public User findById(Long id) {
@@ -96,6 +103,39 @@ public class UserServiceImpl implements UserService {
         String encPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encPassword);
         userRepository.updateUserInfo(user);
+    }
+
+    @Override
+    @Transactional
+    public void refundPoint(Long id, Integer amount) {
+        User user = userRepository.findById(id);
+        if (user.getPoint() < amount) throw new IllegalArgumentException("잔여 포인트 부족");
+        userRepository.refundPoint(id, amount);
+    }
+
+    @Override
+    @Transactional
+    public void createPayment(Long userId) {
+        User user = userRepository.findById(userId);
+        Plan plan = planRepository.findByPlanId(user.getPlanId());
+        if (plan == null) throw new IllegalStateException("유효한 플랜이 없습니다.");
+
+        // Payment 테이블에 기록
+        Payment payment = Payment.builder()
+                .userId(userId)
+                .planId(plan.getId())
+                .price(plan.getPrice())
+                .build();
+        paymentRepository.save(payment);
+
+        // ✅ User 테이블의 paid_at 필드 갱신
+        userRepository.updatePaidAt(userId);
+    }
+
+
+    @Override
+    public void updateUserPlanId(Long id, Long planId) {
+        userRepository.updateUserPlanId(id, planId);
     }
 
 
