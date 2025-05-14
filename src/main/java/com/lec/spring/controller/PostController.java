@@ -98,17 +98,29 @@ public class PostController {
 	
 	
 	@GetMapping("/update/{id}")
-	public String update(@PathVariable Long id, Model model){
-		model.addAttribute("post", postService);
+	public String update(
+			@PathVariable Long id,
+			Model model,
+			@AuthenticationPrincipal PrincipalDetails principal  // (선택) 작성자 검증용
+	) {
+		// 1) DB에서 실제 Post 조회
+		Post post = postService.detail(id);
+		
+		// 2) (선택) 작성자 본인만 수정 가능하도록 체크
+		if(principal == null || !principal.getUser().getId().equals(post.getUser().getId())){
+			return "redirect:/post/list";
+		}
+		
+		model.addAttribute("post", post);
 		return "post/update";
 	}
 	
 	@PostMapping("/update")
 	public String updateOk(
+			@ModelAttribute("post") Post post,
+			BindingResult result,
 			@RequestParam Map<String, MultipartFile> files, // 새로 추가되는 첨부파일(들) 정보
 			Long[] delfile,     // 삭제될 파일들의 id(들)
-			Post post,
-			BindingResult result,
 			Model model,
 			RedirectAttributes redirectAttributes
 	){
@@ -125,7 +137,7 @@ public class PostController {
 			return "redirect:/post/update/" + post.getId();
 		}
 		
-		model.addAttribute("result", postService.update(post, files, delfile));  // <- id, subject, content
+		model.addAttribute("result", postService.update(post, files, delfile));
 		return "post/updateOk";
 	}
 	

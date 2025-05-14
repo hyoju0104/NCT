@@ -25,7 +25,7 @@ public class OrderController {
     public String orderDetail(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes, HttpSession session, @AuthenticationPrincipal PrincipalDetails principal) {
         Item item = itemService.detail(id);
 //        User user = (User) session.getAttribute("user");
-        
+
         if (principal == null) {
             redirectAttributes.addFlashAttribute("error", "로그인 후 작성 가능합니다.");
             return "redirect:/post/list";

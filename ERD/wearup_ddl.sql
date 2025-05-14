@@ -17,7 +17,7 @@ CREATE TABLE Attachment
   post_id    INT          NOT NULL,
   sourcename VARCHAR(100) NULL    ,
   filename   VARCHAR(100) NOT NULL,
-  sequence   INT          NOT NULL,
+  -- sequence   INT          NOT NULL,
   PRIMARY KEY (id)
 );
 

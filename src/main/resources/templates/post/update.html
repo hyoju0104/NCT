@@ -32,12 +32,13 @@
 			<hr>
 			<div class="mb-3 mt-3 clearfix">
 				<span class="float-start me-2">id: [[${post.id}]]</span>
-				<span class="float-end ms-4">작성일: [[${#temporals.format(post.created_at, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+				<span class="float-end ms-4">작성일: [[${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</span>
 			</div>
 			
-			<form name="frm" th:action="@{/post/update}" method="post" enctype="multipart/form-data">
+			<form name="frm" th:action="@{/post/update}" th:object="${post}" method="post" enctype="multipart/form-data">
 				
-				<input type="hidden" name="id" th:value="${post.id}"/>
+				<input type="hidden" name="post_id" th:value="${post.id}" th:field="*{id}"/>
+				
 				<div class="mb-3">
 					<label>작성자:</label>
 					<span class="form-control" readonly th:text="${post.user.username}"></span>
@@ -47,14 +48,14 @@
 				<div class="mb-3 mt-3">
 					<label for="content">내용:</label>
 					<textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content"
-							  th:utext="${content} ? ${content} : ${post.content}"></textarea>
+							  th:field="*{content}"th:utext="${content} ? ${content} : ${post.content}"></textarea>
 				</div>
 				
 				<div class="mb-3 mt-3">
 					<label for="subject">상품:</label>
-					<input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject"
-						   th:value="${items} ? ${items} : ${post.items}">
-					<span class="text-danger" th:if="${error_subject}" th:utext="${error_subject}"></span>
+					<textarea type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject"
+							  th:field="*{items}" th:value="${items} ? ${items} : ${post.items}"></textarea>
+					<span class="text-danger" th:if="${error_items}" th:utext="${error_items}"></span>
 				</div>
 				
 				

@@ -28,7 +28,4 @@ public interface PostService {
 	// 특정 id 의 글 삭제하기 (DELETE)
 	int deleteById(Long id);
 	
-	// 페이징 목록
-	List<Post> list(Integer page, Model model);
-	
 }

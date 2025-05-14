@@ -6,7 +6,7 @@
 <mapper namespace="com.lec.spring.repository.AttachmentRepository">
 
     <sql id="SELECT_FILE">
-        SELECT id, post_id, sourcename, filename, sequence
+        SELECT id, post_id, sourcename, filename/*, sequence*/
         FROM Attachment
         WHERE 1 = 1
     </sql>
@@ -16,20 +16,13 @@
         <result column="post_id" property="postId"/>
         <result column="sourcename" property="sourcename"/>
         <result column="filename" property="filename"/>
-        <result column="sequence" property="sequence"/>
+<!--        <result column="sequence" property="sequence"/>-->
     </resultMap>
 
-    <insert id="insert" parameterType="arrayList" flushCache="true">
-        INSERT INTO Attachment(sourcename, filename, post_id)
-        VALUES
-        <foreach collection="list" item="e" separator=",">
-            (#{e.sourcename}, #{e.filename}, #{param2})
-        </foreach>
-    </insert>
     
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Attachment">
-        INSERT INTO Attachment(sourcename, filename, post_id)
-        VALUES (#{sourcename}, #{filename}, #{post_id})
+        INSERT INTO Attachment(post_id, sourcename, filename)
+        VALUES (#{postId}, #{sourcename}, #{filename})
     </insert>
 
     <select id="findByPostId" resultType="com.lec.spring.domain.Attachment">
