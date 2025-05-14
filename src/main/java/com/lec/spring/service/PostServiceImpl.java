@@ -55,7 +55,9 @@ public class PostServiceImpl implements PostService {
 		List<Post> posts = postRepository.findAll();
 		
 		for (Post post : posts) {
+			// postId 에 연결된 이미지 파일 전부 조회
 			List<PostAttachment> attachments = postAttachmentRepository.findByPostId(post.getId());
+			
 			if (attachments != null && !attachments.isEmpty()) {
 				// id 기준 오름차순으로 정렬
 				PostAttachment representative = attachments.stream()

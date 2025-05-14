@@ -50,7 +50,7 @@
 					<div class="carousel-inner">
 						<div class="carousel-item" th:each="attachment, stat : ${post.fileList}"
 							 th:classappend="${stat.index == 0} ? ' active'">
-							<img th:src="@{'/upload/' + ${attachment.filename}}" class="d-block w-100 img-thumbnail"
+							<img th:src="@{'/upload/post/' + ${attachment.filename}}" class="d-block w-100 img-thumbnail"
 								 alt="이미지">
 						</div>
 					</div>
