@@ -64,8 +64,11 @@
         AND i.id = #{id}
     </select>
 
-    <update id="markAsUnavailable" flushCache="true" parameterType="long">
-        UPDATE Item SET is_available = false WHERE id = #{id}
+    <update id="markAsUnavailable" parameterType="long" flushCache="true">
+        UPDATE Item
+        SET
+            is_available = false
+        WHERE id = #{id}
     </update>
 
     <select id="findAll" resultMap="mapItem">
