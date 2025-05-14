@@ -1,9 +1,9 @@
 package com.lec.spring.service;
 
-import com.lec.spring.domain.Attachment;
+import com.lec.spring.domain.PostAttachment;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
-import com.lec.spring.repository.AttachmentRepository;
+import com.lec.spring.repository.PostAttachmentRepository;
 import com.lec.spring.repository.PostRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.U;
@@ -37,12 +37,12 @@ public class PostServiceImpl implements PostService {
 	
 	private final PostRepository postRepository;
 	private final UserRepository userRepository;
-	private final AttachmentRepository attachmentRepository;
+	private final PostAttachmentRepository attachmentRepository;
 	
 	public PostServiceImpl(SqlSession sqlSession) {
 		this.postRepository = sqlSession.getMapper(PostRepository.class);
 		this.userRepository = sqlSession.getMapper(UserRepository.class);
-		this.attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
+		this.attachmentRepository = sqlSession.getMapper(PostAttachmentRepository.class);
 		System.out.println("✅ PostService() 생성");
 	}
 	
@@ -88,7 +88,7 @@ public class PostServiceImpl implements PostService {
 			System.out.println();
 			
 			// 물리적인 파일 저장
-			Attachment file = upload(e.getValue());
+			PostAttachment file = upload(e.getValue());
 			
 			// 저장 성공 시, DB 에 파일 저장
 			if (file != null) {
@@ -101,9 +101,9 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	// 물리적으로 서버에 파일 저장. 중복된 파일명은 rename 처리
-	private Attachment upload(MultipartFile multipartFile) {
+	private PostAttachment upload(MultipartFile multipartFile) {
 		
-		Attachment attachment = null;
+		PostAttachment attachment = null;
 		
 		// 담긴 파일이 없으면 pass
 		String originalFilename = multipartFile.getOriginalFilename();
@@ -159,7 +159,7 @@ public class PostServiceImpl implements PostService {
 		}
 		
 		// 최종 attachment 설정
-		attachment = Attachment.builder()
+		attachment = PostAttachment.builder()
 				.filename(fileName) // 저장된 파일명
 				.sourcename(sourceName) // 원본 파일명
 				.build();
@@ -174,7 +174,7 @@ public class PostServiceImpl implements PostService {
 		
 		if (post != null) {
 			// 첨부파일(들) 정보 가져오기
-			List<Attachment> fileList = attachmentRepository.findByPostId(post.getId());
+			List<PostAttachment> fileList = attachmentRepository.findByPostId(post.getId());
 			
 			// Post 에 첨부파일 세팅
 			post.setFileList(fileList); // 템플릿 엔진에서 받아서 view 생성

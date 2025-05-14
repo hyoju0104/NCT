@@ -17,6 +17,13 @@ body {
 }
 
 
+/* table-hover 의 hover 스타일을 no-hover 행에선 무시 */
+.table-hover tbody tr.no-hover:hover > td {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+
 .form-group {
     margin-bottom: 16px;
 }

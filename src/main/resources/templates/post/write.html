@@ -22,38 +22,7 @@
 <body>
 	
 	<!-- 상단 메뉴 -->
-	<header class="header">
-		<div class="header-content">
-			<a href="#" class="logo">WearUp</a>
-			<nav class="header-nav">
-				<!-- 전체 공개 메뉴 -->
-				<a th:href="@{/post/list}" class="nav-link">피드</a>
-				<a th:href="@{/item/list}" class="nav-link">아이템</a>
-				<a sec:authorize="isAnonymous()" th:href="@{/login}" class="nav-link" id="login">로그인</a>
-				<a sec:authorize="isAnonymous()" th:href="@{/register/kind}" class="nav-link" id="register">회원가입</a>
-				
-				<!-- 로그인 사용자 전용 메뉴 -->
-				<a sec:authorize="hasAnyAuthority('USER', 'BRAND', 'ADMIN')" th:href="@{/logout}" class="nav-link" id="logout">로그아웃</a>
-				
-				<!-- USER 전용 메뉴 -->
-				<a sec:authorize="hasAnyAuthority('USER')" th:href="@{/user/mypage/detail}" class="nav-link">마이페이지</a>
-				<div sec:authorize="hasAnyAuthority('USER')"
-					 th:text="${#authentication.principal.username + ' (' + #authentication.principal.user.name + ')'}"
-					 id="user-username" class="nav-link"></div>
-				
-				<!-- BRAND 전용 메뉴 -->
-				<a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">상품 관리</a>
-				<a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">마이페이지</a>
-				<div sec:authorize="hasAnyAuthority('BRAND')"
-					 th:text="${#authentication.principal.username + ' (' + #authentication.principal.brand.name + ')'}"
-					 id="brand-username" class="nav-link"></div>
-				
-				<!-- ADMIN 전용 메뉴 -->
-				<a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin/sales}" class="nav-link">매출 관리</a>
-				<a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin/users}" class="nav-link">회원 관리</a>
-			</nav>
-		</div>
-	</header>
+	<th:block th:insert="~{common/header::header}"></th:block>
 	
 	
 	<th:block th:with="loginUser=${#authentication.principal.user}">
