@@ -1,7 +1,7 @@
 package com.lec.spring.config.oauth;
 
 
-import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.config.UserDetails;
 import com.lec.spring.config.oauth.provider.GoogleUserInfo;
 import com.lec.spring.config.oauth.provider.KakaoUserInfo;
 import com.lec.spring.config.oauth.provider.NaverUserInfo;
@@ -109,12 +109,12 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         }
 
         // Spring Security가 인증된 사용자 정보를 담을 수 있도록 PrincipalDetails 객체에 사용자 정보와 attributes(제공자 정보) 전달
-        PrincipalDetails principalDetails = new PrincipalDetails(user, oAuth2User.getAttributes());
+        UserDetails userDetails = new UserDetails(user, oAuth2User.getAttributes());
         // 내부적으로 필요한 userService 를 PrincipalDetails 에도 주입
-        principalDetails.setUserService(userService);
+        userDetails.setUserService(userService);
 
         // 최종적으로 인증된 사용자 객체를 반환
-        return principalDetails;
+        return userDetails;
     }
 }
 

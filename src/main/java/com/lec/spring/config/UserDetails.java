@@ -4,6 +4,7 @@ import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,11 +14,7 @@ import java.util.Map;
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails, OAuth2User {
 
     private final User user;
-    private final UserService userService;
-	
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+    private UserService userService;
 	
 	public User getUser() {
 		return user;
@@ -25,16 +22,19 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	
 	//OAuth2 관련 값 저장
 	private Map<String, Object> attributes;
+	
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
  
 	
 	// 일반 로그인용 생성자
     public UserDetails(User user) {
         this.user = user;
-        this.userService = userService;
     }
 	
 	// OAuth2 로그인용 생성자
-	public PrincipalDetails(User user, Map<String, Object> attributes){
+	public UserDetails(User user, Map<String, Object> attributes){
 		this.user = user;
 		this.attributes = attributes;
 	}
@@ -43,6 +43,11 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	@Override
 	public Map<String, Object> getAttributes() {
 		return this.attributes;
+	}
+	
+	@Override
+	public String getName() {
+		return user.getUsername();
 	}
 
     @Override
@@ -117,6 +122,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
     public boolean isAccountNonExpired() {
         return true;
     }
+	
 }
 
 
