@@ -8,6 +8,11 @@
 	history.back();
 </script>
 
+<script th:inline="javascript">
+	// 익명 사용자(anonymous) 상태에서도 존재하는 전역 변수로 선언
+	var logged_id = null;
+</script>
+
 <th:block th:if="${post}">
 	<head>
 		<meta charset="utf-8">
@@ -18,8 +23,6 @@
 		<!--		<link rel="stylesheet" th:href="@{/css/common.css}">-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 		<script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
-		
-		<script th:src="@{/js/detail.js}"></script>
 		
 		<title>조회 - [[${post.id}]]</title>
 	</head>
@@ -32,7 +35,7 @@
 				
 				<!-- 삭제 기능 -->
 				<form name="frmDelete" th:action="@{/post/delete}" method="post">
-					<input type="hidden" name="id" th:value="${post.id}">
+					<input type="hidden" name="id" id="postId" th:value="${post.id}">
 				</form>
 				<!-- 삭제 기능 -->
 				
@@ -115,7 +118,10 @@
 			
 			</section>
 		</div>
+		
+		<script th:src="@{/js/detail.js}"></script>
 	
 	</body>
+	
 </th:block>
 </html>
