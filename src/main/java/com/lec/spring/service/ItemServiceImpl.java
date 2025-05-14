@@ -27,8 +27,15 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public int write(Item item, Map<String, MultipartFile> files) {
-        return 0;
+    public void save(Item item) {
+        item.setIsAvailable(true);
+        item.setIsExist(true);
+        itemRepository.save(item);
+    }
+
+    @Override
+    public List<Item> findByBrandId(Long brandId) {
+        return itemRepository.findByBrandId(brandId);
     }
 
     @Override

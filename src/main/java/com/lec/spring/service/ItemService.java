@@ -13,7 +13,9 @@ public interface ItemService {
 
     List<Item> findByCategory(String category);
 
-    int write(Item item, Map<String, MultipartFile> files);
+    void save(Item item);
+
+    List<Item> findByBrandId(Long brandId);
 
     Item detail(Long id);
 

@@ -2,125 +2,64 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>브랜드 마이페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/common.css}">
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-
-    <title>Brand Item List</title>
 </head>
 
-<body>
+<form name="frm"
+      th:action="@{/brand/item/write}"
+      method="post"
+      enctype="multipart/form-data">
 
-<!-- 상단 메뉴 -->
-<header class="header">
-    <div class="header-content">
-        <a href="#" class="logo">WearUp</a>
-        <nav class="header-nav">
-            <!-- 전체 공개 메뉴 -->
-            <a th:href="@{/post/list}" class="nav-link">피드</a>
-            <a th:href="@{/item/list}" class="nav-link">아이템</a>
-            <a sec:authorize="isAnonymous()" th:href="@{/login}" class="nav-link" id="login">로그인</a>
-            <a sec:authorize="isAnonymous()" th:href="@{/register/kind}" class="nav-link" id="register">회원가입</a>
+    <h3>상품 등록</h3>
 
-            <!-- 로그인 사용자 전용 메뉴 -->
-            <a sec:authorize="hasAnyAuthority('USER', 'BRAND', 'ADMIN')" th:href="@{/logout}" class="nav-link" id="logout">로그아웃</a>
-
-            <!-- USER 전용 메뉴 -->
-            <a sec:authorize="hasAnyAuthority('USER')" th:href="@{/user/mypage/detail}" class="nav-link">마이페이지</a>
-            <div sec:authorize="hasAnyAuthority('USER')"
-                 th:text="${#authentication.principal.username + ' (' + #authentication.principal.user.name + ')'}"
-                 id="user-username" class="nav-link"></div>
-
-            <!-- BRAND 전용 메뉴 -->
-            <a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">상품 관리</a>
-            <a sec:authorize="hasAnyAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">마이페이지</a>
-            <div sec:authorize="hasAnyAuthority('BRAND')"
-                 th:text="${#authentication.principal.username + ' (' + #authentication.principal.brand.name + ')'}"
-                 id="brand-username" class="nav-link"></div>
-
-            <!-- ADMIN 전용 메뉴 -->
-            <a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin/sales}" class="nav-link">매출 관리</a>
-            <a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin/users}" class="nav-link">회원 관리</a>
-        </nav>
+    <div class="mb-3">
+        <label>브랜드명:</label>
+        <span class="form-control" readonly
+              th:text="${#authentication.principal.brand.name}">브랜드명</span>
     </div>
-</header>
 
-<div class="container mt-3">
+    <div class="mb-3 mt-3">
+        <label for="category">카테고리:</label>
+        <select class="form-select" id="category" name="category">
+            <option value="" disabled th:if="${item.category == null}" selected>카테고리를 선택하세요</option>
+            <option value="상의" th:selected="${item.category == '상의'}">상의</option>
+            <option value="하의" th:selected="${item.category == '하의'}">하의</option>
+            <option value="아우터" th:selected="${item.category == '아우터'}">아우터</option>
+            <option value="신발" th:selected="${item.category == '신발'}">신발</option>
+            <option value="잡화" th:selected="${item.category == '잡화'}">잡화</option>
+        </select>
+    </div>
 
-    <form name="frm" th:action="@{/order/complete/{id}(id=${item.id})}" method="post">
-        <input type="hidden" name="id" th:value="${user.id}"/>
-        <input type="hidden" name="username" th:value="${user.username}"/>
-        <input type="hidden" name="name" th:value="${user.name}"/>
+    <div class="mb-3 mt-3">
+        <label for="name">상품명:</label>
+        <input type="text" class="form-control" id="name" name="name"
+               th:value="${item.name}" placeholder="상품명을 입력하세요">
+    </div>
 
-        <h3>상품 등록</h3>
+    <div class="my-3">
+        <label for="description">상품설명:</label>
+        <textarea class="form-control" rows="5" id="description" name="description"
+                  placeholder="내용을 입력하세요" th:text="${item.description}"></textarea>
+    </div>
 
-        <div class="mb-3">
-            <label>브랜드명:</label>
-            <span class="form-control" readonly th:text="${brand.name}"></span>
-        </div>
+    <div class="mb-3 mt-3">
+        <label for="statusItem">상품상태:</label>
+        <select class="form-select" id="statusItem" name="statusItem">
+            <option value="" disabled th:if="${item.statusItem == null}" selected>상태를 선택하세요</option>
+            <option value="A" th:selected="${item.statusItem == 'A'}">A</option>
+            <option value="B" th:selected="${item.statusItem == 'B'}">B</option>
+            <option value="C" th:selected="${item.statusItem == 'C'}">C</option>
+        </select>
+    </div>
 
-        <div class="mb-3 mt-3">
-            <label for="category">카테고리:</label>
-            <select class="form-select" id="category" name="category">
-                <option value="" disabled th:if="${item.category == null}" selected>카테고리를 선택하세요</option>
-                <option value="상의" th:selected="${item.category == '상의'}">상의</option>
-                <option value="하의" th:selected="${item.category == '하의'}">하의</option>
-                <option value="아우터" th:selected="${item.category == '아우터'}">아우터</option>
-                <option value="신발" th:selected="${item.category == '신발'}">신발</option>
-                <option value="잡화" th:selected="${item.category == '잡화'}">잡화</option>
-            </select>
-        </div>
+    <div class="mb-3 mt-3">
+        <label>상품 이미지:</label>
+    </div>
 
-        <div class="mb-3 mt-3">
-            <label for="name">상품명:</label>
-            <input type="text" class="form-control" id="name" name="name"
-                   th:value="${name != null ? name : item.name}" placeholder="상품명을 입력하세요">
-<!--            <span class="text-danger" th:if="${error_name}" th:utext="${error_name}"></span>-->
-        </div>
-
-        <div class="my-3">
-            <label for="description">상품설명:</label>
-            <textarea class="form-control" rows="5" id="description" placeholder="내용을 입력하세요" name="description" th:utext="${description}"></textarea>
-        </div>
-
-        <div class="mb-3 mt-3">
-            <label for="statusItem">상품상태:</label>
-            <select class="form-select" id="statusItem" name="statusItem">
-                <option value="" disabled th:if="${item.statusItem == null}" selected>상태를 선택하세요</option>
-                <option value="A" th:selected="${item.statusItem == 'A'}">A</option>
-                <option value="B" th:selected="${item.statusItem == 'B'}">B</option>
-                <option value="C" th:selected="${item.statusItem == 'C'}">C</option>
-            </select>
-        </div>
-
-
-        <div class="d-flex">
-            <button type="submit" class="btn btn-outline-danger">등록하기</button>
-            <button type="button" class="btn btn-outline-dark ms-2" onclick="history.back()">이전으로</button>
-        </div>
-    </form>
-
-</div>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <div class="d-flex">
+        <button type="submit" class="btn btn-outline-danger">등록하기</button>
+        <button type="button" class="btn btn-outline-dark ms-2" onclick="history.back()">이전으로</button>
+    </div>
+</form>

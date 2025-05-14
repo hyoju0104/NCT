@@ -12,14 +12,6 @@
 	<h2>브랜드 마이페이지</h2>
 	<hr>
 
-	<div class="mb-4 text-center">
-		<img th:if="${brand.logoFilename != null}"
-			 th:src="@{'/upload/brand/' + ${brand.logoFilename}}"
-			 alt="브랜드 로고"
-			 class="img-thumbnail"
-			 style="max-width: 200px;">
-	</div>
-
 	<div class="mb-3">
 		<label>브랜드명</label>
 		<div class="form-control" readonly th:text="${brand.name}"></div>
@@ -44,6 +36,10 @@
 			  onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
 			<button type="submit" class="btn btn-danger">계정 탈퇴</button>
 		</form>
+
+		<a th:href="@{/brand/list}" class="btn btn-primary ms-auto">등록 상품 목록</a>
+		<a th:href="@{/brand/item/write}" class="btn btn-primary ms-auto">상품 등록하기</a>
+
 	</div>
 </div>
 

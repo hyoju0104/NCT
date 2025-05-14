@@ -2,7 +2,9 @@ package com.lec.spring.controller;
 
 import com.lec.spring.config.BrandDetails;
 import com.lec.spring.domain.Brand;
+import com.lec.spring.domain.Item;
 import com.lec.spring.service.BrandService;
+import com.lec.spring.service.ItemService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,9 +24,11 @@ import java.util.List;
 public class BrandController {
 
     private final BrandService brandService;
+    private final ItemService itemService;
 
-    public BrandController(BrandService brandService) {
+    public BrandController(BrandService brandService, ItemService itemService) {
         this.brandService = brandService;
+        this.itemService = itemService;
     }
 
     @GetMapping("/mypage/detail")
