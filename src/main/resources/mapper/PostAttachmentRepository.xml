@@ -3,15 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.lec.spring.repository.AttachmentRepository">
+<mapper namespace="com.lec.spring.repository.PostAttachmentRepository">
 
     <sql id="SELECT_FILE">
-        SELECT id, post_id, sourcename, filename/*, sequence*/
+        SELECT id, post_id, sourcename, filename
         FROM Attachment
         WHERE 1 = 1
     </sql>
 
-    <resultMap id="MapAttachment" type="com.lec.spring.domain.Attachment">
+    <resultMap id="MapAttachment" type="com.lec.spring.domain.PostAttachment">
         <result column="id" property="id"/>
         <result column="post_id" property="postId"/>
         <result column="sourcename" property="sourcename"/>
@@ -20,18 +20,18 @@
     </resultMap>
 
     
-    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Attachment">
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.PostAttachment">
         INSERT INTO Attachment(post_id, sourcename, filename)
         VALUES (#{postId}, #{sourcename}, #{filename})
     </insert>
 
-    <select id="findByPostId" resultType="com.lec.spring.domain.Attachment">
+    <select id="findByPostId" resultType="com.lec.spring.domain.PostAttachment">
         <include refid="SELECT_FILE"/>
         AND post_id = #{param1}
         ORDER BY id ASC
     </select>
 
-    <select id="findById" resultType="com.lec.spring.domain.Attachment">
+    <select id="findById" resultType="com.lec.spring.domain.PostAttachment">
         <include refid="SELECT_FILE"/>
         AND id = #{id}
     </select>
@@ -39,7 +39,7 @@
     <!-- MyBatis 입장에서는 array 와 ArrayList 를 동일하다고 보고 동작시킴 -->
     <!-- item = e = Long 타입 -->
     <!-- open="(" close=")" : ( id, id, ... ) -->
-    <select id="findByIds" resultType="com.lec.spring.domain.Attachment" parameterType="java.util.ArrayList">
+    <select id="findByIds" resultType="com.lec.spring.domain.PostAttachment" parameterType="java.util.ArrayList">
         <include refid="SELECT_FILE"/>
         AND ID IN
         <foreach collection="array" item="e" separator="," open="(" close=")">
@@ -53,7 +53,7 @@
         WHERE id IN (<foreach collection="array" item="item" separator=",">#{item}</foreach>)
     </delete>
 
-    <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.Attachment">
+    <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.PostAttachment">
         DELETE FROM Attachment
         WHERE id = #{id}
     </delete>

@@ -1,48 +1,27 @@
 package com.lec.spring.config;
 
 import com.lec.spring.domain.Authority;
-import com.lec.spring.domain.User;
-import com.lec.spring.service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.lec.spring.domain.Brand;
+import com.lec.spring.service.BrandService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
-public class PrincipalDetails implements UserDetails, OAuth2User {
+public class BrandDetails implements UserDetails {
 
-    private final User user;
-    private UserService userService;
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    private final Brand brand;
+    private final BrandService brandService;
+    
+    public BrandDetails(Brand brand, BrandService brandService) {
+	    this.brand = brand;
+	    this.brandService = brandService;
     }
-    public User getUser() {
-        return user;
-    }
-
-
-    //OAuth2 관련
-    private Map<String, Object> attributes;
-
-    //일반 로그인용 생성자
-    public PrincipalDetails(User user) {
-        this.user = user;
-    }
-
-    // OAuth2 로그인용 생성자
-    public PrincipalDetails(User user, Map<String, Object> attributes){
-        this.user = user;
-        this.attributes = attributes;
-    }
-
-    @Override
-    public Map<String, Object> getAttributes() {
-        return this.attributes;
+    
+    public Brand getBrand() {
+        return brand;
     }
 
     @Override
@@ -51,7 +30,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         Collection<GrantedAuthority> collect = new ArrayList<>();
         //DB에서 실제로 로그인한 유저의 권한 목록 가져오는 구문
         // e.g. user.getId() → 3 >> selectAuthoritiesById(3) → [Authority(ROLE_USER)]
-        List<Authority> list = userService.selectAuthoritiesById(user.getId());
+        List<Authority> list = brandService.selectAuthoritiesById(brand.getId());
         for(Authority auth : list){
             collect.add(new GrantedAuthority(){
                 @Override
@@ -86,12 +65,13 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        System.out.println("brand.getPassword() : " + brand.getPassword());
+        return brand.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return brand.getUsername();
     }
 
     // 활성화 되었는지
@@ -116,11 +96,6 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     @Override
     public boolean isAccountNonExpired() {
         return true;
-    }
-
-    @Override
-    public String getName() {
-        return "";
     }
 }
 

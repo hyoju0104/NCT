@@ -61,6 +61,7 @@ public class RegisterController {
 
     }
 
+    
     @GetMapping("/brand")
     public void registerBrand(){}
 
@@ -84,24 +85,27 @@ public class RegisterController {
             return "redirect:/register/brand";
         }
 
-        // 3. 로고 파일 저장
-        String originalName = logoFile.getOriginalFilename();
-        //저장할 파일 이름을 고유하게 만듦(중복 방지용)
-        String storedFileName = UUID.randomUUID() + "_" + originalName;
-
-        // /upload/brand 에 저장
-        Path savePath = Paths.get(uploadDir, storedFileName);
-        try {
-            Files.copy(logoFile.getInputStream(), savePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            redirectAttrs.addAttribute("error", "file");
-            return "redirect:/register/brand";
+        // 로고 파일을 업로드한 경우 파일 저장
+        if (!logoFile.isEmpty()) {
+            // 3. 로고 파일 저장
+            String originalName = logoFile.getOriginalFilename();
+            //저장할 파일 이름을 고유하게 만듦(중복 방지용)
+            String storedFileName = UUID.randomUUID() + "_" + originalName;
+            
+            // /upload/brand 에 저장
+            Path savePath = Paths.get(uploadDir, storedFileName);
+            try {
+                Files.copy(logoFile.getInputStream(), savePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+                redirectAttrs.addAttribute("error", "file");
+                return "redirect:/register/brand";
+            }
+            
+            // 4. 파일 정보 저장
+            brand.setLogoSourcename(originalName);
+            brand.setLogoFilename(storedFileName);
         }
-
-        // 4. 파일 정보 저장
-        brand.setLogoSourcename(originalName);
-        brand.setLogoFilename(storedFileName);
 
         // 5. 회원가입 처리
         brandService.register(brand);
