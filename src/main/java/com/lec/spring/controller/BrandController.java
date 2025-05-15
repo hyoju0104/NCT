@@ -24,11 +24,9 @@ import java.util.List;
 public class BrandController {
 
     private final BrandService brandService;
-    private final ItemService itemService;
 
-    public BrandController(BrandService brandService, ItemService itemService) {
+    public BrandController(BrandService brandService) {
         this.brandService = brandService;
-        this.itemService = itemService;
     }
 
     @GetMapping("/mypage/detail")
@@ -52,8 +50,7 @@ public class BrandController {
             @Valid Brand brand,
             BindingResult result,
             @AuthenticationPrincipal BrandDetails principal,
-            RedirectAttributes redirectAttributes,
-            Model model
+            RedirectAttributes redirectAttributes
     ) {
         if (result.hasErrors()) {
             showErrors(result);

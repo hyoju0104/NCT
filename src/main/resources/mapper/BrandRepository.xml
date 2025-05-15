@@ -65,4 +65,8 @@
         UPDATE Brand SET is_actived = false WHERE id = #{id}
     </update>
 
+    <update id="deactivateById">
+        UPDATE Brand SET is_actived = false WHERE id = #{id}
+    </update>
+
 </mapper>

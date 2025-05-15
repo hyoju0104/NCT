@@ -23,4 +23,5 @@ public interface ItemService {
 
     int markAsUnavailable(Long id);
 
+    int markAsNotExist(Long id);
 }

@@ -76,4 +76,11 @@ public class BrandItemController {
         model.addAttribute("result", result);
         return "brand/item/updateOk";
     }
+
+    @PostMapping("/item/delete")
+    public String delete(@RequestParam("id") Long id) {
+        itemService.markAsNotExist(id);
+        return "redirect:/brand/list";
+    }
+
 }
