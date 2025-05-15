@@ -1,5 +1,6 @@
 package com.lec.spring.domain;
 
+//import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,8 +14,13 @@ import java.util.List;
 public class Post {
 	
 	private Long id;
+	
+//	@NotEmpty(message = "내용은 반드시 입력해야 합니다.")
 	private String content;
+	
 	private LocalDateTime createdAt;
+	
+//	@NotEmpty(message = "상품 목록은 반드시 입력해야 합니다.")
 	private String items;
 	
 	private User user;

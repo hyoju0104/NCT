@@ -13,7 +13,6 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 	<link rel="stylesheet" th:href="@{/css/common.css}">
-	<link rel="stylesheet" th:href="@{/css/heaeder.css}">
 	
 	<script th:src="@{/js/write.js}"></script>
 	<title>작성</title>
@@ -44,11 +43,12 @@
 					<label for="content">내용:</label>
 					<textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content"
 							  th:utext="${content}"></textarea>
+				<div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
 				</div>
 				
 				<div class="my-3">
 					<label for="items">상품:</label>
-					<textarea class="form-control" rows="5" id="items" placeholder="내용을 입력하세요" name="items"
+					<textarea class="form-control" rows="5" id="items" placeholder="상품명을 입력하세요" name="items"
 							  th:utext="${items}"></textarea>
 				</div>
 				<div><span class="text-danger" th:if="${error_items}" th:utext="${error_items}"></span></div>

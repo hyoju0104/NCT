@@ -2,6 +2,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.config.UserDetails;
 import com.lec.spring.domain.Post;
+import com.lec.spring.domain.PostValidator;
 import com.lec.spring.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,6 +27,12 @@ public class PostController {
 	
 	public PostController(PostService postService) {
 		this.postService = postService;
+	}
+	
+	@InitBinder("post")
+	public void initBinder(WebDataBinder binder){
+		System.out.println("✅ @InitBinder 호출");
+		binder.setValidator(new PostValidator());
 	}
 	
 	
@@ -52,15 +60,14 @@ public class PostController {
 			redirectAttributes.addFlashAttribute("error", "로그인 후 작성 가능합니다.");
 			return "redirect:/post/list";
 		}
+		
 		// 2) Post 에 User 주입
 		post.setUser(principal.getUser());
 		
-		// 3) 검증 에러 처리 : validation 에러가 있었다면 redirect 한다!
+		// 3) 검증 에러 처리 : validation 에러가 있었다면 redirect
 		if(result.hasErrors()){
 			showErrors(result);
 			
-			// redirect 시, 기존에 입력했던 값들은 보이도록 전달해주어야 한다
-			//   전달한 name 들은 => 템플릿에서 사용 가능한 변수!
 			redirectAttributes.addFlashAttribute("user", post.getUser());
 			redirectAttributes.addFlashAttribute("content", post.getContent());
 			redirectAttributes.addFlashAttribute("items", post.getItems());
@@ -106,7 +113,7 @@ public class PostController {
 	
 	@PostMapping("/update")
 	public String updateOk(
-			@ModelAttribute("post") Post post,
+			@Valid @ModelAttribute("post") Post post,
 			BindingResult result,
 			@RequestParam Map<String, MultipartFile> files, // 새로 추가되는 첨부파일(들) 정보
 			Long[] delfile,     // 삭제될 파일들의 id(들)

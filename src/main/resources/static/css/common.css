@@ -9,7 +9,9 @@ body {
     min-height: 50vh;
     flex-direction: column;
     align-items: center;
+
     margin-top: 100px;
+    margin-bottom: 30px;
 
     font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans', 'Segoe UI', sans-serif;
     background-color: #ffffff;
