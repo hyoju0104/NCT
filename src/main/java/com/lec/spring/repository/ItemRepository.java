@@ -20,6 +20,9 @@ public interface ItemRepository {
 
     int update(Item item);
 
-    int delete(Long id);
+    int markAsNotExist(Long id);
+
+    int markAllItemsAsNotExistByBrandId(Long brandId);
+
 }
 

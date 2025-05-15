@@ -50,6 +50,7 @@
     <update id="update" parameterType="com.lec.spring.domain.Brand">
         UPDATE Brand
         SET phone_num = #{phoneNum},
+            password = #{password},
             description = #{description},
             logo_sourcename = #{logoSourcename},
             logo_filename = #{logoFilename}
@@ -62,6 +63,10 @@
 </select>
 
     <update id="deactivate" parameterType="long">
+        UPDATE Brand SET is_actived = false WHERE id = #{id}
+    </update>
+
+    <update id="deactivateById">
         UPDATE Brand SET is_actived = false WHERE id = #{id}
     </update>
 
