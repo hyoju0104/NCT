@@ -36,6 +36,7 @@
                 <option value="신발" th:selected="${item.category == '신발'}">신발</option>
                 <option value="잡화" th:selected="${item.category == '잡화'}">잡화</option>
             </select>
+            <span class="text-danger" th:if="${error_category}" th:text="${error_category}"></span>
         </div>
 
         <div class="mb-3">
@@ -43,6 +44,7 @@
             <input type="text" class="form-control" id="name" name="name"
                    placeholder="상품명을 입력하세요"
                    th:value="${item.name}">
+            <span class="text-danger" th:if="${error_name}" th:text="${error_name}"></span>
         </div>
 
         <div class="mb-3">
@@ -50,15 +52,18 @@
             <textarea class="form-control" rows="5" id="description" name="description"
                       placeholder="상품소개를 입력하세요"
                       th:text="${item.description}"></textarea>
+            <span class="text-danger" th:if="${error_description}" th:text="${error_description}"></span>
         </div>
 
         <div class="mb-3">
             <label for="statusItem"><strong>상품상태:</strong></label>
             <select id="statusItem" name="statusItem" class="form-select">
-                <option th:selected="${item.statusItem != null and item.statusItem.name() == 'A'}">A</option>
-                <option th:selected="${item.statusItem != null and item.statusItem.name() == 'B'}">B</option>
-                <option th:selected="${item.statusItem != null and item.statusItem.name() == 'C'}">C</option>
+                <option value="" disabled th:if="${item.statusItem == null}" selected>상태를 선택하세요</option>
+                <option value="A" th:selected="${item.statusItem != null and item.statusItem.name() == 'A'}">A</option>
+                <option value="B" th:selected="${item.statusItem != null and item.statusItem.name() == 'B'}">B</option>
+                <option value="C" th:selected="${item.statusItem != null and item.statusItem.name() == 'C'}">C</option>
             </select>
+            <span class="text-danger" th:if="${error_statusItem}" th:text="${error_statusItem}"></span>
         </div>
 
         <div class="mb-3">

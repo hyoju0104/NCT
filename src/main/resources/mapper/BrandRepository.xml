@@ -50,6 +50,7 @@
     <update id="update" parameterType="com.lec.spring.domain.Brand">
         UPDATE Brand
         SET phone_num = #{phoneNum},
+            password = #{password},
             description = #{description},
             logo_sourcename = #{logoSourcename},
             logo_filename = #{logoFilename}
