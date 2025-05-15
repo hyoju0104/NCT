@@ -69,6 +69,7 @@ public class BrandDetails implements UserDetails {
         return brand.getPassword();
     }
 
+
     @Override
     public String getUsername() {
         return brand.getUsername();

@@ -45,8 +45,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public int update(Item item, Map<String, MultipartFile> files, Long[] delfile) {
-        return 0;
+    public int update(Item item) {
+        return itemRepository.update(item);
     }
 
     @Override
@@ -55,8 +55,4 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.markAsUnavailable(id);
     }
 
-    @Override
-    public int deleteById(Item item, Map<String, MultipartFile> files, Long[] delfile) {
-        return 0;
-    }
 }

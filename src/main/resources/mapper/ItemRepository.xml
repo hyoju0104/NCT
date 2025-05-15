@@ -86,11 +86,12 @@
 
     <update id="update" parameterType="com.lec.spring.domain.Item" flushCache="true">
         UPDATE Item
-        SET
-            name = #{name},
+        SET name = #{name},
+            category = #{category},
             description = #{description},
-            item_status = #{item_status},
-            is_available = #{is_available}
+            is_available = #{isAvailable},
+            item_status = #{statusItem},
+            is_exist = #{isExist}
         WHERE id = #{id}
     </update>
 

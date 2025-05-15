@@ -21,23 +21,25 @@
         <tr>
             <th>ID</th>
             <th>상품명</th>
-            <th>카테고리</th>
-            <th>상태</th>
-            <th>대여 가능</th>
             <th>등록일</th>
+            <th>관리</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="item : ${itemList}" th:if="${item != null}">
             <td th:text="${item.id}"></td>
-            <td th:text="${item.name}"></td>
-            <td th:text="${item.category}"></td>
-            <td th:text="${item.statusItem}"></td>
-            <td th:text="${item.isAvailable != null and item.isAvailable} ? '가능' : '불가'"></td>
+            <td><a th:href="@{'/brand/item/detail/' + ${item.id}}" th:text="${item.name}"></a></td>
             <td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd')}"></td>
+            <td>
+                <a th:href="@{'/brand/item/update/' + ${item.id}}" class="btn btn-sm btn-outline-primary">수정</a>
+                <form th:action="@{'/brand/item/delete/' + ${item.id}}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                            onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+                </form>
+            </td>
         </tr>
         <tr th:if="${#lists.isEmpty(itemList)}">
-            <td colspan="6">등록된 상품이 없습니다.</td>
+            <td colspan="7">등록된 상품이 없습니다.</td>
         </tr>
         </tbody>
     </table>

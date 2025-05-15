@@ -43,6 +43,14 @@ public class Item {
 
     private Boolean isExist;
 
+    public Boolean getIsExist() {
+        return isExist;
+    }
+
+    public void setIsExist(Boolean isExist) {
+        this.isExist = isExist;
+    }
+
     private Brand brand;
 
     public Brand getBrand() {
