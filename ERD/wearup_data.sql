@@ -86,6 +86,7 @@ INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status) VALUES
         (3, 3, '2025-05-15 17:40:00', 'OVERDUE')
 ;
 
+-- 포인트 조회 기능 확인용 샘플 데이터
 UPDATE user
 SET point = 30000
 WHERE username = 'user5';

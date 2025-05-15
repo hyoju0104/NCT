@@ -2,23 +2,17 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+
     <title>마이페이지</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}" />
 </head>
+
 <body>
 
-<header class="header">
-    <div class="header-content">
-        <a href="/" class="logo">WearUp</a>
-        <nav class="header-nav">
-            <a href="/feed" class="nav-link">피드</a>
-            <a href="/upload" class="nav-link">업로드</a>
-            <a href="/item" class="nav-link">아이템</a>
-            <a href="/user/mypage/detail" class="nav-link">마이페이지</a>
-            <a href="/logout" class="nav-link">로그아웃</a>
-        </nav>
-    </div>
-</header>
+<!-- 상단 메뉴 -->
+<th:block th:insert="~{common/header::header}"></th:block>
 
 <main class="mypage-container">
     <!-- 1. 내정보 -->
@@ -55,7 +49,7 @@
         <h2 class="section-title">구독정보</h2>
         <div class="info-item">
             <span class="info-label">등급:</span>
-            <span class="info-value" th:text="${user.plan.type}" >silver</span>
+            <span class="info-value" th:text="${user.plan.type}">silver</span>
         </div>
         <div class="info-item">
             <span class="info-label">구독시작일:</span>
@@ -63,7 +57,7 @@
         </div>
         <div class="info-item">
             <span class="info-label">구독만료일:</span>
-            <span class="info-value" th:text="${expiredAt}" >2025-06-01</span>
+            <span class="info-value" th:text="${expiredAt}">2025-06-01</span>
         </div>
     </section>
 
@@ -72,9 +66,10 @@
         <h2 class="section-title">포인트</h2>
         <div class="info-item">
             <span class="info-label">현재 보유 포인트:</span>
-            <span class="info-value highlight" th:text="${user.point}">1200</span>
+            <span class="info-value highlight" th:text="${user.point}"></span>
         </div>
-        <form method="post" action="/user/point/refund">
+        <form method="post" th:action="@{/user/mypage/point}">
+            <input type="hidden" name="amount" th:value="0">
             <button type="submit" class="login-btn">포인트 반환하기</button>
         </form>
     </section>
@@ -98,9 +93,12 @@
                     <td th:text="${rental.itemName}">코트</td>
                     <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">2025-05-10</td>
                     <td th:text="${#temporals.format(rental.returnDueAt, 'yyyy-MM-dd')}">2025-05-17</td>
-                    <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '미반납'}">미반납</td>
+                    <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '미반납'}">
+                        미반납
+                    </td>
                     <td class="status-cell">
-                        <span class="status-badge" th:text="${rental.status}" th:classappend="${rental.status == 'RENTED' ? 'rented' : (rental.status == 'RETURNED' ? 'returned' : '')}">RENTED</span>
+                        <span class="status-badge" th:text="${rental.status}"
+                              th:classappend="${rental.status == 'RENTED' ? 'rented' : (rental.status == 'RETURNED' ? 'returned' : '')}">RENTED</span>
                     </td>
                 </tr>
                 </tbody>

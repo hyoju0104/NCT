@@ -2,23 +2,17 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+
     <title>회원정보 수정</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}" />
 </head>
+
 <body>
 
-<header class="header">
-    <div class="header-content">
-        <a href="/" class="logo">WearUp</a>
-        <nav class="header-nav">
-            <a href="/feed" class="nav-link">피드</a>
-            <a href="/upload" class="nav-link">업로드</a>
-            <a href="/item" class="nav-link">아이템</a>
-            <a href="/user/mypage/detail" class="nav-link">마이페이지</a>
-            <a href="/logout" class="nav-link">로그아웃</a>
-        </nav>
-    </div>
-</header>
+<!-- 상단 메뉴 -->
+<th:block th:insert="~{common/header::header}"></th:block>
 
 <div class="login-container">
     <h2>회원정보 수정</h2>
@@ -64,8 +58,8 @@
 
         <!-- 주소 입력 -->
         <div class="form-group">
-            <label for="address">주소 *</label>
-            <input type="text" id="address" name="address" th:value="${user.address}" placeholder="주소를 입력하세요" required>
+            <label for="address">주소</label>
+            <input type="text" id="address" name="address" th:value="${user.address}" placeholder="주소를 입력하세요">
         </div>
 
         <button type="submit" class="login-btn">수정 완료</button>

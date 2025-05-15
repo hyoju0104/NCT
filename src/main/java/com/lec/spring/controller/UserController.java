@@ -22,12 +22,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
     private final PlanRepository planRepository;
     private final PaymentService paymentService;
     private final RentalService rentalService;
     private final PostService postService;
     private final UserService userService;
-
 
     public UserController(PlanRepository planRepository,
                           PaymentService paymentService,
@@ -94,8 +94,12 @@ public class UserController {
         model.addAttribute("user", user);
     }
 
+
     @GetMapping("/mypage/update")
-    public void updateForm(@AuthenticationPrincipal PrincipalUserDetails PrincipalUserDetails, Model model) {
+    public void updateForm(
+            @AuthenticationPrincipal PrincipalUserDetails PrincipalUserDetails,
+            Model model
+    ) {
         User user = userService.findById(PrincipalUserDetails.getUser().getId());
         model.addAttribute("user", user);
     }
@@ -111,12 +115,16 @@ public class UserController {
         return "redirect:/user/mypage/detail";
     }
 
+
     @GetMapping("/payment")
     public void paymentForm() {}
+
     @PostMapping("/payment")
-    public String submitPayment(@AuthenticationPrincipal PrincipalUserDetails principalDetails,
-                                @RequestParam("planId") Long planId) {
-        Long id = principalDetails.getUser().getId();
+    public String submitPayment(
+            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
+            @RequestParam("planId") Long planId
+    ) {
+        Long id = principalUserDetails.getUser().getId();
 
         // 1. planId만 따로 업데이트
         userService.updateUserPlanId(id, planId);
@@ -127,22 +135,31 @@ public class UserController {
         return "redirect:/user/mypage/detail";
     }
 
+
     @GetMapping("/mypage/point")
-    public void pointRefundForm(@AuthenticationPrincipal PrincipalUserDetails principalDetails,
-                                Model model) {
-        User user = userService.findById(principalDetails.getUser().getId());
+    public void pointRefundForm(
+            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
+            Model model
+    ) {
+        User user = userService.findById(principalUserDetails.getUser().getId());
+        System.out.println("[get] user.point = " + user.getPoint());
         model.addAttribute("user", user);
     }
 
     @PostMapping("/mypage/point")
-    public String refundPoint(@AuthenticationPrincipal PrincipalUserDetails principalDetails,
-                              @RequestParam("amount") Integer amount,
-                              RedirectAttributes redirectAttrs) {
-        User user = principalDetails.getUser();
+    public String refundPoint(
+            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
+            @RequestParam("amount") Integer amount,
+            RedirectAttributes redirectAttributes,
+            Model model
+    ) {
+        User user = userService.findById(principalUserDetails.getUser().getId());
+        System.out.println("[post] user.point = " + user.getPoint());
+        model.addAttribute("user", user);
 
         // 포인트가 부족한 경우
         if (user.getPoint() == null || user.getPoint() < amount) {
-            redirectAttrs.addFlashAttribute("error", "포인트가 부족합니다.");
+            redirectAttributes.addFlashAttribute("error", "포인트가 부족합니다.");
             return "redirect:/user/mypage/point";
         }
 
@@ -150,15 +167,15 @@ public class UserController {
             userService.refundPoint(user.getId(), amount);
             // 사용자 객체 포인트도 차감 (뷰 반영 목적, 실제 DB 반영은 Service에서 수행됨)
             user.setPoint(user.getPoint() - amount);
-            redirectAttrs.addFlashAttribute("success", "환급 요청이 정상적으로 처리되었습니다.");
+            // 포인트 차감 후 재조회
+            user = userService.findById(user.getId());
+            System.out.println("[post-try] user.point = " + user.getPoint());
+            redirectAttributes.addFlashAttribute("success", "환급 요청이 정상적으로 처리되었습니다.");
         } catch (IllegalArgumentException e) {
-            redirectAttrs.addFlashAttribute("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
         return "redirect:/user/mypage/point";
     }
-
-
-
 
 }
