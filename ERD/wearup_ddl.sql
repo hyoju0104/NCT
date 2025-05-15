@@ -59,6 +59,8 @@ CREATE TABLE Item
     id               INT                  NOT NULL AUTO_INCREMENT,
     brand_id         INT                  NOT NULL,
     name             VARCHAR(100)         NOT NULL,
+    image_sourcename VARCHAR(100)         NOT NULL,
+    image_filename   VARCHAR(100)         NOT NULL,
     category         VARCHAR(20)          NOT NULL,
     description      VARCHAR(1000)        NULL,
     is_available     BOOLEAN              NOT NULL DEFAULT true,
