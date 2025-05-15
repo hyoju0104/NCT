@@ -71,7 +71,7 @@ public class BrandController {
         Long brandId = principal.getBrand().getId();
         brand.setId(brandId);
 
-        brandService.myUpdate(brand, logo);
+        brandService.myUpdate(brand);
 
         return "redirect:/brand/mypage/detail";
     }

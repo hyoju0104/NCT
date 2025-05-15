@@ -21,7 +21,7 @@ public interface BrandService {
 
     Brand selectById(Long id);
 
-    int myUpdate(Brand brand, MultipartFile logo);
+    int myUpdate(Brand brand);
 
     int myDelete(Long id);
 

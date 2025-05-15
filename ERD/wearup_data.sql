@@ -20,31 +20,31 @@ DELETE FROM Brand;
 ALTER TABLE Brand AUTO_INCREMENT = 1;
 
 INSERT INTO Authority(grade) VALUES
-        ('USER'), ('BRAND'), ('ADMIN')
+     ('USER'), ('BRAND'), ('ADMIN')
 ;
 
 INSERT INTO Plan(type, price, count) VALUES
-        ('SILVER', 50000, 3),
-        ('GOLD', 70000,5),
-        ('VIP', 100000,10)
+     ('SILVER', 50000, 3),
+     ('GOLD', 70000,5),
+     ('VIP', 100000,10)
 ;
 
 INSERT INTO User (user.auth_id, username, password, name, point, status_plan) VALUES
-        (1, 'user1', '1111', '안주경', 1000, 'ACTIVE'),
-        (1, 'user3', '1111', '이현정', 2000, 'INACTIVE'),
-        (3, 'admin', '1111', '관리자', 0, 'ACTIVE')
+      (1, 'user1', '1111', '안주경', 1000, 'ACTIVE'),
+      (1, 'user3', '1111', '이현정', 2000, 'INACTIVE'),
+      (3, 'admin', '1111', '관리자', 0, 'ACTIVE')
 ;
 
 INSERT INTO Payment (Payment.user_id, Payment.plan_id, price) VALUES
-        (1, 1, 50000),
-        (2, 2, 70000),
-        (3, 3, 100000)
+      (1, 1, 50000),
+      (2, 2, 70000),
+      (3, 3, 100000)
 ;
 
 INSERT INTO Post(Post.user_id, content, items) VALUES
-        (1, '가나다라', '나이키바지'),
-        (2, '가나다다라', '나이키티셔츠'),
-        (3, '가나다라라', '아디다스바지')
+       (1, '가나다라', '나이키바지'),
+       (2, '가나다다라', '나이키티셔츠'),
+       (3, '가나다라라', '아디다스바지')
 ;
 
 INSERT INTO Comment (Comment.user_id, Comment.post_id, content) VALUES
@@ -66,22 +66,22 @@ INSERT INTO Brand (brand.auth_id, name, username, password, phone_num, is_active
 ;
 
 INSERT INTO Item(Item.brand_id, name, category, is_available, item_status, is_exist, description) VALUES
-        (1, 'brand1-바지1', '하의', true, 'A', true, '"brand1" 브랜드의 "바지1" 상품입니다.'),
-        (1, 'brand1-긴팔1', '상의', false, 'B', true, '"brand1" 브랜드의 "긴팔1" 상품입니다.'),
-        (1, 'brand1-신발1', '신발', true, 'A', true,'"brand1" 브랜드의 "신발1" 상품입니다.'),
-        (1, 'brand1-신발2', '신발', true, 'C', true, '"brand1" 브랜드의 "신발2" 상품입니다'),
-        (1, 'brand1-신발3', '신발', true, 'B', true, '"brand1" 브랜드의 "신발3" 상품입니다'),
-        (1, 'brand1-잡화1', '잡화', true, 'C', true, '"brand1" 브랜드의 "잡화1" 상품입니다'),
-        (2, 'brand2-잡화1', '잡화', false, 'B', true,'"brand2" 브랜드의 "잡화1" 상품입니다'),
-        (2, 'brand2-바지1', '하의', false, 'A', true, '"brand2" 브랜드의 "바지1" 상품입니다'),
-        (2, 'brand2-아우터1', '아우터', true, 'C', true,'"brand2" 브랜드의 "아우터1" 상품입니다.'),
-        (2, 'brand2-긴팔1', '상의', false, 'B', true, '"brand2" 브랜드의 "긴팔1" 상품입니다'),
-        (3, 'brand3-아우터1', '아우터', true, 'B', false, '"brand3" 브랜드의 "아우터1" 상품입니다'),
-        (3, 'brand3-잡화1', '잡화', true, 'B', false, '"brand3" 브랜드의 "잡화1" 상품입니다')
+      (1, 'brand1-바지1', '하의', true, 'A', true, '"brand1" 브랜드의 "바지1" 상품입니다.'),
+      (1, 'brand1-긴팔1', '상의', false, 'B', true, '"brand1" 브랜드의 "긴팔1" 상품입니다.'),
+      (1, 'brand1-신발1', '신발', true, 'A', true,'"brand1" 브랜드의 "신발1" 상품입니다.'),
+      (1, 'brand1-신발2', '신발', true, 'C', true, '"brand1" 브랜드의 "신발2" 상품입니다'),
+      (1, 'brand1-신발3', '신발', true, 'B', true, '"brand1" 브랜드의 "신발3" 상품입니다'),
+      (1, 'brand1-잡화1', '잡화', true, 'C', true, '"brand1" 브랜드의 "잡화1" 상품입니다'),
+      (2, 'brand2-잡화1', '잡화', false, 'B', true,'"brand2" 브랜드의 "잡화1" 상품입니다'),
+      (2, 'brand2-바지1', '하의', false, 'A', true, '"brand2" 브랜드의 "바지1" 상품입니다'),
+      (2, 'brand2-아우터1', '아우터', true, 'C', true,'"brand2" 브랜드의 "아우터1" 상품입니다.'),
+      (2, 'brand2-긴팔1', '상의', false, 'B', true, '"brand2" 브랜드의 "긴팔1" 상품입니다'),
+      (3, 'brand3-아우터1', '아우터', true, 'B', false, '"brand3" 브랜드의 "아우터1" 상품입니다'),
+      (3, 'brand3-잡화1', '잡화', true, 'B', false, '"brand3" 브랜드의 "잡화1" 상품입니다')
 ;
 
 INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status) VALUES
-        (1, 1, '2025-05-10 17:40:00', 'RENTED'),
-        (2, 2, '2025-05-13 17:40:00', 'RETURNED'),
-        (3, 3, '2025-05-15 17:40:00', 'OVERDUE')
+      (1, 1, '2025-05-10 17:40:00', 'RENTED'),
+      (2, 2, '2025-05-13 17:40:00', 'RETURNED'),
+      (3, 3, '2025-05-15 17:40:00', 'OVERDUE')
 ;

@@ -23,8 +23,6 @@
             b.id "b_id",
             b.name "b_name",
             b.phone_num "b_phone_num",
-            b.logo_sourcename "b_logo_sourcename",
-            b.logo_filename "b_logo_filename",
             b.description "b_description",
             b.is_actived "b_is_actived"
         FROM
@@ -37,8 +35,6 @@
         <result column="b_id" property="id"/>
         <result column="b_name" property="name"/>
         <result column="b_phone_num" property="phoneNum"/>
-        <result column="b_logo_sourcename" property="logoSourcename"/>
-        <result column="b_logo_filename" property="logoFilename"/>
         <result column="b_description" property="description"/>
         <result column="b_is_actived" property="isActived"/>
     </resultMap>

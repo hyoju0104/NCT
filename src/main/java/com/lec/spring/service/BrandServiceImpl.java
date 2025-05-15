@@ -74,22 +74,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public int myUpdate(Brand brand, MultipartFile logo) {
-        if (logo != null && !logo.isEmpty()) {
-            try {
-                String origin = logo.getOriginalFilename();
-                String saved = UUID.randomUUID() + "_" + origin;
-                Path uploadPath = Paths.get("upload/brand", saved);
-                Files.createDirectories(uploadPath.getParent());
-                Files.copy(logo.getInputStream(), uploadPath);
-
-                brand.setLogoSourcename(origin);
-                brand.setLogoFilename(saved);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
+    public int myUpdate(Brand brand) {
         return brandRepository.update(brand);
     }
 
