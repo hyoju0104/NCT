@@ -3,7 +3,7 @@
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8">
-	
+
 	<link rel="stylesheet" th:href="@{/css/common.css}">
 	
 	<title>Order Detail</title>
@@ -11,10 +11,10 @@
 
 <body>
 	<div class="container mt-3">
-		
+
 		<!-- 상단 메뉴 -->
 		<th:block th:insert="~{common/header::header}"></th:block>
-		
+
 		<div class="mb-3">
 			브랜드명 :
 			<div class="border bg-light rounded p-2" th:text="${item.brand.name}"></div>
@@ -23,9 +23,9 @@
 			카테고리 :
 			<div class="border bg-light rounded p-2" th:text="${item.category}"></div>
 		</div>
-		
+
 		<h2>대여가 완료되었습니다.</h2>
-		
+
 		<hr>
 		<h2>주의사항</h2>
 		<p>- 상품 미반환시 계정이 정지될 수 있습니다.</p>
@@ -34,15 +34,15 @@
 		<p>[SILVER] 등급 : 7일 기준 상품 3개 대여가능</p>
 		<p>[GOLD] 등급 : 7일 기준 상품 5개 대여가능</p>
 		<p>[VIP] 등급 : 7일 기준 상품 10개 대여가능</p>
-		
-		
+
+
 		<h2>상품 안내사항</h2>
 		<p>- 상품 취급 시 주의사항 부분을 반드시 확인하시고 안내사항을 따라주세요.</p>
 		<p>- 전반적으로 보풀 등이 있을 수 있으며 이는 편직 과정에서 발생할 수 있는 특징으로 제품의 하자나 불량 상품이 아닙니다.</p>
 		<p>- 심한 마찰로 인해 보풀 현상이 발생할 수 있으니 주의하여 착용하시기 바랍니다.</p>
-		
+
 		<a th:href="@{'/item/list'}" class="btn btn-outline-danger ms-2">목록으로 돌아가기</a>
-	
+
 	</div>
 </body>
 </html>

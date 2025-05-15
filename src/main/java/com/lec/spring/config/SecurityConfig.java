@@ -43,13 +43,13 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/login", "/register/**",
                                 "/css/**", "/js/**", "/images/**", "/upload/**", "/common/**",
-                                "/post/list", "/post/detail", "/post/detail/**",
-                                "/comment/list", "/comment/list/**", "/comment/write",
-                                "/item/**").permitAll()
+                                "/post/list", "/post/detail/**",
+                                "/comment/**", "/item/list", "/item/detail/**", "/item/list/category/**"
+                        ).permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated() // 그 외 모든 주소는 로그인한 사람만 접근
                 )//authorizeHttpRequests
-                
+
                 .formLogin(form->form //로그인화면을 어떻게 보여줄지
                         .loginPage("/login") //로그인 페이지 설정
                         .loginProcessingUrl("/login") //아이디 비번 입력하고 로그인 버튼 누르면 /login으로 전송
@@ -58,6 +58,7 @@ public class SecurityConfig {
                         .failureUrl("/login?error") //로그인 실패하면.
                         .permitAll() //위에서 설정한 로그인 관련 URL들은 로그인 안해도 누구나 볼수있게
                 ) //formLogin
+
                 
                 .logout(logout -> logout
                         .logoutUrl("/logout")

@@ -102,9 +102,7 @@ public class RegisterController {
                 return "redirect:/register/brand";
             }
             
-            // 4. 파일 정보 저장
-            brand.setLogoSourcename(originalName);
-            brand.setLogoFilename(storedFileName);
+
         }
 
         // 5. 회원가입 처리

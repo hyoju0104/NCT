@@ -17,7 +17,15 @@ public class Item {
     private String name;
     private String category;
     private String description;
+
     private Boolean isAvailable;
+
+    public Boolean getIsAvailable() {
+        return isAvailable;
+    }
+    public void setIsAvailable(Boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
     
     @JsonIgnore
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -35,14 +43,21 @@ public class Item {
 
     private Boolean isExist;
 
-    private String imageSourcename;
-    private String imageFilename;
+    public Boolean getIsExist() {
+        return isExist;
+    }
+
+    public void setIsExist(Boolean isExist) {
+        this.isExist = isExist;
+    }
 
     private Brand brand;
 
-    /*
-    @ToString.Exclude
-    @Builder.Default
-    private List<Attachment> fileList = new ArrayList<>();
-    */
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
 }

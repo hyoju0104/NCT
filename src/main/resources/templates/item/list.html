@@ -33,6 +33,7 @@
 			<tr>
 				<th>상품명</th>
 				<th>브랜드명</th>
+				<th>대여가능여부</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -41,6 +42,7 @@
 					<a th:href="@{'/item/detail/' + ${item.id}}" th:text="${item.name}"></a>
 				</td>
 				<td th:text="${item.brand.name}"></td>
+				<td th:text="${item.isAvailable} ? '대여가능' : '대여불가능'"></td>
 			</tr>
 			</tbody>
 		</table>

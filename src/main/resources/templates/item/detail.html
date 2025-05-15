@@ -32,7 +32,13 @@
                     th:text="${item.statusItem != null ? item.statusItem.name() : '확인불가'}">
         </div>
     </div>
-    <a th:href="@{'/order/detail/' + ${item.id}}" class="btn btn-outline-danger ms-2">대여하기</a>
+
+    <div class="mt-3">
+        <a th:if="${item.isAvailable}" th:href="@{'/order/detail/' + ${item.id}}"
+           class="btn btn-outline-danger ms-2">대여하기</a>
+
+        <button th:if="${!item.isAvailable}" class="btn btn-secondary ms-2" disabled>대여 불가</button>
+    </div>
 
 </div>
 

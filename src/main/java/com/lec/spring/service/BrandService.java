@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.Brand;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
