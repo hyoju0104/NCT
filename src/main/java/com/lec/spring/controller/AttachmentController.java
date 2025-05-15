@@ -1,7 +1,7 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.PostAttachment;
-import com.lec.spring.service.AttachmentService;
+import com.lec.spring.service.PostAttachmentService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -22,10 +22,10 @@ public class AttachmentController {
 	@Value("${app.upload.path.post}")
 	private String uploadDir;
 	
-	private final AttachmentService attachmentService;
+	private final PostAttachmentService postAttachmentService;
 	
-	public AttachmentController(AttachmentService attachmentService) {
-		this.attachmentService = attachmentService;
+	public AttachmentController(PostAttachmentService postAttachmentService) {
+		this.postAttachmentService = postAttachmentService;
 	}
 	
 	// 파일 다운로드
@@ -37,7 +37,7 @@ public class AttachmentController {
 		
 		if (id == null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);  // 없는 객체 찾는 경우 400 에러 발생
 		
-		PostAttachment file = attachmentService.findById(id);
+		PostAttachment file = postAttachmentService.findById(id);
 		if (file == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);  // 못 찾는 경우 404 에러 발생
 		
 		String sourceName = file.getSourcename();   // 원본 파일명

@@ -19,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,12 +39,12 @@ public class PostServiceImpl implements PostService {
 	
 	private final PostRepository postRepository;
 	private final UserRepository userRepository;
-	private final PostAttachmentRepository attachmentRepository;
+	private final PostAttachmentRepository postAttachmentRepository;
 	
-	public PostServiceImpl(SqlSession sqlSession) {
+	public PostServiceImpl(SqlSession sqlSession, PostAttachmentRepository postAttachmentRepository) {
 		this.postRepository = sqlSession.getMapper(PostRepository.class);
 		this.userRepository = sqlSession.getMapper(UserRepository.class);
-		this.attachmentRepository = sqlSession.getMapper(PostAttachmentRepository.class);
+		this.postAttachmentRepository = sqlSession.getMapper(PostAttachmentRepository.class);
 		System.out.println("✅ PostService() 생성");
 	}
 	
@@ -50,7 +52,24 @@ public class PostServiceImpl implements PostService {
 	// 목록
 	@Override
 	public List<Post> list() {
-		return postRepository.findAll();
+		List<Post> posts = postRepository.findAll();
+		
+		for (Post post : posts) {
+			// postId 에 연결된 이미지 파일 전부 조회
+			List<PostAttachment> attachments = postAttachmentRepository.findByPostId(post.getId());
+			
+			if (attachments != null && !attachments.isEmpty()) {
+				// id 기준 오름차순으로 정렬
+				PostAttachment representative = attachments.stream()
+						.min(Comparator.comparing(PostAttachment::getPostId))
+						.orElse(null);
+				
+				// id가 가장 작은 파일만 남기기
+				post.setFileList(Collections.singletonList(representative));
+			}
+		}
+		
+		return posts;
 	}
 	
 	@Override
@@ -93,7 +112,7 @@ public class PostServiceImpl implements PostService {
 			// 저장 성공 시, DB 에 파일 저장
 			if (file != null) {
 				file.setPostId(id);    // FK 설정 (게시물 id)
-				attachmentRepository.save(file);    // INSERT
+				postAttachmentRepository.save(file);    // INSERT
 			}
 			
 		}
@@ -174,7 +193,7 @@ public class PostServiceImpl implements PostService {
 		
 		if (post != null) {
 			// 첨부파일(들) 정보 가져오기
-			List<PostAttachment> fileList = attachmentRepository.findByPostId(post.getId());
+			List<PostAttachment> fileList = postAttachmentRepository.findByPostId(post.getId());
 			
 			// Post 에 첨부파일 세팅
 			post.setFileList(fileList); // 템플릿 엔진에서 받아서 view 생성
@@ -185,8 +204,42 @@ public class PostServiceImpl implements PostService {
 	
 	@Override
 	public int update(Post post, Map<String, MultipartFile> files, Long[] delfile) {
-		return postRepository.update(post);
+		int result = 0;
+		result = postRepository.update(post);
+		
+		// 새로운 첨부파일(들) 추가
+		addFiles(files, post.getId());
+		
+		// 삭제할 기존의 첨부파일(들) 삭제
+		if (delfile != null) {
+			for (Long fileId : delfile) {
+				PostAttachment file = postAttachmentRepository.findById(fileId);
+				if (file != null) {
+					delFile(file);
+					postAttachmentRepository.delete(file);
+				}
+			}
+		}
+		
+		return result;
 	}
+	
+	// 특정 첨부파일을 물리적으로 삭제
+	private void delFile(PostAttachment file) {
+		
+		String saveDir = new File(uploadDir).getAbsolutePath();
+		
+		File f = new File(saveDir, file.getFilename());
+		System.out.println("삭제 시도 --> " + f.getAbsolutePath());
+		
+		if (f.exists()) {   // 파일이 존재하는 경우 삭제
+			if (f.delete()) System.out.println("삭제 성공");
+			else System.out.println("삭제 실패");
+		}
+		else System.out.println("파일이 존재하지 않습니다.");
+		
+	}
+	
 	
 	@Override
 	public int deleteById(Long id) {

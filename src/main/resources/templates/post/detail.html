@@ -24,6 +24,7 @@
 		<script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" th:href="@{/css/common.css}">
 		<link rel="stylesheet" th:href="@{/css/header.css}">
+		<link rel="stylesheet" th:href="@{/css/header.css}">
 		
 		<title>조회 - [[${post.id}]]</title>
 	</head>
@@ -49,7 +50,7 @@
 					<div class="carousel-inner">
 						<div class="carousel-item" th:each="attachment, stat : ${post.fileList}"
 							 th:classappend="${stat.index == 0} ? ' active'">
-							<img th:src="@{'/upload/' + ${attachment.filename}}" class="d-block w-100 img-thumbnail"
+							<img th:src="@{'/upload/post/' + ${attachment.filename}}" class="d-block w-100 img-thumbnail"
 								 alt="이미지">
 						</div>
 					</div>
