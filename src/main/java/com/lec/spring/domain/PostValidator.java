@@ -22,7 +22,7 @@ public class PostValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		Post post = (Post) target;
 		
-		System.out.println("✅ validate() 호출 : " + post);
+		System.out.println("✅ [Post] validate() 호출 : " + post);
 		
 		if (post.getContent() == null || post.getContent().trim().isEmpty()) {
 			errors.rejectValue("content","내용은 반드시 입력해야 합니다.");
