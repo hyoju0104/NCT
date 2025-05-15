@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface ItemRepository {
 
-    // 아이템 등록(INSERT) <- Item (상품명, 종류, 상품설명, 대여가능여부, 상품상태)
+    List<Item> findByBrandId(Long brandId);
+
     int save(Item item);
 
     Item findById(Long id);

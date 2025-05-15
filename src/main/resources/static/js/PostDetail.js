@@ -17,7 +17,7 @@ $(function(){
 
 		// 검증
 		if(!content){
-			alert("댓글 입력을 하세요");
+			alert("댓글을 입력하세요.");
 			$("#input_comment").focus();
 			return;
 		}
@@ -88,7 +88,7 @@ function buildComment(result){
 	if (result.count === 0) {
 		$("#cmt_list").html(`
             <tr class="no-hover">
-                <td colspan="3" class="text-center text-secondary">댓글이 없습니다</td>
+                <td colspan="3" class="text-center text-secondary no-hover">댓글이 없습니다</td>
             </tr>
         `);
 		return;

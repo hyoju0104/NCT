@@ -11,17 +11,11 @@ public interface BrandRepository {
 
     int save(Brand brand);
 
-    int update(Brand brand);
-
     int delete(Long id);
-
-    //==================================================
 
     Brand findById(Long id);
 
-    Brand myDetail(Long id);
+    int update(Brand brand);
 
-    int myUpdate(Brand brand);
-
-    int myDelete(Long id);
+    int deactivate(Long id);
 }

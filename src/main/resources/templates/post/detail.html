@@ -23,8 +23,6 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 		<script src="https://kit.fontawesome.com/51772bd9bd.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" th:href="@{/css/common.css}">
-		<link rel="stylesheet" th:href="@{/css/header.css}">
-		<link rel="stylesheet" th:href="@{/css/header.css}">
 		
 		<title>조회 - [[${post.id}]]</title>
 	</head>
@@ -50,7 +48,8 @@
 					<div class="carousel-inner">
 						<div class="carousel-item" th:each="attachment, stat : ${post.fileList}"
 							 th:classappend="${stat.index == 0} ? ' active'">
-							<img th:src="@{'/upload/post/' + ${attachment.filename}}" class="d-block w-100 img-thumbnail"
+							<img th:src="@{'/upload/post/' + ${attachment.filename}}"
+								 class="d-block w-100 img-thumbnail"
 								 alt="이미지">
 						</div>
 					</div>
@@ -92,7 +91,7 @@
 				<th:block sec:authorize="isAuthenticated()" th:with="logged_user=${#authentication.principal.user}">
 					
 					<script th:inline="javascript">
-						const logged_id = [[${logged_user.id}]];
+						logged_id = [[${logged_user.id}]];
 					</script>
 					
 					<div class="d-flex">
@@ -123,9 +122,9 @@
 			</section>
 		</div>
 		
-		<script th:src="@{/js/detail.js}"></script>
+			<script th:src="@{/js/PostDetail.js}"></script>
 	
 	</body>
-	
+
 </th:block>
 </html>

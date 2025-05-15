@@ -47,32 +47,22 @@
         VALUES (2, #{name}, #{username}, #{password}, #{phoneNum}, #{logoSourcename}, #{logoFilename}, #{description})
     </insert>
 
-    <update id="update" flushCache="true" parameterType="com.lec.spring.domain.Brand">
+    <update id="update" parameterType="com.lec.spring.domain.Brand">
         UPDATE Brand
-        SET password = #{password}, phone_num = #{phone_num}, description = #{description}
+        SET phone_num = #{phoneNum},
+            description = #{description},
+            logo_sourcename = #{logoSourcename},
+            logo_filename = #{logoFilename}
         WHERE id = #{id}
     </update>
 
-    <select id="findById" resultMap="mapBrand">
+    <select id="findById" parameterType="long" resultMap="mapBrand">
         <include refid="SELECT_BASE"/>
-        WHERE id = #{id}
-    </select>
+          WHERE b.id = #{id}
+</select>
 
-    <select id="myDetail" resultMap="mapBrand">
-        <include refid="SELECT_BASE"/>
-            WHERE id = #{id}
-    </select>
-
-    <update id="myUpdate" parameterType="com.lec.spring.domain.Brand" flushCache="true">
-        UPDATE Brand
-        SET phone_num = #{phoneNum}, description = #{description}
-        WHERE id = #{id}
-    </update>
-
-    <update id="myDelete" flushCache="true" parameterType="com.lec.spring.domain.Brand">
-        UPDATE Brand
-        SET is_actived = false
-        WHERE id = #{id}
+    <update id="deactivate" parameterType="long">
+        UPDATE Brand SET is_actived = false WHERE id = #{id}
     </update>
 
 </mapper>

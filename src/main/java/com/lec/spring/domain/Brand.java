@@ -10,6 +10,7 @@ import lombok.*;
 public class Brand {
     private Long id;
     private Long authId;
+
     private String name;
 
     private String username;

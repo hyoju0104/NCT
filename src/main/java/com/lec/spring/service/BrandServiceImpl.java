@@ -5,18 +5,30 @@ import com.lec.spring.domain.Brand;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.BrandRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
 
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
     private final BrandRepository brandRepository;
+
+    public BrandServiceImpl(PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, SqlSession sqlSession) {
+        this.passwordEncoder = passwordEncoder;
+        this.authorityRepository = authorityRepository;
+        this.brandRepository = sqlSession.getMapper(BrandRepository.class);
+    }
 
     @Override
     public int register(Brand brand) {
@@ -53,8 +65,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand selectById(Long id) {
-        Brand brand = brandRepository.findById(id);
-        return brand;
+        return brandRepository.findById(id);
     }
 
     @Override
@@ -64,12 +75,12 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public int myUpdate(Brand brand) {
-        return brandRepository.myUpdate(brand);
+        return brandRepository.update(brand);
     }
 
     @Override
     public int myDelete(Long id) {
-        return brandRepository.myDelete(id);
+        return brandRepository.deactivate(id); // is_actived = false 처리
     }
 
 }
