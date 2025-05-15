@@ -56,6 +56,7 @@ public class UserController {
         }else {
             user.setPlan(new Plan()); //NPE방지
         }
+
         Plan plan = user.getPlan();
         int totalCnt = 0;
         // 총 대여 가능 횟수는 Plan type을 기준으로 계산
@@ -67,6 +68,7 @@ public class UserController {
                 default -> 0;
             };
         }
+
         //Payment 정보 가져오기
         Payment payment = paymentService.findLatestByUserId(user.getId());
         // 💡 payment가 null일 수도 있으니 확인 후 model에 추가
@@ -75,7 +77,7 @@ public class UserController {
 
             // ✅ 구독 만료일 계산 (30일 후)
             LocalDateTime expiredAt = payment.getPaidAt().plusDays(30);
-            model.addAttribute("expiredAt", expiredAt);
+            payment.setExpiredAt(expiredAt);
             model.addAttribute("expiredAt", payment.getExpiredAt());
         } else {
             model.addAttribute("paidAt", null);
@@ -85,6 +87,7 @@ public class UserController {
         // 대여 내역
         List<Rental> rentals = rentalService.findAllByUserId(user.getId());
         model.addAttribute("rentals", rentals);
+        model.addAttribute("totalCnt", totalCnt);
 
         // 게시글 목록
         List<Post> posts = postService.findByUserId(user.getId());

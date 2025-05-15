@@ -5,7 +5,7 @@
 
 <mapper namespace="com.lec.spring.repository.UserRepository">
 
-    <select id="findByUsername" resultType="com.lec.spring.domain.User">
+    <sql id="SELECT_BASE">
         SELECT id,
                auth_id        AS authId,
                plan_id        AS planId,
@@ -24,29 +24,18 @@
                status_account AS statusAccount,
                rental_cnt     AS rentalCnt
         FROM user
-        WHERE username = #{username}
+        WHERE 1 = 1
+    </sql>
+
+
+    <select id="findByUsername" resultType="com.lec.spring.domain.User">
+        <include refid="SELECT_BASE"/>
+        AND username = #{username}
     </select>
 
     <select id="findById" resultType="com.lec.spring.domain.User">
-        SELECT id,
-               auth_id        AS authId,
-               plan_id        AS planId,
-               username,
-               password,
-               name,
-               phone_num      AS phoneNum,
-               email,
-               address,
-               point,
-               provider,
-               provider_id    AS providerId,
-               signed_at      AS signedAt,
-               paid_at        AS paidAt,
-               status_plan    AS statusPlan,
-               status_account AS statusAccount,
-               rental_cnt     AS rentalCnt
-        FROM user
-        WHERE id = #{id}
+        <include refid="SELECT_BASE"/>
+        AND id = #{id}
     </select>
 
     <insert id="save" parameterType="com.lec.spring.domain.User" useGeneratedKeys="true" keyProperty="id">
