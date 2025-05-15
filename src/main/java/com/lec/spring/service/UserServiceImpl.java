@@ -14,7 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
  * Service 구현체 클래스
  * - 실제 서비스 로직을 수행하는 핵심 클래스
@@ -110,7 +113,11 @@ public class UserServiceImpl implements UserService {
     public void refundPoint(Long id, Integer amount) {
         User user = userRepository.findById(id);
         if (user.getPoint() < amount) throw new IllegalArgumentException("잔여 포인트 부족");
-        userRepository.refundPoint(id, amount);
+//        userRepository.refundPoint(id, amount);
+        System.out.println("💡 REFUND: id=" + id + ", amount=" + amount);
+        int result = userRepository.refundPoint(id, amount);
+        System.out.println("💡 update result = " + result);
+
     }
 
     @Override
@@ -137,6 +144,5 @@ public class UserServiceImpl implements UserService {
     public void updateUserPlanId(Long id, Long planId) {
         userRepository.updateUserPlanId(id, planId);
     }
-
 
 }

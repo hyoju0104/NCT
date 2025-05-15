@@ -2,42 +2,36 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+
     <title>포인트 환급</title>
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
 </head>
+
 <body>
 
-<header class="header">
-    <div class="header-content">
-        <a href="/" class="logo">WearUp</a>
-        <nav class="header-nav">
-            <a href="/feed" class="nav-link">피드</a>
-            <a href="/upload" class="nav-link">업로드</a>
-            <a href="/item" class="nav-link">아이템</a>
-            <a href="/user/mypage/detail" class="nav-link">마이페이지</a>
-            <a href="/logout" class="nav-link">로그아웃</a>
-        </nav>
-    </div>
-</header>
+<!-- 상단 메뉴 -->
+<th:block th:insert="~{common/header::header}"></th:block>
 
 <div class="login-container">
     <h2>포인트 환급</h2>
     <p class="subheading">WEAR UP TO LEVEL UP</p>
 
     <!-- 성공 메시지 -->
-    <div th:if="${success}" class="alert alert-success">
+    <div th:if="${success}" class="alert alert-success" style="display: none;">
         <p th:text="${success}">환급 요청이 성공적으로 처리되었습니다.</p>
     </div>
 
     <!-- 실패 메시지 -->
-    <div th:if="${error}" class="alert alert-error">
+    <div th:if="${error}" class="alert alert-error" style="display: none;">
         <p th:text="${error}">환급 요청에 실패했습니다.</p>
     </div>
 
     <!-- 현재 포인트 표시 -->
     <div class="point-info-box">
         <span class="point-label">현재 보유 포인트</span>
-        <span class="point-amount" th:text="${user.point}">0</span>
+        <span class="point-amount" th:text="${user.point}"></span>
         <span class="point-unit">P</span>
     </div>
 

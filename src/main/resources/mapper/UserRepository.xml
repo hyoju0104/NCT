@@ -77,7 +77,8 @@
     <update id="refundPoint">
         UPDATE user
         SET point = point - #{amount}
-        WHERE id = #{id} AND point >= #{amount}
+        WHERE id = #{id}
+          AND point >= #{amount}
     </update>
 
 
