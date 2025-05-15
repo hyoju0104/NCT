@@ -1,3 +1,15 @@
+#login, #register, #logout {
+    /* TODO : 오른쪽 끝에 위치하도록 수정 */
+}
+
+
+
+.no-hover:hover {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+
 .logo {
     font-size: 24px;
     font-weight: 700;

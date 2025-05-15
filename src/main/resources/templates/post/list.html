@@ -37,6 +37,7 @@
 				<th>ID</th>
 				<th>작성자</th>
 				<th>내용</th>
+				<th>썸네일</th>
 				<th>상품명</th>
 				<th>작성일</th>
 			</tr>
@@ -46,11 +47,21 @@
 				<td th:text="${post.id}"></td>
 				<td th:text="${post.user.username}"></td>
 				<td><a th:href="@{'/post/detail/' + ${post.id}}" th:text="${post.content}"></a></td>
+				
+				<!-- 첨부파일이 있으면 첫 번째(=가장 작은 id) 파일 썸네일 -->
+				<td>
+					<img th:if="${!#lists.isEmpty(post.fileList)}"
+						 th:src="@{ '/upload/post/' + ${post.fileList[0].filename} }"
+						 alt="썸네일" style="max-width:100px;"/>
+				</td>
+				
 				<td th:text="${post.items}"></td>
 				<td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 			</tr>
+			
+			<!-- posts 가 비었을 때 -->
 			<tr th:if="${posts == null or posts.isEmpty()}">
-				<td colspan="5">게시글이 없습니다.</td>
+				<td colspan="6">게시글이 없습니다.</td>
 			</tr>
 			</tbody>
 		</table>
