@@ -3,6 +3,7 @@ package com.lec.spring.controller;
 import com.lec.spring.config.UserDetails;
 import com.lec.spring.domain.Post;
 import com.lec.spring.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ public class PostController {
 	@PostMapping("/write")
 	public String writeOk(
 			@RequestParam Map<String, MultipartFile> files,  // 첨부파일들 <name, file>
-			Post post,
+		 	@Valid Post post,
 			BindingResult result,   // Validator 가 유효성 검사를 한 결과가 담긴 객체.
 			Model model,    // 매개변수 선언시 BindingResult 보다 Model 을 뒤에 두어야 한다.
 			RedirectAttributes redirectAttributes,  // redirect: 시 넘겨줄 값들.
