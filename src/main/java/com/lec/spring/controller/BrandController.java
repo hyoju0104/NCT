@@ -1,8 +1,7 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.config.BrandDetails;
+import com.lec.spring.config.PrincipalBrandDetails;
 import com.lec.spring.domain.Brand;
-import com.lec.spring.domain.BrandMypageValidator;
 import com.lec.spring.domain.Item;
 import com.lec.spring.service.BrandService;
 import com.lec.spring.service.ItemService;
@@ -34,7 +33,7 @@ public class BrandController {
     }
 
     @GetMapping("/mypage/detail")
-    public String mypageDetail(@AuthenticationPrincipal BrandDetails principal, Model model) {
+    public String mypageDetail(@AuthenticationPrincipal PrincipalBrandDetails principal, Model model) {
         Long brandId = principal.getBrand().getId();
         Brand brand = brandService.myDetail(brandId);
         model.addAttribute("brand", brand);
@@ -42,7 +41,7 @@ public class BrandController {
     }
 
     @GetMapping("/mypage/update")
-    public String myUpdate(@AuthenticationPrincipal BrandDetails principal, Model model) {
+    public String myUpdate(@AuthenticationPrincipal PrincipalBrandDetails principal, Model model) {
         Long brandId = principal.getBrand().getId();
         model.addAttribute("brand", brandService.selectById(brandId));
         return "brand/mypage/update";
@@ -55,12 +54,12 @@ public class BrandController {
             @RequestParam(required = false) String password2,
             @Valid Brand brand,
             BindingResult result,
-            @AuthenticationPrincipal BrandDetails principal,
+            @AuthenticationPrincipal PrincipalBrandDetails principal,
             RedirectAttributes redirectAttributes
     ) {
-        BrandMypageValidator validator = new BrandMypageValidator();
-        validator.validatePasswords(password, password2, result);
-        validator.validate(brand, result);
+//        BrandMypageValidator validator = new BrandMypageValidator();
+//        validator.validatePasswords(password, password2, result);
+//        validator.validate(brand, result);
 
         if (result.hasErrors()) {
             showErrors(result);
@@ -93,7 +92,7 @@ public class BrandController {
 
 
     @PostMapping("/mypage/delete")
-    public String myDeleteOk(@AuthenticationPrincipal BrandDetails principal) {
+    public String myDeleteOk(@AuthenticationPrincipal PrincipalBrandDetails principal) {
         Long brandId = principal.getBrand().getId();
         brandService.myDelete(brandId);
 

@@ -1,8 +1,8 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.config.BrandDetails;
+import com.lec.spring.config.PrincipalBrandDetails;
 import com.lec.spring.domain.Brand;
-import com.lec.spring.domain.BrandItemValidator;
+//import com.lec.spring.domain.BrandItemValidator;
 import com.lec.spring.domain.Item;
 import com.lec.spring.service.ItemService;
 import jakarta.validation.Valid;
@@ -34,10 +34,10 @@ public class BrandItemController {
     @PostMapping("/item/write")
     public String writeOk(@ModelAttribute("item") Item item,
                           BindingResult result,
-                          @AuthenticationPrincipal BrandDetails principal,
+                          @AuthenticationPrincipal PrincipalBrandDetails principal,
                           Model model) {
 
-        new BrandItemValidator().validate(item, result);
+//        new BrandItemValidator().validate(item, result);
 
         if (result.hasErrors()) {
 
@@ -56,7 +56,7 @@ public class BrandItemController {
     }
 
     @GetMapping("/list")
-    public String list(@AuthenticationPrincipal BrandDetails principal, Model model) {
+    public String list(@AuthenticationPrincipal PrincipalBrandDetails principal, Model model) {
         Long brandId = principal.getBrand().getId();
         List<Item> itemList = itemService.findByBrandId(brandId);
         model.addAttribute("itemList", itemList);
@@ -72,7 +72,7 @@ public class BrandItemController {
 
     @GetMapping("/item/update/{id}")
     public String updateForm(@PathVariable Long id, Model model,
-                             @AuthenticationPrincipal BrandDetails principal) {
+                             @AuthenticationPrincipal PrincipalBrandDetails principal) {
 
         Item item = itemService.detail(id);
 
@@ -87,10 +87,10 @@ public class BrandItemController {
     @PostMapping("/item/update")
     public String updateOk(@ModelAttribute Item item,
                            BindingResult result,
-                           @AuthenticationPrincipal BrandDetails principal,
+                           @AuthenticationPrincipal PrincipalBrandDetails principal,
                            Model model) {
 
-        new BrandItemValidator().validate(item, result);
+//        new BrandItemValidator().validate(item, result);
 
         if (result.hasErrors()) {
             result.getFieldErrors().forEach(error ->
