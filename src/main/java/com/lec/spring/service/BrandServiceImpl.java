@@ -53,8 +53,8 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand findByUsername(String username) {
-        System.out.println("brandRepository.findByUsername(username.toUpperCase()) : " + brandRepository.findByUsername(username.toUpperCase()));
-        return brandRepository.findByUsername(username.toUpperCase());
+        System.out.println("brandRepository.findByUsername(username) : " + brandRepository.findByUsername(username));
+        return brandRepository.findByUsername(username);
     }
 
     @Override

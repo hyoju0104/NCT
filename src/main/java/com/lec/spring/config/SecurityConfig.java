@@ -41,13 +41,14 @@ public class SecurityConfig {
                 //TODO requestmatchers는 html 만든 후 수정하기
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(
-                                "/",
+                                "/", "/error",
                                 "/login", "/register/**",
                                 "/css/**", "/js/**", "/images/**", "/upload/**", "/common/**",
                                 "/post/list", "/post/detail/**",
                                 "/comment/**", "/item/list", "/item/detail/**", "/item/list/category/**"
                         ).permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/brand/**").hasAuthority("BRAND")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated() // 그 외 모든 주소는 로그인한 사람만 접근
                 )//authorizeHttpRequests
 
@@ -61,7 +62,11 @@ public class SecurityConfig {
                                     .anyMatch(a -> a.getAuthority().equals("BRAND"));
                             if (isBrand) {
                                 response.sendRedirect("/brand/list");
-                            } else {
+                            }
+//                            else if (isAdmin) {
+//                                response.sendRedirect("/admin/sales");
+//                            }
+                            else {
                                 // USER 권한 혹은 그 외
                                 response.sendRedirect("/post/list");
                             }

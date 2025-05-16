@@ -37,7 +37,7 @@
     <select id="findByUsername" resultMap="mapBrand">
         <include refid="SELECT_BASE"/>
         <where>
-            username = #{username}
+            b.username = #{username}
         </where>
     </select>
 
