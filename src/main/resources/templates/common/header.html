@@ -22,7 +22,7 @@
 				<!-- USER 전용 메뉴 -->
 				<a sec:authorize="hasAuthority('USER')" th:href="@{/post/write}" class="nav-link">업로드</a>
 				<a sec:authorize="hasAuthority('USER')" th:href="@{/user/mypage/detail}" class="nav-link">마이페이지</a>
-				<div sec:authorize="hasRole('USER')" class="nav-link no-hover">
+				<div sec:authorize="hasAuthority('USER')" class="nav-link no-hover">
 					<span sec:authentication="name"></span>
 					(<span sec:authentication="principal.user.name"></span>)
 				</div>
@@ -30,7 +30,7 @@
 				<!-- BRAND 전용 메뉴 -->
 				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">상품 관리</a>
 				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">마이페이지</a>
-				<div sec:authorize="hasRole('BRAND')" class="nav-link no-hover">
+				<div sec:authorize="hasAuthority('BRAND')" class="nav-link no-hover">
 					<span sec:authentication="name"></span>
 					(<span sec:authentication="principal.brand.name"></span>)
 				</div>

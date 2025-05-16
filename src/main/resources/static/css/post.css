@@ -1,0 +1,23 @@
+#btnAdd {
+    float: none;
+    margin: 0;
+}
+
+#files {
+    margin-top: 10px;
+}
+
+#files .btn-outline-danger {
+    margin-left: 0.5rem;
+}
+
+/* 소제목 크기 및 위치 지정 */
+.sub-title {
+    font-size: large;
+    margin: 0.5rem 0;
+}
+
+/* 버튼 간 간격 지정 */
+.d-flex.justify-content-end > .btn + .btn {
+    margin-left: 0.5rem;
+}
