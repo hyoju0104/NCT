@@ -29,9 +29,5 @@ public class UserUpdateValidator implements Validator {
         } else if (!user.getPassword().equals(user.getRePassword())) {
             errors.rejectValue("rePassword", null, "비밀번호가 일치하지 않습니다.");
         }
-
-        if (user.getPhoneNum() == null || user.getPhoneNum().trim().isEmpty()) {
-            errors.rejectValue("phoneNum", null, "전화번호는 필수입니다.");
-        }
     }
 }
