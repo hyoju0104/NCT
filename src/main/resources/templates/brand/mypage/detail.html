@@ -19,6 +19,11 @@
 	<hr>
 
 	<div class="mb-3">
+		<label class="form-label">로고이미지</label>
+		<img th:src="${brandAttachment != null} ? '/upload/brand/' + ${brandAttachment.filename} : '/img/default-logo.png'" />
+	</div>
+
+	<div class="mb-3">
 		<label>브랜드명</label>
 		<div class="form-control" readonly th:text="${brand.name}"></div>
 	</div>

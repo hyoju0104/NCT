@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.BrandAttachmentRepository">
+    <sql id="SELECT_FILE">
+        SELECT id, brand_id, sourcename, filename
+        FROM BrandAttachment
+        WHERE 1 = 1
+    </sql>
+
+    <resultMap id="BrandAttachment" type="com.lec.spring.domain.BrandAttachment">
+        <result column="id" property="id"/>
+        <result column="brand_id" property="brandId"/>
+        <result column="sourcename" property="sourcename"/>
+        <result column="filename" property="filename"/>
+    </resultMap>
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.BrandAttachment">
+        INSERT INTO BrandAttachment(brand_id, sourcename, filename)
+        VALUES (#{brandId}, #{sourcename}, #{filename})
+    </insert>
+
+    <select id="findByBrand" resultType="com.lec.spring.domain.BrandAttachment">
+        <include refid="SELECT_FILE"/>
+        AND brand_id = #{brandId}
+    </select>
+
+    <delete id="deleteImage" flushCache="true" parameterType="com.lec.spring.domain.BrandAttachment">
+        DELETE FROM BrandAttachment
+        WHERE brand_id = #{brandId}
+    </delete>
+
+</mapper>
