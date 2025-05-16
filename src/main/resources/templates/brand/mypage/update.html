@@ -20,24 +20,28 @@
 	<input type="hidden" name="id" th:value="${brand.id}"/>
 
 	<div class="container mt-3 mb-3 border rounded">
-		<!-- 삭제할 파일의 id 값(들) 저장 -->
 		<div id="delFiles"></div>
 
+		<!-- 기존 첨부파일 -->
 		<div class="mb-3 mt-3">
-			<label>기존 첨부파일:</label>
-			<div th:if="${brandAttachment != null}">
-				<div class="input-group mb-2">
-					<input class="form-control col-xs-3" type="text" readonly th:value="${brandAttachment.sourcename}">
-					<button type="button" class="btn btn-outline-danger delete-file-btn"
-							th:data-fileid="${brandAttachment.id}">삭제</button>
+			<label class="form-label">기존 첨부파일:</label>
+			<div th:if="${attachments != null and !attachments.isEmpty()}">
+				<div th:each="file : ${attachments}" class="mb-3">
+					<img th:src="@{'/upload/brand/' + ${file.filename}}"
+						 style="height: 100px;" class="img-thumbnail mb-1">
+					<div class="input-group">
+						<input class="form-control" type="text" readonly th:value="${file.sourcename}">
+						<button type="button" class="btn btn-outline-danger delete-file-btn"
+								th:data-fileid="${file.id}">삭제</button>
+					</div>
 				</div>
 			</div>
 		</div>
 
 		<!-- 새 첨부파일 추가 -->
 		<div class="mb-3 mt-3">
-			<label for="logo">새 첨부파일 추가:</label>
-			<input type="file" class="form-control" id="logo" name="logo">
+			<label for="files">새 첨부파일 추가:</label>
+			<input type="file" class="form-control" id="files" name="files">
 		</div>
 	</div>
 
@@ -56,18 +60,16 @@
 		<button type="button" class="btn btn-sm btn-outline-secondary" id="togglePasswordBtn">비밀번호 변경하기</button>
 	</div>
 
-	<!-- 비밀번호 입력 필드 (처음에는 숨김) -->
+	<!-- 비밀번호 입력 필드 -->
 	<div id="passwordFields" th:attr="style=${passwordFields} ? 'display: block;' : 'display: none;'">
 		<div class="mb-3">
 			<label for="password">새 비밀번호:</label>
 			<input type="password" class="form-control" name="password" id="password" th:value="${password}" placeholder="비밀번호 입력">
 		</div>
-
 		<div class="mb-3">
 			<label for="password2">비밀번호 확인:</label>
 			<input type="password" class="form-control" name="password2" id="password2" th:value="${password2}" placeholder="비밀번호 확인">
 		</div>
-
 		<div class="mb-3">
 			<span class="text-danger" th:if="${error_password}" th:text="${error_password}"></span>
 		</div>

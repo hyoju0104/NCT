@@ -15,7 +15,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Value("${app.upload.path.post}")
 	private String uploadDir;   // "/upload/post"
 
-	@Value("upload/brand")
+	@Value("${app.upload.path.brand}")
 	private String uploadDirBrand;
 	
 	@Override
@@ -27,8 +27,11 @@ public class MvcConfig implements WebMvcConfigurer {
 				.addResourceHandler("/upload/post/**")
 				.addResourceLocations("file:" + uploadDir + "/");
 
+//		registry.addResourceHandler("/upload/item/**")
+//				.addResourceLocations("file:" + "/" + uploadDirItem + "/");
+
 		registry.addResourceHandler("/upload/brand/**")
-				.addResourceLocations("file:" + uploadDirBrand + "/");
+				.addResourceLocations("file:" + System.getProperty("user.dir") + "/" + uploadDirBrand + "/");
 	}
 	
 //	@Bean

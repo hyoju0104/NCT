@@ -4,12 +4,10 @@ import com.lec.spring.config.BrandDetails;
 import com.lec.spring.domain.Brand;
 import com.lec.spring.domain.BrandAttachment;
 import com.lec.spring.domain.BrandMypageValidator;
-import com.lec.spring.domain.Item;
 import com.lec.spring.service.BrandAttachmentService;
 import com.lec.spring.service.BrandService;
-import com.lec.spring.service.ItemService;
 import jakarta.validation.Valid;
-import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +34,9 @@ public class BrandController {
     private final PasswordEncoder passwordEncoder;
     private final BrandAttachmentService brandAttachmentService;
 
+    @Value("${app.upload.path.brand}")
+    private String uploadDirBrand;
+
     public BrandController(BrandService brandService, PasswordEncoder passwordEncoder, BrandAttachmentService brandAttachmentService) {
         this.brandService = brandService;
         this.passwordEncoder = passwordEncoder;
@@ -42,12 +46,11 @@ public class BrandController {
     @GetMapping("/mypage/detail")
     public String mypageDetail(@AuthenticationPrincipal BrandDetails principal, Model model) {
         Long brandId = principal.getBrand().getId();
-
         Brand brand = brandService.myDetail(brandId);
         model.addAttribute("brand", brand);
 
-        BrandAttachment brandAttachment = brandAttachmentService.findByBrand(brandId);
-        model.addAttribute("brandAttachment", brandAttachment);
+        List<BrandAttachment> attachments = brandAttachmentService.findByBrandId(brandId);
+        model.addAttribute("attachments", attachments);
 
         return "brand/mypage/detail";
     }
@@ -57,15 +60,15 @@ public class BrandController {
         Long brandId = principal.getBrand().getId();
         model.addAttribute("brand", brandService.selectById(brandId));
 
-        BrandAttachment brandAttachment = brandAttachmentService.findByBrand(brandId);
-        model.addAttribute("brandAttachment", brandAttachment);
+        List<BrandAttachment> attachments = brandAttachmentService.findByBrandId(brandId);
+        model.addAttribute("attachments", attachments);
 
         return "brand/mypage/update";
     }
 
     @PostMapping("/mypage/update")
     public String myUpdateOk(
-            @RequestParam(required = false) MultipartFile logo,
+            @RequestParam(required = false) MultipartFile[] files,
             @RequestParam(required = false) String password,
             @RequestParam(required = false) String password2,
             @Valid Brand brand,
@@ -80,15 +83,12 @@ public class BrandController {
 
         if (result.hasErrors()) {
             showErrors(result);
-
             redirectAttributes.addFlashAttribute("phoneNum", brand.getPhoneNum());
             redirectAttributes.addFlashAttribute("description", brand.getDescription());
-            redirectAttributes.addFlashAttribute("passwordFields", !password.isBlank());
-
+            redirectAttributes.addFlashAttribute("passwordFields", password != null && !password.isBlank());
             for (FieldError err : result.getFieldErrors()) {
                 redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getDefaultMessage());
             }
-
             return "redirect:/brand/mypage/update";
         }
 
@@ -104,45 +104,45 @@ public class BrandController {
 
         brandService.myUpdate(brand);
 
-        if (logo != null && !logo.isEmpty()) {
-            try {
-                String uploadDir = "upload/brand";
-                java.nio.file.Path uploadPath = java.nio.file.Paths.get(uploadDir);
-                if (!java.nio.file.Files.exists(uploadPath)) {
-                    java.nio.file.Files.createDirectories(uploadPath);
+        if (files != null) {
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    try {
+                        Path uploadPath = Paths.get(System.getProperty("user.dir"), uploadDirBrand);
+                        if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+
+                        String savedName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+                        Path filePath = uploadPath.resolve(savedName);
+
+                        file.transferTo(filePath.toFile());
+
+                        BrandAttachment attachment = BrandAttachment.builder()
+                                .brandId(brandId)
+                                .sourcename(file.getOriginalFilename())
+                                .filename(savedName)
+                                .build();
+
+                        brandAttachmentService.save(attachment);
+
+                    } catch (IOException e) {
+                        redirectAttributes.addFlashAttribute("error", "파일 업로드에 실패했습니다.");
+                    }
                 }
-
-                String savedName = UUID.randomUUID() + "_" + logo.getOriginalFilename();
-                java.nio.file.Path filePath = uploadPath.resolve(savedName);
-                logo.transferTo(filePath.toFile());
-
-                BrandAttachment attachment = new BrandAttachment();
-                attachment.setBrandId(brandId);
-                attachment.setSourcename(logo.getOriginalFilename());
-                attachment.setFilename(savedName);
-
-                brandAttachmentService.save(attachment);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                redirectAttributes.addFlashAttribute("error", "파일 업로드에 실패했습니다.");
             }
         }
 
-        int resultUpdate = brandService.myUpdate(brand);
 
+        int resultUpdate = brandService.myUpdate(brand);
         model.addAttribute("result", resultUpdate);
         model.addAttribute("brand", brand);
 
         return "brand/mypage/updateOk";
     }
 
-
     @PostMapping("/mypage/delete")
     public String myDeleteOk(@AuthenticationPrincipal BrandDetails principal) {
         Long brandId = principal.getBrand().getId();
         brandService.myDelete(brandId);
-
         return "brand/mypage/deleteOk";
     }
 

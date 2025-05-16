@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lec.spring.repository.BrandAttachmentRepository">
+
     <sql id="SELECT_FILE">
         SELECT id, brand_id, sourcename, filename
         FROM BrandAttachment
@@ -22,14 +23,20 @@
         VALUES (#{brandId}, #{sourcename}, #{filename})
     </insert>
 
-    <select id="findByBrand" resultType="com.lec.spring.domain.BrandAttachment">
+    <select id="findByBrandId" resultType="com.lec.spring.domain.BrandAttachment">
         <include refid="SELECT_FILE"/>
         AND brand_id = #{brandId}
+        ORDER BY id ASC
     </select>
 
-    <delete id="deleteImage" flushCache="true" parameterType="com.lec.spring.domain.BrandAttachment">
+    <select id="findById" resultType="com.lec.spring.domain.BrandAttachment">
+        <include refid="SELECT_FILE"/>
+        AND id = #{id}
+    </select>
+
+    <delete id="deleteById" flushCache="true" parameterType="com.lec.spring.domain.BrandAttachment">
         DELETE FROM BrandAttachment
-        WHERE brand_id = #{brandId}
+        WHERE id = #{id}
     </delete>
 
 </mapper>
