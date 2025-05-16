@@ -10,6 +10,7 @@ import com.lec.spring.repository.PostRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -25,8 +26,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-
-//import org.jsoup.Jsoup;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -79,8 +78,8 @@ public class PostServiceImpl implements PostService {
 			post.setCommentList(comments);
 			
 			// 본문 HTML 태그 제거 후 표시
-//			String plain = Jsoup.parse(post.getContent()).text();
-//			post.setContent(plain);
+			String plain = Jsoup.parse(post.getContent()).text();
+			post.setContent(plain);
 		}
 		
 		return posts;
