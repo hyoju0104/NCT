@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -12,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MvcConfig implements WebMvcConfigurer {
 	
 	@Value("${app.upload.path.post}")
-	private String uploadDir;   // "/upload"
+	private String uploadDir;   // "/upload/post"
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -23,5 +24,10 @@ public class MvcConfig implements WebMvcConfigurer {
 				.addResourceHandler("/upload/post/**")
 				.addResourceLocations("file:" + uploadDir + "/");
 	}
+	
+//	@Bean
+//	public StandardServletMultipartResolver multipartResolver() {
+//		return new StandardServletMultipartResolver();
+//	}
 	
 }

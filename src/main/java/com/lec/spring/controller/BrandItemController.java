@@ -2,7 +2,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.config.PrincipalBrandDetails;
 import com.lec.spring.domain.Brand;
-//import com.lec.spring.domain.BrandItemValidator;
+import com.lec.spring.domain.BrandItemValidator;
 import com.lec.spring.domain.Item;
 import com.lec.spring.service.ItemService;
 import jakarta.validation.Valid;
@@ -35,9 +35,10 @@ public class BrandItemController {
     public String writeOk(@ModelAttribute("item") Item item,
                           BindingResult result,
                           @AuthenticationPrincipal PrincipalBrandDetails principal,
+                          RedirectAttributes redirectAttributes,
                           Model model) {
 
-//        new BrandItemValidator().validate(item, result);
+        new BrandItemValidator().validate(item, result);
 
         if (result.hasErrors()) {
 
@@ -52,7 +53,10 @@ public class BrandItemController {
         item.setIsExist(true);
         itemService.save(item);
 
-        return "redirect:/brand/list";
+        model.addAttribute("item", item);
+        model.addAttribute("result", 1);
+
+        return "brand/item/writeOk";
     }
 
     @GetMapping("/list")
@@ -90,7 +94,7 @@ public class BrandItemController {
                            @AuthenticationPrincipal PrincipalBrandDetails principal,
                            Model model) {
 
-//        new BrandItemValidator().validate(item, result);
+        new BrandItemValidator().validate(item, result);
 
         if (result.hasErrors()) {
             result.getFieldErrors().forEach(error ->
@@ -109,4 +113,21 @@ public class BrandItemController {
         return "brand/item/updateOk";
     }
 
+    @PostMapping("/item/delete")
+    public String deleteItem(@RequestParam Long id,
+                             @AuthenticationPrincipal PrincipalBrandDetails principal,
+                             Model model) {
+
+        Item item = itemService.detail(id);
+
+        if (!item.getBrand().getId().equals(principal.getBrand().getId())) {
+            return "redirect:/brand/list";
+        }
+
+        item.setIsExist(false);
+        itemService.update(item);
+
+        model.addAttribute("result", 1);
+        return "brand/item/deleteOk";
+    }
 }
