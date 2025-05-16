@@ -1,13 +1,16 @@
 package com.lec.spring.service;
 
+import com.lec.spring.domain.Comment;
 import com.lec.spring.domain.PostAttachment;
 import com.lec.spring.domain.Post;
 import com.lec.spring.domain.User;
+import com.lec.spring.repository.CommentRepository;
 import com.lec.spring.repository.PostAttachmentRepository;
 import com.lec.spring.repository.PostRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.util.U;
 import org.apache.ibatis.session.SqlSession;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -40,11 +43,13 @@ public class PostServiceImpl implements PostService {
 	private final PostRepository postRepository;
 	private final UserRepository userRepository;
 	private final PostAttachmentRepository postAttachmentRepository;
+	private final CommentRepository commentRepository;
 	
-	public PostServiceImpl(SqlSession sqlSession, PostAttachmentRepository postAttachmentRepository) {
+	public PostServiceImpl(SqlSession sqlSession, PostAttachmentRepository postAttachmentRepository, CommentRepository commentRepository) {
 		this.postRepository = sqlSession.getMapper(PostRepository.class);
 		this.userRepository = sqlSession.getMapper(UserRepository.class);
 		this.postAttachmentRepository = sqlSession.getMapper(PostAttachmentRepository.class);
+		this.commentRepository = commentRepository;
 		System.out.println("✅ PostService() 생성");
 	}
 	
@@ -67,6 +72,14 @@ public class PostServiceImpl implements PostService {
 				// id가 가장 작은 파일만 남기기
 				post.setFileList(Collections.singletonList(representative));
 			}
+			
+			// postId 에 연결된 댓글 전부 조회
+			List<Comment> comments = commentRepository.findByPost(post.getId());
+			post.setCommentList(comments);
+			
+			// 본문 HTML 태그 제거 후 표시
+			String plain = Jsoup.parse(post.getContent()).text();
+			post.setContent(plain);
 		}
 		
 		return posts;

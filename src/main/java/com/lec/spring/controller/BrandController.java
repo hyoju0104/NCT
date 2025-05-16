@@ -2,6 +2,7 @@ package com.lec.spring.controller;
 
 import com.lec.spring.config.PrincipalBrandDetails;
 import com.lec.spring.domain.Brand;
+import com.lec.spring.domain.BrandMypageValidator;
 import com.lec.spring.domain.Item;
 import com.lec.spring.service.BrandService;
 import com.lec.spring.service.ItemService;
@@ -55,18 +56,19 @@ public class BrandController {
             @Valid Brand brand,
             BindingResult result,
             @AuthenticationPrincipal PrincipalBrandDetails principal,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Model model
     ) {
-//        BrandMypageValidator validator = new BrandMypageValidator();
-//        validator.validatePasswords(password, password2, result);
-//        validator.validate(brand, result);
+        BrandMypageValidator validator = new BrandMypageValidator();
+        validator.validatePasswords(password, password2, result);
+        validator.validate(brand, result);
 
         if (result.hasErrors()) {
             showErrors(result);
 
             redirectAttributes.addFlashAttribute("phoneNum", brand.getPhoneNum());
             redirectAttributes.addFlashAttribute("description", brand.getDescription());
-            redirectAttributes.addFlashAttribute("passwordFields", true); // 입력칸 유지
+            redirectAttributes.addFlashAttribute("passwordFields", !password.isBlank());
 
             for (FieldError err : result.getFieldErrors()) {
                 redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getDefaultMessage());
@@ -84,10 +86,13 @@ public class BrandController {
 
         Long brandId = principal.getBrand().getId();
         brand.setId(brandId);
-
-        brandService.myUpdate(brand);
-
-        return "redirect:/brand/mypage/detail";
+	    
+	    int resultUpdate = brandService.myUpdate(brand);
+	    
+	    model.addAttribute("result", resultUpdate);
+	    model.addAttribute("brand", brand);
+	    
+	    return "/brand/mypage/updateOk";
     }
 
 
