@@ -4,12 +4,13 @@ server:
 spring:
   application:
     name: NCT
-
+  
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
     cache: false
-    
+  
+  
   # MySQL 등 spring-jdbc 사용 시 아래 정보 없으면 서버 가동 시 에러
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,7 +22,7 @@ spring:
     user:
       name: user
       password: 1234
-  
+      
   servlet:
     multipart:
       max-file-size: 10MB
@@ -29,11 +30,6 @@ spring:
 
 
 app:
-  #페이징 세팅값
-  pagination:
-    write_pages: 10 # 기본 write_pages 값. 한 [페이징] 당 몇개의 페이지가 표시되나
-    page_rows: 10 # 기본 page_rows 값.  한 '페이지'에 몇개의 글을 리스트 할것인가?
-  
   #파일 업로드 경로
   upload:
     path:
