@@ -62,8 +62,7 @@ public class PostController {
 	public String writeOk(
 		 	@Valid Post post,
 			BindingResult result,   // Validator 가 유효성 검사를 한 결과가 담긴 객체.
-//			@RequestParam Map<String, MultipartFile> files,  // 첨부파일들 <name, file>
-		    MultipartHttpServletRequest request,
+		    MultipartHttpServletRequest request,    // 첨부파일들 <name, file>
 			Model model,    // 매개변수 선언시 BindingResult 보다 Model 을 뒤에 두어야 한다.
 			RedirectAttributes redirectAttributes,  // redirect: 시 넘겨줄 값들.
 			@AuthenticationPrincipal UserDetails principal   // 로그인된 사용자 정보

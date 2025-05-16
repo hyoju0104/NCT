@@ -30,9 +30,9 @@ INSERT INTO Plan(type, price, count) VALUES
 ;
 
 INSERT INTO User (user.auth_id, username, password, name, point, status_plan) VALUES
-      (1, 'user1', '1111', '안주경', 1000, 'ACTIVE'),
-      (1, 'user3', '1111', '이현정', 2000, 'INACTIVE'),
-      (3, 'admin', '1111', '관리자', 0, 'ACTIVE')
+      (3, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKfe', '관리자', 0, 'ACTIVE'),
+      (1, 'user1', '$2a$10$AsdcGiiMWwG6sCu9IiNqvu5Z1G7krhWLhehijgfiqjRhHCODctw8a', '회원1', 0, 'ACTIVE'),
+      (1, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 0, 'INACTIVE')
 ;
 
 INSERT INTO Payment (Payment.user_id, Payment.plan_id, price) VALUES
@@ -62,7 +62,9 @@ INSERT INTO Comment (Comment.user_id, Comment.post_id, content) VALUES
 INSERT INTO Brand (brand.auth_id, name, username, password, phone_num, is_actived, description) VALUES
         (2, '나이키', 'nike', 'nike123', '031-1234-4321', true, '1111'),
         (2, '아디다스', 'adidas', 'adidas123', '031-1234-5342', true, 'aaaaaa'),
-        (2, '뉴발란스', 'newbalance', 'newbalance123', '031-1234-6757', false, 'bbbbbbbb')
+        (2, '뉴발란스', 'newbalance', 'newbalance123', '031-1234-6757', false, 'bbbbbbbb'),
+        (2, '브랜드1', 'brand1', '$2a$10$.PNEhmDp8ns/piR3D4XfL.OdEbDj.i2Sxf9rnOZogm6YsJU2N0XcS', '1234567890', true, 'test1'),
+        (2, '브랜드2', 'brand2', '$2a$10$aHXnS/n5WQKbQ2rGzXtt2eFYzpING1w62o7AZzwhj4yKmUBsUQMfi', '1234567890', true, '')
 ;
 
 INSERT INTO Item(Item.brand_id, name, category, is_available, item_status, is_exist, description) VALUES
