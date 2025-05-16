@@ -57,7 +57,7 @@ public class SecurityConfig {
                         // 권한별 리다이렉트 핸들러
                         .successHandler((request, response, authentication) -> {
                             boolean isBrand = authentication.getAuthorities().stream()
-                                    .anyMatch(a -> a.getAuthority().equals("ROLE_BRAND"));
+                                    .anyMatch(a -> a.getAuthority().equals("BRAND"));
                             if (isBrand) {
                                 response.sendRedirect("/item/list");
                             } else {
