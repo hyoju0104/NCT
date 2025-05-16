@@ -70,11 +70,15 @@
 				<!-- 본문 -->
 				<div class="mb-3 mt-3">
 					<label>내용:</label>
-					<div class="border bg-light rounded p-2" th:utext="${post.content}"></div>
+					<div class="border bg-light rounded p-2"
+						 style="white-space: pre-wrap; word-break: break-word;"
+						 th:utext="${post.content}"></div>
 				</div>
 				<div class="mb-3 mt-3">
 					<label>상품:</label>
-					<div class="border bg-light rounded p-2" th:text="${post.items}"></div>
+					<div class="border bg-light rounded p-2"
+						 style="white-space: pre-wrap; word-break: break-word;"
+						 th:text="${post.items}"></div>
 				</div>
 				<!-- 본문 -->
 				
