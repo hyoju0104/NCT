@@ -32,17 +32,15 @@
 	</div>
 
 	<div class="d-flex">
-		<button type="button" class="btn btn-outline-secondary" onclick="history.back()">이전으로</button>
-		<a class="btn btn-primary me-2" th:href="@{/brand/mypage/update}">수정</a>
+		<a class="btn btn-primary me-2" th:href="@{/brand/mypage/update}">정보수정</a>
 
 		<form method="post"
 			  th:action="@{/brand/mypage/delete}"
 			  onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
-			<button type="submit" class="btn btn-danger">계정 탈퇴</button>
+			<button type="submit" class="btn btn-danger">계정탈퇴</button>
 		</form>
 
-		<a th:href="@{/brand/list}" class="btn btn-primary ms-auto">등록 상품 목록</a>
-		<a th:href="@{/brand/item/write}" class="btn btn-primary ms-auto">상품 등록하기</a>
+		<a th:href="@{/brand/item/write}" class="btn btn-primary ms-auto">상품등록</a>
 
 	</div>
 </div>

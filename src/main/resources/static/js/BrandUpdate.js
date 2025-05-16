@@ -1,17 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const toggleBtn = document.getElementById("togglePasswordBtn");
-    const passwordFields = document.getElementById("passwordFields");
-    const passwordInput = document.getElementById("password");
-    const password2Input = document.getElementById("password2");
+    const toggle = document.getElementById('changePasswordToggle');
+    const passwordBox = document.getElementById('passwordBox');
+    const password = document.getElementById('password');
+    const password2 = document.getElementById('password2');
 
-    toggleBtn.addEventListener("click", function () {
-        const isVisible = passwordFields.style.display === "block";
-        passwordFields.style.display = isVisible ? "none" : "block";
-        toggleBtn.textContent = isVisible ? "비밀번호 변경하기" : "비밀번호 변경 안하기";
+    function updateState() {
+        const enable = toggle.checked;
+        passwordBox.style.display = enable ? 'block' : 'none';
 
-        if (isVisible) {
-            passwordInput.value = "";
-            password2Input.value = "";
+        if (!enable) {
+            password.value = '';
+            password2.value = '';
         }
-    });
+    }
+
+    toggle.addEventListener('change', updateState);
+
+    updateState();
 });

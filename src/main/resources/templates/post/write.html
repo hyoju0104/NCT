@@ -30,8 +30,6 @@
 			<h2>작성</h2>
 			<hr>
 			
-			<!-- 본문 -->
-			<!-- 첨부파일 submit 하는 form 은 반드시 ⭐method="post" enctype="multipart/form-data"⭐ 이어야 함!! -->
 			<form th:action="@{/post/write}" method="post" enctype="multipart/form-data">
 				
 				<div class="my-3">
@@ -52,20 +50,7 @@
 							  th:utext="${items}"></textarea>
 				</div>
 				<div><span class="text-danger" th:if="${error_items}" th:utext="${error_items}"></span></div>
-				<!-- 본문 -->
-				
-				
-				<!-- 첨부파일 -->
-				<div class="container mt-3 mb-3 border rounded">
-					<div class="mb-3 mt-3">
-						<label>첨부파일:</label>
-						<div id="files">
-						</div>
-						<button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
-					</div>
-				</div>
-				<!-- 첨부파일 -->
-				
+
 				
 				<button type="submit" class="btn btn-outline-dark">작성완료</button>
 				<a class="btn btn-outline-dark" th:href="@{/post/list(page=${session.page})}">목록</a>

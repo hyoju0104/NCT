@@ -9,7 +9,7 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
-	<script th:src="@{/js/BrandUpdate.js}"></script>
+	<script src="/js/BrandUpdate.js"></script>
 
 	<link rel="stylesheet" th:href="@{/css/common.css}">
 	<link rel="stylesheet" th:href="@{/css/header.css}">
@@ -21,7 +21,7 @@
 	<!-- 상단 메뉴 -->
 	<th:block th:insert="~{common/header::header}"></th:block>
 	
-	<form name="frm" th:action="@{/brand/mypage/update}" method="post" enctype="multipart/form-data">
+	<form name="frm" th:action="@{/brand/mypage/update}" method="post" th:object="${brand}">
 		<input type="hidden" name="id" th:value="${brand.id}"/>
 		
 		<div class="mb-3">
@@ -34,39 +34,37 @@
 			<span class="form-control" readonly th:text="${brand.username}"></span>
 		</div>
 
-		<!-- 비밀번호 토글 버튼 -->
-		<div class="mb-3">
-			<button type="button" class="btn btn-sm btn-outline-secondary" id="togglePasswordBtn">비밀번호 변경하기</button>
+		<div class="form-check form-switch mb-3">
+			<input class="form-check-input" type="checkbox" id="changePasswordToggle" th:checked="${passwordFields}">
+			<label class="form-check-label" for="changePasswordToggle">비밀번호 변경</label>
 		</div>
 
-		<!-- 비밀번호 입력 필드 (처음에는 숨김) -->
-		<div id="passwordFields" th:attr="style=${passwordFields} ? 'display: block;' : 'display: none;'">
-			<div class="mb-3">
-				<label for="password">새 비밀번호:</label>
-				<input type="password" class="form-control" name="password" id="password" th:value="${password}">
-			</div>
+		<div id="passwordBox"
+			 th:style="${passwordFields} ? '' : 'display:none'">
 
 			<div class="mb-3">
-				<label for="password2">비밀번호 확인:</label>
-				<input type="password" class="form-control" name="password2" id="password2" th:value="${password2}">
-			</div>
-
-			<div class="mb-3">
+				<label for="password">새 비밀번호</label>
+				<input type="password" class="form-control" id="password" name="password" placeholder="새 비밀번호 입력">
 				<span class="text-danger" th:if="${error_password}" th:text="${error_password}"></span>
 			</div>
+
+			<div class="mb-3">
+				<label for="password2">비밀번호 확인</label>
+				<input type="password" class="form-control" id="password2" name="password2" placeholder="새 비밀번호 확인 입력">
+				<span class="text-danger" th:if="${error_password2}" th:text="${error_password2}"></span>
+			</div>
 		</div>
 
-		<div class="mb-3 mt-3">
+
+		<div class="mb-3">
 			<label for="phoneNum">대표번호:</label>
-			<input type="text" class="form-control" id="phoneNum" name="phoneNum"
-				   th:value="${brand.phoneNum}" placeholder="번호를 입력하세요">
-			<span class="text-danger" th:if="${error_phoneNum}" th:utext="${error_phoneNum}"></span>
+			<input type="text" class="form-control" id="phoneNum" name="phoneNum" th:value="${phoneNum != null ? phoneNum : brand.phoneNum}" placeholder="대표번호 입력">
+			<span class="text-danger" th:if="${error_phoneNum}" th:text="${error_phoneNum}"></span>
 		</div>
 
 		<div class="mb-3 mt-3">
 			<label for="description">소개:</label>
-			<textarea class="form-control" id="description" name="description" rows="5"
-					  placeholder="소개를 입력하세요" th:text="${brand.description}"></textarea>
+			<textarea class="form-control" id="description" name="description" rows="5" placeholder="소개를 입력하세요" th:text="${description != null ? description : brand.description}"></textarea>
 		</div>
 
 		<button type="submit" class="btn btn-outline-danger">수정완료</button>

@@ -2,13 +2,13 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <script th:unless="${result > 0}">
-    alert("수정이 실패하였습니다.");
+    alert("등록이 실패하였습니다.");
     history.back();
 </script>
 
 <script th:if="${result > 0}" th:inline="javascript">
-    alert("수정이 완료되었습니다.");
-    location.href= "/brand/mypage/detail";
+    alert("등록이 완료되었습니다.");
+    location.href= "/brand/item/detail/[[${item.id}]]";
 </script>
 
 

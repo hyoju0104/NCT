@@ -35,6 +35,7 @@ public class BrandItemController {
     public String writeOk(@ModelAttribute("item") Item item,
                           BindingResult result,
                           @AuthenticationPrincipal BrandDetails principal,
+                          RedirectAttributes redirectAttributes,
                           Model model) {
 
         new BrandItemValidator().validate(item, result);
@@ -52,7 +53,10 @@ public class BrandItemController {
         item.setIsExist(true);
         itemService.save(item);
 
-        return "redirect:/brand/list";
+        model.addAttribute("item", item);
+        model.addAttribute("result", 1);
+
+        return "brand/item/writeOk";
     }
 
     @GetMapping("/list")
@@ -109,4 +113,21 @@ public class BrandItemController {
         return "brand/item/updateOk";
     }
 
+    @PostMapping("/item/delete")
+    public String deleteItem(@RequestParam Long id,
+                             @AuthenticationPrincipal BrandDetails principal,
+                             Model model) {
+
+        Item item = itemService.detail(id);
+
+        if (!item.getBrand().getId().equals(principal.getBrand().getId())) {
+            return "redirect:/brand/list";
+        }
+
+        item.setIsExist(false);
+        itemService.update(item);
+
+        model.addAttribute("result", 1);
+        return "brand/item/deleteOk";
+    }
 }
