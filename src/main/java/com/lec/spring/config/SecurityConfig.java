@@ -59,7 +59,7 @@ public class SecurityConfig {
                             boolean isBrand = authentication.getAuthorities().stream()
                                     .anyMatch(a -> a.getAuthority().equals("BRAND"));
                             if (isBrand) {
-                                response.sendRedirect("/item/list");
+                                response.sendRedirect("/brand/list");
                             } else {
                                 // USER 권한 혹은 그 외
                                 response.sendRedirect("/post/list");
