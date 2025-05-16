@@ -41,6 +41,7 @@ public class SecurityConfig {
                 //TODO requestmatchers는 html 만든 후 수정하기
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(
+                                "/",
                                 "/login", "/register/**",
                                 "/css/**", "/js/**", "/images/**", "/upload/**", "/common/**",
                                 "/post/list", "/post/detail/**",
@@ -59,7 +60,7 @@ public class SecurityConfig {
                             boolean isBrand = authentication.getAuthorities().stream()
                                     .anyMatch(a -> a.getAuthority().equals("BRAND"));
                             if (isBrand) {
-                                response.sendRedirect("/item/list");
+                                response.sendRedirect("/brand/list");
                             } else {
                                 // USER 권한 혹은 그 외
                                 response.sendRedirect("/post/list");
@@ -68,7 +69,6 @@ public class SecurityConfig {
                         .failureUrl("/login?error") //로그인 실패하면.
                         .permitAll() //위에서 설정한 로그인 관련 URL들은 로그인 안해도 누구나 볼수있게
                 ) //formLogin
-
                 
                 .logout(logout -> logout
                         .logoutUrl("/logout")
