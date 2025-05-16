@@ -2,6 +2,8 @@ package com.lec.spring.controller;
 
 import com.lec.spring.config.UserDetails;
 import com.lec.spring.domain.Post;
+import com.lec.spring.domain.PostAttachmentValidator;
+import com.lec.spring.domain.PostValidator;
 import com.lec.spring.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,21 +12,39 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/post")
 public class PostController {
 	
 	private final PostService postService;
+	private final PostAttachmentValidator postAttachmentValidator;
 	
-	public PostController(PostService postService) {
+	public PostController(PostService postService, PostAttachmentValidator postAttachmentValidator) {
 		this.postService = postService;
+		this.postAttachmentValidator = postAttachmentValidator;
+	}
+	
+	private static final List<String> IMAGE_MIME_TYPES = Arrays.asList(
+			"image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp"
+	);
+	
+	
+	@InitBinder("post")
+	public void initBinder(WebDataBinder binder){
+		System.out.println("✅ @InitBinder 호출");
+		binder.addValidators(new PostValidator());
 	}
 	
 	
@@ -40,40 +60,63 @@ public class PostController {
 	
 	@PostMapping("/write")
 	public String writeOk(
-			@RequestParam Map<String, MultipartFile> files,  // 첨부파일들 <name, file>
 		 	@Valid Post post,
 			BindingResult result,   // Validator 가 유효성 검사를 한 결과가 담긴 객체.
+//			@RequestParam Map<String, MultipartFile> files,  // 첨부파일들 <name, file>
+		    MultipartHttpServletRequest request,
 			Model model,    // 매개변수 선언시 BindingResult 보다 Model 을 뒤에 두어야 한다.
 			RedirectAttributes redirectAttributes,  // redirect: 시 넘겨줄 값들.
 			@AuthenticationPrincipal UserDetails principal   // 로그인된 사용자 정보
 	){
-		// 1) 로그인 체크
+		// 1. 로그인 체크
 		if (principal == null) {
 			redirectAttributes.addFlashAttribute("error", "로그인 후 작성 가능합니다.");
 			return "redirect:/post/list";
 		}
-		// 2) Post 에 User 주입
 		post.setUser(principal.getUser());
 		
-		// 3) 검증 에러 처리 : validation 에러가 있었다면 redirect 한다!
+		// 2. PostValidator 수행 (자동)
+		
+		// 3. PostAttachmentValidator 수행 (파일별 수동 검증) : 이미지 최소 1개 업로드 검증
+		//                                                      Map→List 로 변환해서 인덱스 접근 가능토록 함
+		// 3-1) 업로드된 파일 전체 Map 으로 꺼내기
+		Map<String, MultipartFile> files = request.getFileMap();
+		
+		// 3-2) 실제로 선택된(비어있지 않은) 파일만 골라내기
+		List<MultipartFile> fileList = files.values().stream()
+				.filter(f -> !f.isEmpty())
+				.collect(Collectors.toList());
+		
+		// 3-3) 이미치 최소 1개 존재 여부 검증
+		if (fileList.isEmpty()) {
+			result.rejectValue("fileList", "1개 이상의 이미지를 등록해주세요.");
+		}
+		else {
+			// 3-4) 파일 개별 검증 : 이미지 파일 여부 확인
+			for (MultipartFile file : fileList) {
+				postAttachmentValidator.validate(file, result);
+			}
+		}
+		
+		// 4. 검증 에러 처리 : validation 에러가 있었다면 redirect
 		if(result.hasErrors()){
+			// 에러 원인 콘솔에 출력
 			showErrors(result);
-			
-			// redirect 시, 기존에 입력했던 값들은 보이도록 전달해주어야 한다
-			//   전달한 name 들은 => 템플릿에서 사용 가능한 변수!
-			redirectAttributes.addFlashAttribute("user", post.getUser());
-			redirectAttributes.addFlashAttribute("content", post.getContent());
-			redirectAttributes.addFlashAttribute("items", post.getItems());
 			
 			// 어떤 에러가 발생했는지 정보 전달
 			for(FieldError err : result.getFieldErrors()){
 				redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
 			}
 			
+			redirectAttributes.addFlashAttribute("user", post.getUser());
+			redirectAttributes.addFlashAttribute("content", post.getContent());
+			redirectAttributes.addFlashAttribute("items", post.getItems());
+			redirectAttributes.addFlashAttribute("fileList", post.getFileList());
+			
 			return "redirect:/post/write";  // GET
 		}
 		
-		// 4) 저장 호출
+		// 5. 저장
 		model.addAttribute("result", postService.write(post, files));
 		return "post/writeOk";  // view
 	}
@@ -106,7 +149,7 @@ public class PostController {
 	
 	@PostMapping("/update")
 	public String updateOk(
-			@ModelAttribute("post") Post post,
+			@Valid @ModelAttribute("post") Post post,
 			BindingResult result,
 			@RequestParam Map<String, MultipartFile> files, // 새로 추가되는 첨부파일(들) 정보
 			Long[] delfile,     // 삭제될 파일들의 id(들)

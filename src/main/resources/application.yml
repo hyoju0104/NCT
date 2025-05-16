@@ -10,7 +10,6 @@ spring:
     suffix: .html
     cache: false
     
-    
   # MySQL 등 spring-jdbc 사용 시 아래 정보 없으면 서버 가동 시 에러
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,6 +21,11 @@ spring:
     user:
       name: user
       password: 1234
+  
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 
 app:
