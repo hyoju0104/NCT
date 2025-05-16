@@ -8,7 +8,7 @@
 
 <script th:if="${result > 0}" th:inline="javascript">
     alert("수정이 완료되었습니다.");
-    location.href= "/brand/mypage/detail";
+    location.href= "/brand/mypage/detail/[[${brand.id}]]";
 </script>
 
 

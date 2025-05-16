@@ -18,14 +18,14 @@ public class BrandMypageValidator implements Validator {
         Brand brand = (Brand) target;
 
         if (brand.getPhoneNum() == null || brand.getPhoneNum().trim().isEmpty()) {
-            errors.rejectValue("phoneNum", null, "대표번호는 필수입니다.");
+            errors.rejectValue("phoneNum", "대표번호는 필수입니다.");
         }
     }
 
     public void validatePasswords(String password, String password2, Errors errors) {
         if (password != null && !password.trim().isEmpty()) {
             if (!password.equals(password2)) {
-                errors.rejectValue("password", null, "비밀번호가 일치하지 않습니다.");
+                errors.rejectValue("password", "비밀번호가 일치하지 않습니다.");
             }
         }
     }

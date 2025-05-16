@@ -56,8 +56,7 @@ public class BrandController {
             @Valid Brand brand,
             BindingResult result,
             @AuthenticationPrincipal BrandDetails principal,
-            RedirectAttributes redirectAttributes,
-            Model model
+            RedirectAttributes redirectAttributes
     ) {
         BrandMypageValidator validator = new BrandMypageValidator();
         validator.validatePasswords(password, password2, result);
@@ -68,7 +67,7 @@ public class BrandController {
 
             redirectAttributes.addFlashAttribute("phoneNum", brand.getPhoneNum());
             redirectAttributes.addFlashAttribute("description", brand.getDescription());
-            redirectAttributes.addFlashAttribute("passwordFields", !password.isBlank());
+            redirectAttributes.addFlashAttribute("passwordFields", true); // 입력칸 유지
 
             for (FieldError err : result.getFieldErrors()) {
                 redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getDefaultMessage());
@@ -87,12 +86,9 @@ public class BrandController {
         Long brandId = principal.getBrand().getId();
         brand.setId(brandId);
 
-        int resultUpdate = brandService.myUpdate(brand);
+        brandService.myUpdate(brand);
 
-        model.addAttribute("result", resultUpdate);
-        model.addAttribute("brand", brand);
-
-        return "/brand/mypage/updateOk";
+        return "redirect:/brand/mypage/detail";
     }
 
 
