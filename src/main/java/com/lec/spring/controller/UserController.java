@@ -44,11 +44,12 @@ public class UserController {
 
     @GetMapping("/mypage/detail")
     public void showMyPage(
-            @AuthenticationPrincipal PrincipalUserDetails PrincipalUserDetails, //로그인한 사용자 정보 가져오기
+            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, //로그인한 사용자 정보 가져오기
             Model model //뷰에 데이터 넘기기 위함
             ){
         //로그인한 사용자 정보 가져오기
-        User user = PrincipalUserDetails.getUser();
+        Long id = principalUserDetails.getUser().getId();
+        User user = userService.findById(id);
         //사용자의 구독 정보 설정(silver,gold,vip << Plan)
         if (user.getPlanId() != null) {
             Plan plan = planRepository.findByPlanId(user.getPlanId());

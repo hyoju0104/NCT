@@ -24,6 +24,7 @@
     </div>
 
     <form th:action="@{/user/mypage/update}" method="post">
+        <input type="hidden" name="id" th:value="${user.id}" />
         <!-- 아이디 (readonly) -->
         <div class="form-group">
             <label for="username">아이디</label>
@@ -53,7 +54,7 @@
 
         <div class="form-group">
             <label for="phone">전화번호 *</label>
-            <input type="tel" id="phone" name="phone" th:value="${user.phoneNum}" required>
+            <input type="tel" id="phone" name="phoneNum" th:value="${user.phoneNum}" required>
         </div>
 
         <!-- 주소 입력 -->
