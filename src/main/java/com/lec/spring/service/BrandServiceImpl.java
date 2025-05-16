@@ -4,6 +4,7 @@ import com.lec.spring.domain.Authority;
 import com.lec.spring.domain.Brand;
 import com.lec.spring.repository.AuthorityRepository;
 import com.lec.spring.repository.BrandRepository;
+import com.lec.spring.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,11 +24,13 @@ public class BrandServiceImpl implements BrandService {
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
     private final BrandRepository brandRepository;
+    private final ItemRepository itemRepository;
 
-    public BrandServiceImpl(PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, SqlSession sqlSession) {
+    public BrandServiceImpl(PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, SqlSession sqlSession, ItemRepository itemRepository) {
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.brandRepository = sqlSession.getMapper(BrandRepository.class);
+        this.itemRepository = itemRepository;
     }
 
     @Override
@@ -80,6 +83,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public int myDelete(Long id) {
+        itemRepository.markAllItemsAsNotExistByBrandId(id);
         return brandRepository.deactivate(id); // is_actived = false 처리
     }
 

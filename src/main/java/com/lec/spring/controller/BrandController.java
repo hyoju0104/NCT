@@ -2,12 +2,14 @@ package com.lec.spring.controller;
 
 import com.lec.spring.config.BrandDetails;
 import com.lec.spring.domain.Brand;
+import com.lec.spring.domain.BrandMypageValidator;
 import com.lec.spring.domain.Item;
 import com.lec.spring.service.BrandService;
 import com.lec.spring.service.ItemService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,11 +26,11 @@ import java.util.List;
 public class BrandController {
 
     private final BrandService brandService;
-    private final ItemService itemService;
+    private final PasswordEncoder passwordEncoder;
 
-    public BrandController(BrandService brandService, ItemService itemService) {
+    public BrandController(BrandService brandService, PasswordEncoder passwordEncoder) {
         this.brandService = brandService;
-        this.itemService = itemService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/mypage/detail")
@@ -49,32 +51,50 @@ public class BrandController {
     @PostMapping("/mypage/update")
     public String myUpdateOk(
             @RequestParam(value = "logo", required = false) MultipartFile logo,
+            @RequestParam(required = false) String password,
+            @RequestParam(required = false) String password2,
             @Valid Brand brand,
             BindingResult result,
             @AuthenticationPrincipal BrandDetails principal,
             RedirectAttributes redirectAttributes,
             Model model
     ) {
+        BrandMypageValidator validator = new BrandMypageValidator();
+        validator.validatePasswords(password, password2, result);
+        validator.validate(brand, result);
+
         if (result.hasErrors()) {
             showErrors(result);
 
             redirectAttributes.addFlashAttribute("phoneNum", brand.getPhoneNum());
             redirectAttributes.addFlashAttribute("description", brand.getDescription());
+            redirectAttributes.addFlashAttribute("passwordFields", !password.isBlank());
 
             for (FieldError err : result.getFieldErrors()) {
-                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getCode());
+                redirectAttributes.addFlashAttribute("error_" + err.getField(), err.getDefaultMessage());
             }
 
             return "redirect:/brand/mypage/update";
         }
 
+        if (password != null && !password.isBlank()) {
+            brand.setPassword(passwordEncoder.encode(password));
+        } else {
+            Brand current = brandService.selectById(principal.getBrand().getId());
+            brand.setPassword(current.getPassword());
+        }
+
         Long brandId = principal.getBrand().getId();
         brand.setId(brandId);
 
-        brandService.myUpdate(brand);
+        int resultUpdate = brandService.myUpdate(brand);
 
-        return "redirect:/brand/mypage/detail";
+        model.addAttribute("result", resultUpdate);
+        model.addAttribute("brand", brand);
+
+        return "/brand/mypage/updateOk";
     }
+
 
     @PostMapping("/mypage/delete")
     public String myDeleteOk(@AuthenticationPrincipal BrandDetails principal) {

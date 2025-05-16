@@ -2,12 +2,16 @@ package com.lec.spring.controller;
 
 import com.lec.spring.config.BrandDetails;
 import com.lec.spring.domain.Brand;
+import com.lec.spring.domain.BrandItemValidator;
 import com.lec.spring.domain.Item;
 import com.lec.spring.service.ItemService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -28,13 +32,31 @@ public class BrandItemController {
     }
 
     @PostMapping("/item/write")
-    public String writeOk(@ModelAttribute Item item,
-                          @AuthenticationPrincipal BrandDetails principal) {
+    public String writeOk(@ModelAttribute("item") Item item,
+                          BindingResult result,
+                          @AuthenticationPrincipal BrandDetails principal,
+                          RedirectAttributes redirectAttributes,
+                          Model model) {
 
-        Brand brand = principal.getBrand();
-        item.setBrand(brand);
+        new BrandItemValidator().validate(item, result);
+
+        if (result.hasErrors()) {
+
+            result.getFieldErrors().forEach(error ->
+                    model.addAttribute("error_" + error.getField(), error.getDefaultMessage())
+            );
+            model.addAttribute("item", item);
+            return "/brand/item/write";
+        }
+
+        item.setBrand(principal.getBrand());
+        item.setIsExist(true);
         itemService.save(item);
-        return "redirect:/brand/list";
+
+        model.addAttribute("item", item);
+        model.addAttribute("result", 1);
+
+        return "brand/item/writeOk";
     }
 
     @GetMapping("/list")
@@ -43,6 +65,13 @@ public class BrandItemController {
         List<Item> itemList = itemService.findByBrandId(brandId);
         model.addAttribute("itemList", itemList);
         return "brand/list";
+    }
+
+    @GetMapping("/item/detail/{id}")
+    public String detail(@PathVariable Long id, Model model) {
+        Item item = itemService.detail(id);
+        model.addAttribute("item", item);
+        return "brand/item/detail";
     }
 
     @GetMapping("/item/update/{id}")
@@ -59,21 +88,46 @@ public class BrandItemController {
         return "brand/item/update";
     }
 
-    @GetMapping("/item/detail/{id}")
-    public String detail(@PathVariable Long id, Model model) {
-        Item item = itemService.detail(id);
-        model.addAttribute("item", item);
-        return "brand/item/detail";
-    }
-
     @PostMapping("/item/update")
-    public String updateOk(@ModelAttribute Item item, Model model) {
-        if (item.getIsExist() == null) {
-            item.setIsExist(true);
+    public String updateOk(@ModelAttribute Item item,
+                           BindingResult result,
+                           @AuthenticationPrincipal BrandDetails principal,
+                           Model model) {
+
+        new BrandItemValidator().validate(item, result);
+
+        if (result.hasErrors()) {
+            result.getFieldErrors().forEach(error ->
+                    model.addAttribute("error_" + error.getField(), error.getDefaultMessage())
+            );
+            item.setBrand(principal.getBrand());
+            model.addAttribute("item", item);
+            return "brand/item/update";
         }
 
-        int result = itemService.update(item);
-        model.addAttribute("result", result);
+        item.setBrand(principal.getBrand());
+        if (item.getIsExist() == null) item.setIsExist(true);
+
+        int updated = itemService.update(item);
+        model.addAttribute("result", updated);
         return "brand/item/updateOk";
+    }
+
+    @PostMapping("/item/delete")
+    public String deleteItem(@RequestParam Long id,
+                             @AuthenticationPrincipal BrandDetails principal,
+                             Model model) {
+
+        Item item = itemService.detail(id);
+
+        if (!item.getBrand().getId().equals(principal.getBrand().getId())) {
+            return "redirect:/brand/list";
+        }
+
+        item.setIsExist(false);
+        itemService.update(item);
+
+        model.addAttribute("result", 1);
+        return "brand/item/deleteOk";
     }
 }

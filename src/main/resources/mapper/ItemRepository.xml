@@ -74,7 +74,6 @@
     <select id="findAll" resultMap="mapItem">
         <include refid="SELECT_BASE"/>
         AND i.is_exist = true
-        ORDER BY i.id DESC
     </select>
 
     <select id="findByCategory" parameterType="string" resultMap="mapItem">
@@ -95,11 +94,17 @@
         WHERE id = #{id}
     </update>
 
-    <delete id="delete" parameterType="com.lec.spring.domain.Item" flushCache="true">
+    <update id="markAsNotExist" parameterType="com.lec.spring.domain.Item" flushCache="true">
         UPDATE Item
         SET
-            is_exist = #{is_exist}
+            is_exist = false
         WHERE id = #{id}
-    </delete>
+    </update>
+
+    <update id="markAllItemsAsNotExistByBrandId" parameterType="com.lec.spring.domain.Item" flushCache="true">
+        UPDATE Item
+        SET is_exist = false
+        WHERE brand_id = #{brandId}
+    </update>
 
 </mapper>
