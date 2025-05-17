@@ -2,11 +2,15 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.Brand;
 import com.lec.spring.domain.User;
+import com.lec.spring.domain.UserValidator;
 import com.lec.spring.service.BrandService;
 import com.lec.spring.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,40 +30,53 @@ public class RegisterController {
     
     private final UserService userService;
     private final BrandService brandService;
+    private final UserValidator userValidator;
 
-    public RegisterController(UserService userService, BrandService brandService) {
+    public RegisterController(UserService userService, BrandService brandService, UserValidator userValidator) {
         this.userService = userService;
         this.brandService = brandService;
+        this.userValidator = userValidator;
     }
-    
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setValidator(userValidator);
+    }
+
 
     //회원가입
     @GetMapping("/kind")
     public void registerKind(){}
 
     @GetMapping("/user")
-    public void registerUser(){}
+    public String registerUserForm(Model model) {
+        model.addAttribute("user", new User());
+        return "register/user";
+    }
 
     @PostMapping("/user")
-    public String processUserJoin(User user, HttpServletRequest request, RedirectAttributes redirectAttrs){
-        //HttpServletRequest request: 폼 안에 있는 rePassword 값은 User 객체에 자동으로 안 담기니까 이걸로 따로 꺼내줘야 해
+    public String processUserJoin(
+            @ModelAttribute("user") User user,
+            BindingResult result,
+            @RequestParam(required = false) String zipcode,
+            @RequestParam(required = false) String addressDetail,
+            Model model
+    ) {
+        userValidator.validate(user, result);
 
-        //1. 비밀번호 일치 확인
-        String rePassword = request.getParameter("rePassword"); //사용자가 폼에 입력한 비번확인칸 값 꺼내옴
-        if(!user.getPassword().equals(rePassword)){
-            redirectAttrs.addAttribute("error","password");
-            return "redirect:/register/user";
+        if (result.hasErrors()) {
+            return "register/user";
         }
-        //2. 아이디 중복 확인
-        if(userService.isExist(user.getUsername())){
-            redirectAttrs.addAttribute("error","exist");
-            return "redirect:/register/user";
-        }
-        //3. 회원가입 처리
+        // ✅ 주소 조합
+        String fullAddress = (zipcode != null ? "[" + zipcode + "] " : "")
+                + (user.getAddress() != null ? user.getAddress() : "")
+                + (addressDetail != null ? " " + addressDetail : "");
+        user.setAddress(fullAddress);
+
         userService.register(user);
         return "redirect:/login";
-
     }
+
 
     
     @GetMapping("/brand")

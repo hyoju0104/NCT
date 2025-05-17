@@ -7,14 +7,15 @@ import com.lec.spring.service.PaymentService;
 import com.lec.spring.service.PostService;
 import com.lec.spring.service.RentalService;
 import com.lec.spring.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.lec.spring.domain.UserUpdateValidator;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,17 +29,25 @@ public class UserController {
     private final RentalService rentalService;
     private final PostService postService;
     private final UserService userService;
+    private final UserUpdateValidator userUpdateValidator;
 
     public UserController(PlanRepository planRepository,
                           PaymentService paymentService,
                           RentalService rentalService,
                           PostService postService,
-                          UserService userService) {
+                          UserService userService,
+                          UserUpdateValidator userUpdateValidator) {
         this.planRepository = planRepository;
         this.paymentService = paymentService;
         this.rentalService = rentalService;
         this.postService = postService;
         this.userService = userService;
+        this.userUpdateValidator = userUpdateValidator;
+    }
+
+    @InitBinder("user")
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(userUpdateValidator);
     }
 
 
@@ -65,7 +74,7 @@ public class UserController {
             totalCnt = switch (plan.getType()) {
                 case "SILVER" -> 3;
                 case "GOLD" -> 5;
-                case "VIP" -> 7;
+                case "VIP" -> 10;
                 default -> 0;
             };
         }
@@ -109,14 +118,17 @@ public class UserController {
     }
 
     @PostMapping("/mypage/update")
-    public String updateSubmit(User user, RedirectAttributes redirectAttrs) {
-        if (!user.getPassword().equals(user.getRePassword())) {
-            redirectAttrs.addFlashAttribute("error", "비밀번호가 일치하지 않습니다.");
-            return "redirect:/user/mypage/update";
+    public String updateSubmit(@ModelAttribute("user") @Valid User user,
+                               BindingResult result,
+                               Model model) {
+
+        if (result.hasErrors()) {
+            return "user/mypage/update";
         }
 
         userService.updateUserInfo(user);
         return "redirect:/user/mypage/detail";
+
     }
 
 

@@ -13,9 +13,10 @@
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 	<link rel="stylesheet" th:href="@{/css/common.css}">
-	
+	<link rel="stylesheet" th:href="@{/css/post.css}">
+
 	<script th:src="@{/js/PostWrite.js}"></script>
-	<title>작성</title>
+	<title th:text="'WearUp | 업로드 (' + ${#authentication.principal.user.name} + ')'"></title>
 </head>
 
 <body>
@@ -26,51 +27,47 @@
 	
 	<th:block th:with="loginUser=${#authentication.principal.user}">
 		<div class="container mt-3">
-			<h2>작성</h2>
-			<hr>
-			
-			<!-- 본문 -->
+
 			<!-- 첨부파일 submit 하는 form 은 반드시 ⭐method="post" enctype="multipart/form-data"⭐ 이어야 함!! -->
 			<form th:action="@{/post/write}" method="post" enctype="multipart/form-data">
 				
+				<!-- 본문 -->
 				<div class="my-3">
-					<label for="user">작성자:</label>
-					<span class="form-control" id="user"
-						  th:text="${loginUser.username + ' (' + loginUser.name + ')'}"></span>
-				</div>
-				
-				<div class="my-3">
-					<label for="content">내용:</label>
-					<textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content"
+					<label for="content" class="sub-title">본문</label>
+					<textarea class="form-control" rows="5" id="content" name="content" placeholder="내용을 입력하세요"
 							  th:utext="${content}"></textarea>
 				<div><span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span></div>
 				</div>
 				
+				<!-- 대여 상품 -->
 				<div class="my-3">
-					<label for="items">상품:</label>
-					<textarea class="form-control" rows="5" id="items" placeholder="상품명을 입력하세요" name="items"
+					<label for="items" class="sub-title">대여 상품</label>
+					<textarea class="form-control" rows="5" id="items" name="items" placeholder="상품명을 입력하세요"
 							  th:utext="${items}"></textarea>
 				</div>
 				<div><span class="text-danger" th:if="${error_items}" th:utext="${error_items}"></span></div>
-				<!-- 본문 -->
 				
 				
-				<!-- 첨부파일 -->
+				<!-- 이미지 첨부 -->
 				<div class="container mt-3 mb-3 border rounded">
-					<div class="mb-3 mt-3">
-						<label>첨부파일:</label>
-						<div id="files">
-						</div>
+					<div class="mb-3 mt-3 d-flex justify-content-between align-items-center">
+						<label class="sub-title">이미지 추가</label>
 						<button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
 					</div>
+					<div id="files">
+						<!-- 파일 리스트 추가 영역 -->
+					</div>
 				</div>
+				<div><span class="text-danger" th:if="${error_fileList}" th:utext="${error_fileList}"></span></div>
 				<!-- 첨부파일 -->
 				
 				
-				<button type="submit" class="btn btn-outline-dark">작성완료</button>
-				<a class="btn btn-outline-dark" th:href="@{/post/list(page=${session.page})}">목록</a>
+				<!-- 하단 버튼 -->
+				<div class="d-flex justify-content-end mt-4 mb-5">
+					<button type="submit" class="btn btn-outline-primary">작성완료</button>
+					<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
+				</div>
 			</form>
-		
 		</div>
 	</th:block>
 </body>

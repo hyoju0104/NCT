@@ -75,12 +75,14 @@ public class SecurityConfig {
                         .successHandler((request, response, authentication) -> {
                             boolean isBrand = authentication.getAuthorities().stream()
                                     .anyMatch(a -> a.getAuthority().equals("BRAND"));
+                            boolean isAdmin = authentication.getAuthorities().stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ADMIN"));
                             if (isBrand) {
                                 response.sendRedirect("/brand/list");
                             }
-//                            else if (isAdmin) {
-//                                response.sendRedirect("/admin/sales");
-//                            }
+                            else if (isAdmin) {
+                                response.sendRedirect("/admin/sales");
+                            }
                             else {
                                 // USER 권한 혹은 그 외
                                 response.sendRedirect("/post/list");
