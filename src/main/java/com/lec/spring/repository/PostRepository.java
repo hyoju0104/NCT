@@ -27,10 +27,6 @@ public interface PostRepository {
 	// 특정 id 글 삭제하기 (DELETE) <= Post(id)
 	int delete(Post post);
 	
-	// 페이징 동작
-	// from 부터 rows 개수만큼 읽기 (SELECT)
-	List<Post> selectFromRow(int from, int rows);
-	
 	// 전체 글의 개수 (SELECT)
 	int countAll();
 

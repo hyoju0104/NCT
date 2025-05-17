@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,12 +37,15 @@ public class PostServiceImpl implements PostService {
 	private final PostRepository postRepository;
 	private final UserRepository userRepository;
 	private final PostAttachmentRepository postAttachmentRepository;
+	private final PostAttachmentService postAttachmentService;
 	private final CommentRepository commentRepository;
 	
-	public PostServiceImpl(SqlSession sqlSession, PostAttachmentRepository postAttachmentRepository, CommentRepository commentRepository) {
+	public PostServiceImpl(SqlSession sqlSession, PostAttachmentRepository postAttachmentRepository,
+	                       PostAttachmentService postAttachmentService, CommentRepository commentRepository) {
 		this.postRepository = sqlSession.getMapper(PostRepository.class);
 		this.userRepository = sqlSession.getMapper(UserRepository.class);
 		this.postAttachmentRepository = sqlSession.getMapper(PostAttachmentRepository.class);
+		this.postAttachmentService = postAttachmentService;
 		this.commentRepository = commentRepository;
 		System.out.println("✅ PostService() 생성");
 	}
@@ -236,7 +240,7 @@ public class PostServiceImpl implements PostService {
 		String saveDir = new File(uploadDir).getAbsolutePath();
 		
 		File f = new File(saveDir, file.getFilename());
-		System.out.println("삭제 시도 --> " + f.getAbsolutePath());
+		System.out.println("삭제 시도 : " + f.getAbsolutePath());
 		
 		if (f.exists()) {   // 파일이 존재하는 경우 삭제
 			if (f.delete()) System.out.println("삭제 성공");
@@ -248,7 +252,11 @@ public class PostServiceImpl implements PostService {
 	
 	
 	@Override
+	@Transactional
 	public int deleteById(Long id) {
+		// 연결된 첨부파일 모두 삭제
+		postAttachmentService.deleteByPostId(id);
+		// 게시글 레코드 삭제
 		return postRepository.delete(postRepository.findById(id));
 	}
 
