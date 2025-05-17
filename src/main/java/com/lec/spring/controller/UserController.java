@@ -74,7 +74,7 @@ public class UserController {
             totalCnt = switch (plan.getType()) {
                 case "SILVER" -> 3;
                 case "GOLD" -> 5;
-                case "VIP" -> 7;
+                case "VIP" -> 10;
                 default -> 0;
             };
         }

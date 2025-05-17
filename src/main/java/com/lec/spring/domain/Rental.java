@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 public class Rental {
 
     private Long id;
-    private LocalDateTime rented_at;
-    private LocalDateTime retrurn_due_at;
-    private LocalDateTime retrurned_at;
+    private LocalDateTime rentedAt;
+    private LocalDateTime returnDueAt;
+    private LocalDateTime returnedAt;
     private String status;
 
     private User user;
     private Item item;
-    private String itemName;  // item 테이블에서 join으로 받아올 상품명
+    private String itemName;  // item 테이블에서 join 으로 받아올 상품명
 
 }

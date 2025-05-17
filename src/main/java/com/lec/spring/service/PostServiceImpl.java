@@ -33,13 +33,6 @@ public class PostServiceImpl implements PostService {
 	@Value("${app.upload.path.post}")
 	private String uploadDir;
 	
-	@Value("${app.pagination.write_pages}")
-	private int WRITE_PAGES;    // default = 10
-	
-	@Value("${app.pagination.page_rows}")
-	private int PAGE_ROWS;  // default = 10
-	
-	
 	private final PostRepository postRepository;
 	private final UserRepository userRepository;
 	private final PostAttachmentRepository postAttachmentRepository;

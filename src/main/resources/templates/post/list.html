@@ -30,12 +30,16 @@
 						
 						<!-- 본문 -->
 						<div class="card-body">
-							<p class="card-text" th:text="${post.content}">본문</p>
+							<p class="card-text text-truncate"
+							   style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+							   th:text="${post.content}">본문</p>
 						</div>
 						
 						<!-- 상품명 -->
 						<ul class="list-group list-group-flush">
-							<li class="list-group-item d-block text-truncate" th:text="${post.items}">상품명</li>
+							<li class="list-group-item text-truncate"
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+								th:text="${post.items}">상품명</li>
 						</ul>
 						
 						<!-- 게시글 정보 -->
