@@ -119,7 +119,7 @@ CREATE TABLE User
     username       VARCHAR(100)                           NOT NULL,
     password       VARCHAR(100)                           NOT NULL,
     name           VARCHAR(30)                            NOT NULL,
-    phone_num      VARCHAR(15)                            NOT NULL DEFAULT '000-0000-0000',
+    phone_num      VARCHAR(15)                            NULL,
     email          VARCHAR(100)                           NULL,
     point          INT                                    NOT NULL DEFAULT 0,
     address        VARCHAR(100)                           NULL,
