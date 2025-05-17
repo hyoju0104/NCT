@@ -1,5 +1,7 @@
 SET SESSION FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS Attachment;
+DROP TABLE IF EXISTS BrandAttachment;
+DROP TABLE IF EXISTS ItemAttachment;
 DROP TABLE IF EXISTS Authority;
 DROP TABLE IF EXISTS Brand;
 DROP TABLE IF EXISTS Comment;
@@ -16,6 +18,24 @@ CREATE TABLE Attachment
     id         INT          NOT NULL AUTO_INCREMENT,
     post_id    INT          NOT NULL,
     sourcename VARCHAR(100) NULL,
+    filename   VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE BrandAttachment
+(
+    id         INT          NOT NULL AUTO_INCREMENT,
+    brand_id    INT         NOT NULL,
+    sourcename VARCHAR(100) NULL,
+    filename   VARCHAR(100) NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE ItemAttachment
+(
+    id         INT          NOT NULL AUTO_INCREMENT,
+    item_id    INT          NOT NULL,
+    sourcename VARCHAR(100) NOT NULL,
     filename   VARCHAR(100) NOT NULL,
     PRIMARY KEY (id)
 );
@@ -37,8 +57,6 @@ CREATE TABLE Brand
     username        VARCHAR(100)  NOT NULL,
     password        VARCHAR(100)  NOT NULL,
     phone_num       VARCHAR(13)   NOT NULL,
-    logo_sourcename VARCHAR(100)  NULL,
-    logo_filename   VARCHAR(100)  NULL,
     description     VARCHAR(1000) NULL,
     is_actived      BOOLEAN       NOT NULL DEFAULT TRUE,
     PRIMARY KEY (id)
@@ -67,8 +85,7 @@ CREATE TABLE Item
     created_at       DATETIME             NOT NULL DEFAULT now(),
     PRIMARY KEY (id)
 );
-# image_sourcename VARCHAR(100)         NOT NULL,
-# image_filename   VARCHAR(100)         NOT NULL,
+
 
 CREATE TABLE Payment
 (
@@ -140,6 +157,20 @@ ALTER TABLE Attachment
             ON DELETE CASCADE
 ;
 
+ALTER TABLE BrandAttachment
+    ADD CONSTRAINT FK_Post_TO_BrandAttachment
+        FOREIGN KEY (brand_id)
+            REFERENCES Brand (id)
+            ON DELETE CASCADE
+;
+
+ALTER TABLE ItemAttachment
+    ADD CONSTRAINT FK_Post_TO_ItemAttachment
+        FOREIGN KEY (item_id)
+            REFERENCES Item (id)
+            ON DELETE CASCADE
+;
+
 ALTER TABLE Brand
     ADD CONSTRAINT UQ_brand UNIQUE (name);
 
@@ -191,7 +222,6 @@ ALTER TABLE Post
             REFERENCES User (id)
             ON DELETE CASCADE
 ;
-
 
 ALTER TABLE Rental
     ADD CONSTRAINT FK_User_TO_Rental

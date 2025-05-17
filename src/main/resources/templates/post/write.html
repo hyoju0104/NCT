@@ -65,13 +65,10 @@
 					</div>
 				</div>
 				<!-- 첨부파일 -->
-				<div><span class="text-danger" th:if="${error_fileList}" th:utext="${error_fileList}"></span></div>
 				
 				
-				<div style="margin-top: 20px;">
-					<button type="submit" class="btn btn-outline-dark">작성완료</button>
-					<a class="btn btn-outline-dark" th:href="@{/post/list(page=${session.page})}">목록</a>
-				</div>
+				<button type="submit" class="btn btn-outline-dark">작성완료</button>
+				<a class="btn btn-outline-dark" th:href="@{/post/list(page=${session.page})}">목록</a>
 			</form>
 		
 		</div>

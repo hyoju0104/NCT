@@ -13,8 +13,6 @@
             b.username "b_username",
             b.password "b_password",
             b.phone_num "b_phone_num",
-            b.logo_sourcename "b_logo_sourcename",
-            b.logo_filename "b_logo_filename",
             b.description "b_description",
             b.is_actived "b_is_actived"
         FROM
@@ -28,8 +26,6 @@
         <result column="b_username" property="username"/>
         <result column="b_password" property="password"/>
         <result column="b_phone_num" property="phoneNum"/>
-        <result column="b_logo_sourcename" property="logoSourcename"/>
-        <result column="b_logo_filename" property="logoFilename"/>
         <result column="b_description" property="description"/>
         <result column="b_is_actived" property="isActived"/>
     </resultMap>
@@ -43,17 +39,15 @@
 
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Brand" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO Brand(auth_id, name, username, password, phone_num, logo_sourcename, logo_filename, description)
-        VALUES (2, #{name}, #{username}, #{password}, #{phoneNum}, #{logoSourcename}, #{logoFilename}, #{description})
+        INSERT INTO Brand(auth_id, name, username, password, phone_num, description, is_actived)
+        VALUES (2, #{name}, #{username}, #{password}, #{phoneNum}, #{description}, true)
     </insert>
 
     <update id="update" parameterType="com.lec.spring.domain.Brand">
         UPDATE Brand
         SET phone_num = #{phoneNum},
             password = #{password},
-            description = #{description},
-            logo_sourcename = #{logoSourcename},
-            logo_filename = #{logoFilename}
+            description = #{description}
         WHERE id = #{id}
     </update>
 

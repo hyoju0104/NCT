@@ -1,20 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const toggle = document.getElementById('changePasswordToggle');
-    const passwordBox = document.getElementById('passwordBox');
+    const toggle = document.getElementById('togglePasswordBtn');
+    const passwordBox = document.getElementById('passwordFields');
     const password = document.getElementById('password');
     const password2 = document.getElementById('password2');
 
-    function updateState() {
-        const enable = toggle.checked;
-        passwordBox.style.display = enable ? 'block' : 'none';
+    toggle.addEventListener('click', function () {
+        const isVisible = passwordBox.style.display === 'block';
+        passwordBox.style.display = isVisible ? 'none' : 'block';
 
-        if (!enable) {
+        if (!isVisible) {
             password.value = '';
             password2.value = '';
         }
-    }
-
-    toggle.addEventListener('change', updateState);
-
-    updateState();
+    });
 });
