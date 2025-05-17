@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/attachment")
+@RequestMapping("/brand/attachment")
 public class BrandAttachmentController {
 
     @Value("${app.upload.path.brand}")
