@@ -141,10 +141,11 @@ public class BrandController {
 
 
         int resultUpdate = brandService.myUpdate(brand);
+
         model.addAttribute("result", resultUpdate);
         model.addAttribute("brand", brand);
 
-        return "brand/mypage/updateOk";
+        return "/brand/mypage/updateOk";
     }
 
     @PostMapping("/mypage/delete")
