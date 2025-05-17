@@ -18,11 +18,12 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+		
 		<link rel="stylesheet" th:href="@{/css/common.css}">
+		<link rel="stylesheet" th:href="@{/css/post.css}">
 		
 		<script th:src="@{/js/PostUpdate.js}"></script>
-		
-		<title th:text="'수정 - ' + ${post.id}"></title>
+		<title th:text="'WearUp | 수정 (' + ${#authentication.principal.user.name} + ')'"></title>
 	</head>
 	
 	<body style="margin-bottom: 200px">
@@ -32,8 +33,7 @@
 		
 		
 		<div class="container mt-3">
-			<h2>수정</h2>
-			<hr>
+			
 			<div class="mb-3 mt-3 clearfix">
 				<span class="float-start me-2">id: [[${post.id}]]</span>
 				<span class="float-end ms-4">작성일: [[${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</span>
@@ -43,22 +43,18 @@
 				
 				<input type="hidden" name="post_id" th:value="${post.id}" th:field="*{id}"/>
 				
-				<div class="mb-3">
-					<label>작성자:</label>
-					<span class="form-control" readonly th:text="${post.user.username}"></span>
-				
-				</div>
-				
-				<div class="mb-3 mt-3">
-					<label for="content">내용:</label>
-					<textarea class="form-control" rows="5" id="content" placeholder="내용을 입력하세요" name="content"
-							  th:field="*{content}"th:utext="${content} ? ${content} : ${post.content}"></textarea>
+				<!-- 본문 -->
+				<div class="my-3">
+					<label for="content" class="sub-title">본문</label>
+					<textarea class="form-control" rows="5" id="content" name="content" placeholder="내용을 입력하세요"
+							  th:field="*{content}" th:utext="${content} ? ${content} : ${post.content}"></textarea>
 					<span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span>
 				</div>
 				
-				<div class="mb-3 mt-3">
-					<label for="subject">상품:</label>
-					<textarea type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject"
+				<!-- 대여 상품 -->
+				<div class="my-3">
+					<label for="items" class="sub-title">대여 상품</label>
+					<textarea class="form-control" id="items" name="items" placeholder="제목을 입력하세요"
 							  th:field="*{items}" th:value="${items} ? ${items} : ${post.items}"></textarea>
 					<span class="text-danger" th:if="${error_items}" th:utext="${error_items}"></span>
 				</div>
@@ -70,7 +66,7 @@
 					<div id="delFiles"></div>
 					
 					<div class="mb-3 mt-3">
-						<label>첨부파일:</label>
+						<label class="sub-title">기존 이미지</label>
 						<!-- 첨부파일 이름, 다운로드 링크 -->
 						<div class="input-group mb-2" th:each="attachment : ${post.fileList}">
 							<input class="form-control col-xs-3" type="text" readonly th:value="${attachment.sourcename}">
@@ -83,10 +79,10 @@
 				
 				<!-- 새로운 첨부파일 추가 -->
 				<div class="container mt-3 mb-3 border rounded">
-					<div class="mb-3 mt-3">
-						<label>첨부파일:</label>
+					<div class="mb-3 mt-3 d-flex justify-content-between align-items-center">
+						<label class="sub-title mb-0">이미지 추가</label>
 						<div id="files">
-						
+							<!-- 파일 리스트 추가 영역 -->
 						</div>
 						<button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
 					</div>
@@ -95,12 +91,11 @@
 				
 				
 				<!-- 하단 링크 -->
-				<div class="d-flex">
+				<div class="d-flex justify-content-end mt-4 mb-5">
 					<!-- 현재 로그인한 계정의 id 값과 현재 게시물 작성자의 id 값이 동일한 경우에만 수정완료 버튼 렌더링 -->
-					<button type="submit" class="btn btn-outline-dark" th:if="${logged_user.id == post.user.id}">수정완료
-					</button>
-					<button type="button" class="btn btn-outline-dark ms-1" onclick="history.back()">이전으로</button>
-					<a class="btn btn-outline-dark ms-1" th:href="@{/post/list(page=${session.page})}">목록</a>
+					<button type="submit" class="btn btn-outline-primary" th:if="${logged_user.id == post.user.id}">수정 완료</button>
+					<button type="button" class="btn btn-outline-danger ms-2" onclick="history.back()">취소</button>
+					<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
 				</div>
 				<!-- 하단 링크 -->
 			
