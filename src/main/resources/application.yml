@@ -22,16 +22,11 @@ spring:
     user:
       name: user
       password: 1234
-      
+  
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
-  # 자동 재시작 비활성화 (개발 중에만 임시로 비활성화)
-  devtools:
-    restart:
-      enabled: false
 
 
 app:
