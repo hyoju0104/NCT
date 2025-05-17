@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -68,7 +68,7 @@ public class BrandController {
 
     @PostMapping("/mypage/update")
     public String myUpdateOk(
-            @RequestParam(required = false) MultipartFile[] files,
+            @RequestParam(required = false) MultipartFile logo,
             @RequestParam(required = false) String password,
             @RequestParam(required = false) String password2,
             @Valid Brand brand,
@@ -104,31 +104,39 @@ public class BrandController {
 
         brandService.myUpdate(brand);
 
-        if (files != null) {
-            for (MultipartFile file : files) {
-                if (!file.isEmpty()) {
-                    try {
-                        Path uploadPath = Paths.get(System.getProperty("user.dir"), uploadDirBrand);
-                        if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+        if (logo != null && !logo.isEmpty()) {
 
-                        String savedName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-                        Path filePath = uploadPath.resolve(savedName);
+            List<BrandAttachment> beforeImg = brandAttachmentService.findByBrandId(brandId);
 
-                        file.transferTo(filePath.toFile());
+            for (int i = 0; i < beforeImg.size(); i++) {
+                BrandAttachment old = beforeImg.get(i);
+                File oldFile = Paths.get(System.getProperty("user.dir"), uploadDirBrand, old.getFilename()).toFile();
 
-                        BrandAttachment attachment = BrandAttachment.builder()
-                                .brandId(brandId)
-                                .sourcename(file.getOriginalFilename())
-                                .filename(savedName)
-                                .build();
-
-                        brandAttachmentService.save(attachment);
-
-                    } catch (IOException e) {
-                        redirectAttributes.addFlashAttribute("error", "파일 업로드에 실패했습니다.");
-                    }
+                if (oldFile.exists()) {
+                    oldFile.delete();
                 }
+
+                brandAttachmentService.deleteById(old.getId());
             }
+
+            String originalName = logo.getOriginalFilename();
+            String newFileName = UUID.randomUUID() + "_" + originalName;
+
+            File newFile = Paths.get(System.getProperty("user.dir"), uploadDirBrand, newFileName).toFile();
+
+            try {
+                logo.transferTo(newFile);
+            } catch (IOException e) {
+                redirectAttributes.addFlashAttribute("error", "파일 저장 중 오류가 발생했습니다.");
+                return "redirect:/brand/mypage/update";
+            }
+
+            BrandAttachment newAttachment = new BrandAttachment();
+            newAttachment.setBrandId(brandId);
+            newAttachment.setSourcename(originalName);
+            newAttachment.setFilename(newFileName);
+
+            brandAttachmentService.save(newAttachment);
         }
 
 

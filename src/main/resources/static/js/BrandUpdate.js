@@ -13,28 +13,4 @@ document.addEventListener("DOMContentLoaded", function () {
             password2.value = '';
         }
     });
-
-    document.querySelectorAll(".delete-file-btn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-            const fileId = this.getAttribute("data-fileid");
-            if (!fileId) return;
-
-            if (confirm("첨부파일을 삭제하시겠습니까?")) {
-                fetch("/brand/mypage/deleteFile", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: "id=" + fileId
-                })
-                    .then(response => response.text())
-                    .then(result => {
-                        if (result === "OK") {
-                            alert("삭제되었습니다.");
-                            location.reload();
-                        } else {
-                            alert("삭제 실패");
-                        }
-                    });
-            }
-        });
-    });
 });

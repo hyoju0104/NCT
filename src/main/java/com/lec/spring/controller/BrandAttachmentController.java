@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +19,10 @@ import java.util.UUID;
 @RequestMapping("/attachment")
 public class BrandAttachmentController {
 
-    private final BrandAttachmentService brandAttachmentService;
-
     @Value("${app.upload.path.brand}")
     private String uploadDirBrand;
+
+    private final BrandAttachmentService brandAttachmentService;
 
     public BrandAttachmentController(BrandAttachmentService brandAttachmentService) {
         this.brandAttachmentService = brandAttachmentService;
@@ -60,8 +61,7 @@ public class BrandAttachmentController {
     }
 
     @PostMapping("/delete")
-    @ResponseBody
-    public String delete(@RequestParam("id") Long id) {
+    public String delete(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         BrandAttachment attachment = brandAttachmentService.findById(id);
         if (attachment != null) {
             File file = new File(uploadDirBrand + File.separator + attachment.getFilename());
@@ -69,8 +69,12 @@ public class BrandAttachmentController {
                 file.delete();
             }
             brandAttachmentService.deleteById(id);
-            return "삭제 성공";
+            redirectAttributes.addFlashAttribute("msg", "첨부파일이 삭제되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "삭제할 파일을 찾을 수 없습니다.");
         }
-        return "삭제 실패";
+
+        return "redirect:/brand/mypage/update";
     }
+
 }

@@ -16,32 +16,32 @@
 
 <th:block th:insert="~{common/header::header}"></th:block>
 
+<div class="container mt-3 mb-3 border rounded">
+	<div class="mb-3 mt-3">
+		<label class="form-label">기존 첨부파일:</label>
+		<div th:if="${attachments != null and !attachments.isEmpty()}">
+			<div th:each="file : ${attachments}" class="mb-3">
+				<img th:src="@{'/upload/brand/' + ${file.filename}}"
+					 style="height: 100px;" class="img-thumbnail mb-1">
+				<div class="input-group">
+					<input class="form-control" type="text" readonly th:value="${file.sourcename}">
+					<form th:action="@{'/attachment/delete'}" method="post" onsubmit="return confirm('첨부파일을 삭제하시겠습니까?')">
+						<input type="hidden" name="id" th:value="${file.id}"/>
+						<button type="submit" class="btn btn-danger">삭제</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <form name="frm" th:action="@{/brand/mypage/update}" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="id" th:value="${brand.id}"/>
 
 	<div class="container mt-3 mb-3 border rounded">
-		<div id="delFiles"></div>
-
-		<!-- 기존 첨부파일 -->
 		<div class="mb-3 mt-3">
-			<label class="form-label">기존 첨부파일:</label>
-			<div th:if="${attachments != null and !attachments.isEmpty()}">
-				<div th:each="file : ${attachments}" class="mb-3">
-					<img th:src="@{'/upload/brand/' + ${file.filename}}"
-						 style="height: 100px;" class="img-thumbnail mb-1">
-					<div class="input-group">
-						<input class="form-control" type="text" readonly th:value="${file.sourcename}">
-						<button type="button" class="btn btn-outline-danger delete-file-btn"
-								th:data-fileid="${file.id}">삭제</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- 새 첨부파일 추가 -->
-		<div class="mb-3 mt-3">
-			<label for="files">새 첨부파일 추가:</label>
-			<input type="file" class="form-control" id="files" name="files">
+			<label for="logo">첨부파일 변경:</label>
+			<input type="file" class="form-control" id="logo" name="logo">
 		</div>
 	</div>
 
