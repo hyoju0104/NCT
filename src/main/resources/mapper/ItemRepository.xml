@@ -21,7 +21,10 @@
             i.is_exist "i_is_exist",
             i.created_at "i_created_at",
             b.id "b_id",
+            b.auth_id "b_auth_id",
             b.name "b_name",
+            b.username "b_username",
+            b.password "b_password",
             b.phone_num "b_phone_num",
             b.description "b_description",
             b.is_actived "b_is_actived"
@@ -33,7 +36,10 @@
 
     <resultMap id="mapBrand" type="com.lec.spring.domain.Brand">
         <result column="b_id" property="id"/>
+        <result column="b_auth_id" property="authId"/>
         <result column="b_name" property="name"/>
+        <result column="b_username" property="username"/>
+        <result column="b_password" property="password"/>
         <result column="b_phone_num" property="phoneNum"/>
         <result column="b_description" property="description"/>
         <result column="b_is_actived" property="isActived"/>

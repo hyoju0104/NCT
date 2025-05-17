@@ -21,8 +21,7 @@ public class Brand {
     private String rePassword;
 
     private String phoneNum;
-    private String logoSourcename;
-    private String logoFilename;
+
     private String description;
     private Boolean isActived;
 }
