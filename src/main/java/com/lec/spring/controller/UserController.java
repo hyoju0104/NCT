@@ -16,6 +16,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.lec.spring.domain.UserUpdateValidator;
+import org.springframework.web.bind.annotation.InitBinder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,6 +50,7 @@ public class UserController {
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(userUpdateValidator);
     }
+
 
 
     @GetMapping("/mypage/detail")
@@ -158,22 +160,27 @@ public class UserController {
             Model model
     ) {
         User user = userService.findById(principalUserDetails.getUser().getId());
-        System.out.println("[get] user.point = " + user.getPoint());
         model.addAttribute("user", user);
+        model.addAttribute("refundForm", new RefundForm());
     }
 
     @PostMapping("/mypage/point")
     public String refundPoint(
             @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
-            @RequestParam("amount") Integer amount,
+            @Valid @ModelAttribute("refundForm") RefundForm refundForm,
+            BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
             Model model
     ) {
         User user = userService.findById(principalUserDetails.getUser().getId());
-        System.out.println("[post] user.point = " + user.getPoint());
         model.addAttribute("user", user);
 
-        // 포인트가 부족한 경우
+        if (bindingResult.hasErrors()) {
+            return "user/mypage/point";
+        }
+
+        Integer amount = refundForm.getAmount();
+
         if (user.getPoint() == null || user.getPoint() < amount) {
             redirectAttributes.addFlashAttribute("error", "포인트가 부족합니다.");
             return "redirect:/user/mypage/point";
@@ -181,17 +188,14 @@ public class UserController {
 
         try {
             userService.refundPoint(user.getId(), amount);
-            // 사용자 객체 포인트도 차감 (뷰 반영 목적, 실제 DB 반영은 Service에서 수행됨)
             user.setPoint(user.getPoint() - amount);
-            // 포인트 차감 후 재조회
-            user = userService.findById(user.getId());
-            System.out.println("[post-try] user.point = " + user.getPoint());
             redirectAttributes.addFlashAttribute("success", "환급 요청이 정상적으로 처리되었습니다.");
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
         return "redirect:/user/mypage/point";
+
     }
 
 }

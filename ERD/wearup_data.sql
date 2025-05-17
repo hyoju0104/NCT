@@ -121,3 +121,5 @@ WHERE id = 2;
 UPDATE User
 SET plan_id = 1
 WHERE id = 3;
+
+UPDATE User SET point = 30000 WHERE id = 7;
