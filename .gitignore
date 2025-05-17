@@ -36,4 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
+### configuration ###
+/src/main/resources/application.yml
+
+### attachment directory ###
 upload

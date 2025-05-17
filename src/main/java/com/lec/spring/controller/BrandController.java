@@ -3,11 +3,8 @@ package com.lec.spring.controller;
 import com.lec.spring.config.PrincipalBrandDetails;
 import com.lec.spring.domain.Brand;
 import com.lec.spring.domain.BrandMypageValidator;
-import com.lec.spring.domain.Item;
 import com.lec.spring.service.BrandService;
-import com.lec.spring.service.ItemService;
 import jakarta.validation.Valid;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 
 @Controller
 @RequestMapping("/brand")

@@ -8,7 +8,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
 	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<script th:src="@{/js/AdminSales.js}"></script>
 	
 	<title>WearUp | 관리자 페이지 - 매출 관리</title>
 </head>
@@ -18,4 +21,20 @@
 	<!-- 상단 메뉴 -->
 	<th:block th:insert="~{common/header::header}"></th:block>
 	
+	<div id="content">
+		<h1>매출 확인</h1>
+		
+		<section>
+			<h2>전체 매출</h2>
+			<canvas id="monthlySalesChart"></canvas>
+		</section>
+		
+		<section>
+			<h2>구독 종류별 매출</h2>
+			<canvas id="planSalesChart"></canvas>
+		</section>
+	</div>
+	
+	<script src="/js/admin-sales.js"></script>
 </body>
+</html>
