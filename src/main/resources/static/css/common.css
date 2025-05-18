@@ -238,15 +238,17 @@ body {
     margin: 0;
 }
 
-/* 계좌번호 입력 필드 특별 스타일 */
-.form-group input[type="text"][id="accountNumber"] {
-    font-family: monospace;
-    letter-spacing: 1px;
-}
 
 /* 환급 요청 버튼 호버 효과 강화 */
 .login-btn:hover {
     background-color: #000000;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.field-error {
+    color: #c33;  /* 진한 빨강색 */
+    font-size: 13px;
+    margin-top: 6px;
+    font-weight: 500;
 }
