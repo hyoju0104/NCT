@@ -252,3 +252,42 @@ body {
     margin-top: 6px;
     font-weight: 500;
 }
+
+/* 결제 페이지 컨테이너 */
+.payment-container {
+    max-width: 1000px;
+    margin: 100px auto 40px;
+    padding: 20px;
+}
+
+/* 플랜 컨테이너 */
+.plans-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* 플랜 카드 컨테이너 */
+.plan-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* 결제 폼 */
+.payment-form {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .plan-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+}

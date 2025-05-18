@@ -62,3 +62,9 @@
     height: 24px;
     cursor: pointer;
 }
+
+/* 로그아웃 링크 스타일 */
+#logout {
+    position: absolute;
+    right: 20px;
+}

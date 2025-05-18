@@ -3,44 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>결제</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
 </head>
 <body>
-<header>
-    <div>
-        <a href="/">로고</a>
-        <nav>
-            <a href="/feed">피드</a>
-            <a href="/upload">업로드</a>
-            <a href="/item">아이템</a>
-            <a href="/user/mypage/detail">마이페이지</a>
+<header class="header">
+    <div class="header-content">
+        <a href="/" class="logo">WearUp</a>
+        <nav class="header-nav">
+            <a href="/feed" class="nav-link">피드</a>
+            <a href="/upload" class="nav-link">업로드</a>
+            <a href="/item" class="nav-link">아이템</a>
+            <a href="/user/mypage/detail" class="nav-link">마이페이지</a>
         </nav>
-        <span>계정명</span>
-        <a href="/logout">로그아웃</a>
     </div>
 </header>
 
-<main>
-    <h2>구독 등급 선택</h2>
-    <div>
-        <form th:action="@{/user/payment}" method="post">
-            <input type="hidden" name="planId" id="planId">
+<main class="payment-container">
+    <h2 class="section-title">구독 등급 선택</h2>
 
-            <button type="button" onclick="selectPlan(1)">Silver 선택</button>
-            <button type="button" onclick="selectPlan(2)">Gold 선택</button>
-            <button type="button" onclick="selectPlan(3)">VIP 선택</button>
-
-            <div>
-                <button type="submit">결제하기</button>
+    <div class="plans-container">
+        <div class="plan-cards">
+            <div class="plan-card" id="silver-plan" onclick="selectPlan(1)">
+                <div class="plan-header">
+                    <h3 class="plan-title">Silver</h3>
+                    <p class="plan-price">50,000원<span class="price-period">/월</span></p>
+                </div>
+                <div class="plan-features">
+                    <ul>
+                        <li>주 최대 3개 아이템 대여</li>
+                    </ul>
+                </div>
+                <div class="plan-badge">가성비</div>
             </div>
+
+            <div class="plan-card" id="gold-plan" onclick="selectPlan(2)">
+                <div class="plan-header">
+                    <h3 class="plan-title">Gold</h3>
+                    <p class="plan-price">70,000원<span class="price-period">/월</span></p>
+                </div>
+                <div class="plan-features">
+                    <ul>
+                        <li>주 최대 5개 아이템 대여</li>
+                        <li>카드 무이자 할부 3개월 지원</li>
+                    </ul>
+                </div>
+                <div class="plan-badge popular">인기</div>
+            </div>
+
+            <div class="plan-card" id="vip-plan" onclick="selectPlan(3)">
+                <div class="plan-header">
+                    <h3 class="plan-title">VIP</h3>
+                    <p class="plan-price">100,000원<span class="price-period">/월</span></p>
+                </div>
+                <div class="plan-features">
+                    <ul>
+                        <li>주 최대 10개 아이템 대여</li>
+                        <li>VIP 전용 웰컴 기프트 박스 발송</li>
+                        <li>카드 무이자 할부 6개월 혜택 제공</li>
+                    </ul>
+                </div>
+                <div class="plan-badge">프리미엄</div>
+            </div>
+        </div>
+
+        <form th:action="@{/user/payment}" method="post" class="payment-form">
+            <input type="hidden" name="planId" id="planId">
+            <button type="submit" class="login-btn payment-btn">결제하기</button>
         </form>
-
-        <script>
-            function selectPlan(id) {
-                document.getElementById("planId").value = id;
-            }
-        </script>
-
     </div>
 </main>
+
+<script>
+    function selectPlan(id) {
+        document.getElementById("planId").value = id;
+
+        // 모든 카드에서 selected 클래스 제거
+        document.querySelectorAll('.plan-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+
+        // 선택된 카드에 selected 클래스 추가
+        if (id === 1) {
+            document.getElementById('silver-plan').classList.add('selected');
+        } else if (id === 2) {
+            document.getElementById('gold-plan').classList.add('selected');
+        } else if (id === 3) {
+            document.getElementById('vip-plan').classList.add('selected');
+        }
+    }
+</script>
 </body>
 </html>
