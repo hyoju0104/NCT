@@ -56,11 +56,11 @@
         </div>
         <div class="info-item">
             <span class="info-label">구독시작일:</span>
-            <span class="info-value" th:text="${paidAt}">2025-05-01</span>
+            <span class="info-value" th:text="${#temporals.format(paidAt, 'yyyy-MM-dd')}">2025-05-01</span>
         </div>
         <div class="info-item">
             <span class="info-label">구독만료일:</span>
-            <span class="info-value" th:text="${expiredAt}">2025-06-01</span>
+            <span class="info-value" th:text="${#temporals.format(expiredAt, 'yyyy-MM-dd')}">2025-06-01</span>
         </div>
         <form method="get" th:action="@{/user/payment}">
             <button type="submit" class="login-btn">구독 정보 수정</button>
