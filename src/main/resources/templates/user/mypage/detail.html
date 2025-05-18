@@ -42,6 +42,9 @@
             <span class="info-label">전화번호:</span>
             <span class="info-value" th:text="${user.phoneNum}">010-0000-0000</span>
         </div>
+        <form method="post" th:action="@{/user/mypage/update}">
+            <button type="submit" class="login-btn">정보 수정</button>
+        </form>
     </section>
 
     <!-- 2. 구독정보 -->
@@ -59,6 +62,9 @@
             <span class="info-label">구독만료일:</span>
             <span class="info-value" th:text="${expiredAt}">2025-06-01</span>
         </div>
+        <form method="get" th:action="@{/user/payment}">
+            <button type="submit" class="login-btn">구독 정보 수정</button>
+        </form>
     </section>
 
     <!-- 3. 포인트 -->
