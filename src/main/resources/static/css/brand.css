@@ -1,318 +1,598 @@
-/* 브랜드 페이지 전용 스타일 */
-.brand-container {
-    padding-top: 30px;
+/* 브랜드 대시보드 MZ 스타일 - KREAM 영감 */
+.brand-dashboard {
+    padding-top: 60px;
+    background-color: #f9fafb;
+    min-height: 100vh;
 }
 
-.product-title {
-    font-size: 28px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 20px;
+.dashboard-header {
+    background: linear-gradient(135deg, #222, #444);
+    color: white;
+    padding: 60px 0 40px;
+    margin-bottom: 40px;
 }
 
-.add-product-btn {
-    margin-bottom: 20px;
-    font-weight: 500;
+.dashboard-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.5px;
 }
 
-.product-table-container {
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.dashboard-subtitle {
+    font-size: 16px;
+    margin-top: 10px;
+    opacity: 0.8;
 }
 
-.product-table {
-    margin-bottom: 0;
-}
-
-.product-table thead {
-    background-color: #f8f9fa;
-}
-
-.product-table th {
-    padding: 15px;
-    font-weight: 600;
-    border-bottom: 2px solid #dee2e6;
-}
-
-.product-table td {
-    padding: 15px;
-    vertical-align: middle;
-}
-
-.product-link {
-    color: #4a6bff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.product-link:hover {
-    color: #3a5bef;
-    text-decoration: underline;
-}
-
-.action-buttons {
+.dashboard-actions {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.filter-section {
+    display: flex;
     gap: 10px;
 }
 
-.no-products {
-    padding: 30px;
-    text-align: center;
-    color: #888;
-    font-style: italic;
-}
-
-/* 상품 등록 폼 스타일 */
-.product-form-container {
-    max-width: 800px;
-    margin: 30px auto;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-    padding: 40px;
-}
-
-.product-form-title {
-    font-size: 28px;
+.filter-btn {
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
     font-weight: 600;
-    color: #333;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+    color: #888;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.product-form .form-group {
-    margin-bottom: 25px;
+.filter-btn:hover {
+    color: #222;
 }
 
-.brand-name {
-    background-color: #f8f9fa;
-    font-weight: 500;
-}
-
-.image-upload-container {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-
-.image-preview {
-    width: 200px;
-    height: 200px;
-    border: 2px dashed #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f9f9f9;
-}
-
-.image-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: none;
-}
-
-.image-preview-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #aaa;
-    padding: 20px;
-}
-
-.image-preview-placeholder i {
-    font-size: 48px;
-    margin-bottom: 10px;
-}
-
-.image-preview-placeholder p {
-    margin: 0;
-}
-
-.image-upload-input {
-    flex: 1;
-    min-width: 300px;
-}
-
-/* 상태 선택 옵션에 색상 표시 */
-#statusItem option[value="A"] {
-    color: #28a745;
-}
-
-#statusItem option[value="B"] {
-    color: #007bff;
-}
-
-#statusItem option[value="C"] {
-    color: #fd7e14;
-}
-
-/* 버튼 스타일 변경 */
-.product-form .btn-primary {
-    padding: 10px 24px;
-    font-weight: 500;
-}
-
-.product-form .btn-outline-secondary {
-    padding: 10px 24px;
-    color: #6c757d;
-    border-color: #6c757d;
-}
-
-.product-form .btn-outline-secondary:hover {
-    background-color: #6c757d;
+.filter-btn.active {
+    background-color: #222;
     color: white;
 }
 
-/* 상품 상세 페이지 스타일 */
-.product-detail-container {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-    padding: 30px;
-    margin: 30px 0;
-}
-
-.product-detail-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.product-detail-title {
-    font-size: 28px;
-    font-weight: 600;
-    color: #333;
-    margin: 0;
-}
-
-.product-detail-status {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.status-available {
-    background-color: rgba(40, 167, 69, 0.15);
-    color: #28a745;
-}
-
-.status-unavailable {
-    background-color: rgba(220, 53, 69, 0.15);
-    color: #dc3545;
-}
-
-.product-image-container {
-    height: 400px;
-    background-color: #f8f9fa;
+.add-btn {
+    background-color: #222;
+    color: white;
+    border: none;
     border-radius: 8px;
+    padding: 12px 24px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.add-btn:hover {
+    background-color: #000;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 상품 그리드 레이아웃 */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.product-card-image {
+    height: 200px;
+    background-color: #f5f5f5;
+    position: relative;
     overflow: hidden;
 }
 
-.product-detail-image {
+.product-card-image img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-.product-detail-no-image {
+.product-card:hover .product-card-image img {
+    transform: scale(1.05);
+}
+
+.no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    font-size: 48px;
+}
+
+.product-status {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(34, 34, 34, 0.8);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.product-card-content {
+    padding: 20px;
+}
+
+.product-brand {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+}
+
+.product-name a {
+    color: #222;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.product-name a:hover {
+    color: #555;
+}
+
+.product-category {
+    background-color: #f0f0f0;
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.product-date {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.product-card-actions {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-card-actions {
+    opacity: 1;
+}
+
+.card-action {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: rgba(34, 34, 34, 0.7);
+    border: none;
+}
+
+.card-action:hover {
+    background-color: rgba(34, 34, 34, 0.9);
+    transform: translateY(-2px);
+}
+
+.edit-action {
+    text-decoration: none;
+    color: white;
+}
+
+.edit-action:hover {
+    color: white;
+}
+
+/* 빈 상태 스타일 */
+.empty-state {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #aaa;
-    width: 100%;
-    height: 100%;
+    padding: 80px 0;
+    text-align: center;
 }
 
-.product-detail-no-image i {
+.empty-icon {
     font-size: 64px;
-    margin-bottom: 16px;
+    color: #ddd;
+    margin-bottom: 20px;
 }
 
-.product-info-container {
-    margin-bottom: 30px;
-}
-
-.product-info-item {
-    display: flex;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 15px;
-}
-
-.info-label {
-    width: 120px;
+.empty-title {
+    font-size: 24px;
     font-weight: 600;
-    color: #555;
-}
-
-.info-value {
-    flex: 1;
     color: #333;
+    margin-bottom: 10px;
 }
 
-.status-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-weight: 500;
-}
-
-.status-A {
-    background-color: rgba(40, 167, 69, 0.15);
-    color: #28a745;
-}
-
-.status-B {
-    background-color: rgba(0, 123, 255, 0.15);
-    color: #007bff;
-}
-
-.status-C {
-    background-color: rgba(253, 126, 20, 0.15);
-    color: #fd7e14;
-}
-
-.product-description {
+.empty-message {
+    font-size: 16px;
+    color: #888;
     margin-bottom: 30px;
 }
 
-.description-content {
-    margin-top: 10px;
-    padding: 15px;
-    background-color: #f8f9fa;
+.empty-action {
+    background-color: #222;
+    color: white;
+    padding: 14px 30px;
     border-radius: 8px;
-    min-height: 100px;
-    white-space: pre-line;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
 }
 
-.product-detail-actions {
+.empty-action:hover {
+    background-color: #000;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 기존 테이블 스타일 오버라이드 (사용하지 않음) */
+.product-table-container,
+.product-table {
+    display: none;
+}
+
+/* 넓은 화면 레이아웃을 위한 컨테이너 스타일 */
+.wide-container {
+    max-width: 1600px !important;
+    padding: 0 40px;
+    margin: 0 auto;
+}
+
+/* 브랜드 대시보드 MZ 스타일 - KREAM 영감 (웹 최적화) */
+.brand-dashboard {
+    padding-top: 60px;
+    background-color: #f9fafb;
+    min-height: 100vh;
+}
+
+.dashboard-header {
+    background: linear-gradient(110deg, #222, #444);
+    color: white;
+    padding: 60px 0 40px;
+    margin-bottom: 40px;
+}
+
+.dashboard-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.dashboard-subtitle {
+    font-size: 16px;
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+.dashboard-actions {
     display: flex;
     justify-content: space-between;
-    margin-top: 30px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
-.action-buttons {
+.filter-section {
     display: flex;
     gap: 10px;
 }
 
-.btn i {
-    margin-right: 5px;
+.filter-btn {
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #888;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    color: #222;
+}
+
+.filter-btn.active {
+    background-color: #222;
+    color: white;
+}
+
+.add-btn {
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.add-btn:hover {
+    background-color: #000;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 상품 그리드 레이아웃 - 웹에 최적화 */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+    margin-bottom: 50px;
+}
+
+/* 미디어 쿼리로 화면 크기에 따라 그리드 조정 */
+@media (min-width: 1200px) {
+    .products-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (min-width: 1600px) {
+    .products-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.product-card-image {
+    height: 220px;
+    background-color: #f5f5f5;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-card-image img {
+    transform: scale(1.05);
+}
+
+.no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    font-size: 48px;
+}
+
+.product-status {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(34, 34, 34, 0.8);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.product-card-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-brand {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+}
+
+.product-name a {
+    color: #222;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.product-name a:hover {
+    color: #555;
+}
+
+.product-category {
+    background-color: #f0f0f0;
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.product-date {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: auto;
+}
+
+.product-card-actions {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-card-actions {
+    opacity: 1;
+}
+
+.card-action {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: rgba(34, 34, 34, 0.7);
+    border: none;
+}
+
+.card-action:hover {
+    background-color: rgba(34, 34, 34, 0.9);
+    transform: translateY(-2px);
+}
+
+.edit-action {
+    text-decoration: none;
+    color: white;
+}
+
+.edit-action:hover {
+    color: white;
+}
+
+/* 빈 상태 스타일 */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 64px;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+.empty-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.empty-message {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 30px;
+}
+
+.empty-action {
+    background-color: #222;
+    color: white;
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.empty-action:hover {
+    background-color: #000;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 기존 테이블 스타일 오버라이드 (사용하지 않음) */
+.product-table-container,
+.product-table {
+    display: none;
 }

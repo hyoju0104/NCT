@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>등록한 상품 목록</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/brand.css}">
@@ -11,56 +12,99 @@
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
 
-<div class="container brand-container mt-4">
-
-    <h2 class="product-title">내가 등록한 상품 목록</h2>
-    <hr>
-
-    <div class="mb-3 text-end">
-        <a class="btn btn-primary add-product-btn" th:href="@{/brand/item/write}">상품 등록</a>
+<div class="brand-dashboard">
+    <div class="dashboard-header">
+        <div class="container-fluid wide-container">
+            <h1 class="dashboard-title">My Products</h1>
+            <p class="dashboard-subtitle">등록된 제품을 관리하세요</p>
+        </div>
     </div>
 
-    <div class="product-table-container">
-        <table class="table table-hover text-center product-table">
-            <thead class="table-light">
-            <tr>
-                <th>ID</th>
-                <th>상품명</th>
-                <th>등록일</th>
-                <th>관리</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="item : ${itemList}" th:if="${item != null}">
-                <td th:text="${item.id}"></td>
-                <td><a th:href="@{'/brand/item/detail/' + ${item.id}}" class="product-link" th:text="${item.name}"></a></td>
-                <td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd')}"></td>
-                <td class="action-buttons">
-                    <a th:href="@{'/brand/item/update/' + ${item.id}}" class="btn btn-sm btn-outline-primary me-2">수정</a>
-                    <button type="button" class="btn btn-sm btn-outline-danger"
-                            th:onclick="'deleteItem(' + ${item.id} + ')'">삭제</button>
-                </td>
-            </tr>
-            <tr th:if="${#lists.isEmpty(itemList)}">
-                <td colspan="7" class="no-products">등록된 상품이 없습니다.</td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="container-fluid wide-container">
+        <div class="dashboard-actions">
+            <div class="filter-section">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Available</button>
+                <button class="filter-btn">Unavailable</button>
+            </div>
+
+            <a class="add-btn" th:href="@{/brand/item/write}">
+                <i class="bi bi-plus-lg"></i>
+                <span>Add Product</span>
+            </a>
+        </div>
+
+        <!-- 카드 그리드 레이아웃 -->
+        <div class="products-grid" th:if="${not #lists.isEmpty(itemList)}">
+            <div class="product-card" th:each="item : ${itemList}" th:if="${item != null}">
+                <div class="product-card-image">
+                    <!-- 이미지가 있는 경우 -->
+                    <img th:if="${item.imageUrl != null}" th:src="${item.imageUrl}" alt="상품 이미지">
+                    <!-- 이미지가 없는 경우 -->
+                    <div th:if="${item.imageUrl == null}" class="no-image">
+                        <i class="bi bi-image"></i>
+                    </div>
+
+                    <div class="product-status" th:if="${item.statusItem != null}">
+                        <span th:text="${item.statusItem}"></span>
+                    </div>
+                </div>
+
+                <div class="product-card-content">
+                    <div class="product-brand" th:text="${item.brand != null ? item.brand.name : '브랜드명'}"></div>
+                    <h3 class="product-name">
+                        <a th:href="@{'/brand/item/detail/' + ${item.id}}" th:text="${item.name}"></a>
+                    </h3>
+                    <div class="product-category" th:text="${item.category != null ? '#'+item.category : '#카테고리'}"></div>
+                    <div class="product-date" th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd')}"></div>
+                </div>
+
+                <div class="product-card-actions">
+                    <a th:href="@{'/brand/item/update/' + ${item.id}}" class="card-action edit-action">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <button type="button" class="card-action delete-action" th:onclick="'deleteItem(' + ${item.id} + ')'">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 상품이 없을 때 -->
+        <div class="empty-state" th:if="${#lists.isEmpty(itemList)}">
+            <div class="empty-icon">
+                <i class="bi bi-box"></i>
+            </div>
+            <h3 class="empty-title">등록된 상품이 없습니다</h3>
+            <p class="empty-message">첫 번째 상품을 등록해보세요!</p>
+            <a class="empty-action" th:href="@{/brand/item/write}">
+                <i class="bi bi-plus-lg"></i> 상품 등록하기
+            </a>
+        </div>
     </div>
-
-    <!-- 삭제 폼은 숨겨두고 자바스크립트로 제출 -->
-    <form id="deleteForm" th:action="@{/brand/item/delete}" method="post" style="display: none;">
-        <input type="hidden" id="deleteItemId" name="id" value="" />
-    </form>
-
-    <script>
-        function deleteItem(itemId) {
-            if (confirm('정말 삭제하시겠습니까?')) {
-                document.getElementById('deleteItemId').value = itemId;
-                document.getElementById('deleteForm').submit();
-            }
-        }
-    </script>
 </div>
+
+<!-- 삭제 폼은 숨겨두고 자바스크립트로 제출 -->
+<form id="deleteForm" th:action="@{/brand/item/delete}" method="post" style="display: none;">
+    <input type="hidden" id="deleteItemId" name="id" value="" />
+</form>
+
+<script>
+    function deleteItem(itemId) {
+        if (confirm('정말 삭제하시겠습니까?')) {
+            document.getElementById('deleteItemId').value = itemId;
+            document.getElementById('deleteForm').submit();
+        }
+    }
+
+    // 필터 버튼 활성화 (실제 필터링은 백엔드에서 구현 필요)
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+</script>
+
 </body>
 </html>
