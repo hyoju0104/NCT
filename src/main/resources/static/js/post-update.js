@@ -1,6 +1,7 @@
-// File: src/main/resources/static/js/PostUpdate.js
+$(function() {
 
-$(function(){
+	console.log("post-update.js loaded");
+
 	// 새 파일 추가
 	let i = 0;
 	$('#btnAdd').click(() => {
@@ -15,25 +16,26 @@ $(function(){
 	});
 
 	// 새로 추가된 파일 삭제
-	$('#files').on('click', '.remove-new-file', function(){
+	$('#files').on('click', '.remove-new-file', function () {
 		$(this).closest('.input-group').remove();
 	});
 
-	// 기존 첨부파일 삭제 (id 있는 것들)
-	$("form[name='frm']").on('click', '[data-fileid-del]', function(){
-		const fileId = $(this).data('fileid-del');
-		deleteFiles(fileId);
+	// 기존 첨부파일 삭제 (항상 document 에 위임)
+	$('#updateForm').on('click', '[data-fileid-del]', function () {
+		const fileId = $(this).attr('data-fileid-del');
+		console.log('▶ delete clicked:', fileId);
+		// 히든 필드 추가
+
+		$('#delFiles').append(
+			`<input type="hidden" name="delFile" value="${fileId}">`
+		);
 		$(this).closest('.input-group').remove();
+		console.log('▶ #delFiles now has:', $('#delFiles').html());
 	});
 
 	// Summernote 초기화
 	$('#content').summernote({
 		height: 300
 	});
-});
 
-function deleteFiles(fileId){
-	$('#delFiles').append(
-		`<input type="hidden" name="delFile" value="${fileId}">`
-	);
-}
+});

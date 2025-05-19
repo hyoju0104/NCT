@@ -25,104 +25,86 @@
 	<title th:text="'WearUp | 수정 (' + ${#authentication.principal.user.name} + ')'"></title>
 </head>
 
-<th:block th:if="${post}">
-	<body style="margin-bottom: 200px">
-		
-		<!-- 상단 메뉴 -->
-		<th:block th:insert="~{common/header::header}"></th:block>
-		<!-- 상단 메뉴 -->
-		
-		<div class="container mt-3">
-			<form name="frm"
-				  th:action="@{/post/update}"
-				  th:object="${post}"
-				  method="post"
-				  enctype="multipart/form-data">
-				
-				<!-- 삭제용 hidden 필드 컨테이너 -->
-				<div id="delFiles"></div>
-				
-				<!-- PK 및 User 전달 -->
-				<input type="hidden" th:field="*{id}" />
-				<input type="hidden" th:field="*{user.id}" />
-				
-				<!-- 본문 -->
-				<div class="my-3">
-					<label for="content" class="sub-title">본문</label>
-					<textarea id="content"
-							  th:field="*{content}"
-							  class="form-control"
-							  rows="5"
-							  placeholder="내용을 입력하세요"></textarea>
-					<span class="text-danger"
-						  th:if="${error_content}"
-						  th:text="${error_content}"></span>
-				</div>
-				
-				<!-- 대여 상품 -->
-				<div class="my-3">
-					<label for="items" class="sub-title">대여 상품</label>
-					<textarea id="items"
-							  th:field="*{items}"
-							  class="form-control"
-							  placeholder="제목을 입력하세요"></textarea>
-					<span class="text-danger"
-						  th:if="${error_items}"
-						  th:text="${error_items}"></span>
-				</div>
-				
-				<!-- 기존 첨부파일 목록 -->
-				<div class="container mt-3 mb-3 border rounded">
-					<div class="mb-3 mt-3">
-						<label class="sub-title">기존 이미지</label>
-						<div class="input-group mb-2"
-							 th:each="attachment : ${post.fileList}">
-							<input class="form-control col-xs-3"
-								   type="text"
-								   readonly
-								   th:value="${attachment.sourcename}" />
-							<button type="button"
-									class="btn btn-outline-danger"
-									th:attr="data-fileid-del=${attachment.id}">
-								삭제
-							</button>
-						</div>
-					</div>
-				</div>
-				
-				<!-- 새로운 첨부파일 추가 -->
-				<div class="container mt-3 mb-3 border rounded">
-					<div class="mb-3 mt-3 d-flex justify-content-between align-items-center">
-						<label class="sub-title mb-0">이미지 추가</label>
-						<button type="button"
-								id="btnAdd"
-								class="btn btn-secondary">추가</button>
-					</div>
-					<div id="files"></div>
-				</div>
-				<span class="text-danger"
-					  th:if="${error_fileList}"
-					  th:text="${error_fileList}"></span>
-				
-				<!-- 하단 링크 -->
-				<div class="d-flex justify-content-end mt-4 mb-5">
-					<button type="submit"
-							class="btn btn-outline-primary"
-							th:if="${#authentication.principal.user.id == post.user.id}">
-						수정 완료
-					</button>
-					<button type="button"
-							class="btn btn-outline-danger ms-2"
-							onclick="history.back()">취소</button>
-					<a class="btn btn-outline-dark ms-2"
-					   th:href="@{/post/list(page=${session.page})}">
-						목록
-					</a>
-				</div>
+<body style="margin-bottom: 200px">
+	
+	<!-- 상단 메뉴 -->
+	<th:block th:insert="~{common/header::header}"></th:block>
+	<!-- 상단 메뉴 -->
+	
+	<div id="updateFormContainer" class="container mt-3">
+		<form id="updateForm" name="frm" th:action="@{/post/update}" th:object="${post}" method="post"
+			  enctype="multipart/form-data">
 			
-			</form>
-		</div>
-	</body>
-</th:block>
+			<!-- 삭제용 hidden 필드 컨테이너 -->
+			<div id="delFiles">
+				<div th:if="${delFile != null}">
+					<input type="hidden" th:each="file : ${delFile}" name="delFile" th:value="${delFile}"/>
+				</div>
+			</div>
+			<!-- 삭제용 hidden 필드 컨테이너 -->
+			
+			
+			<!-- PK 및 User 전달 -->
+			<input type="hidden" th:field="*{id}"/>
+			<input type="hidden" th:field="*{user.id}"/>
+			<!-- PK 및 User 전달 -->
+			
+			
+			<!-- 본문 -->
+			<div class="my-3">
+				<label for="content" class="sub-title">본문</label>
+				<textarea id="content" th:field="*{content}" class="form-control" rows="5"
+						  placeholder="내용을 입력하세요"></textarea>
+				<span class="text-danger" th:if="${error_content}" th:text="${error_content}"></span>
+			</div>
+			<!-- 본문 -->
+			
+			
+			<!-- 대여 상품 -->
+			<div class="my-3">
+				<label for="items" class="sub-title">대여 상품</label>
+				<textarea id="items" th:field="*{items}" class="form-control" placeholder="대여한 상품을 입력하세요"></textarea>
+				<span class="text-danger" th:if="${error_items}" th:text="${error_items}"></span>
+			</div>
+			<!-- 대여 상품 -->
+			
+			
+			<!-- 기존 첨부파일 목록 -->
+			<div class="container mt-3 mb-3 border rounded">
+				<div class="mb-3 mt-3">
+					<label class="sub-title">기존 이미지</label>
+					<div class="input-group mb-2" th:each="attachment : ${post.fileList}">
+						<input class="form-control col-xs-3" type="text" readonly th:value="${attachment.sourcename}"/>
+						<button type="button" class="btn btn-outline-danger" th:attr="data-fileid-del=${attachment.id}">삭제</button>
+					</div>
+				</div>
+			</div>
+			<!-- 기존 첨부파일 목록 -->
+			
+			
+			<!-- 새로운 첨부파일 추가 -->
+			<div class="container mt-3 mb-3 border rounded">
+				<div class="mb-3 mt-3 d-flex justify-content-between align-items-center">
+					<label class="sub-title mb-0">이미지 추가</label>
+					<button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
+				</div>
+				<div id="files"></div>
+			</div>
+			<span class="text-danger" th:if="${error_fileList}" th:text="${error_fileList}"></span>
+			<!-- 새로운 첨부파일 추가 -->
+			
+			
+			<!-- 하단 링크 -->
+			<div class="d-flex justify-content-end mt-4 mb-5">
+				<button type="submit" class="btn btn-outline-primary"
+						th:if="${#authentication.principal.user.id == post.user.id}">수정 완료</button>
+				<button type="button" class="btn btn-outline-danger ms-2" onclick="history.back()">취소</button>
+				<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
+			</div>
+			<!-- 하단 링크 -->
+		
+		</form>
+	</div>
+</body>
 
 </html>

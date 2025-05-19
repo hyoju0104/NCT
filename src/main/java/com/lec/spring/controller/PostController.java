@@ -177,10 +177,8 @@ public class PostController {
 	public String updateOk(
 			@Valid @ModelAttribute("post") Post post,
 			BindingResult result,
-//			@RequestParam Map<String, MultipartFile> files, // 새로 추가되는 첨부파일(들) 정보
 			MultipartHttpServletRequest request,
 			Model model,
-//			RedirectAttributes redirectAttributes,
 			@RequestParam(required = false) Long[] delFile     // 삭제될 파일들의 id(들)
 	){
 		// 1. 게시글 조회 : 존재하지 않는 게시글이면 redirect
