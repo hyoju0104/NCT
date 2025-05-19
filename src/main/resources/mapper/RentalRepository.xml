@@ -5,13 +5,118 @@
 
 <mapper namespace="com.lec.spring.repository.RentalRepository">
 
-    <!-- 특정 사용자 대여 내역 전체 조회 -->
-    <select id="findAllByUserId" resultType="com.lec.spring.domain.Rental">
-        SELECT r.*, i.name AS item_name
-        FROM rental r
-                 JOIN item i ON r.item_id = i.id
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Rental" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO Rental (user_id, item_id, rented_at, return_due_at, status)
+        VALUES (#{user.id}, #{item.id}, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), #{status})
+    </insert>
+
+    <sql id="SELECT_BASE">
+        SELECT
+            r.id "r_id",
+            r.rented_at "r_rented_at",
+            r.return_due_at "r_return_due_at",
+            r.returned_at "r_returned_at",
+            r.status "r_status",
+            u.id "u_id",
+            u.username "u_username",
+            u.password "u_password",
+            u.name "u_name",
+            u.phone_num "u_phone_num",
+            u.email "u_email",
+            u.address "u_address",
+            u.point "u_point",
+            u.provider "u_provider",
+            u.provider_id "u_provider_id",
+            u.signed_at "u_signedAt",
+            u.paid_at "u_paidAt",
+            u.status_plan "u_status_plan",
+            u.status_account "u_status_account",
+            u.rental_cnt "u_rental_cnt",
+            i.id "i_id",
+            i.name "i_name",
+            i.category "i_category",
+            i.description "i_description",
+            i.is_available "i_is_available",
+            i.item_status "i_item_status",
+            i.is_exist "i_is_exist",
+            i.created_at "i_created_at"
+        FROM Rental r
+                 JOIN user u ON r.user_id = u.id
+                 JOIN Item i ON r.item_id = i.id
+    </sql>
+
+    <resultMap id="mapUser" type="com.lec.spring.domain.User">
+        <result column="u_id" property="id"/>
+        <result column="u_username" property="username"/>
+        <result column="u_password" property="password"/>
+        <result column="u_name" property="name"/>
+        <result column="u_phone_num" property="phoneNum"/>
+        <result column="u_email" property="email"/>
+        <result column="u_address" property="address"/>
+        <result column="u_point" property="point"/>
+        <result column="u_provider" property="provider"/>
+        <result column="u_provider_id" property="providerId"/>
+        <result column="u_signed_at" property="signedAt"/>
+        <result column="u_paid_at" property="paidAt"/>
+        <result column="u_status_plan" property="statusPlan"/>
+        <result column="u_status_account" property="statusAccount"/>
+        <result column="u_rental_cnt" property="rentalCnt"/>
+    </resultMap>
+
+    <resultMap id="mapItem" type="com.lec.spring.domain.Item">
+        <result column="i_id" property="id"/>
+        <result column="i_name" property="name"/>
+        <result column="i_category" property="category"/>
+        <result column="i_description" property="description"/>
+        <result column="i_is_available" property="isAvailable"/>
+        <result column="i_item_status" property="statusItem"/>
+        <result column="i_is_exist" property="isExist"/>
+        <result column="i_created_at" property="createdAt"/>
+    </resultMap>
+
+    <resultMap id="mapRental" type="com.lec.spring.domain.Rental">
+        <result column="r_id" property="id"/>
+        <result column="r_rented_at" property="rentedAt"/>
+        <result column="r_return_due_at" property="returnDueAt"/>
+        <result column="r_returned_at" property="returnedAt"/>
+        <result column="r_status" property="status"/>
+        <association property="user" resultMap="mapUser"/>
+        <association property="item" resultMap="mapItem"/>
+    </resultMap>
+
+    <select id="findById" resultMap="mapRental" parameterType="com.lec.spring.domain.Rental">
+        <include refid="SELECT_BASE"/>
+        WHERE r.id = #{id}
+    </select>
+
+    <select id="findAllByUserId" resultMap="mapRental" parameterType="com.lec.spring.domain.Rental">
+        <include refid="SELECT_BASE"/>
         WHERE r.user_id = #{userId}
         ORDER BY r.rented_at DESC
     </select>
+
+    <select id="findAllByBrandId" resultMap="mapRental" parameterType="com.lec.spring.domain.Rental">
+        <include refid="SELECT_BASE"/>
+        SELECT_BASE.*
+        , b.id AS b_id, b.name AS b_name
+        FROM Rental r
+        JOIN user u ON r.user_id = u.id
+        JOIN Item i ON r.item_id = i.id
+        JOIN Brand b ON i.brand_id = b.id
+        WHERE b.id = #{brandId}
+        ORDER BY r.rented_at DESC
+    </select>
+
+    <update id="updateReturned" parameterType="com.lec.spring.domain.Rental">
+        UPDATE Rental
+        SET returned_at = NOW(), status = 'RETURNED'
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateOverdue">
+        UPDATE Rental
+        SET status = 'OVERDUE'
+        WHERE status = 'RENTED' AND return_due_at &lt; NOW()
+    </update>
 
 </mapper>

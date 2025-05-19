@@ -21,10 +21,7 @@
 		<label class="form-label">로고이미지</label>
 		<div class="d-flex flex-wrap gap-3" th:if="${attachments != null and !attachments.isEmpty()}">
 			<div th:each="file : ${attachments}">
-				<img th:src="@{'/upload/brand/' + ${file.filename}}"
-					 alt="썸네일"
-					 class="img-thumbnail"
-					 style="width: 150px; height: auto;">
+				<img th:src="@{'/upload/brand/' + ${file.filename}}" alt="썸네일" class="img-thumbnail" style="width: 150px; height: auto;">
 			</div>
 		</div>
 	</div>
