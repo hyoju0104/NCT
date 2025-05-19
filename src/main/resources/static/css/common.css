@@ -1401,6 +1401,133 @@ hr {
     background-color: #f5f5f5;
     color: #333333;
 }
+/* 상품 정보 테이블 */
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.info-row {
+    display: flex;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 16px;
+}
+
+.info-label {
+    flex: 0 0 120px;
+    font-size: 14px;
+    color: #888888;
+    font-weight: 500;
+}
+
+.info-value {
+    flex: 1;
+    font-size: 16px;
+    color: #333333;
+}
+
+.info-value.highlight {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222222;
+}
+
+/* 주의사항 섹션 */
+.notice-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.notice-section.warning {
+    border-left: 4px solid #ff9800;
+}
+
+.notice-section.info {
+    border-left: 4px solid #2196f3;
+}
+
+.notice-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notice-list li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #444444;
+    line-height: 1.6;
+}
+
+.notice-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #888888;
+    font-size: 18px;
+    top: -2px;
+}
+
+.sub-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0 16px;
+}
+
+.sub-list li {
+    margin-bottom: 8px;
+    padding-left: 0;
+}
+
+.sub-list li::before {
+    display: none;
+}
+
+/* 플랜 배지 */
+.plan-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 6px;
+    background-color: #f5f5f5;
+    color: #333333;
+    letter-spacing: 0.5px;
+}
+
+/* 버튼 영역 */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.return-btn {
+    padding: 16px 32px;
+    background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.return-btn:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
 
 
 /* 반응형 조정 - 모바일에서도 세련된 디자인 유지 */
@@ -1543,6 +1670,24 @@ hr {
     .rental-confirm-btn,
     .cancel-btn {
         width: 100%;
+    }
+    .completion-section,
+    .order-section,
+    .notice-section {
+        padding: 20px;
+    }
+
+    .info-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .info-label {
+        flex: none;
+    }
+
+    .completion-message {
+        font-size: 20px;
     }
 }
 /* 모바일 대응 */

@@ -80,6 +80,7 @@
     <select id="findAll" resultMap="mapItem">
         <include refid="SELECT_BASE"/>
         AND i.is_exist = true
+        ORDER BY i.id DESC
     </select>
 
     <select id="findByCategory" parameterType="string" resultMap="mapItem">

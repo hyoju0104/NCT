@@ -3,46 +3,87 @@
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8">
-
 	<link rel="stylesheet" th:href="@{/css/common.css}">
-	
-	<title>Order Detail</title>
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/login.css}">
+	<title>대여 완료</title>
 </head>
 
 <body>
-	<div class="container mt-3">
+<!-- 상단 메뉴 -->
+<th:block th:insert="~{common/header::header}"></th:block>
 
-		<!-- 상단 메뉴 -->
-		<th:block th:insert="~{common/header::header}"></th:block>
-
-		<div class="mb-3">
-			브랜드명 :
-			<div class="border bg-light rounded p-2" th:text="${item.brand.name}"></div>
-			상품명 :
-			<div class="border bg-light rounded p-2" th:text="${item.name}"></div>
-			카테고리 :
-			<div class="border bg-light rounded p-2" th:text="${item.category}"></div>
-		</div>
-
-		<h2>대여가 완료되었습니다.</h2>
-
-		<hr>
-		<h2>주의사항</h2>
-		<p>- 상품 미반환시 계정이 정지될 수 있습니다.</p>
-		<p>- 대여기간 : 대여일로부터 7일</p>
-		<p>- 대여횟수</p>
-		<p>[SILVER] 등급 : 7일 기준 상품 3개 대여가능</p>
-		<p>[GOLD] 등급 : 7일 기준 상품 5개 대여가능</p>
-		<p>[VIP] 등급 : 7일 기준 상품 10개 대여가능</p>
-
-
-		<h2>상품 안내사항</h2>
-		<p>- 상품 취급 시 주의사항 부분을 반드시 확인하시고 안내사항을 따라주세요.</p>
-		<p>- 전반적으로 보풀 등이 있을 수 있으며 이는 편직 과정에서 발생할 수 있는 특징으로 제품의 하자나 불량 상품이 아닙니다.</p>
-		<p>- 심한 마찰로 인해 보풀 현상이 발생할 수 있으니 주의하여 착용하시기 바랍니다.</p>
-
-		<a th:href="@{'/item/list'}" class="btn btn-outline-danger ms-2">목록으로 돌아가기</a>
-
+<div class="items-container">
+	<div class="section-header">
+		<h2 class="section-title">대여 완료</h2>
 	</div>
+
+	<!-- 완료 메시지 섹션 -->
+	<div class="completion-section">
+		<div class="completion-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+				<polyline points="22 4 12 14.01 9 11.01"></polyline>
+			</svg>
+		</div>
+		<h3 class="completion-message">대여가 성공적으로 완료되었습니다</h3>
+		<p class="completion-description">상품은 영업일 기준 1-2일 내에 발송될 예정입니다.</p>
+	</div>
+
+	<!-- 상품 정보 섹션 -->
+	<div class="order-section">
+		<div class="section-subtitle">상품 정보</div>
+
+		<div class="product-info">
+			<div class="info-row">
+				<div class="info-label">브랜드</div>
+				<div class="info-value" th:text="${item.brand.name}"></div>
+			</div>
+
+			<div class="info-row">
+				<div class="info-label">상품명</div>
+				<div class="info-value highlight" th:text="${item.name}"></div>
+			</div>
+
+			<div class="info-row">
+				<div class="info-label">카테고리</div>
+				<div class="info-value" th:text="${item.category}"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 주의사항 섹션 -->
+	<div class="notice-section warning">
+		<div class="section-subtitle">주의사항</div>
+
+		<ul class="notice-list">
+			<li>상품 미반환시 계정이 정지될 수 있습니다.</li>
+			<li>대여기간 : 대여일로부터 7일</li>
+			<li>대여횟수
+				<ul class="sub-list">
+					<li><span class="plan-badge">SILVER</span> 등급 : 7일 기준 상품 3개 대여가능</li>
+					<li><span class="plan-badge">GOLD</span> 등급 : 7일 기준 상품 5개 대여가능</li>
+					<li><span class="plan-badge">VIP</span> 등급 : 7일 기준 상품 10개 대여가능</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 상품 안내사항 섹션 -->
+	<div class="notice-section info">
+		<div class="section-subtitle">상품 안내사항</div>
+
+		<ul class="notice-list">
+			<li>상품 취급 시 주의사항 부분을 반드시 확인하시고 안내사항을 따라주세요.</li>
+			<li>전반적으로 보풀 등이 있을 수 있으며 이는 편직 과정에서 발생할 수 있는 특징으로 제품의 하자나 불량 상품이 아닙니다.</li>
+			<li>심한 마찰로 인해 보풀 현상이 발생할 수 있으니 주의하여 착용하시기 바랍니다.</li>
+		</ul>
+	</div>
+
+	<!-- 버튼 영역 -->
+	<div class="action-buttons">
+		<a th:href="@{'/item/list'}" class="return-btn">상품 목록으로 돌아가기</a>
+	</div>
+</div>
 </body>
 </html>
