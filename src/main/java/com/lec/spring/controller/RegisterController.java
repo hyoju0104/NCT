@@ -109,7 +109,7 @@ public class RegisterController {
         }
 
         // 3. 회원가입 먼저 수행 (brand.id가 생성됨)
-//        brandService.register(brand);
+        brandService.register(brand);
 
         // 4. 첨부파일 저장 (로고 업로드)
         if (logo != null && !logo.isEmpty()) {
@@ -136,8 +136,6 @@ public class RegisterController {
             brandAttachmentService.save(attachment);
         }
 
-        // 5. 회원가입 처리
-        brandService.register(brand);
 
         return "redirect:/login";
     }
