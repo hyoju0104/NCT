@@ -492,3 +492,56 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
+
+/* 액션 버튼 */
+.action-btn {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 아웃라인 버튼 */
+.btn-outline {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: transparent;
+    color: #222222;
+    border: 1px solid #222222;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+    background-color: #f8f8f8;
+    color: #000000;
+    border-color: #000000;
+}
+
+.btn-outline.danger {
+    color: #d32f2f;
+    border-color: #d32f2f;
+}
+
+.btn-outline.danger:hover {
+    background-color: #ffeaea;
+    color: #b71c1c;
+    border-color: #b71c1c;
+}

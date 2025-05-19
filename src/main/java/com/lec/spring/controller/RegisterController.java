@@ -36,8 +36,7 @@ public class RegisterController {
     private final BrandAttachmentService brandAttachmentService;
     private final UserValidator userValidator;
 
-    public RegisterController(UserService userService, BrandService brandService, BrandAttachmentService brandAttachmentService) {
-    public RegisterController(UserService userService, BrandService brandService, UserValidator userValidator) {
+    public RegisterController(UserService userService, BrandService brandService, BrandAttachmentService brandAttachmentService, UserValidator userValidator) {
         this.userService = userService;
         this.brandService = brandService;
         this.brandAttachmentService = brandAttachmentService;
@@ -110,7 +109,7 @@ public class RegisterController {
         }
 
         // 3. 회원가입 먼저 수행 (brand.id가 생성됨)
-        brandService.register(brand);
+//        brandService.register(brand);
 
         // 4. 첨부파일 저장 (로고 업로드)
         if (logo != null && !logo.isEmpty()) {

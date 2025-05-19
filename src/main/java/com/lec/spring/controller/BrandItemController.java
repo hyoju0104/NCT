@@ -1,6 +1,6 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.config.BrandDetails;
+import com.lec.spring.config.PrincipalBrandDetails;
 import com.lec.spring.domain.BrandItemValidator;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.ItemAttachment;
@@ -49,7 +49,7 @@ public class BrandItemController {
     public String writeOk(@ModelAttribute("item") Item item,
                           BindingResult result,
                           @RequestParam("itemImage") MultipartFile itemImage,
-                          @AuthenticationPrincipal BrandDetails principal,
+                          @AuthenticationPrincipal PrincipalBrandDetails principal,
                           RedirectAttributes redirectAttributes,
                           Model model) {
 
@@ -124,7 +124,7 @@ public class BrandItemController {
 
     @GetMapping("/item/update/{id}")
     public String update(@PathVariable Long id, Model model,
-                             @AuthenticationPrincipal BrandDetails principal) {
+                             @AuthenticationPrincipal PrincipalBrandDetails principal) {
 
         Item item = itemService.detail(id);
         if (!item.getBrand().getId().equals(principal.getBrand().getId())) {
@@ -143,7 +143,7 @@ public class BrandItemController {
     public String updateOk(@ModelAttribute Item item,
                            @RequestParam(value = "itemImage", required = false) MultipartFile itemImage,
                            BindingResult result,
-                           @AuthenticationPrincipal BrandDetails principal,
+                           @AuthenticationPrincipal PrincipalBrandDetails principal,
                            RedirectAttributes redirectAttributes,
                            Model model) {
 

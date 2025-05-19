@@ -370,6 +370,143 @@ hr {
     padding: 20px;
 }
 
+/* 상품 목록 컨테이너 */
+.items-container {
+    max-width: 1000px;
+    margin: 100px auto 40px;
+    padding: 20px;
+}
+
+/* 섹션 헤더 스타일 */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+/* 테이블 컨테이너 스타일 */
+.table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    margin-top: 16px;
+}
+
+/* 상품 테이블 */
+.item-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+.item-table th,
+.item-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.item-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #444444;
+    font-size: 14px;
+}
+
+.item-table td {
+    color: #666666;
+    font-size: 14px;
+}
+
+.item-table tr:hover {
+    background-color: #fafafa;
+}
+
+.item-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* 상품 링크 스타일 */
+.item-link {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.item-link:hover {
+    text-decoration: underline;
+}
+
+/* 액션 셀 스타일 */
+.action-cell {
+    display: flex;
+    gap: 8px;
+}
+
+/* 인라인 폼 */
+.inline-form {
+    display: inline-block;
+}
+
+/* 비어있는 메시지 */
+.empty-message {
+    text-align: center;
+    padding: 24px;
+    color: #888888;
+    font-style: italic;
+}
+
+/* 컨테이너 너비 수정 */
+.items-container,
+.mypage-container,
+.payment-container {
+    max-width: 1280px; /* 헤더와 동일한 max-width로 수정 */
+    width: 100%;
+    margin: 100px auto 40px;
+    padding: 0 20px;
+}
+
+/* 섹션 헤더 스타일 개선 */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* 테이블 컨테이너 전체 너비 사용 */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    margin-top: 16px;
+}
+
+/* 상품 목록 페이지 중앙 정렬 제거 */
+.section-title {
+    text-align: left; /* 중앙 정렬에서 왼쪽 정렬로 변경 */
+    font-size: 28px; /* 크기 조정 */
+}
+
+.image-preview-placeholder p {
+    font-size: 14px;
+}
+
+
+/* 모바일 대응 */
+@media (max-width: 576px) {
+    .form-actions {
+        flex-direction: column; /* 모바일에서는 세로로 쌓음 */
+    }
+
+    .form-actions .cancel-btn {
+        width: 100%;
+    }
+}
 /* 모바일 반응형 */
 @media (max-width: 768px) {
     .plan-cards {
@@ -389,30 +526,41 @@ hr {
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     }
 
-    /* 작은 모바일 화면 대응 */
-    @media (max-width: 480px) {
-        .wide-container {
-            padding: 0 15px;
-        }
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
 
-        .dashboard-title {
-            font-size: 28px;
-        }
-
-        .dashboard-actions {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 15px;
-        }
-
-        .filter-section {
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-
-        .products-grid {
-            grid-template-columns: 1fr;
-        }
+    .form-actions button {
+        width: 100%;
+        max-width: 300px;
     }
 }
+
+/* 작은 모바일 화면 대응 */
+@media (max-width: 480px) {
+    .wide-container {
+        padding: 0 15px;
+    }
+
+    .dashboard-title {
+        font-size: 28px;
+    }
+
+    .dashboard-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .filter-section {
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 
