@@ -1271,7 +1271,136 @@ hr {
     margin-top: 20px;
 }
 
+/* 대여 신청 페이지 스타일 */
+.order-id {
+    font-size: 14px;
+    color: #888888;
+    margin-top: 8px;
+}
 
+.order-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 주문 섹션 */
+.order-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.section-subtitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222222;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* 읽기 전용 값 */
+.readonly-value {
+    padding: 14px 16px;
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #666666;
+}
+
+/* 상품 정보 테이블 */
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.info-row {
+    display: flex;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 16px;
+}
+
+.info-label {
+    flex: 0 0 120px;
+    font-size: 14px;
+    color: #888888;
+    font-weight: 500;
+}
+
+.info-value {
+    flex: 1;
+    font-size: 16px;
+    color: #333333;
+}
+
+.info-value.highlight {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222222;
+}
+
+/* 주의사항 섹션 */
+.notice-section {
+    background-color: #fffdf0;
+}
+
+.notice-content {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #666666;
+}
+
+.notice-content p {
+    margin-bottom: 8px;
+}
+
+/* 버튼 영역 */
+.form-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.rental-confirm-btn {
+    flex: 1;
+    height: 54px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rental-confirm-btn:hover {
+    background-color: #e03333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.2);
+}
+
+.cancel-btn {
+    height: 54px;
+    width: 120px;
+    background-color: #ffffff;
+    color: #666666;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #f5f5f5;
+    color: #333333;
+}
 
 
 /* 반응형 조정 - 모바일에서도 세련된 디자인 유지 */
@@ -1368,21 +1497,6 @@ hr {
         width: 100%;
         padding: 12px 20px;
     }
-}
-
-
-/* 모바일 대응 */
-@media (max-width: 576px) {
-    .form-actions {
-        flex-direction: column; /* 모바일에서는 세로로 쌓음 */
-    }
-
-    .form-actions .cancel-btn {
-        width: 100%;
-    }
-}
-/* 모바일 반응형 */
-@media (max-width: 768px) {
     .plan-cards {
         flex-direction: column;
         align-items: center;
@@ -1409,7 +1523,39 @@ hr {
         width: 100%;
         max-width: 300px;
     }
+    .order-section {
+        padding: 20px;
+    }
+
+    .info-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .info-label {
+        flex: none;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .rental-confirm-btn,
+    .cancel-btn {
+        width: 100%;
+    }
 }
+/* 모바일 대응 */
+@media (max-width: 576px) {
+    .form-actions {
+        flex-direction: column; /* 모바일에서는 세로로 쌓음 */
+    }
+
+    .form-actions .cancel-btn {
+        width: 100%;
+    }
+}
+
 
 /* 작은 모바일 화면 대응 */
 @media (max-width: 480px) {
