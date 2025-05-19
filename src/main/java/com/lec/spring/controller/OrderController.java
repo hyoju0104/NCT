@@ -3,8 +3,10 @@ package com.lec.spring.controller;
 import com.lec.spring.config.UserDetails;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.OrderValidator;
+import com.lec.spring.domain.Rental;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.ItemService;
+import com.lec.spring.service.RentalService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,10 +21,12 @@ public class OrderController {
 
     private final ItemService itemService;
     private final OrderValidator orderValidator;
+    private final RentalService rentalService;
 
-    public OrderController(ItemService itemService, OrderValidator orderValidator) {
+    public OrderController(ItemService itemService, OrderValidator orderValidator, RentalService rentalService) {
         this.itemService = itemService;
         this.orderValidator = orderValidator;
+        this.rentalService = rentalService;
     }
 
     @GetMapping("/detail/{id}")
@@ -58,6 +62,7 @@ public class OrderController {
                                 @ModelAttribute("user") User user,
                                 BindingResult result,
                                 @AuthenticationPrincipal UserDetails principal,
+                                HttpSession session,
                                 Model model) {
 
         orderValidator.validate(user, result);
@@ -72,9 +77,19 @@ public class OrderController {
             return "order/detail";
         }
 
+        User loginUser = principal.getUser();
+        Item item = itemService.detail(id);
+
+        Rental rental = new Rental();
+        rental.setUser(loginUser);
+        rental.setItem(item);
+        rental.setStatus("RENTED");
+        rentalService.createRental(rental);
+
         int updateResult = itemService.markAsUnavailable(id);
         System.out.println(">> markAsUnavailable 결과: " + updateResult);
 
         return "redirect:/order/complete/" + id;
     }
+
 }

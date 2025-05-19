@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/rental")
+@RequestMapping("/brand/rental")
 public class RentalController {
 
     private final RentalService rentalService;
@@ -18,27 +18,27 @@ public class RentalController {
     public RentalController(RentalService rentalService) {
         this.rentalService = rentalService;
     }
-    // [USER] 내 대여 목록 보기
-    @GetMapping("/user/mypage/rentals")
-    public String userRentalList(Model model, HttpSession session) {
-        Long userId = (Long) session.getAttribute("userId");
-        List<Rental> rentals = rentalService.getRentalsByUserId(userId);
-        rentalService.updateOverdue();
-        model.addAttribute("rentals", rentals);
-        return "user/mypage/rentals";
-    }
 
-    @GetMapping("/brand/rentals")
+    // 브랜드의 아이템 대여 목록 페이지
+    @GetMapping("/list")
     public String brandRentalList(Model model, HttpSession session) {
         Long brandId = (Long) session.getAttribute("brandId");
+        System.out.println("세션 brandId = " + brandId);
+
         List<Rental> rentals = rentalService.getRentalsByBrandId(brandId);
+        System.out.println("렌탈 수 = " + rentals.size());
+        for (Rental r : rentals) {
+            System.out.println("렌탈 ID = " + r.getId() + ", 아이템명 = " + r.getItem().getName());
+        }
+
         model.addAttribute("rentals", rentals);
-        return "brand/rentals/list";
+        return "brand/rental/list";
     }
 
-    @PostMapping("/brand/rentals/return/{id}")
+    // 반납 처리
+    @PostMapping("/return/{id}")
     public String returnItem(@PathVariable("id") Long rentalId) {
         rentalService.updateReturned(rentalId);
-        return "redirect:/rental/brand/rentals";
+        return "redirect:/brand/rental/list";
     }
 }
