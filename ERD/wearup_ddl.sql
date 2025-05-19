@@ -124,7 +124,7 @@ CREATE TABLE Rental
     rented_at     DATETIME                               NOT NULL DEFAULT now(),
     return_due_at DATETIME                               NOT NULL,
     returned_at   DATETIME                               NULL,
-    status        ENUM ('RENTED', 'RETURNED', 'OVERDUE') NOT NULL,
+    status        VARCHAR(50)                            NOT NULL DEFAULT 'RENTED',
     PRIMARY KEY (id)
 );
 
