@@ -14,6 +14,13 @@
     <hr>
 
     <div class="mb-3">
+        <label class="form-label">상품 이미지</label><br>
+        <div th:if="${attachment != null}">
+            <img th:src="@{'/upload/item/' + ${attachment.filename}}" class="img-thumbnail" style="height: 150px;">
+        </div>
+    </div>
+
+    <div class="mb-3">
         <label><strong>브랜드명:</strong></label>
         <div class="form-control" th:text="${item.brand.name}"></div>
     </div>

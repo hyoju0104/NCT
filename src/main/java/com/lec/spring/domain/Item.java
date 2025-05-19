@@ -60,4 +60,14 @@ public class Item {
     public void setBrand(Brand brand) {
         this.brand = brand;
     }
+
+    private ItemAttachment attachment;
+
+    public ItemAttachment getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(ItemAttachment attachment) {
+        this.attachment = attachment;
+    }
 }

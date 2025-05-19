@@ -25,7 +25,7 @@
 					 style="height: 100px;" class="img-thumbnail mb-1">
 				<div class="input-group">
 					<input class="form-control" type="text" readonly th:value="${file.sourcename}">
-					<form th:action="@{'/attachment/delete'}" method="post" onsubmit="return confirm('첨부파일을 삭제하시겠습니까?')">
+					<form th:action="@{'/brand/attachment/delete'}" method="post" onsubmit="return confirm('첨부파일을 삭제하시겠습니까?')">
 						<input type="hidden" name="id" th:value="${file.id}"/>
 						<button type="submit" class="btn btn-danger">삭제</button>
 					</form>

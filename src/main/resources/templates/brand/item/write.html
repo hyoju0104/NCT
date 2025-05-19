@@ -12,12 +12,11 @@
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
 
-<form name="frm"
-      th:action="@{/brand/item/write}"
-      method="post"
-      enctype="multipart/form-data">
+<form name="frm" th:action="@{/brand/item/write}" method="post" enctype="multipart/form-data">
 
     <h3>상품 등록</h3>
+
+    <input type="file" name="itemImage" class="form-control" required>
 
     <div class="mb-3">
         <label>브랜드명:</label>
@@ -63,10 +62,6 @@
             <option value="C" th:selected="${item.statusItem == 'C'}">C</option>
         </select>
         <span class="text-danger" th:if="${error_statusItem}" th:text="${error_statusItem}"></span>
-    </div>
-
-    <div class="mb-3 mt-3">
-        <label>상품 이미지:</label>
     </div>
 
     <div class="d-flex">

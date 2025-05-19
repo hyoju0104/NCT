@@ -18,9 +18,39 @@
 <th:block th:insert="~{common/header::header}"></th:block>
 
 <div class="container mt-4">
+    <h2>상품 수정</h2>
+    <hr>
+
     <form name="frm" th:action="@{/brand/item/update}" method="post" enctype="multipart/form-data">
 
         <input type="hidden" name="id" th:value="${item.id}"/>
+
+        <!-- 기존 첨부파일 -->
+        <div class="mb-3">
+            <label class="form-label">기존 이미지</label><br>
+
+            <div th:if="${attachment != null}">
+                <img th:src="@{'/upload/item/' + ${attachment.filename}}" class="img-thumbnail" style="height: 100px;">
+                <div class="input-group mt-2">
+                    <input type="text" class="form-control" readonly th:value="${attachment.sourcename}">
+                    <form th:action="@{/item/attachment/delete}" method="post"
+                          onsubmit="return confirm('첨부파일을 삭제하시겠습니까?')">
+                        <input type="hidden" name="id" th:value="${attachment.id}" />
+                        <button type="submit" class="btn btn-danger">삭제</button>
+                    </form>
+                </div>
+            </div>
+
+            <div th:if="${attachment == null}">
+                <p class="text-muted">첨부파일이 없습니다.</p>
+            </div>
+        </div>
+
+        <!-- 새 이미지 등록 -->
+        <div class="mb-3">
+            <label for="itemImage">이미지 변경:</label>
+            <input type="file" class="form-control" id="itemImage" name="itemImage">
+        </div>
 
         <div class="mb-3">
             <label><strong>브랜드명:</strong></label>
@@ -69,8 +99,11 @@
         <div class="mb-3">
             <label for="isAvailable"><strong>대여 가능 여부:</strong></label>
             <select id="isAvailable" name="isAvailable" class="form-select">
-                <option value="true" th:selected="${item.isAvailable}">가능</option>
-                <option value="false" th:selected="${!item.isAvailable}">불가</option>
+                <option value="true"
+                        th:selected="${item.isAvailable != null and item.isAvailable}">가능</option>
+                <option value="false"
+                        th:selected="${item.isAvailable != null and !item.isAvailable}">불가</option>
+
             </select>
         </div>
 
