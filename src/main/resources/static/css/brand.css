@@ -1,0 +1,318 @@
+/* 브랜드 페이지 전용 스타일 */
+.brand-container {
+    padding-top: 30px;
+}
+
+.product-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.add-product-btn {
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.product-table-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.product-table {
+    margin-bottom: 0;
+}
+
+.product-table thead {
+    background-color: #f8f9fa;
+}
+
+.product-table th {
+    padding: 15px;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.product-table td {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.product-link {
+    color: #4a6bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.product-link:hover {
+    color: #3a5bef;
+    text-decoration: underline;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.no-products {
+    padding: 30px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}
+
+/* 상품 등록 폼 스타일 */
+.product-form-container {
+    max-width: 800px;
+    margin: 30px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+}
+
+.product-form-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.product-form .form-group {
+    margin-bottom: 25px;
+}
+
+.brand-name {
+    background-color: #f8f9fa;
+    font-weight: 500;
+}
+
+.image-upload-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.image-preview {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+.image-preview-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    padding: 20px;
+}
+
+.image-preview-placeholder i {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.image-preview-placeholder p {
+    margin: 0;
+}
+
+.image-upload-input {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* 상태 선택 옵션에 색상 표시 */
+#statusItem option[value="A"] {
+    color: #28a745;
+}
+
+#statusItem option[value="B"] {
+    color: #007bff;
+}
+
+#statusItem option[value="C"] {
+    color: #fd7e14;
+}
+
+/* 버튼 스타일 변경 */
+.product-form .btn-primary {
+    padding: 10px 24px;
+    font-weight: 500;
+}
+
+.product-form .btn-outline-secondary {
+    padding: 10px 24px;
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.product-form .btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* 상품 상세 페이지 스타일 */
+.product-detail-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    margin: 30px 0;
+}
+
+.product-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.product-detail-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.product-detail-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.status-available {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #28a745;
+}
+
+.status-unavailable {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #dc3545;
+}
+
+.product-image-container {
+    height: 400px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.product-detail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.product-detail-no-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    width: 100%;
+    height: 100%;
+}
+
+.product-detail-no-image i {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.product-info-container {
+    margin-bottom: 30px;
+}
+
+.product-info-item {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.info-label {
+    width: 120px;
+    font-weight: 600;
+    color: #555;
+}
+
+.info-value {
+    flex: 1;
+    color: #333;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.status-A {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #28a745;
+}
+
+.status-B {
+    background-color: rgba(0, 123, 255, 0.15);
+    color: #007bff;
+}
+
+.status-C {
+    background-color: rgba(253, 126, 20, 0.15);
+    color: #fd7e14;
+}
+
+.product-description {
+    margin-bottom: 30px;
+}
+
+.description-content {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    min-height: 100px;
+    white-space: pre-line;
+}
+
+.product-detail-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn i {
+    margin-right: 5px;
+}
