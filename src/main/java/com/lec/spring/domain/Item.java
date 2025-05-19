@@ -19,6 +19,7 @@ public class Item {
     private String description;
 
     private Boolean isAvailable;
+    private String imageUrl;
 
     public Boolean getIsAvailable() {
         return isAvailable;

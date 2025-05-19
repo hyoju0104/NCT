@@ -376,4 +376,43 @@ hr {
         flex-direction: column;
         align-items: center;
     }
+
+    .wide-container {
+        padding: 0 20px;
+    }
+
+    .dashboard-title {
+        font-size: 32px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    /* 작은 모바일 화면 대응 */
+    @media (max-width: 480px) {
+        .wide-container {
+            padding: 0 15px;
+        }
+
+        .dashboard-title {
+            font-size: 28px;
+        }
+
+        .dashboard-actions {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 15px;
+        }
+
+        .filter-section {
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .products-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 }
+
