@@ -96,7 +96,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="rental : ${rentals}">
-                    <td th:text="${rental.itemName}">코트</td>
+                    <td th:text="${rental.item.name}">코트</td>
                     <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">2025-05-10</td>
                     <td th:text="${#temporals.format(rental.returnDueAt, 'yyyy-MM-dd')}">2025-05-17</td>
                     <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '미반납'}"></td>
