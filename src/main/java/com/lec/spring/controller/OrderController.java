@@ -1,6 +1,6 @@
 package com.lec.spring.controller;
 
-import com.lec.spring.config.UserDetails;
+import com.lec.spring.config.PrincipalUserDetails;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.OrderValidator;
 import com.lec.spring.domain.Rental;
@@ -34,7 +34,7 @@ public class OrderController {
                               Model model,
                               RedirectAttributes redirectAttributes,
                               HttpSession session,
-                              @AuthenticationPrincipal UserDetails principal) {
+                              @AuthenticationPrincipal PrincipalUserDetails principal) {
         Item item = itemService.detail(id);
 
         if (principal == null) {
@@ -61,7 +61,7 @@ public class OrderController {
     public String completeOrder(@PathVariable Long id,
                                 @ModelAttribute("user") User user,
                                 BindingResult result,
-                                @AuthenticationPrincipal UserDetails principal,
+                                @AuthenticationPrincipal PrincipalUserDetails principal,
                                 HttpSession session,
                                 Model model) {
 

@@ -1,6 +1,6 @@
 package com.lec.spring.util;
 
-import com.lec.spring.config.UserDetails;
+import com.lec.spring.config.PrincipalUserDetails;
 import com.lec.spring.domain.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -31,8 +31,8 @@ public class U {
 	public static User getLoggedUser() {
 		// 현재 로그인한 사용자
 		// Security ContextHolder 라는 키값에다가 session 정보를 저장함
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userDetails.getUser();
+		PrincipalUserDetails principalUserDetails = (PrincipalUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = principalUserDetails.getUser();
 		return user;
 	}
 

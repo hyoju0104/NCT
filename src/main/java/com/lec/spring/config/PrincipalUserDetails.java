@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
+public class PrincipalUserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
     private final User user;
     private final UserService userService;
     
-    public UserDetails(User user, UserService userService) {
+    public PrincipalUserDetails(User user, UserService userService) {
         this.user = user;
         this.userService = userService;
     }
