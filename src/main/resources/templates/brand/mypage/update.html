@@ -4,96 +4,138 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 	<script th:src="@{/js/BrandUpdate.js}"></script>
 	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/login.css}">
 	<title>브랜드 정보 수정</title>
 </head>
 
 <body>
-
 <th:block th:insert="~{common/header::header}"></th:block>
 
-<div class="container mt-3 mb-3 border rounded">
-	<div class="mb-3 mt-3">
-		<label class="form-label">기존 첨부파일:</label>
-		<div th:if="${attachments != null and !attachments.isEmpty()}">
-			<div th:each="file : ${attachments}" class="mb-3">
-				<img th:src="@{'/upload/brand/' + ${file.filename}}"
-					 style="height: 100px;" class="img-thumbnail mb-1">
-				<div class="input-group">
-					<input class="form-control" type="text" readonly th:value="${file.sourcename}">
-					<form th:action="@{'/brand/attachment/delete'}" method="post" onsubmit="return confirm('첨부파일을 삭제하시겠습니까?')">
+<div class="items-container">
+	<div class="section-header">
+		<h2 class="section-title">브랜드 정보 수정</h2>
+	</div>
+
+	<!-- 기존 첨부파일 섹션 -->
+	<div class="form-section">
+		<div class="section-subtitle">현재 로고</div>
+		<div class="attachment-gallery" th:if="${attachments != null and !attachments.isEmpty()}">
+			<div th:each="file : ${attachments}" class="attachment-item">
+				<div class="attachment-preview">
+					<img th:src="@{'/upload/brand/' + ${file.filename}}" alt="브랜드 로고" class="logo-preview">
+				</div>
+				<div class="attachment-info">
+					<span class="filename" th:text="${file.sourcename}"></span>
+					<form th:action="@{'/brand/attachment/delete'}" method="post" class="delete-form" onsubmit="return confirm('첨부파일을 삭제하시겠습니까?')">
 						<input type="hidden" name="id" th:value="${file.id}"/>
-						<button type="submit" class="btn btn-danger">삭제</button>
+						<button type="submit" class="delete-button">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="3 6 5 6 21 6"></polyline>
+								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+								<line x1="10" y1="11" x2="10" y2="17"></line>
+								<line x1="14" y1="11" x2="14" y2="17"></line>
+							</svg>
+						</button>
 					</form>
 				</div>
 			</div>
 		</div>
+		<div class="no-attachments" th:if="${attachments == null or attachments.isEmpty()}">
+			<p>등록된 로고 이미지가 없습니다</p>
+		</div>
 	</div>
+
+	<!-- 브랜드 정보 수정 폼 -->
+	<form name="frm" th:action="@{/brand/mypage/update}" method="post" enctype="multipart/form-data" class="brand-update-form">
+		<input type="hidden" name="id" th:value="${brand.id}"/>
+
+		<!-- 로고 업로드 섹션 -->
+		<div class="form-section">
+			<div class="section-subtitle">로고 업로드</div>
+			<div class="form-group">
+				<label for="logo" class="file-upload-label">
+					<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="17 8 12 3 7 8"></polyline>
+						<line x1="12" y1="3" x2="12" y2="15"></line>
+					</svg>
+					로고 이미지 선택
+				</label>
+				<input type="file" id="logo" name="logo" class="file-upload-input" accept="image/*">
+				<div class="selected-file" id="selectedFileName"></div>
+			</div>
+		</div>
+
+		<!-- 기본 정보 섹션 -->
+		<div class="form-section">
+			<div class="section-subtitle">기본 정보</div>
+
+			<div class="form-group">
+				<label class="form-label">브랜드명</label>
+				<div class="readonly-value" th:text="${brand.name}"></div>
+			</div>
+
+			<div class="form-group">
+				<label class="form-label">아이디</label>
+				<div class="readonly-value" th:text="${brand.username}"></div>
+			</div>
+
+			<div class="form-group">
+				<button type="button" class="toggle-button" id="togglePasswordBtn">
+					<span class="toggle-icon">+</span> 비밀번호 변경하기
+				</button>
+			</div>
+
+			<div id="passwordFields" class="password-fields" th:attr="style=${passwordFields} ? 'display: block;' : 'display: none;'">
+				<div class="form-group">
+					<label for="password" class="form-label">새 비밀번호</label>
+					<input type="password" name="password" id="password" th:value="${password}" placeholder="비밀번호 입력">
+				</div>
+				<div class="form-group">
+					<label for="password2" class="form-label">비밀번호 확인</label>
+					<input type="password" name="password2" id="password2" th:value="${password2}" placeholder="비밀번호 확인">
+				</div>
+				<div class="field-error" th:if="${error_password}" th:text="${error_password}"></div>
+			</div>
+		</div>
+
+		<!-- 추가 정보 섹션 -->
+		<div class="form-section">
+			<div class="section-subtitle">추가 정보</div>
+
+			<div class="form-group">
+				<label for="phoneNum" class="form-label">대표 전화번호</label>
+				<input type="text" id="phoneNum" name="phoneNum"
+					   th:value="${phoneNum != null} ? ${phoneNum} : ${brand.phoneNum}" placeholder="전화번호를 입력하세요">
+				<div class="field-error" th:if="${error_phoneNum}" th:text="${error_phoneNum}"></div>
+			</div>
+
+			<div class="form-group">
+				<label for="description" class="form-label">브랜드 소개</label>
+				<textarea id="description" name="description" rows="5"
+						  placeholder="브랜드 소개를 입력하세요"
+						  th:text="${description != null} ? ${description} : ${brand.description}"></textarea>
+			</div>
+		</div>
+
+		<!-- 버튼 영역 -->
+		<div class="form-actions">
+			<button type="submit" class="login-btn">수정완료</button>
+		</div>
+	</form>
 </div>
 
-<form name="frm" th:action="@{/brand/mypage/update}" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="id" th:value="${brand.id}"/>
-
-	<div class="container mt-3 mb-3 border rounded">
-		<div class="mb-3 mt-3">
-			<label for="logo">첨부파일 변경:</label>
-			<input type="file" class="form-control" id="logo" name="logo">
-		</div>
-	</div>
-
-	<div class="mb-3">
-		<label>이름:</label>
-		<span class="form-control" readonly th:text="${brand.name}"></span>
-	</div>
-
-	<div class="mb-3">
-		<label>아이디:</label>
-		<span class="form-control" readonly th:text="${brand.username}"></span>
-	</div>
-
-	<!-- 비밀번호 토글 버튼 -->
-	<div class="mb-3">
-		<button type="button" class="btn btn-sm btn-outline-secondary" id="togglePasswordBtn">비밀번호 변경하기</button>
-	</div>
-
-	<!-- 비밀번호 입력 필드 -->
-	<div id="passwordFields" th:attr="style=${passwordFields} ? 'display: block;' : 'display: none;'">
-		<div class="mb-3">
-			<label for="password">새 비밀번호:</label>
-			<input type="password" class="form-control" name="password" id="password" th:value="${password}" placeholder="비밀번호 입력">
-		</div>
-		<div class="mb-3">
-			<label for="password2">비밀번호 확인:</label>
-			<input type="password" class="form-control" name="password2" id="password2" th:value="${password2}" placeholder="비밀번호 확인">
-		</div>
-		<div class="mb-3">
-			<span class="text-danger" th:if="${error_password}" th:text="${error_password}"></span>
-		</div>
-	</div>
-
-	<div class="mb-3 mt-3">
-		<label for="phoneNum">대표번호:</label>
-		<input type="text" class="form-control" id="phoneNum" name="phoneNum"
-			   th:value="${phoneNum != null} ? ${phoneNum} : ${brand.phoneNum}" placeholder="번호를 입력하세요">
-		<span class="text-danger" th:if="${error_phoneNum}" th:utext="${error_phoneNum}"></span>
-	</div>
-
-	<div class="mb-3 mt-3">
-		<label for="description">소개:</label>
-		<textarea class="form-control" id="description" name="description" rows="5"
-				  placeholder="소개를 입력하세요"
-				  th:text="${description != null} ? ${description} : ${brand.description}"></textarea>
-	</div>
-
-	<div class="mb-3">
-		<button type="submit" class="btn btn-outline-danger">수정완료</button>
-		<button type="button" class="btn btn-outline-secondary" onclick="history.back()">이전으로</button>
-	</div>
-</form>
+<script>
+	// 파일 선택 시 파일명 표시
+	document.getElementById('logo').addEventListener('change', function() {
+		const fileName = this.files[0] ? this.files[0].name : '선택된 파일 없음';
+		document.getElementById('selectedFileName').textContent = fileName;
+	});
+</script>
 
 </body>
 </html>
