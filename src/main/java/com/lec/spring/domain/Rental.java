@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 public class Rental {
 
     private Long id;
-    private LocalDateTime rented_at;
-    private LocalDateTime retrurn_due_at;
-    private LocalDateTime retrurned_at;
+    private LocalDateTime rentedAt;
+    private LocalDateTime returnDueAt;
+    private LocalDateTime returnedAt;
     private String status;
 
     private User user;

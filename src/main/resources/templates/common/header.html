@@ -4,21 +4,21 @@
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <th:block th:fragment="header">
-	
+
 	<link th:href="@{/css/header.css}" rel="stylesheet"/>
-	
+
 	<!-- 상단 메뉴 -->
 	<header class="header">
 		<div class="header-content">
 			<a th:href="@{/post/list}" class="logo">WearUp</a>
-			
+
 			<nav class="header-nav">
 				<!-- 전체 공개 메뉴 -->
 				<a sec:authorize="!hasAnyAuthority('BRAND', 'ADMIN')" th:href="@{/post/list}" class="nav-link">피드</a>
 				<a sec:authorize="!hasAnyAuthority('BRAND', 'ADMIN')" th:href="@{/item/list}" class="nav-link">아이템</a>
 				<a sec:authorize="isAnonymous()" th:href="@{/login}" class="nav-link" id="login">로그인</a>
 				<a sec:authorize="isAnonymous()" th:href="@{/register/kind}" class="nav-link" id="register">회원가입</a>
-				
+
 				<!-- USER 전용 메뉴 -->
 				<a sec:authorize="hasAuthority('USER')" th:href="@{/post/write}" class="nav-link">업로드</a>
 				<a sec:authorize="hasAuthority('USER')" th:href="@{/user/mypage/detail}" class="nav-link">마이페이지</a>
@@ -26,19 +26,20 @@
 					<span sec:authentication="name"></span>
 					(<span sec:authentication="principal.user.name"></span>)
 				</div>
-				
+
 				<!-- BRAND 전용 메뉴 -->
 				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">상품 관리</a>
+				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/rental}" class="nav-link">대여 관리</a>
 				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">마이페이지</a>
 				<div sec:authorize="hasAuthority('BRAND')" class="nav-link no-hover">
 					<span sec:authentication="name"></span>
 					(<span sec:authentication="principal.brand.name"></span>)
 				</div>
-				
+
 				<!-- ADMIN 전용 메뉴 -->
 				<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/sales}" class="nav-link">매출 관리</a>
 				<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/users}" class="nav-link">회원 관리</a>
-				
+
 				<!-- 로그인 사용자 전용 메뉴 -->
 				<a sec:authorize="hasAnyAuthority('USER', 'BRAND', 'ADMIN')" th:href="@{/logout}" class="nav-link"
 				   id="logout">로그아웃</a>
