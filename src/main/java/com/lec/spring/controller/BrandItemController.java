@@ -1,7 +1,6 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.config.BrandDetails;
-import com.lec.spring.domain.Brand;
 import com.lec.spring.domain.BrandItemValidator;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.ItemAttachment;
@@ -49,6 +48,7 @@ public class BrandItemController {
     @PostMapping("/item/write")
     public String writeOk(@ModelAttribute("item") Item item,
                           BindingResult result,
+                          @RequestParam("itemImage") MultipartFile itemImage,
                           @AuthenticationPrincipal BrandDetails principal,
                           RedirectAttributes redirectAttributes,
                           Model model) {
@@ -96,7 +96,7 @@ public class BrandItemController {
     }
 
     @GetMapping("/list")
-    public String list(@AuthenticationPrincipal BrandDetails principal, Model model) {
+    public String list(@AuthenticationPrincipal PrincipalBrandDetails principal, Model model) {
         Long brandId = principal.getBrand().getId();
         List<Item> itemList = itemService.findByBrandId(brandId);
 
@@ -123,7 +123,7 @@ public class BrandItemController {
     }
 
     @GetMapping("/item/update/{id}")
-    public String updateForm(@PathVariable Long id, Model model,
+    public String update(@PathVariable Long id, Model model,
                              @AuthenticationPrincipal BrandDetails principal) {
 
         Item item = itemService.detail(id);
@@ -144,6 +144,7 @@ public class BrandItemController {
                            @RequestParam(value = "itemImage", required = false) MultipartFile itemImage,
                            BindingResult result,
                            @AuthenticationPrincipal BrandDetails principal,
+                           RedirectAttributes redirectAttributes,
                            Model model) {
 
         new BrandItemValidator().validate(item, result);
@@ -196,7 +197,7 @@ public class BrandItemController {
 
     @PostMapping("/item/delete")
     public String deleteItem(@RequestParam Long id,
-                             @AuthenticationPrincipal BrandDetails principal,
+                             @AuthenticationPrincipal PrincipalBrandDetails principal,
                              Model model) {
 
         Item item = itemService.detail(id);
