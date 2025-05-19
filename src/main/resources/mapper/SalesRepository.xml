@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.SalesRepository">
+
+    <!-- 월별 매출 -->
+    <select id="findSalesByMonth" resultType="com.lec.spring.domain.SalesByMonth">
+        SELECT DATE_FORMAT(paid_at, '%Y-%m')  AS month,
+               SUM(price)                      AS total
+        FROM Payment
+        GROUP BY month
+        ORDER BY month
+    </select>
+
+    <!-- 구독 종류별 매출 -->
+    <select id="findSalesByPlan" resultType="map">
+        SELECT p.type                          AS planName,
+               DATE_FORMAT(paid_at, '%Y-%m')  AS month,
+               SUM(pay.price)                  AS total
+        FROM Payment pay, Plan p
+        WHERE pay.plan_id = p.id
+        GROUP BY p.type, month
+        ORDER BY p.type, month
+    </select>
+
+</mapper>

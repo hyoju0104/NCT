@@ -68,7 +68,7 @@
         ORDER BY p.id DESC
     </select>
 
-    <select id="findById" resultMap="mapPost">
+    <select id="findById" parameterType="long" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
         AND p.id = #{id}
     </select>
@@ -104,5 +104,9 @@
         ORDER BY created_at DESC
     </select>
 
+    <select id="findUserById" resultType="com.lec.spring.domain.User">
+        <include refid="SELECT_BASE"/>
+        AND p.id = #{id}
+    </select>
 
 </mapper>

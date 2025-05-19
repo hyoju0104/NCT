@@ -35,6 +35,12 @@
 		<div class="container mt-3">
 			<section>
 				
+				<!-- 작성자와 게시글 정보 전달 -->
+				<input type="hidden" id="id" th:value="${post.id}">
+				<input type="hidden" id="user" th:value="${post.user.id}">
+				<!-- 작성자와 게시글 정보 전달 -->
+				
+				
 				<!-- 삭제 기능 -->
 				<form name="frmDelete" th:action="@{/post/delete}" method="post">
 					<input type="hidden" name="id" id="postId" th:value="${post.id}">
@@ -126,7 +132,7 @@
 			</section>
 		</div>
 		
-			<script th:src="@{/js/PostDetail.js}"></script>
+			<script th:src="@{/js/post-detail.js}"></script>
 	
 	</body>
 
