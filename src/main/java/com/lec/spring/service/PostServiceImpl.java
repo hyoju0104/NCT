@@ -205,6 +205,13 @@ public class PostServiceImpl implements PostService {
 			// 첨부파일(들) 정보 가져오기
 			List<PostAttachment> fileList = postAttachmentRepository.findByPostId(post.getId());
 			
+			// User 정보 가져오기
+			if (post.getUser() == null) {
+				User user = postRepository.findUserById(post.getId());
+				post.setUser(user);
+			}
+//			System.out.println(post.getUser().getUsername());
+			
 			// Post 에 첨부파일 세팅
 			post.setFileList(fileList); // 템플릿 엔진에서 받아서 view 생성
 		}

@@ -4,7 +4,9 @@ package com.lec.spring.repository;
 // DataSource (DB) 등에 대한 직접적인 접근
 
 import com.lec.spring.domain.Post;
+import com.lec.spring.domain.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public interface PostRepository {
 	
 	// 특정 id 글 내용 읽기 (SELECT)
 	// 만약 해당 id 의 글 없으면 null 리턴함
-	Post findById(Long id);
+	Post findById(@Param("id") Long id);
 	
 	// 특정 id 글 수정 (제목, 내용) (UPDATE) <- Post(id, subject, content)
 	int update(Post post);
@@ -30,7 +32,10 @@ public interface PostRepository {
 	// 전체 글의 개수 (SELECT)
 	int countAll();
 
+	// 특정 User 의 Post (SELECT)
 	List<Post> findByUserId(Long userId);
 
+	// 특정 Post 의 User 정보
+	User findUserById(Long id);
 
 }
