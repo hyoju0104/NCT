@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -55,16 +56,40 @@ public class BrandItemController {
 
         new BrandItemValidator().validate(item, result);
 
+        item.setBrand(principal.getBrand());
+        item.setIsExist(true);
+
         if (result.hasErrors()) {
-            result.getFieldErrors().forEach(error ->
-                    model.addAttribute("error_" + error.getField(), error.getDefaultMessage())
-            );
-            model.addAttribute("item", item);
+
+            for (FieldError error : result.getFieldErrors()) {
+                model.addAttribute("error_" + error.getField(), error.getDefaultMessage());
+            }
+
+            if (itemImage != null && !itemImage.isEmpty()) {
+                try {
+                    Path uploadPath = Paths.get(System.getProperty("user.dir"), uploadDirItem);
+                    if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+
+                    String savedName = UUID.randomUUID() + "_" + itemImage.getOriginalFilename();
+                    File saveFile = uploadPath.resolve(savedName).toFile();
+                    itemImage.transferTo(saveFile);
+
+                    ItemAttachment attach = new ItemAttachment();
+                    attach.setItemId(item.getId());
+                    attach.setSourcename(itemImage.getOriginalFilename());
+                    attach.setFilename(savedName);
+
+                    model.addAttribute("item", item);
+                    model.addAttribute("attachment", attach);
+
+                } catch (IOException e) {
+                    redirectAttributes.addFlashAttribute("error", "파일 저장 실패");
+                }
+            }
+
             return "/brand/item/write";
         }
 
-        item.setBrand(principal.getBrand());
-        item.setIsExist(true);
         itemService.save(item);
 
         if (itemImage != null && !itemImage.isEmpty()) {
@@ -84,7 +109,6 @@ public class BrandItemController {
                 itemAttachmentService.save(attach);
 
             } catch (IOException e) {
-                e.printStackTrace();
                 redirectAttributes.addFlashAttribute("error", "파일 저장 실패");
             }
         }
@@ -94,6 +118,7 @@ public class BrandItemController {
 
         return "brand/item/writeOk";
     }
+
 
     @GetMapping("/list")
     public String list(@AuthenticationPrincipal PrincipalBrandDetails principal, Model model) {
@@ -124,7 +149,7 @@ public class BrandItemController {
 
     @GetMapping("/item/update/{id}")
     public String update(@PathVariable Long id, Model model,
-                             @AuthenticationPrincipal PrincipalBrandDetails principal) {
+                         @AuthenticationPrincipal PrincipalBrandDetails principal) {
 
         Item item = itemService.detail(id);
         if (!item.getBrand().getId().equals(principal.getBrand().getId())) {
@@ -201,15 +226,15 @@ public class BrandItemController {
                              Model model) {
 
         Item item = itemService.detail(id);
-
         if (!item.getBrand().getId().equals(principal.getBrand().getId())) {
             return "redirect:/brand/list";
         }
 
-        item.setIsExist(false);
-        itemService.update(item);
+        itemService.markAsNotExist(id);
 
         model.addAttribute("result", 1);
         return "brand/item/deleteOk";
     }
+
+
 }

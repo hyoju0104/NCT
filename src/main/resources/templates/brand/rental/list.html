@@ -34,7 +34,7 @@
             <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '-'}">-</td>
             <td th:text="${rental.status}">RENTED</td>
             <td>
-                <form th:action="@{'/brand/rental/return/' + ${rental.id}}" method="post">
+                <form th:action="@{'/brand/rental/return/' + ${rental.id}}" method="post" onsubmit="return confirm('반납처리를 하시겠습니까?')">
                 <button class="btn btn-sm btn-success" type="submit" th:disabled="${rental.status != 'RENTED' and rental.status != 'OVERDUE'}">반납처리</button>
                 </form>
             </td>

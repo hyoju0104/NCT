@@ -12,7 +12,7 @@ public interface RentalService {
 
     List<Rental> getRentalsByBrandId(Long brandId);       // 브랜드 등록 아이템 대여 목록
 
-    int updateReturned(Long rentalId);                    // 반납 처리
+    void updateReturned(Long rentalId);                    // 반납 처리
 
     int updateOverdue();                            // 연체 상태 갱신
 }

@@ -2,6 +2,7 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.Rental;
 import com.lec.spring.repository.RentalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +12,12 @@ import java.util.List;
 public class RentalServiceImpl implements RentalService {
 
     private final RentalRepository rentalRepository;
+    private final ItemService itemService;
 
-    public RentalServiceImpl(RentalRepository rentalRepository) {
+    @Autowired
+    public RentalServiceImpl(RentalRepository rentalRepository, ItemService itemService) {
         this.rentalRepository = rentalRepository;
+        this.itemService = itemService;
     }
 
     @Override
@@ -38,9 +42,13 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    @Transactional
-    public int updateReturned(Long rentalId) {
-        return rentalRepository.updateReturned(rentalId);
+    public void updateReturned(Long rentalId) {
+        rentalRepository.updateReturned(rentalId);
+
+        Rental rental = rentalRepository.findById(rentalId);
+        if (rental != null && rental.getItem() != null) {
+            itemService.setAvailable(rental.getItem().getId(), true);
+        }
     }
 
     @Override

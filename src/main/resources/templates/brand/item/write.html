@@ -16,7 +16,23 @@
 
     <h3>상품 등록</h3>
 
-    <input type="file" name="itemImage" class="form-control" required>
+    <div class="mb-3">
+        <label class="form-label">기존 이미지</label>
+
+        <div th:if="${attachment != null}">
+            <img th:src="@{'/upload/item/' + ${attachment.filename}}" class="img-thumbnail mb-2" style="height: 100px;">
+            <input type="text" class="form-control mb-2" readonly th:value="${attachment.sourcename}">
+        </div>
+
+        <div th:if="${attachment == null}">
+            <p class="text-muted">첨부파일이 없습니다.</p>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="itemImage">이미지 변경:</label>
+        <input type="file" class="form-control" id="itemImage" name="itemImage">
+    </div>
 
     <div class="mb-3">
         <label>브랜드명:</label>

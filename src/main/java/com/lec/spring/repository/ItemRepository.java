@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Item;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ public interface ItemRepository {
     int markAsNotExist(Long id);
 
     int markAllItemsAsNotExistByBrandId(Long brandId);
+
+    void setAvailable(@Param("itemId") Long itemId, @Param("isAvailable") boolean isAvailable);
 
 }
 
