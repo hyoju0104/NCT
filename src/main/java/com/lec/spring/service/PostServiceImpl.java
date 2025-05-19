@@ -89,6 +89,8 @@ public class PostServiceImpl implements PostService {
 		post.setUser(user);  // 글 작성자 세팅.
 		
 		int cnt = postRepository.save(post);   // 글 먼저 저장 -> AI 된 PK값(id) 받아오기 가능
+		// ✅ 글 작성 완료 후 포인트 500 지급
+		userRepository.addPoint(user.getId(), 500);
 		
 		// 첨부파일 추가
 		addFiles(files, post.getId());

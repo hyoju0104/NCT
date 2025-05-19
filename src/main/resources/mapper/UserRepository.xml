@@ -70,6 +70,11 @@
           AND point >= #{amount}
     </update>
 
+    <update id="addPoint">
+        UPDATE user SET point = point + #{amount} WHERE id = #{id}
+    </update>
+
+
 
 
 </mapper>

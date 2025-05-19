@@ -19,5 +19,10 @@ public interface UserRepository {
 
     int updatePaidAt(Long id);
 
+    //글 작성 시 포인트 지급
+    // 포인트 증가
+    int addPoint(@Param("id") Long id, @Param("amount") Integer amount);
+
+
 
 }
