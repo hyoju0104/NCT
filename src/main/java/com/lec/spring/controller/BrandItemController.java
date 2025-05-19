@@ -124,7 +124,7 @@ public class BrandItemController {
 
     @GetMapping("/item/update/{id}")
     public String update(@PathVariable Long id, Model model,
-                             @AuthenticationPrincipal PrincipalBrandDetails principal) {
+                         @AuthenticationPrincipal PrincipalBrandDetails principal) {
 
         Item item = itemService.detail(id);
         if (!item.getBrand().getId().equals(principal.getBrand().getId())) {

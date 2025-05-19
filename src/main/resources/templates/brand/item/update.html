@@ -59,14 +59,15 @@
 
         <div class="mb-3">
             <label for="category"><strong>카테고리:</strong></label>
-            <select id="category" name="category" class="form-select">
-                <option value="상의" th:selected="${item.category == '상의'}">상의</option>
-                <option value="하의" th:selected="${item.category == '하의'}">하의</option>
-                <option value="아우터" th:selected="${item.category == '아우터'}">아우터</option>
-                <option value="신발" th:selected="${item.category == '신발'}">신발</option>
-                <option value="잡화" th:selected="${item.category == '잡화'}">잡화</option>
-            </select>
-            <span class="text-danger" th:if="${error_category}" th:text="${error_category}"></span>
+            <div class="form-control" id="category" readonly th:text="${item.category}"></div>
+            <!--            <select id="category" name="category" class="form-select">-->
+            <!--                <option value="상의" th:selected="${item.category == '상의'}">상의</option>-->
+            <!--                <option value="하의" th:selected="${item.category == '하의'}">하의</option>-->
+            <!--                <option value="아우터" th:selected="${item.category == '아우터'}">아우터</option>-->
+            <!--                <option value="신발" th:selected="${item.category == '신발'}">신발</option>-->
+            <!--                <option value="잡화" th:selected="${item.category == '잡화'}">잡화</option>-->
+            <!--            </select>-->
+            <!--            <span class="text-danger" th:if="${error_category}" th:text="${error_category}"></span>-->
         </div>
 
         <div class="mb-3">

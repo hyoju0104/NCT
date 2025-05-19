@@ -81,7 +81,7 @@
                     </div>
                     <img id="preview" src="#" alt="이미지 미리보기" style="display: none;">
                 </div>
-                <input type="file" id="file" name="file" accept="image/*" onchange="previewImage()">
+                <input type="file" id="file" name="itemImage" accept="image/*" onchange="previewImage()">
                 <small class="form-help">권장 크기: 800 x 800px, 최대 5MB</small>
             </div>
             <div class="field-error" th:if="${error_file}" th:text="${error_file}"></div>
