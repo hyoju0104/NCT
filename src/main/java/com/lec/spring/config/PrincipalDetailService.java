@@ -43,8 +43,8 @@ public class PrincipalDetailService implements UserDetailsService {
         // (2) Brand 사용자 조회
         Brand brand = brandRepository.findByUsername(username);
         if (brand != null) {
-            BrandDetails brandDetails = new BrandDetails(brand, brandService);
-            return brandDetails;
+            PrincipalBrandDetails principalBrandDetails = new PrincipalBrandDetails(brand, brandService);
+            return principalBrandDetails;
         }
         
         throw new UsernameNotFoundException(username); //해당 유저가 없다면.
