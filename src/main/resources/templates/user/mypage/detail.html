@@ -99,9 +99,7 @@
                     <td th:text="${rental.itemName}">코트</td>
                     <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">2025-05-10</td>
                     <td th:text="${#temporals.format(rental.returnDueAt, 'yyyy-MM-dd')}">2025-05-17</td>
-                    <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '미반납'}">
-                        미반납
-                    </td>
+                    <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '미반납'}"></td>
                     <td class="status-cell">
                         <span class="status-badge" th:text="${rental.status}"
                               th:classappend="${rental.status == 'RENTED' ? 'rented' : (rental.status == 'RETURNED' ? 'returned' : '')}">RENTED</span>
@@ -118,7 +116,7 @@
         <div class="rental-count-wrapper">
             <div class="rental-count-item">
                 <span class="count-label">남은 횟수</span>
-                <span class="count-value remaining" th:text="${(totalCnt ?: 0) - (user.rentalCnt ?: 0)}">2</span>
+                <span class="count-value remaining" th:text="${remainingCnt}">2</span>
             </div>
             <div class="rental-count-divider">/</div>
             <div class="rental-count-item">

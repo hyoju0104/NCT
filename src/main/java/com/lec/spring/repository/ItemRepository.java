@@ -24,5 +24,8 @@ public interface ItemRepository {
 
     int markAllItemsAsNotExistByBrandId(Long brandId);
 
+    int decreaseAvailableCount(Long itemId);
+
+
 }
 

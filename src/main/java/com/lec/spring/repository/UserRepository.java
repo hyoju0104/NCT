@@ -23,6 +23,9 @@ public interface UserRepository {
     // 포인트 증가
     int addPoint(@Param("id") Long id, @Param("amount") Integer amount);
 
+    //빌린 횟수 증가 메서드
+    int increaseRentalCount(Long userId);
+
 
 
 }

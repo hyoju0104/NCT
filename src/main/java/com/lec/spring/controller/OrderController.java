@@ -3,8 +3,10 @@ package com.lec.spring.controller;
 import com.lec.spring.config.PrincipalUserDetails;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.OrderValidator;
+import com.lec.spring.domain.Rental;
 import com.lec.spring.domain.User;
 import com.lec.spring.service.ItemService;
+import com.lec.spring.service.RentalService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,10 +21,12 @@ public class OrderController {
 
     private final ItemService itemService;
     private final OrderValidator orderValidator;
+    private final RentalService rentalService;
 
-    public OrderController(ItemService itemService, OrderValidator orderValidator) {
+    public OrderController(ItemService itemService, OrderValidator orderValidator, RentalService rentalService) {
         this.itemService = itemService;
         this.orderValidator = orderValidator;
+        this.rentalService = rentalService;
     }
 
     @GetMapping("/detail/{id}")
@@ -72,8 +76,14 @@ public class OrderController {
             return "order/detail";
         }
 
-        int updateResult = itemService.markAsUnavailable(id);
-        System.out.println(">> markAsUnavailable 결과: " + updateResult);
+        // Rental 생성
+        Rental rental = new Rental();
+        rental.setUser(principal.getUser());
+        rental.setItem(itemService.detail(id));
+        rental.setStatus("RENTED");
+
+        // 저장 + available_count -1 처리
+        rentalService.rentItem(rental);
 
         return "redirect:/order/complete/" + id;
     }

@@ -73,6 +73,11 @@
     <update id="addPoint">
         UPDATE user SET point = point + #{amount} WHERE id = #{id}
     </update>
+    <update id="increaseRentalCount" parameterType="long">
+        UPDATE User
+        SET rental_cnt = rental_cnt + 1
+        WHERE id = #{userId}
+    </update>
 
 
 

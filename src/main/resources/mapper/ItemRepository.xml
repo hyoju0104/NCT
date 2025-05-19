@@ -114,4 +114,5 @@
         WHERE brand_id = #{brandId}
     </update>
 
+
 </mapper>

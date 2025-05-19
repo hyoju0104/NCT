@@ -97,13 +97,23 @@ public class UserController {
         }
 
         // 대여 내역
-        List<Rental> rentals = rentalService.findAllByUserId(user.getId());
+        List<Rental> rentals = rentalService.findAllByUserId(id);
         model.addAttribute("rentals", rentals);
-        model.addAttribute("totalCnt", totalCnt);
 
-        // 게시글 목록
+        //대여할때마다 -1씩 카운트
+        model.addAttribute("totalCnt", totalCnt);
+        int usedCnt = user.getRentalCnt();
+        int remainingCnt = totalCnt - usedCnt;
+
+        model.addAttribute("usedCnt", usedCnt);
+        model.addAttribute("remainingCnt", remainingCnt);
+
+
+        /*
+        게시글 목록 - 이건 일단 다른거 다 되면 하자
         List<Post> posts = postService.findByUserId(user.getId());
         model.addAttribute("posts", posts);
+        */
 
 
         model.addAttribute("user", user);
