@@ -1,0 +1,183 @@
+/* 관리자 페이지 그리드 레이아웃 스타일 */
+.admin-container {
+    max-width: 1200px;
+    margin: 80px auto 40px;
+    padding: 0 20px;
+}
+
+/* 콘텐츠 헤더 */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.content-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #222222;
+}
+
+/* 기간 필터 */
+.period-filter {
+    display: flex;
+    gap: 8px;
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    padding: 4px;
+}
+
+.period-btn {
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.period-btn:hover {
+    color: #222222;
+}
+
+.period-btn.active {
+    background-color: #ffffff;
+    color: #222222;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 그리드 레이아웃 */
+.admin-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 각 그리드 행 */
+.grid-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* 요약 카드 행 */
+.cards-row {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* 차트 행 */
+.charts-row {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* 요약 카드 스타일 */
+.summary-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 100%;
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.card-icon.revenue {
+    background-color: #4caf50;
+}
+
+.card-icon.rentals {
+    background-color: #ff9800;
+}
+
+.card-content {
+    flex: 1;
+}
+
+.card-title {
+    font-size: 14px;
+    color: #888888;
+    margin-bottom: 4px;
+}
+
+.card-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #222222;
+    margin-bottom: 4px;
+}
+
+.card-change {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.card-change.positive {
+    color: #4caf50;
+}
+
+.card-change.negative {
+    color: #f44336;
+}
+
+/* 차트 섹션 */
+.chart-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222222;
+    margin-bottom: 16px;
+}
+
+.chart-container {
+    flex: 1;
+    position: relative;
+    min-height: 300px;
+}
+
+/* 반응형 조정 */
+@media (max-width: 992px) {
+    .grid-row {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-section {
+        min-height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .chart-container {
+        min-height: 250px;
+    }
+}
