@@ -88,6 +88,8 @@ public class OrderController {
 
         // 저장 + available_count -1 처리
         rentalService.rentItem(rental);
+        itemService.markAsUnavailable(item.getId());
+
 
         return "redirect:/order/complete/" + id;
     }
