@@ -159,7 +159,6 @@ body {
     color: #222222;
     margin-bottom: 20px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #f0f0f0;
 }
 
 .info-item {
@@ -331,11 +330,7 @@ body {
     position: relative;
 }
 
-/* 필수 항목에 * 표시가 이미 있는 경우 스타일링 */
-.form-group label:has-text("*")::after {
-    color: #ff4444;
-    font-weight: 600;
-}
+
 
 @media (max-width: 768px) {
     .header-nav {
