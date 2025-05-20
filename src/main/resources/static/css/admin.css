@@ -159,6 +159,138 @@
     min-height: 300px;
 }
 
+/* 차트 그리드 레이아웃 */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+/* 차트 카드 스타일 */
+.chart-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* 차트 래퍼 스타일 */
+.chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    margin: auto;
+}
+
+/* 차트 중앙 라벨 */
+.center-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    white-space: pre-line;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #666666;
+    font-weight: 500;
+}
+
+/* 섹션 헤더 */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #222222;
+}
+
+/* 테이블 컨테이너 */
+.table-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+/* 데이터 테이블 */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    background-color: #f8f8f8;
+    color: #555555;
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.data-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    color: #444444;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* 정지 해제 버튼 */
+.unban-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.unban-btn:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 데이터 없을 때 */
+.no-data td {
+    text-align: center;
+    padding: 40px 20px;
+    color: #888888;
+    font-style: italic;
+}
+
 /* 반응형 조정 */
 @media (max-width: 992px) {
     .grid-row {
@@ -167,6 +299,16 @@
 
     .chart-section {
         min-height: 350px;
+    }
+    .charts-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .chart-card:last-child {
+        grid-column: span 2;
+        max-width: 500px;
+        margin: 0 auto;
+        width: 100%;
     }
 }
 
@@ -179,5 +321,26 @@
 
     .chart-container {
         min-height: 250px;
+    }
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-card:last-child {
+        grid-column: auto;
+    }
+
+    .data-table {
+        font-size: 13px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 10px 12px;
+    }
+
+    /* 작은 화면에서 테이블 스크롤 허용 */
+    .table-container {
+        overflow-x: auto;
     }
 }
