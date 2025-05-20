@@ -62,6 +62,7 @@ public class OrderController {
                                 @ModelAttribute("user") User user,
                                 BindingResult result,
                                 @AuthenticationPrincipal PrincipalUserDetails principal,
+                                HttpSession session,
                                 Model model) {
 
         orderValidator.validate(user, result);
@@ -76,14 +77,17 @@ public class OrderController {
             return "order/detail";
         }
 
-        // Rental 생성
-        Rental rental = new Rental();
-        rental.setUser(principal.getUser());
-        rental.setItem(itemService.detail(id));
-        rental.setStatus("RENTED");
+        User loginUser = principal.getUser();
+        Item item = itemService.detail(id);
 
-        // 저장 + available_count -1 처리
-        rentalService.rentItem(rental);
+        Rental rental = new Rental();
+        rental.setUser(loginUser);
+        rental.setItem(item);
+        rental.setStatus("RENTED");
+        rentalService.createRental(rental);
+
+        int updateResult = itemService.markAsUnavailable(id);
+        System.out.println(">> markAsUnavailable 결과: " + updateResult);
 
         return "redirect:/order/complete/" + id;
     }

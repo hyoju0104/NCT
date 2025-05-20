@@ -108,6 +108,12 @@
         WHERE id = #{id}
     </update>
 
+    <update id="setAvailable" parameterType="map">
+        UPDATE Item
+        SET is_available = #{isAvailable}
+        WHERE id = #{itemId}
+    </update>
+
     <update id="markAllItemsAsNotExistByBrandId" parameterType="com.lec.spring.domain.Item" flushCache="true">
         UPDATE Item
         SET is_exist = false

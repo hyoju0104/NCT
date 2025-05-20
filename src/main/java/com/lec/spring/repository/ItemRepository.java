@@ -24,8 +24,7 @@ public interface ItemRepository {
 
     int markAllItemsAsNotExistByBrandId(Long brandId);
 
-    int decreaseAvailableCount(Long itemId);
-
+    void setAvailable(@Param("itemId") Long itemId, @Param("isAvailable") boolean isAvailable);
 
 }
 

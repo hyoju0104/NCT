@@ -1,3 +1,4 @@
+item/update
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -34,11 +35,6 @@
                 <img th:src="@{'/upload/item/' + ${attachment.filename}}" class="img-thumbnail" style="height: 100px;">
                 <div class="input-group mt-2">
                     <input type="text" class="form-control" readonly th:value="${attachment.sourcename}">
-                    <form th:action="@{/item/attachment/delete}" method="post"
-                          onsubmit="return confirm('첨부파일을 삭제하시겠습니까?')">
-                        <input type="hidden" name="id" th:value="${attachment.id}" />
-                        <button type="submit" class="btn btn-danger">삭제</button>
-                    </form>
                 </div>
             </div>
 

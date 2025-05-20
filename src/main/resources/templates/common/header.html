@@ -29,7 +29,7 @@
 
 				<!-- BRAND 전용 메뉴 -->
 				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">상품 관리</a>
-				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/rental}" class="nav-link">대여 관리</a>
+				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/rental/list}" class="nav-link">대여 관리</a>
 				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">마이페이지</a>
 				<div sec:authorize="hasAuthority('BRAND')" class="nav-link no-hover">
 					<span sec:authentication="name"></span>
