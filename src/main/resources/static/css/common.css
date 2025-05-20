@@ -1905,6 +1905,55 @@ hr {
     cursor: not-allowed;
 }
 
+/* 내가 작성한 게시물 테이블 스타일 */
+.my-post-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+.my-post-table th,
+.my-post-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.my-post-table th {
+    background-color: #f8f8f8;
+    font-weight: 600;
+    color: #444444;
+    font-size: 14px;
+}
+
+.my-post-table td {
+    color: #666666;
+    font-size: 14px;
+}
+
+.my-post-table tr:hover {
+    background-color: #fafafa;
+}
+
+.my-post-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* 게시물 링크 스타일 */
+.my-post-table a {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.my-post-table a:hover {
+    color: #0d47a1;
+    text-decoration: underline;
+}
+
+
+
 /* 반응형 조정 */
 @media (max-width: 992px) {
     .section-header {
@@ -2050,6 +2099,10 @@ hr {
     .completion-message {
         font-size: 20px;
     }
+    .my-post-table th,
+    .my-post-table td {
+        padding: 12px;
+    }
 }
 
 
@@ -2088,6 +2141,14 @@ hr {
 
     .products-grid {
         grid-template-columns: 1fr;
+    }
+    .my-post-table {
+        font-size: 13px;
+    }
+
+    .my-post-table th,
+    .my-post-table td {
+        padding: 10px 8px;
     }
 }
 
