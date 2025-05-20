@@ -39,15 +39,18 @@
     </select>
 
     <insert id="save" parameterType="com.lec.spring.domain.User" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (auth_id, username, password, name, email, phone_num, address, point, status_plan, status_account, rental_cnt)
-        VALUES (1, #{username}, #{password}, #{name}, #{email}, #{phoneNum}, #{address}, #{point}, #{statusPlan}, #{statusAccount}, #{rentalCnt})
+        INSERT INTO user (auth_id, username, password, name, email, phone_num, address, point, status_plan,
+                          status_account, rental_cnt)
+        VALUES (1, #{username}, #{password}, #{name}, #{email}, #{phoneNum}, #{address}, #{point}, #{statusPlan},
+                #{statusAccount}, #{rentalCnt})
     </insert>
+
 
     <update id="updateUserInfo" parameterType="com.lec.spring.domain.User">
         UPDATE user
-        SET name = #{name},
+        SET name      = #{name},
             phone_num = #{phoneNum},
-            password = #{password}
+            password  = #{password}
         WHERE id = #{id}
     </update>
 
@@ -63,6 +66,7 @@
         WHERE id = #{id}
     </update>
 
+
     <update id="refundPoint">
         UPDATE user
         SET point = point - #{amount}
@@ -71,8 +75,12 @@
     </update>
 
     <update id="addPoint">
-        UPDATE user SET point = point + #{amount} WHERE id = #{id}
+        UPDATE user
+        SET point = point + #{amount}
+        WHERE id = #{id}
     </update>
+
+
     <update id="increaseRentalCount" parameterType="long">
         UPDATE User
         SET rental_cnt = rental_cnt + 1
@@ -80,6 +88,11 @@
     </update>
 
 
-
+    <!-- 회원 상태(status_account) 복구 -->
+    <update id="updateStatusAccount">
+        UPDATE User
+        SET status_account = #{status}
+        WHERE id = #{userId}
+    </update>
 
 </mapper>

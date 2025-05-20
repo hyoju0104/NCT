@@ -2,30 +2,33 @@ package com.lec.spring.service;
 
 import com.lec.spring.domain.SalesByMonth;
 import com.lec.spring.domain.SalesByPlan;
-import com.lec.spring.repository.SalesRepository;
+import com.lec.spring.repository.AdminSalesRepository;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class SalesServiceImpl implements SalesService {
+@Transactional(readOnly = true)
+public class AdminSalesServiceImpl implements AdminSalesService {
 	
-	private final SalesRepository salesRepository;
+	private final AdminSalesRepository adminSalesRepository;
 	
-	public SalesServiceImpl(SalesRepository salesRepository) {
-		this.salesRepository = salesRepository;
+	public AdminSalesServiceImpl(SqlSession sqlSession) {
+		this.adminSalesRepository = sqlSession.getMapper(AdminSalesRepository.class);
 	}
 	
 	
 	@Override
 	public List<SalesByMonth> getSalesByMonth() {
-		return salesRepository.findSalesByMonth();
+		return adminSalesRepository.findSalesByMonth();
 	}
 	
 	@Override
 	public SalesByPlan getSalesByPlan() {
-		List<Map<String, Object>> raw = salesRepository.findSalesByPlan();
+		List<Map<String, Object>> raw = adminSalesRepository.findSalesByPlan();
 		
 		// 0. Null 필터
 		List<Map<String, Object>> safeRaw = raw.stream()

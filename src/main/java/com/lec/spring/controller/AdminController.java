@@ -2,51 +2,88 @@ package com.lec.spring.controller;
 
 import com.lec.spring.domain.SalesByMonth;
 import com.lec.spring.domain.SalesByPlan;
-import com.lec.spring.service.SalesService;
+import com.lec.spring.service.AdminSalesService;
+import com.lec.spring.service.AdminUsersService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	
-	private final SalesService salesService;
+	private final AdminSalesService adminSalesService;
+	private final AdminUsersService adminUsersService;
 	
-	public AdminController(SalesService salesService) {
-		this.salesService = salesService;
+	public AdminController(AdminSalesService adminSalesService, AdminUsersService adminUsersService) {
+		this.adminSalesService = adminSalesService;
+		this.adminUsersService = adminUsersService;
 	}
 	
 	
+	// 1. 매출 관리
 	@GetMapping("/sales")
 	public String sales(Model model) {
-		// TODO: 매출 데이터 조회해서 model.addAttribute("salesData", ...)
-		return "admin/sales";  // templates/admin/sales.html 템플릿을 렌더링
+		return "admin/sales";  // templates/admin/sales.html
 	}
 	
-	// 2) 월별 매출 데이터(JSON)
+	// 1-1) 월별 매출 데이터(JSON)
 	@GetMapping("/sales/monthly-data")
 	@ResponseBody
-	public List<SalesByMonth> monthlyData() {
-		return salesService.getSalesByMonth();
+	public List<SalesByMonth> salesMonthlyData() {
+		return adminSalesService.getSalesByMonth();
 	}
 	
-	// 3) 구독 종류별 매출 데이터(JSON)
+	// 1-2) 구독 종류별 매출 데이터(JSON)
 	@GetMapping("/sales/plan-data")
 	@ResponseBody
-	public SalesByPlan planData() {
-		return salesService.getSalesByPlan();
+	public SalesByPlan salesPlanData() {
+		return adminSalesService.getSalesByPlan();
 	}
 	
 	
+	// 2. 회원 관리
 	@GetMapping("/users")
 	public String users(Model model) {
-		// TODO: 매출 데이터 조회해서 model.addAttribute("salesData", ...)
-		return "admin/users";  // templates/admin/sales.html 템플릿을 렌더링
+		return "admin/users";  // templates/admin/sales.html
+	}
+	
+	// 2-1) 구독 종류별 회원수 pie chart 출력
+	@GetMapping("/users/plan-data")
+	@ResponseBody
+	public List<Map<String, Object>> usersPlanData() {
+		return adminUsersService.getUsersByPlan();
+	}
+	
+	// 2-2) 대여 상태별 회원 수
+	@GetMapping("/users/status-data")
+	@ResponseBody
+	public List<Map<String, Object>> usersStatusData() {
+		return adminUsersService.getUsersByStatus();
+	}
+	
+	// 2-3) 브랜드별 대여 건수
+	@GetMapping("/users/brand-data")
+	@ResponseBody
+	public List<Map<String, Object>> usersBrandData() {
+		return adminUsersService.getRentalsByBrand();
+	}
+	
+	// 2-4) 정지된 회원 관리
+	@GetMapping("/users/late-data")
+	@ResponseBody
+	public List<Map<String, Object>> usersLateData() {
+		return adminUsersService.getLateUsers();
+	}
+	
+	// 2-5) 정지 해제
+	@PostMapping("/users/{userId}/release")
+	@ResponseBody
+	public void release(@PathVariable Long userId) {
+		adminUsersService.releaseSuspension(userId);
 	}
 	
 }
