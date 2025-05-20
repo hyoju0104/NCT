@@ -25,29 +25,35 @@
           enctype="multipart/form-data"
           class="item-form">
 
-    <div class="mb-3">
-        <label class="form-label">기존 이미지</label>
+        <div class="form-group">
 
-        <div th:if="${attachment != null}">
-            <img th:src="@{'/upload/item/' + ${attachment.filename}}" class="img-thumbnail mb-2" style="height: 100px;">
-            <input type="text" class="form-control mb-2" readonly th:value="${attachment.sourcename}">
+            <div class="image-upload-container">
+                <div class="mb-3">
+                    <label class="form-label">상품 이미지</label>
+                    <img id="preview" src="#" alt="이미지 미리보기" style="display: none;">
+                    <div th:if="${attachment != null}">
+                        <img th:src="@{'/upload/item/' + ${attachment.filename}}" class="img-thumbnail mb-2" style="height: 100px;">
+                        <input type="text" class="form-control mb-2" readonly th:value="${attachment.sourcename}">
+                    </div>
+                </div>
+
+                <input type="file" id="file" name="itemImage" accept="image/*" onchange="previewImage()">
+                <small class="form-help">권장 크기: 800 x 800px, 최대 5MB</small>
+
+                <div th:if="${selectedFileName != null}">
+                    <input type="text" class="form-control mt-2" readonly th:value="${selectedFileName}">
+                </div>
+
+                <div class="field-error" th:if="${error_file}" th:text="${error_file}"></div>
+            </div>
+
         </div>
 
-        <div th:if="${attachment == null}">
-            <p class="text-muted">첨부파일이 없습니다.</p>
+        <div class="mb-3">
+            <label>브랜드명:</label>
+            <span class="form-control" readonly
+                  th:text="${#authentication.principal.brand.name}">브랜드명</span>
         </div>
-    </div>
-
-    <div class="mb-3">
-        <label for="itemImage">이미지 변경:</label>
-        <input type="file" class="form-control" id="itemImage" name="itemImage">
-    </div>
-
-    <div class="mb-3">
-        <label>브랜드명:</label>
-        <span class="form-control" readonly
-              th:text="${#authentication.principal.brand.name}">브랜드명</span>
-    </div>
 
         <div class="form-group">
             <label for="category" class="form-label">카테고리 *</label>
@@ -89,50 +95,12 @@
             <div class="field-error" th:if="${error_statusItem}" th:text="${error_statusItem}"></div>
         </div>
 
-        <div class="form-group">
-            <label class="form-label">상품 이미지 *</label>
-            <div class="image-upload-container">
-                <div class="image-preview" id="imagePreview">
-                    <div class="image-preview-placeholder">
-                        <i class="bi bi-image"></i>
-                        <p>미리보기</p>
-                    </div>
-                    <img id="preview" src="#" alt="이미지 미리보기" style="display: none;">
-                </div>
-                <input type="file" id="file" name="itemImage" accept="image/*" onchange="previewImage()">
-                <small class="form-help">권장 크기: 800 x 800px, 최대 5MB</small>
-            </div>
-            <div class="field-error" th:if="${error_file}" th:text="${error_file}"></div>
-        </div>
-
-
         <button type="submit" class="login-btn">등록하기</button>
 
     </form>
 </div>
 
-<script>
-    function previewImage() {
-        const preview = document.getElementById('preview');
-        const placeholder = document.querySelector('.image-preview-placeholder');
-        const file = document.getElementById('file').files[0];
-        const reader = new FileReader();
-
-        reader.onloadend = function() {
-            preview.src = reader.result;
-            preview.style.display = 'block';
-            placeholder.style.display = 'none';
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = '';
-            preview.style.display = 'none';
-            placeholder.style.display = 'flex';
-        }
-    }
-</script>
+<script th:src="@{/js/brand-write.js}"></script>
 
 </body>
 </html>
