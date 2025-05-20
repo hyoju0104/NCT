@@ -38,8 +38,8 @@ public class AdminUsersServiceImpl implements AdminUsersService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getLateUsers() {
-		return adminUsersRepository.findLateStatus();
+	public List<Map<String, Object>> getInactiveUsers() {
+		return adminUsersRepository.findInactiveUsers();
 	}
 	
 	@Override

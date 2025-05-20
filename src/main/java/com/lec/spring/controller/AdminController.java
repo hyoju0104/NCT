@@ -76,7 +76,7 @@ public class AdminController {
 	@GetMapping("/users/late-data")
 	@ResponseBody
 	public List<Map<String, Object>> usersLateData() {
-		return adminUsersService.getLateUsers();
+		return adminUsersService.getInactiveUsers();
 	}
 	
 	// 2-5) 정지 해제

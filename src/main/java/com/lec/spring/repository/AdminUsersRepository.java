@@ -16,7 +16,7 @@ public interface AdminUsersRepository {
 	// Brand.id 별 대여 건수 집계
 	List<Map<String, Object>> countRentalByBrand();
 	
-	// 연체 회원 목록 (user + overdue days + 상태)
-	List<Map<String, Object>> findLateStatus();
+	// 정지된 회원 목록 (user + overdue days + 상태)
+	List<Map<String, Object>> findInactiveUsers();
 	
 }

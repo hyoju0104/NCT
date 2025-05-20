@@ -35,11 +35,11 @@ VALUES ('SILVER', 50000, 3),
        ('VIP', 100000, 10)
 ;
 
-INSERT INTO User (user.auth_id, username, password, name, point, status_plan)
-VALUES (3, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKfe', '관리자', 0, 'ACTIVE'),
-       (1, 'user1', '$2a$10$AsdcGiiMWwG6sCu9IiNqvu5Z1G7krhWLhehijgfiqjRhHCODctw8a', '회원1', 30000, 'ACTIVE'),
-       (1, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 0, 'INACTIVE'),
-       (1, 'user3', '$2a$10$zT51nN0ycpAvSg5aimPoUuOIyg94ktXJzLhWHGxeJQ8iDqXB4vqRm', '회원3', 57000, 'ACTIVE')
+INSERT INTO User (user.auth_id, user.plan_id, username, password, name, point, status_plan, status_account)
+VALUES (3, null, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKfe', '관리자', 0, 'ACTIVE', 'ACTIVE'),
+       (1, 1, 'user1', '$2a$10$AsdcGiiMWwG6sCu9IiNqvu5Z1G7krhWLhehijgfiqjRhHCODctw8a', '회원1', 30000, 'ACTIVE', 'ACTIVE'),
+       (1, 2, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 0, 'ACTIVE', 'ACTIVE'),
+       (1, 3, 'user3', '$2a$10$zT51nN0ycpAvSg5aimPoUuOIyg94ktXJzLhWHGxeJQ8iDqXB4vqRm', '회원3', 57000, 'ACTIVE', 'INACTIVE')
 ;
 
 INSERT INTO Payment (Payment.user_id, Payment.plan_id, price, paid_at)
@@ -94,25 +94,17 @@ INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status)
 VALUES (2, 1, '2025-05-10 17:40:00', 'RENTED'),
        (2, 2, '2025-05-13 17:40:00', 'RETURNED'),
        (2, 3, '2025-05-15 17:40:00', 'OVERDUE'),
-       (3, 4, '2025-02-10 17:40:00', 'RENTED'),
-       (3, 5, '2025-03-13 17:40:00', 'RETURNED'),
-       (3, 6, '2025-04-15 17:40:00', 'OVERDUE'),
-       (4, 7, '2025-01-17 17:40:00', 'RENTED'),
-       (4, 8, '2025-01-22 17:40:00', 'RETURNED'),
-       (4, 9, '2025-03-15 17:40:00', 'OVERDUE')
+       (3, 7, '2025-01-17 17:40:00', 'RETURNED'),
+       (3, 8, '2025-01-22 17:40:00', 'RETURNED'),
+       (3, 9, '2025-05-15 17:40:00', 'RENTED'),
+       (4, 4, '2025-02-10 17:40:00', 'RETURNED'),
+       (4, 5, '2025-03-13 17:40:00', 'RETURNED'),
+       (4, 6, '2025-04-15 17:40:00', 'OVERDUE')
 ;
 
 -- 포인트 조회 기능 확인용 샘플 데이터
 UPDATE user
 SET point = 30000
 WHERE username = 'user5';
-
-UPDATE User
-SET plan_id = 3
-WHERE id = 2;
-
-UPDATE User
-SET plan_id = 1
-WHERE id = 3;
 
 UPDATE User SET point = 30000 WHERE id = 7;
