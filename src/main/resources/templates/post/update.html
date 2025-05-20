@@ -8,101 +8,103 @@
 	history.back();
 </script>
 
-<th:block th:if="${post}" th:with="logged_user=${#authentication.principal.user}">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-		
-		<link rel="stylesheet" th:href="@{/css/common.css}">
-		<link rel="stylesheet" th:href="@{/css/post.css}">
-		
-		<script th:src="@{/js/PostUpdate.js}"></script>
-		<title th:text="'WearUp | 수정 (' + ${#authentication.principal.user.name} + ')'"></title>
-	</head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	
-	<body style="margin-bottom: 200px">
-		
-		<!-- 상단 메뉴 -->
-		<th:block th:insert="~{common/header::header}"></th:block>
-		
-		
-		<div class="container mt-3">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+	
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<link rel="stylesheet" th:href="@{/css/post.css}">
+	
+	<script th:src="@{/js/post-update.js}"></script>
+	<title th:text="'WearUp | 수정 (' + ${#authentication.principal.user.name} + ')'"></title>
+</head>
+
+<body style="margin-bottom: 200px">
+	
+	<!-- 상단 메뉴 -->
+	<th:block th:insert="~{common/header::header}"></th:block>
+	<!-- 상단 메뉴 -->
+	
+	<div id="updateFormContainer" class="container mt-3">
+		<form id="updateForm" name="frm" th:action="@{/post/update}" th:object="${post}" method="post"
+			  enctype="multipart/form-data">
 			
-			<div class="mb-3 mt-3 clearfix">
-				<span class="float-start me-2">id: [[${post.id}]]</span>
-				<span class="float-end ms-4">작성일: [[${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</span>
+			<!-- 삭제용 hidden 필드 컨테이너 -->
+			<div id="delFiles">
+				<div th:if="${delFile != null}">
+					<input type="hidden" th:each="file : ${delFile}" name="delFile" th:value="${delFile}"/>
+				</div>
 			</div>
+			<!-- 삭제용 hidden 필드 컨테이너 -->
 			
-			<form name="frm" th:action="@{/post/update}" th:object="${post}" method="post" enctype="multipart/form-data">
-				
-				<input type="hidden" name="post_id" th:value="${post.id}" th:field="*{id}"/>
-				
-				<!-- 본문 -->
-				<div class="my-3">
-					<label for="content" class="sub-title">본문</label>
-					<textarea class="form-control" rows="5" id="content" name="content" placeholder="내용을 입력하세요"
-							  th:field="*{content}" th:utext="${content} ? ${content} : ${post.content}"></textarea>
-					<span class="text-danger" th:if="${error_content}" th:utext="${error_content}"></span>
-				</div>
-				
-				<!-- 대여 상품 -->
-				<div class="my-3">
-					<label for="items" class="sub-title">대여 상품</label>
-					<textarea class="form-control" id="items" name="items" placeholder="제목을 입력하세요"
-							  th:field="*{items}" th:value="${items} ? ${items} : ${post.items}"></textarea>
-					<span class="text-danger" th:if="${error_items}" th:utext="${error_items}"></span>
-				</div>
-				
-				
-				<!-- 기존 첨부파일 목록 (삭제 가능) -->
-				<div class="container mt-3 mb-3 border rounded">
-					<!-- 삭제할 파일의 id 값(들) 저장 -->
-					<div id="delFiles"></div>
-					
-					<div class="mb-3 mt-3">
-						<label class="sub-title">기존 이미지</label>
-						<!-- 첨부파일 이름, 다운로드 링크 -->
-						<div class="input-group mb-2" th:each="attachment : ${post.fileList}">
-							<input class="form-control col-xs-3" type="text" readonly th:value="${attachment.sourcename}">
-							<button type="button"  class="btn btn-outline-danger" th:data-fileid-del="${attachment.id}">삭제</button>
-						</div>
-					</div>
-				</div>
-				<!-- 기존 첨부파일 목록 (삭제 가능) -->
-				
-				
-				<!-- 새로운 첨부파일 추가 -->
-				<div class="container mt-3 mb-3 border rounded">
-					<div class="mb-3 mt-3 d-flex justify-content-between align-items-center">
-						<label class="sub-title mb-0">이미지 추가</label>
-						<button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
-					</div>
-					<div id="files">
-						<!-- 파일 리스트 추가 영역 -->
-					</div>
-				</div>
-				<!-- 새로운 첨부파일 추가 -->
-				
-				
-				<!-- 하단 링크 -->
-				<div class="d-flex justify-content-end mt-4 mb-5">
-					<!-- 현재 로그인한 계정의 id 값과 현재 게시물 작성자의 id 값이 동일한 경우에만 수정완료 버튼 렌더링 -->
-					<button type="submit" class="btn btn-outline-primary" th:if="${logged_user.id == post.user.id}">수정 완료</button>
-					<button type="button" class="btn btn-outline-danger ms-2" onclick="history.back()">취소</button>
-					<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
-				</div>
-				<!-- 하단 링크 -->
 			
-			</form>
-		</div>
-	
-	</body>
-</th:block>
+			<!-- PK 및 User 전달 -->
+			<input type="hidden" th:field="*{id}"/>
+			<input type="hidden" th:field="*{user.id}"/>
+			<!-- PK 및 User 전달 -->
+			
+			
+			<!-- 본문 -->
+			<div class="my-3">
+				<label for="content" class="sub-title">본문</label>
+				<textarea id="content" th:field="*{content}" class="form-control" rows="5"
+						  placeholder="내용을 입력하세요"></textarea>
+				<span class="text-danger" th:if="${error_content}" th:text="${error_content}"></span>
+			</div>
+			<!-- 본문 -->
+			
+			
+			<!-- 대여 상품 -->
+			<div class="my-3">
+				<label for="items" class="sub-title">대여 상품</label>
+				<textarea id="items" th:field="*{items}" class="form-control" placeholder="대여한 상품을 입력하세요"></textarea>
+				<span class="text-danger" th:if="${error_items}" th:text="${error_items}"></span>
+			</div>
+			<!-- 대여 상품 -->
+			
+			
+			<!-- 기존 첨부파일 목록 -->
+			<div class="container mt-3 mb-3 border rounded">
+				<div class="mb-3 mt-3">
+					<label class="sub-title">기존 이미지</label>
+					<div class="input-group mb-2" th:each="attachment : ${post.fileList}">
+						<input class="form-control col-xs-3" type="text" readonly th:value="${attachment.sourcename}"/>
+						<button type="button" class="btn btn-outline-danger" th:attr="data-fileid-del=${attachment.id}">삭제</button>
+					</div>
+				</div>
+			</div>
+			<!-- 기존 첨부파일 목록 -->
+			
+			
+			<!-- 새로운 첨부파일 추가 -->
+			<div class="container mt-3 mb-3 border rounded">
+				<div class="mb-3 mt-3 d-flex justify-content-between align-items-center">
+					<label class="sub-title mb-0">이미지 추가</label>
+					<button type="button" id="btnAdd" class="btn btn-secondary">추가</button>
+				</div>
+				<div id="files"></div>
+			</div>
+			<span class="text-danger" th:if="${error_fileList}" th:text="${error_fileList}"></span>
+			<!-- 새로운 첨부파일 추가 -->
+			
+			
+			<!-- 하단 링크 -->
+			<div class="d-flex justify-content-end mt-4 mb-5">
+				<button type="submit" class="btn btn-outline-primary"
+						th:if="${#authentication.principal.user.id == post.user.id}">수정 완료</button>
+				<button type="button" class="btn btn-outline-danger ms-2" onclick="history.back()">취소</button>
+				<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
+			</div>
+			<!-- 하단 링크 -->
+		
+		</form>
+	</div>
+</body>
 
 </html>

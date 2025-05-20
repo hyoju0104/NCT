@@ -95,10 +95,41 @@
         ORDER BY r.rented_at DESC
     </select>
 
-    <select id="findAllByBrandId" resultMap="mapRental" parameterType="com.lec.spring.domain.Rental">
-        <include refid="SELECT_BASE"/>
-        SELECT_BASE.*
-        , b.id AS b_id, b.name AS b_name
+    <select id="findAllByBrandId" resultMap="mapRental" parameterType="long">
+        SELECT
+            r.id "r_id",
+            r.rented_at "r_rented_at",
+            r.return_due_at "r_return_due_at",
+            r.returned_at "r_returned_at",
+            r.status "r_status",
+            u.id "u_id",
+            u.username "u_username",
+            u.password "u_password",
+            u.name "u_name",
+            u.phone_num "u_phone_num",
+            u.email "u_email",
+            u.address "u_address",
+            u.point "u_point",
+            u.provider "u_provider",
+            u.provider_id "u_provider_id",
+            u.signed_at "u_signed_at",
+            u.paid_at "u_paid_at",
+            u.status_plan "u_status_plan",
+            u.status_account "u_status_account",
+            u.rental_cnt "u_rental_cnt",
+            i.id "i_id",
+            i.name "i_name",
+            i.category "i_category",
+            i.description "i_description",
+            i.is_available "i_is_available",
+            i.item_status "i_item_status",
+            i.is_exist "i_is_exist",
+            i.created_at "i_created_at",
+            b.id "b_id",
+            b.name "b_name",
+            b.username "b_username",
+            b.phone_num "b_phone_num",
+            b.description "b_description"
         FROM Rental r
         JOIN user u ON r.user_id = u.id
         JOIN Item i ON r.item_id = i.id

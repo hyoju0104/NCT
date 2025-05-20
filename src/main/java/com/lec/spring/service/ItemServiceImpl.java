@@ -60,4 +60,10 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.markAsNotExist(id);
     }
 
+    @Override
+    public void setAvailable(Long itemId, boolean isAvailable) {
+        itemRepository.setAvailable(itemId, isAvailable);
+    }
+
+
 }

@@ -62,6 +62,7 @@ public class OrderController {
                                 @ModelAttribute("user") User user,
                                 BindingResult result,
                                 @AuthenticationPrincipal PrincipalUserDetails principal,
+                                HttpSession session,
                                 Model model) {
 
         orderValidator.validate(user, result);
@@ -75,6 +76,9 @@ public class OrderController {
             model.addAttribute("item", itemService.detail(id));
             return "order/detail";
         }
+
+        User loginUser = principal.getUser();
+        Item item = itemService.detail(id);
 
         // Rental 생성
         Rental rental = new Rental();

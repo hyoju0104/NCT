@@ -1,8 +1,8 @@
 package com.lec.spring.domain;
 
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
@@ -10,7 +10,7 @@ public class PostValidator implements Validator {
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
-		System.out.println("ℹ✅ supports(" + clazz.getName() + ") 호출");
+		System.out.println("✅ supports(" + clazz.getName() + ") 호출");
 		
 		// ↓ 검증할 객체의 클래스 타입인지 확인 : Post = clazz; 가능 여부
 		boolean result = Post.class.isAssignableFrom(clazz);
@@ -24,7 +24,8 @@ public class PostValidator implements Validator {
 		
 		System.out.println("✅ [Post] validate() 호출 : " + post);
 		
-		if (post.getContent() == null || post.getContent().trim().isEmpty()) {
+		String plainContent = Jsoup.parse(post.getContent()).text();
+		if (plainContent.trim().isEmpty()) {
 			errors.rejectValue("content","내용은 반드시 입력해야 합니다.");
 		}
 		if (post.getItems() == null || post.getItems().trim().isEmpty()) {

@@ -12,3 +12,5 @@ SELECT * FROM Comment;
 SELECT * FROM Brand;
 SELECT * FROM Item;
 SELECT * FROM Rental;
+
+SELECT * FROM Rental ORDER BY id DESC;

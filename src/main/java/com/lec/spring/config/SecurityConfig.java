@@ -1,6 +1,9 @@
 package com.lec.spring.config;
 
 import com.lec.spring.config.oauth.PrincipalOauth2UserService;
+import com.lec.spring.domain.Brand;
+import com.lec.spring.domain.User;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -73,26 +76,41 @@ public class SecurityConfig {
                                                       // 근데 이때 Spring Security가 이 요청을 가로채서 로그인 처리 자동으로 해줌
                         // 권한별 리다이렉트 핸들러
                         .successHandler((request, response, authentication) -> {
+                            Object principal = authentication.getPrincipal();
+
+                            if (principal instanceof com.lec.spring.config.PrincipalBrandDetails brandDetails) {
+                                Brand brand = brandDetails.getBrand();
+                                HttpSession session = request.getSession();
+                                session.setAttribute("brandId", brand.getId());
+                                session.setAttribute("brandUsername", brand.getUsername());
+                            }
+
+                            // USER 계정이면 세션에 userId 저장
+                            if (principal instanceof PrincipalUserDetails principalUserDetails) {
+                                User user = principalUserDetails.getUser();
+                                HttpSession session = request.getSession();
+                                session.setAttribute("userId", user.getId());
+                                session.setAttribute("username", user.getUsername());
+                            }
+
                             boolean isBrand = authentication.getAuthorities().stream()
                                     .anyMatch(a -> a.getAuthority().equals("BRAND"));
                             boolean isAdmin = authentication.getAuthorities().stream()
                                     .anyMatch(a -> a.getAuthority().equals("ADMIN"));
+
                             if (isBrand) {
                                 response.sendRedirect("/brand/list");
-                            }
-                            else if (isAdmin) {
+                            } else if (isAdmin) {
                                 response.sendRedirect("/admin/sales");
-                            }
-                            else {
-                                // USER 권한 혹은 그 외
+                            } else {
                                 response.sendRedirect("/post/list");
                             }
                         })
                         .failureUrl("/login?error") //로그인 실패하면.
                         .permitAll() //위에서 설정한 로그인 관련 URL들은 로그인 안해도 누구나 볼수있게
                 ) //formLogin
-                
-		        
+
+
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")

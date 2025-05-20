@@ -28,6 +28,7 @@ public interface PostService {
 	// 특정 id 의 글 삭제하기 (DELETE)
 	int deleteById(Long id);
 
+	// 특정 user 의 Post 찾기
 	List<Post> findByUserId(Long userId);
 	
 }

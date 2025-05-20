@@ -38,31 +38,32 @@ VALUES ('SILVER', 50000, 3),
 INSERT INTO User (user.auth_id, username, password, name, point, status_plan)
 VALUES (3, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKfe', '관리자', 0, 'ACTIVE'),
        (1, 'user1', '$2a$10$AsdcGiiMWwG6sCu9IiNqvu5Z1G7krhWLhehijgfiqjRhHCODctw8a', '회원1', 30000, 'ACTIVE'),
-       (1, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 0, 'INACTIVE')
+       (1, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 0, 'INACTIVE'),
+       (1, 'user3', '$2a$10$zT51nN0ycpAvSg5aimPoUuOIyg94ktXJzLhWHGxeJQ8iDqXB4vqRm', '회원3', 57000, 'ACTIVE')
 ;
 
-INSERT INTO Payment (Payment.user_id, Payment.plan_id, price)
-VALUES (1, 1, 50000),
-       (2, 2, 70000),
-       (3, 3, 100000)
+INSERT INTO Payment (Payment.user_id, Payment.plan_id, price, paid_at)
+VALUES (2, 1, 50000, '2025-4-25'),
+       (3, 2, 70000, '2025-1-2'),
+       (4, 3, 100000, '2024-12-30')
 ;
 
 INSERT INTO Post(Post.user_id, content, items)
-VALUES (1, '가나다라', '나이키바지'),
-       (2, '가나다다라', '나이키티셔츠'),
-       (3, '가나다라라', '아디다스바지')
+VALUES (2, '가나다라', '나이키바지'),
+       (3, '가나다다라', '나이키티셔츠'),
+       (4, '가나다라라', '아디다스바지')
 ;
 
 INSERT INTO Comment (Comment.user_id, Comment.post_id, content)
-VALUES (1, 1, 'ㄱㄱㄱㄱㄱㅂㅂㅂ'),
-       (2, 1, 'ㄱㄱㄱㄱㄱㅂㅂㅂㅇㄹㄹ'),
-       (3, 1, 'ㄱㄱㄱㄱㄱㅂㅂㅂㄴㅇㅁㄹ'),
-       (1, 2, 'ㄱㄱㄱㄱㄱㅂㅇㄴㄹㅂㅂ'),
-       (2, 2, 'ㄱㄱㄱㄱㄱㅂㅁㄴㅇㄹㅂㅂ'),
+VALUES (2, 1, 'ㄱㄱㄱㄱㄱㅂㅂㅂ'),
+       (3, 1, 'ㄱㄱㄱㄱㄱㅂㅂㅂㅇㄹㄹ'),
+       (4, 1, 'ㄱㄱㄱㄱㄱㅂㅂㅂㄴㅇㅁㄹ'),
+       (2, 2, 'ㄱㄱㄱㄱㄱㅂㅇㄴㄹㅂㅂ'),
        (3, 2, 'ㄱㄱㄱㄱㄱㅂㅁㄴㅇㄹㅂㅂ'),
-       (1, 3, 'ㄱㄱㄱㄱㄱㅂㄴㅇㅁㅁㅂㅂ'),
-       (2, 3, 'ㄱㄱㅁㄴㅇㄱㄱㄱㅂㅂㅂ'),
-       (3, 3, 'ㄱㅁㅇㄴㄹㄱㄱㄱㄱㅂㅂㅂ')
+       (4, 2, 'ㄱㄱㄱㄱㄱㅂㅁㄴㅇㄹㅂㅂ'),
+       (2, 3, 'ㄱㄱㄱㄱㄱㅂㄴㅇㅁㅁㅂㅂ'),
+       (3, 3, 'ㄱㄱㅁㄴㅇㄱㄱㄱㅂㅂㅂ'),
+       (4, 3, 'ㄱㅁㅇㄴㄹㄱㄱㄱㄱㅂㅂㅂ')
 ;
 
 INSERT INTO Brand (brand.auth_id, name, username, password, phone_num, is_actived, description)
@@ -93,9 +94,12 @@ INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status)
 VALUES (2, 1, '2025-05-10 17:40:00', 'RENTED'),
        (2, 2, '2025-05-13 17:40:00', 'RETURNED'),
        (2, 3, '2025-05-15 17:40:00', 'OVERDUE'),
-       (3, 5, '2025-02-10 17:40:00', 'RENTED'),
-       (3, 6, '2025-03-13 17:40:00', 'RETURNED'),
-       (3, 7, '2025-04-15 17:40:00', 'OVERDUE')
+       (3, 4, '2025-02-10 17:40:00', 'RENTED'),
+       (3, 5, '2025-03-13 17:40:00', 'RETURNED'),
+       (3, 6, '2025-04-15 17:40:00', 'OVERDUE'),
+       (4, 7, '2025-01-17 17:40:00', 'RENTED'),
+       (4, 8, '2025-01-22 17:40:00', 'RETURNED'),
+       (4, 9, '2025-03-15 17:40:00', 'OVERDUE')
 ;
 
 -- 포인트 조회 기능 확인용 샘플 데이터

@@ -15,36 +15,36 @@ public class PrincipalUserDetails implements org.springframework.security.core.u
 
     private final User user;
     private UserService userService;
-	
+
 	public User getUser() {
 		return user;
 	}
-	
+
 	//OAuth2 관련 값 저장
 	private Map<String, Object> attributes;
-	
+
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
- 
-	
+
+
 	// 일반 로그인용 생성자
     public PrincipalUserDetails(User user) {
         this.user = user;
     }
-	
+
 	// OAuth2 로그인용 생성자
 	public PrincipalUserDetails(User user, Map<String, Object> attributes){
 		this.user = user;
 		this.attributes = attributes;
 	}
-	
-	
+
+
 	@Override
 	public Map<String, Object> getAttributes() {
 		return this.attributes;
 	}
-	
+
 	@Override
 	public String getName() {
 		return user.getUsername();
@@ -122,7 +122,7 @@ public class PrincipalUserDetails implements org.springframework.security.core.u
     public boolean isAccountNonExpired() {
         return true;
     }
-	
+
 }
 
 

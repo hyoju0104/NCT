@@ -16,7 +16,6 @@
         <result column="post_id" property="postId"/>
         <result column="sourcename" property="sourcename"/>
         <result column="filename" property="filename"/>
-<!--        <result column="sequence" property="sequence"/>-->
     </resultMap>
 
     
@@ -25,7 +24,7 @@
         VALUES (#{postId}, #{sourcename}, #{filename})
     </insert>
 
-    <select id="findByPostId" resultType="com.lec.spring.domain.PostAttachment">
+    <select id="findByPostId" parameterType="long" resultMap="MapAttachment" flushCache="true">
         <include refid="SELECT_FILE"/>
         AND post_id = #{param1}
         ORDER BY id ASC
@@ -36,26 +35,14 @@
         AND id = #{id}
     </select>
 
-    <!-- MyBatis 입장에서는 array 와 ArrayList 를 동일하다고 보고 동작시킴 -->
-    <!-- item = e = Long 타입 -->
-    <!-- open="(" close=")" : ( id, id, ... ) -->
-    <select id="findByIds" resultType="com.lec.spring.domain.PostAttachment" parameterType="java.util.ArrayList">
-        <include refid="SELECT_FILE"/>
-        AND ID IN
-        <foreach collection="array" item="e" separator="," open="(" close=")">
-            #{e}
-        </foreach>
-        ORDER BY id ASC
-    </select>
-
-    <delete id="deleteByIds" flushCache="true" parameterType="java.util.ArrayList">
-        DELETE FROM Attachment
-        WHERE id IN (<foreach collection="array" item="item" separator=",">#{item}</foreach>)
-    </delete>
-
     <delete id="delete" flushCache="true" parameterType="com.lec.spring.domain.PostAttachment">
         DELETE FROM Attachment
         WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteByPostId" parameterType="long" flushCache="true">
+        DELETE FROM Attachment
+        WHERE post_id = #{postId}
     </delete>
 
 </mapper>
