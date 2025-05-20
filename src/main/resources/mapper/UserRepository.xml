@@ -79,6 +79,12 @@
         WHERE id = #{userId}
     </update>
 
+    <update id="updateStatusAccount">
+        UPDATE user
+        SET status_account = #{status}
+        WHERE id = #{userId}
+    </update>
+
 
 
 

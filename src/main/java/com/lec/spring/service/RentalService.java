@@ -14,7 +14,7 @@ public interface RentalService {
 
     void updateReturned(Long rentalId);                    // 반납 처리
 
-    int updateOverdue();                            // 연체 상태 갱신+
+    void updateOverdueStatus();                         // 연체 상태 갱신+
 
     void rentItem(Rental rental);
 }

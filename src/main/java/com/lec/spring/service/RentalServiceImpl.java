@@ -56,10 +56,10 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    @Transactional
-    public int updateOverdue() {
-        return rentalRepository.updateOverdue();
+    public void updateOverdueStatus() {
+        rentalRepository.updateOverdue();
     }
+
 
     @Override
     @Transactional

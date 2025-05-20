@@ -30,7 +30,6 @@ public interface UserService {
 
     void updateUserPlanId(Long id, Long planId);
 
-
-
+    void inactivateUser(Long userId);
 
 }
