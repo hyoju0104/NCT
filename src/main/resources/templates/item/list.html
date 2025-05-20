@@ -5,10 +5,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-	
+
 	<link rel="stylesheet" th:href="@{/css/common.css}">
 	<link rel="stylesheet" th:href="@{/css/login.css}">
-	
+
 	<title>상품 목록</title>
 </head>
 
@@ -36,13 +36,17 @@
 		<table class="item-table">
 			<thead>
 			<tr>
-				<th width="50%">상품명</th>
-				<th width="30%">브랜드</th>
+				<th width="30%">상품사진</th>
+				<th width="30%">상품명</th>
+				<th width="20%">브랜드</th>
 				<th width="20%">대여 상태</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr th:each="item : ${items}">
+				<td>
+					<img th:if="${item.attachment != null}" th:src="@{'/upload/item/' + ${item.attachment.filename}}" alt="상품 이미지" class="img-thumbnail" style="height: 80px;">
+				</td>
 				<td>
 					<a th:href="@{'/item/detail/' + ${item.id}}" class="item-link" th:text="${item.name}"></a>
 				</td>

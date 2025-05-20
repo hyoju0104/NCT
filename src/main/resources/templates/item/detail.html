@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    
+
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/login.css}">
-    
+
     <title>상품 상세정보</title>
 </head>
 
@@ -23,10 +23,8 @@
 
     <div class="item-detail-container">
         <!-- 왼쪽: 이미지 섹션 (이미지가 있다면) -->
-        <div class="item-image-section" th:if="${attachment != null}">
-            <div class="item-image-wrapper">
-                <img th:src="@{'/upload/item/' + ${attachment.filename}}" class="item-image" alt="상품 이미지">
-            </div>
+        <div th:if="${attachment != null}" class="item-image-wrapper">
+            <img th:src="@{'/upload/item/' + ${attachment.filename}}" class="item-image" alt="상품 이미지">
         </div>
 
         <!-- 오른쪽: 상품 정보 섹션 -->
