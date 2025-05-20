@@ -1,10 +1,8 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.config.PrincipalUserDetails;
-import com.lec.spring.domain.Item;
-import com.lec.spring.domain.OrderValidator;
-import com.lec.spring.domain.Rental;
-import com.lec.spring.domain.User;
+import com.lec.spring.domain.*;
+import com.lec.spring.service.ItemAttachmentService;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.RentalService;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/order")
 public class OrderController {
@@ -22,33 +22,31 @@ public class OrderController {
     private final ItemService itemService;
     private final OrderValidator orderValidator;
     private final RentalService rentalService;
+    private final ItemAttachmentService itemAttachmentService;
 
-    public OrderController(ItemService itemService, OrderValidator orderValidator, RentalService rentalService) {
+    public OrderController(ItemService itemService, OrderValidator orderValidator, RentalService rentalService, ItemAttachmentService itemAttachmentService) {
         this.itemService = itemService;
         this.orderValidator = orderValidator;
         this.rentalService = rentalService;
+        this.itemAttachmentService = itemAttachmentService;
     }
 
     @GetMapping("/detail/{id}")
-    public String orderDetail(@PathVariable Long id,
-                              Model model,
-                              RedirectAttributes redirectAttributes,
-                              HttpSession session,
-                              @AuthenticationPrincipal PrincipalUserDetails principal) {
+    public String orderDetail(@PathVariable("id") Long id,
+                              @AuthenticationPrincipal PrincipalUserDetails principal,
+                              Model model) {
         Item item = itemService.detail(id);
-
-        if (principal == null) {
-            redirectAttributes.addFlashAttribute("error", "로그인 후 작성 가능합니다.");
-            return "redirect:/post/list";
-        }
-
-        User user = principal.getUser();
+        List<ItemAttachment> attachments = itemAttachmentService.findByItemId(id);
+        ItemAttachment attachment = !attachments.isEmpty() ? attachments.get(0) : null;
 
         model.addAttribute("item", item);
-        model.addAttribute("user", user);
+        model.addAttribute("attachment", attachment);
+        model.addAttribute("user", principal.getUser());
 
         return "order/detail";
     }
+
+
 
     @GetMapping("/complete/{id}")
     public String orderComplete(@PathVariable Long id, Model model) {
@@ -80,6 +78,7 @@ public class OrderController {
 
 
         orderValidator.validate(user, result);
+
         if (result.hasErrors()) {
             if (result.hasFieldErrors("phoneNum")) {
                 model.addAttribute("error_phoneNum", result.getFieldError("phoneNum").getDefaultMessage());
@@ -87,17 +86,23 @@ public class OrderController {
             if (result.hasFieldErrors("address")) {
                 model.addAttribute("error_address", result.getFieldError("address").getDefaultMessage());
             }
-            model.addAttribute("item", itemService.detail(id));
+
+            Item item = itemService.detail(id);
+            model.addAttribute("item", item);
+
+            List<ItemAttachment> attachments = itemAttachmentService.findByItemId(item.getId());
+            ItemAttachment attachment = !attachments.isEmpty() ? attachments.get(0) : null;
+            model.addAttribute("attachment", attachment);
+
             return "order/detail";
         }
-
 
         Item item = itemService.detail(id);
 
         // Rental 생성
         Rental rental = new Rental();
         rental.setUser(principal.getUser());
-        rental.setItem(itemService.detail(id));
+        rental.setItem(item);
         rental.setStatus("RENTED");
 
         // 저장 + available_count -1 처리

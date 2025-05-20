@@ -1,6 +1,8 @@
 package com.lec.spring.controller;
 
 import com.lec.spring.domain.Item;
+import com.lec.spring.domain.ItemAttachment;
+import com.lec.spring.service.ItemAttachmentService;
 import com.lec.spring.service.ItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +17,28 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
+    private final ItemAttachmentService itemAttachmentService;
 
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, ItemAttachmentService itemAttachmentService) {
         this.itemService = itemService;
+        this.itemAttachmentService = itemAttachmentService;
     }
 
     @GetMapping("/list")
     public String list(Model model) {
-        model.addAttribute("items", itemService.list());
+        List<Item> items = itemService.list();
+
+        for (Item item : items) {
+            List<ItemAttachment> attachments = itemAttachmentService.findByItemId(item.getId());
+            if (!attachments.isEmpty()) {
+                item.setAttachment(attachments.get(0));
+            }
+        }
+
+        model.addAttribute("items", items);
         return "item/list";
     }
+
 
     @GetMapping("/category/{category}")
     public String listByCategory(@PathVariable String category, Model model) {
@@ -34,7 +48,13 @@ public class ItemController {
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
-        model.addAttribute("item", itemService.detail(id));
+        Item item = itemService.detail(id);
+
+        List<ItemAttachment> attachments = itemAttachmentService.findByItemId(id);
+        ItemAttachment attachment = !attachments.isEmpty() ? attachments.get(0) : null;
+
+        model.addAttribute("item", item);
+        model.addAttribute("attachment", attachment);
         return "item/detail";
     }
 }
