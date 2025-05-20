@@ -1981,10 +1981,6 @@ hr {
         padding: 12px 16px;
     }
 
-    .item-table th:nth-child(2),
-    .item-table td:nth-child(2) {
-        display: none; /* 중간 열 숨김 (브랜드) */
-    }
     .rental-btn {
         width: 100%;
         padding: 12px 20px;
