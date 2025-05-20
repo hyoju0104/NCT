@@ -27,4 +27,10 @@ public interface UserRepository {
     int increaseRentalCount(Long userId);
 
     void updateStatusAccount(@Param("userId") Long userId, @Param("status") String status);
+
+    String findStatusAccountById(Long id);
+
+
 }
+
+

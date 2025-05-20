@@ -148,4 +148,8 @@ public class UserServiceImpl implements UserService {
         userRepository.updateStatusAccount(userId, "INACTIVE");
     }
 
+    @Override
+    public String findUserStatus(Long userId) {
+        return userRepository.findStatusAccountById(userId);
+    }
 }

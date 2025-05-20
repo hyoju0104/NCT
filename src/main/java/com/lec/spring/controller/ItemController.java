@@ -1,14 +1,18 @@
 package com.lec.spring.controller;
 
+import com.lec.spring.config.PrincipalUserDetails;
 import com.lec.spring.domain.Item;
 import com.lec.spring.domain.ItemAttachment;
 import com.lec.spring.service.ItemAttachmentService;
 import com.lec.spring.service.ItemService;
+import com.lec.spring.service.UserService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -18,10 +22,12 @@ public class ItemController {
 
     private final ItemService itemService;
     private final ItemAttachmentService itemAttachmentService;
+    private final UserService userService;
 
-    public ItemController(ItemService itemService, ItemAttachmentService itemAttachmentService) {
+    public ItemController(ItemService itemService, ItemAttachmentService itemAttachmentService, UserService userService) {
         this.itemService = itemService;
         this.itemAttachmentService = itemAttachmentService;
+        this.userService = userService;
     }
 
     @GetMapping("/list")
@@ -47,14 +53,24 @@ public class ItemController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model) {
-        Item item = itemService.detail(id);
+    public String detail(@PathVariable Long id,
+                         @AuthenticationPrincipal PrincipalUserDetails principal,
+                         Model model) {
 
+        Item item = itemService.detail(id);
         List<ItemAttachment> attachments = itemAttachmentService.findByItemId(id);
         ItemAttachment attachment = !attachments.isEmpty() ? attachments.get(0) : null;
 
         model.addAttribute("item", item);
         model.addAttribute("attachment", attachment);
+
+        if (principal != null) {
+            Long userId = principal.getUser().getId();
+            String status = userService.findUserStatus(userId);
+            model.addAttribute("accountStatus", status);
+        }
+
         return "item/detail";
     }
+
 }

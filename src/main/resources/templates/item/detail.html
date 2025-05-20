@@ -22,7 +22,7 @@
     </div>
 
     <div class="item-detail-container">
-        <!-- 왼쪽: 이미지 섹션 (이미지가 있다면) -->
+        <!-- 왼쪽: 이미지 섹션 -->
         <div th:if="${attachment != null}" class="item-image-wrapper">
             <img th:src="@{'/upload/item/' + ${attachment.filename}}" class="item-image" alt="상품 이미지">
         </div>
@@ -58,10 +58,23 @@
                 <div class="detail-value description" th:text="${item.description}"></div>
             </div>
 
+            <!-- 계정 정지 메시지 -->
+            <div class="info-group" th:if="${accountStatus == 'INACTIVE'}">
+                <div class="alert alert-danger">
+                    현재 계정은 정지 상태입니다. 대여가 불가능합니다.
+                </div>
+            </div>
+
             <!-- 대여 버튼 영역 -->
             <div class="rental-action">
-                <a th:if="${item.isAvailable}" th:href="@{'/order/detail/' + ${item.id}}" class="rental-btn">대여하기</a>
+                <a th:if="${item.isAvailable and accountStatus != 'INACTIVE'}"
+                   th:href="@{'/order/detail/' + ${item.id}}"
+                   class="rental-btn">대여하기</a>
+
                 <button th:if="${!item.isAvailable}" class="rental-btn disabled" disabled>대여 불가</button>
+
+                <button th:if="${item.isAvailable and accountStatus == 'INACTIVE'}"
+                        class="rental-btn disabled" disabled>계정 정지됨</button>
             </div>
         </div>
     </div>

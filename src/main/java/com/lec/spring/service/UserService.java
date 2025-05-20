@@ -32,4 +32,6 @@ public interface UserService {
 
     void inactivateUser(Long userId);
 
+    String findUserStatus(Long userId);
+
 }

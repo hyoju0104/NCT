@@ -85,7 +85,8 @@
         WHERE id = #{userId}
     </update>
 
-
-
+    <select id="findStatusAccountById" resultType="string">
+        SELECT status_account FROM user WHERE id = #{id}
+    </select>
 
 </mapper>

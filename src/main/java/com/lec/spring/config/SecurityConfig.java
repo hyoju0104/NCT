@@ -63,7 +63,7 @@ public class SecurityConfig {
                                 "/login", "/register/**",
                                 "/css/**", "/js/**", "/images/**", "/upload/**", "/common/**",
                                 "/post/list", "/post/detail/**",
-                                "/comment/**", "/item/list", "/item/detail/**", "/item/list/category/**"
+                                "/comment/**", "/item/**", "/item/detail/**", "/item/list/category/**"
                         ).permitAll()
                         .requestMatchers("/brand/**").hasAuthority("BRAND")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
