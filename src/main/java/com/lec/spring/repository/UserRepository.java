@@ -26,6 +26,9 @@ public interface UserRepository {
     //빌린 횟수 증가 메서드
     int increaseRentalCount(Long userId);
 
+    int updateStatusToDeleted(Long userId);
+
+
 
 
 }

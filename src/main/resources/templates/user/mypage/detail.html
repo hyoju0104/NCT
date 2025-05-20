@@ -125,6 +125,14 @@
             </div>
         </div>
     </section>
+    <!-- 7. 계정 상태 -->
+    <section class="info-section">
+        <h2 class="section-title">계정 관리</h2>
+        <form th:action="@{/user/withdraw}" method="post" onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
+            <button type="submit" class="login-btn danger">탈퇴하기</button>
+        </form>
+    </section>
+
 
 </main>
 

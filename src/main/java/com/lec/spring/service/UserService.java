@@ -30,6 +30,9 @@ public interface UserService {
 
     void updateUserPlanId(Long id, Long planId);
 
+    void markAsDeleted(Long userId);
+
+
 
 
 

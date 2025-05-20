@@ -119,6 +119,13 @@ public class UserController {
         model.addAttribute("user", user);
     }
 
+    @PostMapping("/withdraw")
+    public String withdraw(@AuthenticationPrincipal PrincipalUserDetails principal) {
+        Long userId = principal.getUser().getId();
+        userService.markAsDeleted(userId);  // status_account = 'DELETED'
+        return "redirect:/logout"; // 로그아웃으로 강제 이동
+    }
+
 
     @GetMapping("/mypage/update")
     public void updateForm(

@@ -79,6 +79,12 @@
         WHERE id = #{userId}
     </update>
 
+    <update id="updateStatusToDeleted" parameterType="long">
+        UPDATE User
+        SET status_account = 'DELETED'
+        WHERE id = #{userId}
+    </update>
+
 
 
 

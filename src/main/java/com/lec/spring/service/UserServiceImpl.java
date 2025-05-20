@@ -145,4 +145,10 @@ public class UserServiceImpl implements UserService {
         userRepository.updateUserPlanId(id, planId);
     }
 
+    @Override
+    public void markAsDeleted(Long userId) {
+        userRepository.updateStatusToDeleted(userId);
+    }
+
+
 }
