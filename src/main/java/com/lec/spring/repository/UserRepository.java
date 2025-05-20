@@ -27,9 +27,7 @@ public interface UserRepository {
     int increaseRentalCount(Long userId);
 
     int updateStatusToDeleted(Long userId);
-    
+
     // 회원 상태(status_account) 업데이트
-    int updateStatusAccount(@Param("userId") Long userId, @Param("status") String status);
-
-
+    void updateStatusAccount(@Param("userId") Long userId, @Param("status") String status);
 }

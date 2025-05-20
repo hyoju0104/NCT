@@ -135,10 +135,8 @@ public class UserServiceImpl implements UserService {
                 .build();
         paymentRepository.save(payment);
 
-        // ✅ User 테이블의 paid_at 필드 갱신
         userRepository.updatePaidAt(userId);
     }
-
 
     @Override
     public void updateUserPlanId(Long id, Long planId) {
@@ -150,5 +148,9 @@ public class UserServiceImpl implements UserService {
         userRepository.updateStatusToDeleted(userId);
     }
 
+    @Override
+    public void inactivateUser(Long userId) {
+        userRepository.updateStatusAccount(userId, "INACTIVE");
+    }
 
 }

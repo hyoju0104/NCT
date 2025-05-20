@@ -32,8 +32,6 @@ public interface UserService {
 
     void markAsDeleted(Long userId);
 
-
-
-
+    void inactivateUser(Long userId);
 
 }

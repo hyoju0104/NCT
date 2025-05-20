@@ -18,30 +18,57 @@
     <table class="table table-bordered text-center align-middle">
         <thead class="table-light">
         <tr>
+            <th>사용자ID</th>
             <th>아이템명</th>
             <th>대여일</th>
             <th>반납예정일</th>
             <th>실제반납일</th>
             <th>상태</th>
             <th>반납 처리</th>
+            <th>정지 처리</th>
+            <th>정지 여부</th> <!-- ✅ 추가된 열 -->
         </tr>
         </thead>
         <tbody>
-        <tr th:each="rental : ${rentals}">
+        <tr th:each="rental : ${rentals}"
+            th:attr="data-status-account=(${rental.user.statusAccount} ? 'ACTIVE' : 'INACTIVE')">
+            <td th:text="${rental.user.username}">사용자ID</td>
             <td th:text="${rental.item.name}">아이템명</td>
-            <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">2025-05-19</td>
-            <td th:text="${#temporals.format(rental.returnDueAt, 'yyyy-MM-dd')}">2025-05-26</td>
+            <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">대여일</td>
+            <td th:text="${#temporals.format(rental.returnDueAt, 'yyyy-MM-dd')}">반납예정일</td>
             <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '-'}">-</td>
             <td th:text="${rental.status}">RENTED</td>
             <td>
-                <form th:action="@{'/brand/rental/return/' + ${rental.id}}" method="post" onsubmit="return confirm('반납처리를 하시겠습니까?')">
-                <button class="btn btn-sm btn-success" type="submit" th:disabled="${rental.status != 'RENTED' and rental.status != 'OVERDUE'}">반납처리</button>
+                <form th:action="@{'/brand/rental/return/' + ${rental.id}}" method="post"
+                      onsubmit="return confirm('반납처리를 하시겠습니까?')">
+                    <button class="btn btn-sm btn-success" type="submit"
+                            th:disabled="${rental.status != 'RENTED' and rental.status != 'OVERDUE'}">
+                        반납처리
+                    </button>
                 </form>
+            </td>
+            <td>
+                <form th:action="@{'/brand/rental/deactivate/' + ${rental.user.id}}" method="post"
+                      onsubmit="return confirm('계정 정지처리를 하시겠습니까?')">
+                    <button class="btn btn-sm"
+                            th:classappend="${rental.status == 'OVERDUE' and rental.user.statusAccount != 'INACTIVE'} ? 'btn-danger' : 'btn-secondary'"
+                            type="submit"
+                            th:disabled="${rental.user.statusAccount == 'INACTIVE' or rental.status != 'OVERDUE'}"
+                            th:title="${rental.user.statusAccount == 'INACTIVE'} ? '이미 정지된 계정입니다.' : ''">
+                        계정정지
+                    </button>
+                </form>
+            </td>
+            <td>
+                <span th:if="${rental.user.statusAccount == 'INACTIVE'}" class="badge bg-danger">정지됨</span>
+                <span th:if="${rental.user.statusAccount != 'INACTIVE'}" class="badge bg-success">정상</span>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<script th:src="@{/js/rental-list.js}"></script>
 
 </body>
 </html>
