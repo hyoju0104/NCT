@@ -14,3 +14,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const logoInput = document.getElementById("logo");
+    const fileNameDisplay = document.getElementById("selectedFileName");
+
+    if (logoInput) {
+        logoInput.addEventListener("change", function () {
+            const fileName = this.files.length > 0 ? this.files[0].name : "선택된 파일 없음";
+            fileNameDisplay.textContent = fileName;
+        });
+    }
+});

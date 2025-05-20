@@ -56,42 +56,31 @@ public class BrandItemController {
 
         new BrandItemValidator().validate(item, result);
 
+        if (itemImage == null || itemImage.isEmpty()) {
+            model.addAttribute("error_file", "상품 이미지는 필수입니다.");
+            result.reject("error_file");
+        }
+
         item.setBrand(principal.getBrand());
         item.setIsExist(true);
 
         if (result.hasErrors()) {
-
             for (FieldError error : result.getFieldErrors()) {
                 model.addAttribute("error_" + error.getField(), error.getDefaultMessage());
             }
 
+            // 선택한 파일명 flash
             if (itemImage != null && !itemImage.isEmpty()) {
-                try {
-                    Path uploadPath = Paths.get(System.getProperty("user.dir"), uploadDirItem);
-                    if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
-
-                    String savedName = UUID.randomUUID() + "_" + itemImage.getOriginalFilename();
-                    File saveFile = uploadPath.resolve(savedName).toFile();
-                    itemImage.transferTo(saveFile);
-
-                    ItemAttachment attach = new ItemAttachment();
-                    attach.setItemId(item.getId());
-                    attach.setSourcename(itemImage.getOriginalFilename());
-                    attach.setFilename(savedName);
-
-                    model.addAttribute("item", item);
-                    model.addAttribute("attachment", attach);
-
-                } catch (IOException e) {
-                    redirectAttributes.addFlashAttribute("error", "파일 저장 실패");
-                }
+                model.addAttribute("selectedFileName", itemImage.getOriginalFilename());
             }
 
             return "/brand/item/write";
         }
 
+        // DB 저장
         itemService.save(item);
 
+        // 파일 저장
         if (itemImage != null && !itemImage.isEmpty()) {
             try {
                 Path uploadPath = Paths.get(System.getProperty("user.dir"), uploadDirItem);
@@ -115,7 +104,6 @@ public class BrandItemController {
 
         model.addAttribute("item", item);
         model.addAttribute("result", 1);
-
         return "brand/item/writeOk";
     }
 
@@ -180,6 +168,16 @@ public class BrandItemController {
             );
             item.setBrand(principal.getBrand());
             model.addAttribute("item", item);
+
+            List<ItemAttachment> attachments = itemAttachmentService.findByItemId(item.getId());
+            if (!attachments.isEmpty()) {
+                model.addAttribute("attachment", attachments.get(0));
+            }
+
+            if (itemImage != null && !itemImage.isEmpty()) {
+                model.addAttribute("selectedFileName", itemImage.getOriginalFilename());
+            }
+
             return "brand/item/update";
         }
 
