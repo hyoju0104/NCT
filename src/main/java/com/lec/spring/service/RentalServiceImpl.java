@@ -3,6 +3,7 @@ package com.lec.spring.service;
 import com.lec.spring.domain.Rental;
 import com.lec.spring.repository.RentalRepository;
 import com.lec.spring.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

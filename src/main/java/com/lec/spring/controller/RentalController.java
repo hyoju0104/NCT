@@ -28,7 +28,7 @@ public class RentalController {
         Long brandId = (Long) session.getAttribute("brandId");
         System.out.println("세션 brandId = " + brandId);
 
-        List<Rental> rentals = rentalService.getRentalsByBrandId(brandId);
+        List<Rental> rentals = rentalService.findRentalsByBrandId(brandId);
 //        System.out.println("렌탈 수 = " + rentals.size());
 //        for (Rental r : rentals) {
 //            System.out.println("렌탈 ID = " + r.getId() + ", 아이템명 = " + r.getItem().getName());

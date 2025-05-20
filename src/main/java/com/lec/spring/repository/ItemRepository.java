@@ -1,6 +1,7 @@
 package com.lec.spring.repository;
 
 import com.lec.spring.domain.Item;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

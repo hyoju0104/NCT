@@ -80,14 +80,14 @@ public class OrderController {
         User loginUser = principal.getUser();
         Item item = itemService.detail(id);
 
+        // Rental 생성
         Rental rental = new Rental();
-        rental.setUser(loginUser);
-        rental.setItem(item);
+        rental.setUser(principal.getUser());
+        rental.setItem(itemService.detail(id));
         rental.setStatus("RENTED");
-        rentalService.createRental(rental);
 
-        int updateResult = itemService.markAsUnavailable(id);
-        System.out.println(">> markAsUnavailable 결과: " + updateResult);
+        // 저장 + available_count -1 처리
+        rentalService.rentItem(rental);
 
         return "redirect:/order/complete/" + id;
     }
