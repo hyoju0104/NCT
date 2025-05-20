@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.AdminUsersRepository">
+
+    <!-- User.plan_id 기준 회원 수 집계 -->
+    <select id="countUsersByPlan" resultType="map">
+        SELECT p.type   AS planType,
+               COUNT(*) AS cnt
+        FROM `User` u,
+             `Plan` p
+        WHERE u.plan_id = p.id
+        GROUP BY p.type
+    </select>
+
+    <!-- Rental.status 기준 회원 수 집계 -->
+    <select id="countUsersRentalStatus" resultType="map">
+        SELECT status,
+               COUNT(DISTINCT user_id) AS cnt
+        FROM Rental
+        GROUP BY status
+    </select>
+
+    <!-- Brand.id 별 대여 건수 집계 -->
+    <select id="countRentalByBrand" resultType="map">
+        SELECT b.name   AS brandName,
+               COUNT(*) AS cnt
+        FROM Rental r,
+             Item i,
+             Brand b
+        WHERE r.item_id = i.id
+          AND i.brand_id = b.id
+        GROUP BY b.name
+    </select>
+
+    <!-- 정지된 회원 목록 (user + overdue days + 상태) -->
+    <select id="findInactiveUsers" resultType="map">
+        SELECT u.id       AS userId,
+               u.username AS username,
+               CASE
+                   WHEN r.returned_at IS NULL
+                       THEN DATEDIFF(now(), r.return_due_at)
+                   ELSE
+                       DATEDIFF(r.returned_at, r.return_due_at)
+                   END    AS overdueDate,
+               r.status   AS status,
+               i.name     AS itemName
+        FROM Rental r,
+             User u,
+             Item i
+        WHERE r.user_id = u.id
+          AND r.item_id = i.id
+          AND u.status_account = 'INACTIVE'
+          AND r.status = 'OVERDUE'
+    </select>
+
+</mapper>
