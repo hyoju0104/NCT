@@ -168,4 +168,11 @@ public class UserServiceImpl implements UserService {
         userRepository.updateUserPhoneNum(user);
     }
 
+    @Override
+    @Transactional
+    public void updateStatusPlan(Long userId, Long paidId) {
+        userRepository.updateStatusPlan(userId, paidId);
+        userRepository.updatePaidAt(userId);
+    }
+
 }

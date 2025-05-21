@@ -180,11 +180,14 @@ public class UserController {
             // 1. planId만 따로 업데이트
             userService.updateUserPlanId(id, planId);
 
-            // 2. 결제 처리
-            userService.createPayment(id);
+        // 2. 결제 처리
+        userService.createPayment(id);
 
-            return "redirect:/user/mypage/detail";
-        }
+        // 3. status_plan 업데이트
+        userService.updateStatusPlan(id, planId);
+
+        return "redirect:/user/mypage/detail";
+    }
 
 
         @GetMapping("/mypage/point")
