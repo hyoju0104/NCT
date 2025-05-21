@@ -152,5 +152,15 @@ public class UserServiceImpl implements UserService {
     public void inactivateUser(Long userId) {
         userRepository.updateStatusAccount(userId, "INACTIVE");
     }
-
+    
+    @Override
+    public void updateUserAddress(User user) {
+        userRepository.updateUserAddress(user);
+    }
+    
+    @Override
+    public void updateUserPhoneNum(User user) {
+        userRepository.updateUserPhoneNum(user);
+    }
+    
 }

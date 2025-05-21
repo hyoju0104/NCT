@@ -27,7 +27,9 @@ public class User {
 	private String name;
 	private String phoneNum;
 	private String email;
+	private String zipcode;
 	private String address;
+	private String addressDetail;
 	private Integer point;
 	
 	private String provider;
