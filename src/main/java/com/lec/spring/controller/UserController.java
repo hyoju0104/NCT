@@ -7,6 +7,7 @@ import com.lec.spring.service.PaymentService;
 import com.lec.spring.service.PostService;
 import com.lec.spring.service.RentalService;
 import com.lec.spring.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/user")
@@ -53,12 +55,11 @@ public class UserController {
     }
 
 
-
     @GetMapping("/mypage/detail")
     public void showMyPage(
             @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, //로그인한 사용자 정보 가져오기
             Model model //뷰에 데이터 넘기기 위함
-            ){
+    ) {
         //로그인한 사용자 정보 가져오기
         Long id = principalUserDetails.getUser().getId();
         User user = userService.findById(id);
@@ -66,7 +67,7 @@ public class UserController {
         if (user.getPlanId() != null) {
             Plan plan = planRepository.findByPlanId(user.getPlanId());
             user.setPlan(plan);
-        }else {
+        } else {
             user.setPlan(new Plan()); //NPE방지
         }
 
@@ -110,10 +111,8 @@ public class UserController {
         model.addAttribute("remainingCnt", remainingCnt);
 
 
-
         List<Post> myPosts = postService.findByUserId(user.getId());
         model.addAttribute("myPosts", myPosts);
-
 
 
         model.addAttribute("user", user);
@@ -151,69 +150,85 @@ public class UserController {
     }
 
 
-
     @GetMapping("/payment")
-    public void paymentForm() {}
-
-    @PostMapping("/payment")
-    public String submitPayment(
-            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
-            @RequestParam("planId") Long planId
-    ) {
-        Long id = principalUserDetails.getUser().getId();
-
-        // 1. planId만 따로 업데이트
-        userService.updateUserPlanId(id, planId);
-
-        // 2. 결제 처리
-        userService.createPayment(id);
-
-        return "redirect:/user/mypage/detail";
+    public String paymentForm(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
+                              RedirectAttributes redirectAttrs) {
+        User user = userService.findById(principalUserDetails.getUser().getId());
+        Payment payment = paymentService.findLatestByUserId(user.getId());
+        if (payment != null && payment.getPaidAt().plusDays(30).isAfter(LocalDateTime.now())) {
+            redirectAttrs.addFlashAttribute("error", "구독 만료 후에만 변경 가능합니다.");
+            return "redirect:/user/mypage/detail";
+        }
+        return "user/payment";
     }
 
+        @PostMapping("/payment")
+        public String submitPayment (
+                @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
+                @RequestParam("planId") Long planId,
+                HttpServletRequest request,
+                RedirectAttributes redirectAttrs
+    ){
+            Long id = principalUserDetails.getUser().getId();
 
-    @GetMapping("/mypage/point")
-    public void pointRefundForm(
-            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
-            Model model
-    ) {
-        User user = userService.findById(principalUserDetails.getUser().getId());
-        model.addAttribute("user", user);
-        model.addAttribute("refundForm", new RefundForm());
-    }
+            Payment payment = paymentService.findLatestByUserId(id);
+            if (payment != null
+                    && payment.getPaidAt().plusDays(30).isAfter(LocalDateTime.now())) {
+                    redirectAttrs.addFlashAttribute("error", "구독 만료 후에만 변경 가능합니다.");
+                return "redirect:/user/mypage/detail";
+            }
+            // 1. planId만 따로 업데이트
+            userService.updateUserPlanId(id, planId);
 
-    @PostMapping("/mypage/point")
-    public String refundPoint(
-            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
-            @Valid @ModelAttribute("refundForm") RefundForm refundForm,
-            BindingResult bindingResult,
-            RedirectAttributes redirectAttributes,
-            Model model
-    ) {
-        User user = userService.findById(principalUserDetails.getUser().getId());
-        model.addAttribute("user", user);
+            // 2. 결제 처리
+            userService.createPayment(id);
 
-        if (bindingResult.hasErrors()) {
-            return "user/mypage/point";
+            return "redirect:/user/mypage/detail";
         }
 
-        Integer amount = refundForm.getAmount();
 
-        if (user.getPoint() == null || user.getPoint() < amount) {
-            redirectAttributes.addFlashAttribute("error", "포인트가 부족합니다.");
+        @GetMapping("/mypage/point")
+        public void pointRefundForm (
+                @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
+                Model model
+    ){
+            User user = userService.findById(principalUserDetails.getUser().getId());
+            model.addAttribute("user", user);
+            model.addAttribute("refundForm", new RefundForm());
+        }
+
+        @PostMapping("/mypage/point")
+        public String refundPoint (
+                @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
+                @Valid @ModelAttribute("refundForm") RefundForm refundForm,
+                BindingResult bindingResult,
+                RedirectAttributes redirectAttributes,
+                Model model
+    ){
+            User user = userService.findById(principalUserDetails.getUser().getId());
+            model.addAttribute("user", user);
+
+            if (bindingResult.hasErrors()) {
+                return "user/mypage/point";
+            }
+
+            Integer amount = refundForm.getAmount();
+
+            if (user.getPoint() == null || user.getPoint() < amount) {
+                redirectAttributes.addFlashAttribute("error", "포인트가 부족합니다.");
+                return "redirect:/user/mypage/point";
+            }
+
+            try {
+                userService.refundPoint(user.getId(), amount);
+                user.setPoint(user.getPoint() - amount);
+                redirectAttributes.addFlashAttribute("success", "환급 요청이 정상적으로 처리되었습니다.");
+            } catch (IllegalArgumentException e) {
+                redirectAttributes.addFlashAttribute("error", e.getMessage());
+            }
+
             return "redirect:/user/mypage/point";
-        }
 
-        try {
-            userService.refundPoint(user.getId(), amount);
-            user.setPoint(user.getPoint() - amount);
-            redirectAttributes.addFlashAttribute("success", "환급 요청이 정상적으로 처리되었습니다.");
-        } catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-
-        return "redirect:/user/mypage/point";
 
     }
-
-}
