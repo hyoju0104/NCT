@@ -32,9 +32,9 @@
 				<p th:text="${planNullError}">요금제를 구독해 주세요.</p>
 			</div>
 			
-			<input type="hidden" name="id" th:value="${user.id}"/>
-			<input type="hidden" name="username" th:value="${user.username}"/>
-			<input type="hidden" name="name" th:value="${user.name}"/>
+			<input type="hidden" th:field="*{id}"/>
+			<input type="hidden" th:field="*{username}"/>
+			<input type="hidden" th:field="*{name}"/>
 			
 			<!-- 사용자 정보 섹션 -->
 			<div class="order-section">

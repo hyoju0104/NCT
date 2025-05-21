@@ -104,4 +104,20 @@
     </update>
 
 
+    <!-- 주소 수정 전용 -->
+    <update id="updateUserAddress" parameterType="com.lec.spring.domain.User">
+        UPDATE User
+        SET zipcode = #{zipcode},
+            address = #{address},
+            address_detail = #{addressDetail}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 연락처 전용 -->
+    <update id="updateUserPhoneNum" parameterType="com.lec.spring.domain.User">
+        UPDATE User
+        SET phone_num = #{phoneNum}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

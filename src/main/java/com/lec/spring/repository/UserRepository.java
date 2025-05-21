@@ -30,4 +30,11 @@ public interface UserRepository {
 
     // 회원 상태(status_account) 업데이트
     void updateStatusAccount(@Param("userId") Long userId, @Param("status") String status);
+    
+    // 주소 업데이트
+    void updateUserAddress(User user);
+    
+    // 연락처 업데이트
+    void updateUserPhoneNum(User user);
+    
 }

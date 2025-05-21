@@ -17,77 +17,73 @@
 	
 	<!-- 회원가입 폼 -->
 	<div class="login-container"></div>
-		<h2>회원가입</h2>
-		<p class="subheading">WEAR UP TO LEVEL UP</p>
-
-		<form th:action="@{/register/user}" th:object="${user}" method="post">
+	<h2>회원가입</h2>
+	<p class="subheading">WEAR UP TO LEVEL UP</p>
+	
+	<form th:action="@{/register/user}" th:object="${user}" method="post">
 		<!-- th:object="${user}" >> 컨트롤러에서 모델에 담은 User 객체를 기준객체로 삼겠다 -->
-			<div class="form-group">
-				<label for="username">아이디 *</label>
-				<input type="text" id="username" th:field="*{username}">
-				<!-- *{username} >> 사용자가 입력한 값이 user.setUsername(...) 으로 들어감-->
-				<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
-				<!-- th:errors="*{username}" → UserValidator에서 errors.rejectValue("username", "메시지")로 넘긴 메시지 표시-->
-			</div>
-			<div class="form-group">
-				<label for="password">비밀번호 *</label>
-				<input type="password" id="password" th:field="*{password}">
-				<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-			</div>
-
-			<div class="form-group">
-				<label for="rePassword">비밀번호 확인 *</label>
-				<input type="password" id="rePassword" th:field="*{rePassword}">
-				<div th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}"></div>
-			</div>
-
-			<div class="form-group">
-				<label for="name">이름 *</label>
-				<input type="text" id="name" th:field="*{name}">
-				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-			</div>
-
-			<div class="form-group">
-				<label for="email">이메일</label>
-				<input type="email" id="email" th:field="*{email}">
-				<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-			</div>
-
-			<div class="form-group">
-				<label for="phoneNum">전화번호</label>
-				<input type="tel" id="phoneNum" th:field="*{phoneNum}">
-				<div th:if="${#fields.hasErrors('phoneNum')}" th:errors="*{phoneNum}"></div>
-			</div>
-
-			<div class="form-group" data-type="zipcode">
-				<label for="zipcode">우편번호</label>
-				<input type="text" id="zipcode" name="zipcode">
-				<button type="button" onclick="searchAddress()">주소 찾기</button>
-			</div>
-
-			<div class="form-group">
-				<label for="address">주소</label>
-				<input type="text" id="address" th:field="*{address}">
-			</div>
-
-			<div class="form-group">
-				<label for="addressDetail">상세 주소</label>
-				<input type="text" id="addressDetail" name="addressDetail">
-			</div>
-
-			<button type="submit" class="login-btn">회원가입</button>
-		</form>
-
+		<div class="form-group">
+			<label for="username">아이디 *</label>
+			<input type="text" id="username" th:field="*{username}">
+			<!-- *{username} >> 사용자가 입력한 값이 user.setUsername(...) 으로 들어감-->
+			<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+			<!-- th:errors="*{username}" → UserValidator에서 errors.rejectValue("username", "메시지")로 넘긴 메시지 표시-->
+		</div>
+		<div class="form-group">
+			<label for="password">비밀번호 *</label>
+			<input type="password" id="password" th:field="*{password}">
+			<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+		</div>
+		
+		<div class="form-group">
+			<label for="rePassword">비밀번호 확인 *</label>
+			<input type="password" id="rePassword" th:field="*{rePassword}">
+			<div th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}"></div>
+		</div>
+		
+		<div class="form-group">
+			<label for="name">이름 *</label>
+			<input type="text" id="name" th:field="*{name}">
+			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+		</div>
+		
+		<div class="form-group">
+			<label for="email">이메일</label>
+			<input type="email" id="email" th:field="*{email}">
+			<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+		</div>
+		
+		<div class="form-group">
+			<label for="phoneNum">전화번호</label>
+			<input type="tel" id="phoneNum" th:field="*{phoneNum}">
+			<div th:if="${#fields.hasErrors('phoneNum')}" th:errors="*{phoneNum}"></div>
+		</div>
+		
+		<div class="form-group" data-type="zipcode">
+			<label for="zipcode">우편번호</label>
+			<input type="text" id="zipcode" name="zipcode">
+			<button type="button" onclick="searchAddress()">주소 찾기</button>
+		</div>
+		
+		<div class="form-group">
+			<label for="address">주소</label>
+			<input type="text" id="address" th:field="*{address}">
+		</div>
+		
+		<div class="form-group">
+			<label for="addressDetail">상세 주소</label>
+			<input type="text" id="addressDetail" name="addressDetail">
+		</div>
+		
+		<button type="submit" class="login-btn">회원가입</button>
+	</form>
+	
 	<div class="register-link">
 		<p>이미 계정이 있으신가요? <a th:href="@{/login}">로그인</a></p>
 	</div>
-
-	<!-- 나중에 카카오 주소 API 연결할 script 자리 -->
-	<script>
-		function searchAddress() {
-			alert('주소 검색 API 연결 예정');
-		}
-	</script>
+	
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script th:src="@{/js/address.js}"></script>
 
 </body>
 </html>
