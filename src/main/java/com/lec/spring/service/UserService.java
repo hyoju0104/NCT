@@ -33,5 +33,11 @@ public interface UserService {
     void markAsDeleted(Long userId);
 
     void inactivateUser(Long userId);
+    
+    // 주소 업데이트
+    void updateUserAddress(User user);
+    
+    // 전화번호 업데이트
+    void updateUserPhoneNum(User user);
 
 }
