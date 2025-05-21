@@ -3,12 +3,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (rentBtn) {
         rentBtn.addEventListener("click", function (e) {
-            if (typeof planId === "undefined" || planId === null) {
-                e.preventDefault();
-                alert("대여는 구독한 사용자만 가능합니다.");
+            e.preventDefault();
+
+            const itemId = this.dataset.id;
+            const planStatus = this.dataset.planStatus;
+
+            if (!planStatus || planStatus === "INACTIVE") {
+                alert("구독 이용자만 대여가 가능합니다.");
                 window.location.href = "/user/payment";
             } else {
-                window.location.href = "/order/detail/" + rentBtn.getAttribute("data-id");
+                window.location.href = "/order/detail/" + itemId;
             }
         });
     }

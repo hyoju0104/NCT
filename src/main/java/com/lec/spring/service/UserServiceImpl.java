@@ -157,4 +157,12 @@ public class UserServiceImpl implements UserService {
     public String findUserStatus(Long userId) {
         return userRepository.findStatusAccountById(userId);
     }
+
+    @Override
+    @Transactional
+    public void updateStatusPlan(Long userId, Long paidId) {
+        userRepository.updateStatusPlan(userId, paidId);
+        userRepository.updatePaidAt(userId);
+    }
+
 }

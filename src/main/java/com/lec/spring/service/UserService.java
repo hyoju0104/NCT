@@ -36,4 +36,7 @@ public interface UserService {
 
     String findUserStatus(Long userId);
 
+    void updateStatusPlan(Long userId, Long paidId);
+
+
 }

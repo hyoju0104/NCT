@@ -168,6 +168,9 @@ public class UserController {
         // 2. 결제 처리
         userService.createPayment(id);
 
+        // 3. status_plan 업데이트
+        userService.updateStatusPlan(id, planId);
+
         return "redirect:/user/mypage/detail";
     }
 

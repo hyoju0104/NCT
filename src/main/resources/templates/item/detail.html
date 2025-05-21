@@ -69,9 +69,8 @@
             <div class="rental-action">
                 <a href="#" id="rentBtn"
                    th:if="${item.isAvailable and accountStatus != 'INACTIVE'}"
-                   th:attr="data-id=${item.id}"
+                   th:attr="data-id=${item.id}, data-plan-status=${statusPlan}"
                    class="rental-btn">대여하기</a>
-
 
                 <button th:if="${!item.isAvailable}" class="rental-btn disabled" disabled>대여 불가</button>
 
@@ -87,9 +86,6 @@
     </div>
 </div>
 
-<script th:inline="javascript">
-    const planId = /*[[${planId}]]*/ null;
-</script>
 <script th:src="@{/js/item-detail.js}"></script>
 
 

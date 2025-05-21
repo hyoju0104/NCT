@@ -99,4 +99,11 @@
         SELECT status_account FROM user WHERE id = #{id}
     </select>
 
+    <update id="updateStatusPlan">
+        UPDATE user
+        SET plan_id = #{planId},
+            status_plan = 'ACTIVE'
+        WHERE id = #{id}
+    </update>
+
 </mapper>

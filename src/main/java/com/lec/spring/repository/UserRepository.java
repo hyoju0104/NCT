@@ -33,6 +33,7 @@ public interface UserRepository {
 
     String findStatusAccountById(Long id);
 
+    void updateStatusPlan(@Param("id") Long id, @Param("planId") Long planId);
 
 }
 
