@@ -18,7 +18,7 @@
     <h2>회원정보 수정</h2>
     <p class="subheading">WEAR UP TO LEVEL UP</p>
 
-    <form th:action="@{/user/mypage/update}" th:object="${user}" method="post">
+    <form th:action="@{/user/mypage/update}" th:object="${user}" method="post" onsubmit="combineAddress(this)">
         <input type="hidden" th:field="*{id}" />
 
         <!-- ✅ 글로벌 에러 메시지 출력 -->
@@ -71,6 +71,11 @@
             <label for="address">주소</label>
             <input type="text" id="address" th:field="*{address}" placeholder="주소를 입력하세요">
         </div>
+        <!-- 상세주소 -->
+        <div class="form-group">
+            <label for="detailAddress">상세주소</label>
+            <input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소를 입력하세요">
+        </div>
 
         <!-- 주소 수정 버튼 -->
         <div class="form-group">
@@ -95,6 +100,13 @@
             }
         }).open();
     }
+    function combineAddress(form) {
+        const addr = form.address.value;
+        const detail = form.detailAddress.value.trim();
+        form.address.value = detail ? `${addr} ${detail}` : addr;
+    }
+
+
 </script>
 </body>
 </html>
