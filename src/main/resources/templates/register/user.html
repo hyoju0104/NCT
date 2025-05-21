@@ -20,7 +20,7 @@
 	<h2>회원가입</h2>
 	<p class="subheading">WEAR UP TO LEVEL UP</p>
 	
-	<form th:action="@{/register/user}" th:object="${user}" method="post">
+	<form th:action="@{/register/user}" th:object="${user}" method="post" onsubmit="alert('회원가입이 완료되었습니다. 로그인 화면으로 이동합니다.'); return true;">
 		<!-- th:object="${user}" >> 컨트롤러에서 모델에 담은 User 객체를 기준객체로 삼겠다 -->
 		<div class="form-group">
 			<label for="username">아이디 *</label>
