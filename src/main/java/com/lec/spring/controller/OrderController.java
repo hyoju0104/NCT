@@ -49,7 +49,9 @@ public class OrderController {
 		
 		model.addAttribute("item", item);
 		model.addAttribute("attachment", attachment);
-		model.addAttribute("user", principal.getUser());
+		
+		User nowUser = userService.findById(principal.getUser().getId());
+		model.addAttribute("user", nowUser);
 		
 		return "order/detail";
 	}
