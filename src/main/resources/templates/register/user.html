@@ -26,37 +26,37 @@
 			<label for="username">아이디 *</label>
 			<input type="text" id="username" th:field="*{username}">
 			<!-- *{username} >> 사용자가 입력한 값이 user.setUsername(...) 으로 들어감-->
-			<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+			<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="field-error"></div>
 			<!-- th:errors="*{username}" → UserValidator에서 errors.rejectValue("username", "메시지")로 넘긴 메시지 표시-->
 		</div>
 		<div class="form-group">
 			<label for="password">비밀번호 *</label>
 			<input type="password" id="password" th:field="*{password}">
-			<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+			<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="field-error"></div>
 		</div>
 		
 		<div class="form-group">
 			<label for="rePassword">비밀번호 확인 *</label>
 			<input type="password" id="rePassword" th:field="*{rePassword}">
-			<div th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}"></div>
+			<div th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}" class="field-error"></div>
 		</div>
 		
 		<div class="form-group">
 			<label for="name">이름 *</label>
 			<input type="text" id="name" th:field="*{name}">
-			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="field-error"></div>
 		</div>
 		
 		<div class="form-group">
 			<label for="email">이메일</label>
 			<input type="email" id="email" th:field="*{email}">
-			<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+			<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="field-error"></div>
 		</div>
 		
 		<div class="form-group">
 			<label for="phoneNum">전화번호</label>
 			<input type="tel" id="phoneNum" th:field="*{phoneNum}">
-			<div th:if="${#fields.hasErrors('phoneNum')}" th:errors="*{phoneNum}"></div>
+			<div th:if="${#fields.hasErrors('phoneNum')}" th:errors="*{phoneNum}" class="field-error"></div>
 		</div>
 		
 		<div class="form-group" data-type="zipcode">
