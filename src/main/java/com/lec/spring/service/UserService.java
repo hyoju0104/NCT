@@ -40,4 +40,6 @@ public interface UserService {
     // 전화번호 업데이트
     void updateUserPhoneNum(User user);
 
+    String findUserStatus(Long userId);
+
 }
