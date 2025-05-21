@@ -18,7 +18,7 @@
     <h2>회원정보 수정</h2>
     <p class="subheading">WEAR UP TO LEVEL UP</p>
 
-    <form th:action="@{/user/mypage/update}" th:object="${user}" method="post">
+    <form th:action="@{/user/mypage/update}" th:object="${user}" method="post" onsubmit="combineAddress(this)">
         <input type="hidden" th:field="*{id}" />
 
         <!-- ✅ 글로벌 에러 메시지 출력 -->
@@ -72,10 +72,19 @@
             <input type="text" id="address" th:field="*{address}" placeholder="주소를 입력하세요">
         </div>
 
-        <!-- 주소 수정 버튼 -->
-        <div class="form-group">
-            <button type="button" onclick="execDaumPostcode()" class="login-btn">주소 수정</button>
+        <div class="form-group" data-type="zipcode">
+            <label th:for="zipcode">우편번호</label>
+            <input type="text" th:field="*{zipcode}" placeholder="우편번호" readonly>
+            <button type="button" onclick="execDaumPostcode()">주소 수정</button>
+            <div th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" class="field-error"></div>
         </div>
+
+        <!-- 상세주소 -->
+        <div class="form-group">
+            <label for="detailAddress">상세주소</label>
+            <input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소를 입력하세요">
+        </div>
+
 
 
     <button type="submit" class="login-btn">수정 완료</button>
@@ -91,10 +100,21 @@
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
+                document.getElementById('zipcode').value = data.zonecode;
                 document.getElementById('address').value = data.address;
             }
         }).open();
     }
+    function combineAddress(form) {
+        const zip    = form.zipcode.value;
+        const addr = form.address.value;
+        const detail = form.detailAddress.value.trim();
+        form.address.value = detail
+            ? '[' + zip + '] ' + addr + ' ' + detail
+            : '[' + zip + '] ' + addr;
+    }
+
+
 </script>
 </body>
 </html>

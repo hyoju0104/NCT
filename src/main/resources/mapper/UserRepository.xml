@@ -47,12 +47,11 @@
                 #{statusAccount}, #{rentalCnt})
     </insert>
 
-
     <update id="updateUserInfo" parameterType="com.lec.spring.domain.User">
         UPDATE user
-        SET name      = #{name},
+        SET name = #{name},
             phone_num = #{phoneNum},
-            password  = #{password},
+            password = #{password}
             address   = #{address}
         WHERE id = #{id}
     </update>
@@ -69,7 +68,6 @@
         WHERE id = #{id}
     </update>
 
-
     <update id="refundPoint">
         UPDATE user
         SET point = point - #{amount}
@@ -78,12 +76,8 @@
     </update>
 
     <update id="addPoint">
-        UPDATE user
-        SET point = point + #{amount}
-        WHERE id = #{id}
+        UPDATE user SET point = point + #{amount} WHERE id = #{id}
     </update>
-
-
     <update id="increaseRentalCount" parameterType="long">
         UPDATE User
         SET rental_cnt = rental_cnt + 1
@@ -99,11 +93,14 @@
 
     <!-- 회원 상태(status_account) 복구 -->
     <update id="updateStatusAccount">
-        UPDATE User
+        UPDATE user
         SET status_account = #{status}
         WHERE id = #{userId}
     </update>
 
+    <select id="findStatusAccountById" resultType="string">
+        SELECT status_account FROM user WHERE id = #{id}
+    </select>
 
     <!-- 주소 수정 전용 -->
     <update id="updateUserAddress" parameterType="com.lec.spring.domain.User">

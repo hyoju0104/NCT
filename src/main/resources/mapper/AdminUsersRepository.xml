@@ -53,7 +53,8 @@
         WHERE r.user_id = u.id
           AND r.item_id = i.id
           AND u.status_account = 'INACTIVE'
-          AND r.status = 'OVERDUE'
+          AND r.status = 'RETURNED'
+          AND r.status not like 'OVERDUE'
     </select>
 
 </mapper>
