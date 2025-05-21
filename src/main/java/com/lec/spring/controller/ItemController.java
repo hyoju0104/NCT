@@ -67,10 +67,15 @@ public class ItemController {
         if (principal != null) {
             Long userId = principal.getUser().getId();
             String status = userService.findUserStatus(userId);
+
             model.addAttribute("accountStatus", status);
+            model.addAttribute("planId", principal.getUser().getPlanId());
+        } else {
+            model.addAttribute("planId", null);
         }
 
         return "item/detail";
     }
+
 
 }

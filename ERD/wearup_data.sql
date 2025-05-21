@@ -87,7 +87,8 @@ VALUES (1, 'brand1-바지1', '하의', true, 'A', true, '"brand1" 브랜드의 "
        (2, 'brand2-아우터1', '아우터', true, 'C', true, '"brand2" 브랜드의 "아우터1" 상품입니다.'),
        (2, 'brand2-긴팔1', '상의', false, 'B', true, '"brand2" 브랜드의 "긴팔1" 상품입니다'),
        (3, 'brand3-아우터1', '아우터', true, 'B', false, '"brand3" 브랜드의 "아우터1" 상품입니다'),
-       (3, 'brand3-잡화1', '잡화', true, 'B', false, '"brand3" 브랜드의 "잡화1" 상품입니다')
+       (3, 'brand3-잡화1', '잡화', true, 'B', false, '"brand3" 브랜드의 "잡화1" 상품입니다'),
+       (6, 'cccccccccccccc', '아우터', false, 'B', true, 'ccccccccccccccccc')
 ;
 
 INSERT INTO Rental(Rental.user_id, Rental.item_id, return_due_at, status)
@@ -100,7 +101,8 @@ VALUES (2, 1, '2025-05-10 17:40:00', 'RENTED'),
        (3, 6, '2025-04-15 17:40:00', 'OVERDUE'),
        (4, 7, '2025-01-17 17:40:00', 'RENTED'),
        (4, 8, '2025-01-22 17:40:00', 'RETURNED'),
-       (4, 9, '2025-03-15 17:40:00', 'OVERDUE')
+       (4, 9, '2025-03-15 17:40:00', 'OVERDUE'),
+       (5, 27, '2025-03-15 17:40:00', 'OVERDUE')
 ;
 
 -- 포인트 조회 기능 확인용 샘플 데이터

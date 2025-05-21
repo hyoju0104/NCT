@@ -64,19 +64,6 @@ public class OrderController {
                                 Model model,
                                 RedirectAttributes redirectAttributes) {
 
-        User loginUser = principal.getUser();
-        // 대여 가능 조건 검사
-        if (!"ACTIVE".equals(loginUser.getStatusAccount())) {
-            redirectAttributes.addFlashAttribute("inactiveError", "계정 비활성화 상태입니다.");
-            return "redirect:/order/detail/" + id;
-        }
-        if(loginUser.getPlanId() == null) {
-            redirectAttributes.addFlashAttribute("planNullError", "요금제를 구독해 주세요.");
-            return "redirect:/order/detail/" + id;
-
-        }
-
-
         orderValidator.validate(user, result);
 
         if (result.hasErrors()) {

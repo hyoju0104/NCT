@@ -67,9 +67,11 @@
 
             <!-- 대여 버튼 영역 -->
             <div class="rental-action">
-                <a th:if="${item.isAvailable and accountStatus != 'INACTIVE'}"
-                   th:href="@{'/order/detail/' + ${item.id}}"
+                <a href="#" id="rentBtn"
+                   th:if="${item.isAvailable and accountStatus != 'INACTIVE'}"
+                   th:attr="data-id=${item.id}"
                    class="rental-btn">대여하기</a>
+
 
                 <button th:if="${!item.isAvailable}" class="rental-btn disabled" disabled>대여 불가</button>
 
@@ -84,5 +86,12 @@
         <a href="/item/list" class="btn-outline">목록으로</a>
     </div>
 </div>
+
+<script th:inline="javascript">
+    const planId = /*[[${planId}]]*/ null;
+</script>
+<script th:src="@{/js/item-detail.js}"></script>
+
+
 </body>
 </html>
