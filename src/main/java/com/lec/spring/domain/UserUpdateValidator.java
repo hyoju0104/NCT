@@ -29,5 +29,15 @@ public class UserUpdateValidator implements Validator {
         } else if (!user.getPassword().equals(user.getRePassword())) {
             errors.rejectValue("rePassword", null, "비밀번호가 일치하지 않습니다.");
         }
+
+        // 전화번호 검증: 숫자와 하이픈(-)만 허용
+        if (user.getPhoneNum() == null || user.getPhoneNum().trim().isEmpty()) {
+            errors.rejectValue("phoneNum", null, "전화번호는 필수입니다.");
+        } else {
+            String phone = user.getPhoneNum().trim();
+            if (!phone.matches("[0-9\\-]+")) {
+                errors.rejectValue("phoneNum", null, "전화번호는 숫자와 하이픈(-)만 입력 가능합니다.");
+            }
+        }
     }
 }

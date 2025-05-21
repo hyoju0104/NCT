@@ -40,6 +40,12 @@ public class UserValidator implements Validator {
         // 전화번호
         if (user.getPhoneNum() == null || user.getPhoneNum().trim().isEmpty()) {
             errors.rejectValue("phoneNum", null, "전화번호는 필수입니다.");
+        }else {
+            // 숫자와 하이픈(-)만 허용
+            String phone = user.getPhoneNum().trim();
+            if (!phone.matches("[0-9\\-]+")) {
+                errors.rejectValue("phoneNum", null, "전화번호는 숫자와 하이픈(-)만 입력 가능합니다.");
+            }
         }
 
         // 비밀번호
