@@ -7,6 +7,7 @@ import com.lec.spring.service.PaymentService;
 import com.lec.spring.service.PostService;
 import com.lec.spring.service.RentalService;
 import com.lec.spring.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -128,10 +129,10 @@ public class UserController {
 
     @GetMapping("/mypage/update")
     public void updateForm(
-            @AuthenticationPrincipal PrincipalUserDetails PrincipalUserDetails,
+            @AuthenticationPrincipal PrincipalUserDetails principal,
             Model model
     ) {
-        User user = userService.findById(PrincipalUserDetails.getUser().getId());
+        User user = userService.findById(principal.getUser().getId());
         model.addAttribute("user", user);
     }
 
@@ -148,6 +149,7 @@ public class UserController {
         return "redirect:/user/mypage/detail";
 
     }
+
 
 
     @GetMapping("/payment")
