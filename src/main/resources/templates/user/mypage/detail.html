@@ -125,6 +125,45 @@
             </div>
         </div>
     </section>
+    <!-- 7. 내가 작성한 게시물 목록 -->
+    <section class="info-section">
+        <h2 class="section-title">내가 작성한 게시물</h2>
+        <div class="table-container">
+            <table class="my-post-table">
+                <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>작성일시</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post, iterStat : ${myPosts}">
+                    <td>
+                        <a th:href="@{/post/detail/{id}(id=${post.id})}"
+                           th:text="'게시물 ' + ${iterStat.count}">
+                            게시물 1
+                        </a>
+                    </td>
+                    <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">
+                        2025-05-20 16:00
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(myPosts)}" class="no-hover">
+                    <td colspan="2" class="empty-message">작성한 게시물이 없습니다.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 8. 계정 상태 -->
+    <section class="info-section">
+        <h2 class="section-title">계정 관리</h2>
+        <form th:action="@{/user/withdraw}" method="post" onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
+            <button type="submit" class="login-btn danger">탈퇴하기</button>
+        </form>
+    </section>
+
 
 </main>
 

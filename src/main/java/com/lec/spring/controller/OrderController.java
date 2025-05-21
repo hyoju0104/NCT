@@ -65,15 +65,17 @@ public class OrderController {
                                 RedirectAttributes redirectAttributes) {
 
         User loginUser = principal.getUser();
-
+        // 대여 가능 조건 검사
         if (!"ACTIVE".equals(loginUser.getStatusAccount())) {
             redirectAttributes.addFlashAttribute("inactiveError", "계정 비활성화 상태입니다.");
             return "redirect:/order/detail/" + id;
         }
-        if (loginUser.getPlanId() == null) {
+        if(loginUser.getPlanId() == null) {
             redirectAttributes.addFlashAttribute("planNullError", "요금제를 구독해 주세요.");
             return "redirect:/order/detail/" + id;
+
         }
+
 
         orderValidator.validate(user, result);
 
@@ -95,19 +97,20 @@ public class OrderController {
             return "order/detail";
         }
 
-        // 대여 처리
         Item item = itemService.detail(id);
 
+        // Rental 생성
         Rental rental = new Rental();
         rental.setUser(principal.getUser());
         rental.setItem(item);
         rental.setStatus("RENTED");
 
+        // 저장 + available_count -1 처리
         rentalService.rentItem(rental);
         itemService.markAsUnavailable(item.getId());
 
+
         return "redirect:/order/complete/" + id;
     }
-
 
 }

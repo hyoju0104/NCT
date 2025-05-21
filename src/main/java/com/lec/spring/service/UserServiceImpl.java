@@ -144,6 +144,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void markAsDeleted(Long userId) {
+        userRepository.updateStatusToDeleted(userId);
+    }
+
+    @Override
     public void inactivateUser(Long userId) {
         userRepository.updateStatusAccount(userId, "INACTIVE");
     }

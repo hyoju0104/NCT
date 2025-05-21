@@ -159,7 +159,6 @@ body {
     color: #222222;
     margin-bottom: 20px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #f0f0f0;
 }
 
 .info-item {
@@ -331,11 +330,7 @@ body {
     position: relative;
 }
 
-/* 필수 항목에 * 표시가 이미 있는 경우 스타일링 */
-.form-group label:has-text("*")::after {
-    color: #ff4444;
-    font-weight: 600;
-}
+
 
 @media (max-width: 768px) {
     .header-nav {
@@ -382,166 +377,4 @@ body {
     .rental-count-divider {
         transform: rotate(90deg);
     }
-}
-
-/* 플랜 카드 스타일 */
-.plan-card {
-    flex: 1;
-    min-width: 250px;
-    max-width: 300px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    padding: 24px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.plan-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    border-color: #d0d0d0;
-}
-
-.plan-card.selected {
-    border: 2px solid #222222;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* 플랜 헤더 */
-.plan-header {
-    text-align: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.plan-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #222222;
-    margin-bottom: 8px;
-}
-
-.plan-price {
-    font-size: 28px;
-    font-weight: 700;
-    color: #1976d2;
-}
-
-.price-period {
-    font-size: 14px;
-    color: #888888;
-    font-weight: 400;
-}
-
-/* 플랜 기능 목록 */
-.plan-features ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.plan-features li {
-    position: relative;
-    padding-left: 24px;
-    margin-bottom: 12px;
-    color: #666666;
-    font-size: 14px;
-}
-
-.plan-features li::before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    color: #1976d2;
-    font-weight: 700;
-}
-
-/* 플랜 배지 */
-.plan-badge {
-    position: absolute;
-    top: 12px;
-    right: -30px;
-    transform: rotate(45deg);
-    background-color: #1976d2;
-    color: white;
-    padding: 5px 40px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.plan-badge.popular {
-    background-color: #f44336;
-}
-
-/* 결제 버튼 */
-.payment-btn {
-    margin-top: 20px;
-    font-size: 18px;
-    height: 56px;
-}
-
-.payment-btn:hover {
-    background-color: #000000;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* 액션 버튼 */
-.action-btn {
-    display: inline-block;
-    padding: 10px 16px;
-    background-color: #222222;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.action-btn:hover {
-    background-color: #000000;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* 아웃라인 버튼 */
-.btn-outline {
-    display: inline-block;
-    padding: 6px 12px;
-    background-color: transparent;
-    color: #222222;
-    border: 1px solid #222222;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-outline:hover {
-    background-color: #f8f8f8;
-    color: #000000;
-    border-color: #000000;
-}
-
-.btn-outline.danger {
-    color: #d32f2f;
-    border-color: #d32f2f;
-}
-
-.btn-outline.danger:hover {
-    background-color: #ffeaea;
-    color: #b71c1c;
-    border-color: #b71c1c;
 }

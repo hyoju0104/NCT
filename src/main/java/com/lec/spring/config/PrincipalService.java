@@ -35,11 +35,15 @@ public class PrincipalService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
         //해당 username의 user가 DB에 있다면 userDetails를 생성해서 리턴..
         if (user != null) {
+            if (user.getStatusAccount().equals("DELETED")) {
+                throw new org.springframework.security.authentication.DisabledException("탈퇴한 계정입니다.");
+            }
             //PrincipalDetails : 사용자 정보 객체 > 그 안에 우리가 찾은 user 객체를 넣어서 리턴
             PrincipalUserDetails principalUserDetails = new PrincipalUserDetails(user);
             principalUserDetails.setUserService(userService);
             return principalUserDetails;
         }
+
         
         // (2) Brand 사용자 조회
         Brand brand = brandRepository.findByUsername(username);

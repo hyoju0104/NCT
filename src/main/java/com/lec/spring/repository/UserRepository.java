@@ -26,6 +26,9 @@ public interface UserRepository {
     //빌린 횟수 증가 메서드
     int increaseRentalCount(Long userId);
 
+    int updateStatusToDeleted(Long userId);
+
+    // 회원 상태(status_account) 업데이트
     void updateStatusAccount(@Param("userId") Long userId, @Param("status") String status);
 
     String findStatusAccountById(Long id);

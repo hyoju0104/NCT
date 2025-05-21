@@ -25,7 +25,6 @@ body {
     color: inherit !important;
 }
 
-
 .form-group {
     margin-bottom: 16px;
 }
@@ -1530,6 +1529,170 @@ hr {
 }
 
 
+/* 플랜 카드 스타일 */
+.plan-card {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-color: #d0d0d0;
+}
+
+.plan-card.selected {
+    border: 2px solid #222222;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 플랜 헤더 */
+.plan-header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.plan-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #222222;
+    margin-bottom: 8px;
+}
+
+.plan-price {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1976d2;
+}
+
+.price-period {
+    font-size: 14px;
+    color: #888888;
+    font-weight: 400;
+}
+
+/* 플랜 기능 목록 */
+.plan-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.plan-features li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 12px;
+    color: #666666;
+    font-size: 14px;
+}
+
+.plan-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #1976d2;
+    font-weight: 700;
+}
+
+/* 플랜 배지 */
+.plan-badge {
+    position: absolute;
+    top: 12px;
+    right: -30px;
+    transform: rotate(45deg);
+    background-color: #1976d2;
+    color: white;
+    padding: 5px 40px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.plan-badge.popular {
+    background-color: #f44336;
+}
+
+/* 결제 버튼 */
+.payment-btn {
+    margin-top: 20px;
+    font-size: 18px;
+    height: 56px;
+}
+
+.payment-btn:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 액션 버튼 */
+.action-btn {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 아웃라인 버튼 */
+.btn-outline {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: transparent;
+    color: #222222;
+    border: 1px solid #222222;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+    background-color: #f8f8f8;
+    color: #000000;
+    border-color: #000000;
+}
+
+.btn-outline.danger {
+    color: #d32f2f;
+    border-color: #d32f2f;
+}
+
+.btn-outline.danger:hover {
+    background-color: #ffeaea;
+    color: #b71c1c;
+    border-color: #b71c1c;
+}
+
+
+
 /* 반응형 조정 - 모바일에서도 세련된 디자인 유지 */
 @media (max-width: 992px) {
 
@@ -1553,6 +1716,257 @@ hr {
     }
 }
 
+/* 브랜드 대여 목록 페이지 스타일 */
+.rental-container {
+    max-width: 1200px;
+    margin: 80px auto 40px;
+    padding: 0 20px;
+}
+
+/* 섹션 헤더 */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #222222;
+    margin: 0;
+}
+
+/* 필터 버튼 영역 */
+.rental-filters {
+    display: flex;
+    gap: 8px;
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    padding: 4px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    color: #222222;
+}
+
+.filter-btn.active {
+    background-color: #ffffff;
+    color: #222222;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 테이블 컨테이너 */
+.table-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+    overflow-x: auto;
+    margin-bottom: 40px;
+}
+
+/* 대여 테이블 */
+.rental-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.rental-table th {
+    background-color: #f8f8f8;
+    color: #555555;
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.rental-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    color: #444444;
+    vertical-align: middle;
+}
+
+.rental-table tr:last-child td {
+    border-bottom: none;
+}
+
+.rental-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* 상태 배지 */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 90px;
+}
+
+.status-badge.RENTED {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.status-badge.OVERDUE {
+    background-color: #fbe9e7;
+    color: #d84315;
+}
+
+.status-badge.RETURNED {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+/* 계정 상태 배지 */
+.account-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 70px;
+}
+
+.account-badge.active {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.account-badge.inactive {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* 액션 버튼 */
+.action-btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    min-width: 80px;
+}
+
+/* 반납 처리 버튼 */
+.action-btn.return {
+    background-color: #4caf50;
+    color: white;
+}
+
+.action-btn.return:hover {
+    background-color: #388e3c;
+}
+
+.action-btn.return:disabled {
+    background-color: #e0e0e0;
+    color: #9e9e9e;
+    cursor: not-allowed;
+}
+
+/* 계정 정지 버튼 */
+.action-btn.deactivate {
+    background-color: #f44336;
+    color: white;
+}
+
+.action-btn.deactivate:hover {
+    background-color: #d32f2f;
+}
+
+.action-btn.deactivate.disabled {
+    background-color: #e0e0e0;
+    color: #9e9e9e;
+    cursor: not-allowed;
+}
+
+/* 내가 작성한 게시물 테이블 스타일 */
+.my-post-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+.my-post-table th,
+.my-post-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.my-post-table th {
+    background-color: #f8f8f8;
+    font-weight: 600;
+    color: #444444;
+    font-size: 14px;
+}
+
+.my-post-table td {
+    color: #666666;
+    font-size: 14px;
+}
+
+.my-post-table tr:hover {
+    background-color: #fafafa;
+}
+
+.my-post-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* 게시물 링크 스타일 */
+.my-post-table a {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.my-post-table a:hover {
+    color: #0d47a1;
+    text-decoration: underline;
+}
+
+
+
+/* 반응형 조정 */
+@media (max-width: 992px) {
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .rental-filters {
+        width: 100%;
+        justify-content: center;
+    }
+}
+/* 태블릿 화면 대응 */
 @media (max-width: 768px) {
     .action-buttons {
         flex-wrap: wrap;
@@ -1616,10 +2030,6 @@ hr {
         padding: 12px 16px;
     }
 
-    .item-table th:nth-child(2),
-    .item-table td:nth-child(2) {
-        display: none; /* 중간 열 숨김 (브랜드) */
-    }
     .rental-btn {
         width: 100%;
         padding: 12px 20px;
@@ -1689,7 +2099,13 @@ hr {
     .completion-message {
         font-size: 20px;
     }
+    .my-post-table th,
+    .my-post-table td {
+        padding: 12px;
+    }
 }
+
+
 /* 모바일 대응 */
 @media (max-width: 576px) {
     .form-actions {
@@ -1725,6 +2141,14 @@ hr {
 
     .products-grid {
         grid-template-columns: 1fr;
+    }
+    .my-post-table {
+        font-size: 13px;
+    }
+
+    .my-post-table th,
+    .my-post-table td {
+        padding: 10px 8px;
     }
 }
 

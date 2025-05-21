@@ -56,7 +56,6 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화
 
-                //TODO requestmatchers는 html 만든 후 수정하기
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(
                                 "/", "/error",
@@ -67,6 +66,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/brand/**").hasAuthority("BRAND")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/user/withdraw").authenticated()
                         .anyRequest().authenticated() // 그 외 모든 주소는 로그인한 사람만 접근
                 )//authorizeHttpRequests
 

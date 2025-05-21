@@ -109,14 +109,20 @@ public class UserController {
         model.addAttribute("remainingCnt", remainingCnt);
 
 
-        /*
-        게시글 목록 - 이건 일단 다른거 다 되면 하자
-        List<Post> posts = postService.findByUserId(user.getId());
-        model.addAttribute("posts", posts);
-        */
+
+        List<Post> myPosts = postService.findByUserId(user.getId());
+        model.addAttribute("myPosts", myPosts);
+
 
 
         model.addAttribute("user", user);
+    }
+
+    @PostMapping("/withdraw")
+    public String withdraw(@AuthenticationPrincipal PrincipalUserDetails principal) {
+        Long userId = principal.getUser().getId();
+        userService.markAsDeleted(userId);  // status_account = 'DELETED'
+        return "redirect:/logout"; // 로그아웃으로 강제 이동
     }
 
 

@@ -21,7 +21,7 @@
 		
 		<!-- 로그인 실패 메시지 : ?error -->
 		<div th:if="${param.error}" class="alert alert-error">
-			<p>아이디 또는 비밀번호가 틀렸습니다.</p>
+			<p th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">로그인 실패</p>
 		</div>
 		
 		<!-- 로그아웃 메시지 : ?logout -->

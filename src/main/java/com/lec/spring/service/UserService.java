@@ -30,6 +30,8 @@ public interface UserService {
 
     void updateUserPlanId(Long id, Long planId);
 
+    void markAsDeleted(Long userId);
+
     void inactivateUser(Long userId);
 
     String findUserStatus(Long userId);
