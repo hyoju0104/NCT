@@ -42,7 +42,7 @@
             <span class="info-label">전화번호:</span>
             <span class="info-value" th:text="${user.phoneNum}">010-0000-0000</span>
         </div>
-        <form method="post" th:action="@{/user/mypage/update}">
+        <form method="get" th:action="@{/user/mypage/update}">
             <button type="submit" class="login-btn">정보 수정</button>
         </form>
     </section>
