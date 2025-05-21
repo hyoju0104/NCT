@@ -1,0 +1,29 @@
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.post-item {
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+}
+
+.post-img {
+    width: 100%;
+    height: 200px;      /* 원하는 높이로 조정 가능 */
+    object-fit: cover;  /* 비율 유지하며 꽉 채우기 */
+    display: block;
+}
+
+.no-image {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.9rem;
+    background-color: #eee;
+}
