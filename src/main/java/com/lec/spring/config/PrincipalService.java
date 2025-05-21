@@ -48,6 +48,9 @@ public class PrincipalService implements UserDetailsService {
         // (2) Brand 사용자 조회
         Brand brand = brandRepository.findByUsername(username);
         if (brand != null) {
+            if (brand.getIsActived() == false){
+                throw new org.springframework.security.authentication.DisabledException("탈퇴한 브랜드 계정입니다.");
+            }
             PrincipalBrandDetails principalBrandDetails = new PrincipalBrandDetails(brand, brandService);
             return principalBrandDetails;
         }

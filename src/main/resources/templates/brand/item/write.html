@@ -40,10 +40,6 @@
                 <input type="file" id="file" name="itemImage" accept="image/*" onchange="previewImage()">
                 <small class="form-help">권장 크기: 800 x 800px, 최대 5MB</small>
 
-                <div th:if="${selectedFileName != null}">
-                    <input type="text" class="form-control mt-2" readonly th:value="${selectedFileName}">
-                </div>
-
                 <div class="field-error" th:if="${error_file}" th:text="${error_file}"></div>
             </div>
 

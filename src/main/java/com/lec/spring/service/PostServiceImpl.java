@@ -271,6 +271,19 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<Post> findByUserId(Long userId) {
-		return postRepository.findByUserId(userId);
+		List<Post> posts = postRepository.findByUserId(userId);
+		
+		for (Post post : posts) {
+			List<PostAttachment> attachments = postAttachmentRepository.findByPostId(post.getId());
+			
+			if (attachments != null && !attachments.isEmpty()) {
+				PostAttachment representative = attachments.stream()
+						.min(Comparator.comparing(PostAttachment::getId))
+						.orElse(attachments.get(0));
+				post.setFileList(Collections.singletonList(representative));
+			}
+		}
+		
+		return posts;
 	}
 }
