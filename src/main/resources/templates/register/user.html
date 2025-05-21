@@ -60,19 +60,22 @@
 		</div>
 		
 		<div class="form-group" data-type="zipcode">
-			<label for="zipcode">우편번호</label>
-			<input type="text" id="zipcode" name="zipcode">
+			<label th:for="zipcode">우편번호</label>
+			<input type="text" th:field="*{zipcode}" placeholder="우편번호" readonly>
 			<button type="button" onclick="searchAddress()">주소 찾기</button>
+			<div th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" class="field-error"></div>
 		</div>
 		
 		<div class="form-group">
-			<label for="address">주소</label>
-			<input type="text" id="address" th:field="*{address}">
+			<label th:for="address">주소</label>
+			<input type="text" th:field="*{address}" readonly>
+			<div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="field-error"></div>
 		</div>
 		
 		<div class="form-group">
-			<label for="addressDetail">상세 주소</label>
-			<input type="text" id="addressDetail" name="addressDetail">
+			<label th:for="addressDetail">상세 주소</label>
+			<input type="text" th:field="*{addressDetail}" placeholder="상세주소를 입력하세요">
+			<div th:if="${#fields.hasErrors('addressDetail')}" th:errors="*{addressDetail}" class="field-error"></div>
 		</div>
 		
 		<button type="submit" class="login-btn">회원가입</button>

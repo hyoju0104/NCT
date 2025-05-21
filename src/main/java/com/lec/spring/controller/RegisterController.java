@@ -62,27 +62,18 @@ public class RegisterController {
     @PostMapping("/user")
     public String processUserJoin(
             @ModelAttribute("user") User user,
-            BindingResult result,
-            @RequestParam(required = false) String zipcode,
-            @RequestParam(required = false) String addressDetail,
-            Model model
+            BindingResult result
     ) {
         userValidator.validate(user, result);
 
         if (result.hasErrors()) {
             return "register/user";
         }
-        // ✅ 주소 조합
-        String fullAddress = (zipcode != null ? "[" + zipcode + "] " : "")
-                + (user.getAddress() != null ? user.getAddress() : "")
-                + (addressDetail != null ? " " + addressDetail : "");
-        user.setAddress(fullAddress);
 
         userService.register(user);
         return "redirect:/login";
 
     }
-
 
     
     @GetMapping("/brand")
