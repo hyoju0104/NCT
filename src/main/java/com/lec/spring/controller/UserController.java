@@ -89,8 +89,8 @@ public class UserController {
         if (payment != null) {
             model.addAttribute("paidAt", payment.getPaidAt());
 
-            // ✅ 구독 만료일 계산 (30일 후)
-            LocalDateTime expiredAt = payment.getPaidAt().plusDays(30);
+            // ✅ 구독 만료일 계산 (28일 후)
+            LocalDateTime expiredAt = payment.getPaidAt().plusDays(28);
             payment.setExpiredAt(expiredAt);
             model.addAttribute("expiredAt", payment.getExpiredAt());
         } else {
