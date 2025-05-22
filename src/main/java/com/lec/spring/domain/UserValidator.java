@@ -49,6 +49,16 @@ public class UserValidator implements Validator {
             errors.rejectValue("rePassword", null, "비밀번호가 일치하지 않습니다.");
         }
         
+        // 이메일 : 값이 비어있으면 통과, 비어있지 않으면 이메일 형식 검증 필요
+        String email = user.getEmail();
+        if (email != null && !email.isBlank()) {
+            String trimmedEmail = email.trim();
+            String emailRegex = "^[A-Za-z0-9_.\\-]+@[A-Za-z0-9\\-]+\\.[A-Za-z]{2,6}$";
+            if (!trimmedEmail.matches(emailRegex)) {
+                errors.rejectValue("email", null, "이메일 형식이 아닙니다.");
+            }
+        }
+        
         // 전화번호 : 값이 비어있으면 통과, 비어있지 않으면 숫자와 하이픈(-)만 가능
         String phone = user.getPhoneNum();
         if (phone != null && !phone.isBlank()) {
@@ -56,6 +66,15 @@ public class UserValidator implements Validator {
             if (!trimmedPhone.matches("[0-9\\-]+")) {
                 errors.rejectValue("phoneNum", null, "전화번호는 숫자와 하이픈(-)만 입력 가능합니다.");
             }
+        }
+        
+        // 대여 횟수 : 0 미만이 될 수 없도록 수정
+        Integer rentalCnt = user.getRentalCnt();
+        if (rentalCnt == null) {
+            // null 일 때 기본값 0으로 대체하거나, 에러로 처리
+            user.setRentalCnt(0);
+        } else if (rentalCnt < 0) {
+            errors.rejectValue("rentalCnt", null, "대여 가능 횟수는 0 이상이어야 합니다.");
         }
     }
 }
