@@ -51,7 +51,7 @@
         UPDATE user
         SET name = #{name},
             phone_num = #{phoneNum},
-            password = #{password}
+            password = #{password},
             address   = #{address}
         WHERE id = #{id}
     </update>

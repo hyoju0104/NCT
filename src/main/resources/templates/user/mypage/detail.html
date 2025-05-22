@@ -75,7 +75,7 @@
             <span class="info-label">현재 보유 포인트:</span>
             <span class="info-value highlight" th:text="${user.point}"></span>
         </div>
-        <form method="post" th:action="@{/user/mypage/point}">
+        <form method="get" th:action="@{/user/mypage/point}">
             <input type="hidden" name="amount" th:value="0">
             <button type="submit" class="login-btn">포인트 반환하기</button>
         </form>
