@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         if (auth != null) {
             user.setAuthId(auth.getId());  // 권한 ID 설정
         }
-        user.setStatusPlan("ACTIVE");
+        user.setStatusPlan("INACTIVE");
         user.setStatusAccount("ACTIVE");
         user.setPoint(0);
         user.setRentalCnt(0);
