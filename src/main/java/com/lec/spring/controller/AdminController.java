@@ -27,7 +27,21 @@ public class AdminController {
 	// 1. 매출 관리
 	@GetMapping("/sales")
 	public String sales(Model model) {
-		return "admin/sales";  // templates/admin/sales.html
+		// 이번 달 총 매출
+		long totalRevenue = adminSalesService.getTotalRevenueCurrentMonth();
+		// 이번 달 전체 대여 건수
+		long totalRentals = adminSalesService.getTotalRentalsCurrentMonth();
+		// 전월 대비 매출 증감율 (%, 소수점 첫째 자리까지)
+		double revenueChange = adminSalesService.getRevenueChangePercentMonthOnMonth();
+		// 전월 대비 대여 건수 증감율
+		double rentalChange = adminSalesService.getRentalChangePercentMonthOnMonth();
+		
+		model.addAttribute("totalRevenue", totalRevenue);
+		model.addAttribute("totalRentals", totalRentals);
+		model.addAttribute("revenueChange", revenueChange);
+		model.addAttribute("rentalChange", rentalChange);
+		
+		return "admin/sales";
 	}
 	
 	// 1-1) 월별 매출 데이터(JSON)
@@ -48,7 +62,7 @@ public class AdminController {
 	// 2. 회원 관리
 	@GetMapping("/users")
 	public String users(Model model) {
-		return "admin/users";  // templates/admin/sales.html
+		return "admin/users";
 	}
 	
 	// 2-1) 구독 종류별 회원수 pie chart 출력
