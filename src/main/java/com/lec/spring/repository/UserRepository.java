@@ -36,6 +36,8 @@ public interface UserRepository {
     // 주소 업데이트
     void updateUserAddress(User user);
 
+    void updateStatusPlan(@Param("id") Long id, @Param("planId") Long planId);
+
     // 연락처 업데이트
     void updateUserPhoneNum(User user);
 

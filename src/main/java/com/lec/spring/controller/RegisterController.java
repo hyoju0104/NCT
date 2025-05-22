@@ -72,6 +72,7 @@ public class RegisterController {
 
         userService.register(user);
         return "redirect:/login";
+
     }
 
     
