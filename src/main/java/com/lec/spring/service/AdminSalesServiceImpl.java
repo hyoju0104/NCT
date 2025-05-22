@@ -28,32 +28,58 @@ public class AdminSalesServiceImpl implements AdminSalesService {
 	}
 	
 	@Override
-	public SalesByPlan getSalesByPlan() {
-		List<Map<String, Object>> raw = adminSalesRepository.findSalesByPlan();
-		
-		// 0. Null 필터
+	public List<SalesByMonth> getSalesByQuarter() {
+		return adminSalesRepository.findSalesByQuarter();
+	}
+	
+	@Override
+	public List<SalesByMonth> getSalesByYear() {
+		return adminSalesRepository.findSalesByYear();
+	}
+	
+	
+	@Override
+	public SalesByPlan getSalesByPlanMonth() {
+		return buildSalesByPlan(adminSalesRepository.findSalesByPlanMonth());
+	}
+	
+	@Override
+	public SalesByPlan getSalesByPlanQuarter() {
+		return buildSalesByPlan(adminSalesRepository.findSalesByPlanQuarter());
+	}
+	
+	@Override
+	public SalesByPlan getSalesByPlanYear() {
+		return buildSalesByPlan(adminSalesRepository.findSalesByPlanYear());
+	}
+	
+	/* raw : List<{month: String, planName: String, total: Number}> */
+	private SalesByPlan buildSalesByPlan(List<Map<String, Object>> raw) {
+		// 1. Null 필터
 		List<Map<String, Object>> safeRaw = raw.stream()
 				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 		
-		// 1. 전체 month 목록 추출
+		// 2. 전체 month 목록 추출
 		List<String> months = raw.stream()
 				.map(m -> (String) m.get("month"))
 				.distinct()
 				.sorted()
 				.collect(Collectors.toList());
 		
-		// 2. planNames 목록
+		// 3. planNames 목록 추출
 		List<String> planNames = raw.stream()
 				.map(m -> (String) m.get("planName"))
 				.distinct()
 				.collect(Collectors.toList());
 		
-		// 3. 데이터 구조화
+		// 4. 데이터 구조화 및 맵 초기화
 		Map<String, List<Integer>> data = new HashMap<>();
 		for (String plan : planNames) {
 			data.put(plan, new ArrayList<>(Collections.nCopies(months.size(), 0)));
 		}
+		
+		// 5. 값 채우기
 		for (Map<String, Object> row : raw) {
 			String plan = (String) row.get("planName");
 			String month = (String) row.get("month");
@@ -62,7 +88,7 @@ public class AdminSalesServiceImpl implements AdminSalesService {
 			data.get(plan).set(idx, total);
 		}
 		
-		// 4. 객체 생성
+		// 6. DTO 생성
 		SalesByPlan salesByPlan = new SalesByPlan();
 		salesByPlan.setMonths(months);
 		salesByPlan.setPlanNames(planNames);
@@ -70,6 +96,7 @@ public class AdminSalesServiceImpl implements AdminSalesService {
 		
 		return salesByPlan;
 	}
+	
 	
 	@Override
 	public long getTotalRevenueCurrentMonth() {

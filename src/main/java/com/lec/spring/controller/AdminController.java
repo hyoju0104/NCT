@@ -44,18 +44,36 @@ public class AdminController {
 		return "admin/sales";
 	}
 	
-	// 1-1) 월별 매출 데이터(JSON)
+	// 1-1) 기간별 매출 데이터(JSON)
 	@GetMapping("/sales/monthly-data")
 	@ResponseBody
-	public List<SalesByMonth> salesMonthlyData() {
-		return adminSalesService.getSalesByMonth();
+	public List<SalesByMonth> salesMonthlyData(
+			@RequestParam(value = "period", defaultValue = "month") String period
+	) {
+		switch (period) {
+			case "quarter" :
+				return adminSalesService.getSalesByQuarter();
+			case "year" :
+				return adminSalesService.getSalesByYear();
+			default:
+				return adminSalesService.getSalesByMonth();
+		}
 	}
 	
 	// 1-2) 구독 종류별 매출 데이터(JSON)
 	@GetMapping("/sales/plan-data")
 	@ResponseBody
-	public SalesByPlan salesPlanData() {
-		return adminSalesService.getSalesByPlan();
+	public SalesByPlan salesPlanData(
+			@RequestParam(value = "period", defaultValue = "month") String period
+	) {
+		switch (period) {
+			case "quarter" :
+				return adminSalesService.getSalesByPlanQuarter();
+			case "year" :
+				return adminSalesService.getSalesByPlanYear();
+			default:
+				return adminSalesService.getSalesByPlanMonth();
+		}
 	}
 	
 	

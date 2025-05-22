@@ -8,11 +8,23 @@ import java.util.Map;
 
 public interface AdminSalesService {
 	
-	// 월별 매출 SELECT
+	// 월간 전체 매출 SELECT
 	List<SalesByMonth> getSalesByMonth();
 	
-	// 구독별 매출 SELECT
-	SalesByPlan getSalesByPlan();
+	// 분기 전체 매출 SELECT
+	List<SalesByMonth> getSalesByQuarter();
+	
+	// 연간 전체 매출 SELECT
+	List<SalesByMonth> getSalesByYear();
+	
+	// 구독별 월 매출 SELECT
+	SalesByPlan getSalesByPlanMonth();
+	
+	// 구독별 분기 매출 SELECT
+	SalesByPlan getSalesByPlanQuarter();
+	
+	// 구독별 연 매출 SELECT
+	SalesByPlan getSalesByPlanYear();
 	
 	// 이번 달 총 매출
 	long getTotalRevenueCurrentMonth();
