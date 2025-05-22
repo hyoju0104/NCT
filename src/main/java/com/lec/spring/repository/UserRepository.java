@@ -41,4 +41,10 @@ public interface UserRepository {
     // 연락처 업데이트
     void updateUserPhoneNum(User user);
 
+    // 7일마다 rental_cnt 업데이트
+    void resetRentalCnt();
+
+    // 28일 이후 plan 업데이트
+    void resetPlan();
+
 }
