@@ -146,7 +146,7 @@ CREATE TABLE User
     provider_id    VARCHAR(100)                           NULL,
     signed_at      DATETIME                               NOT NULL DEFAULT now(),
     paid_at        DATETIME                               NULL,
-    status_plan    ENUM ('ACTIVE', 'INACTIVE')            NOT NULL,
+    status_plan    ENUM ('ACTIVE', 'INACTIVE')            NOT NULL DEFAULT 'INACTIVE',
     status_account VARCHAR(50)                            NOT NULL DEFAULT 'ACTIVE' COMMENT '계정 상태',
     rental_cnt     INT                                    NOT NULL DEFAULT 0 COMMENT '이번주에 대여한 횟수',
     PRIMARY KEY (id)
