@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    
+
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/login.css}">
 
@@ -36,11 +36,11 @@
     </div>
 
     <form th:action="@{/user/mypage/point}" th:object="${refundForm}" method="post">
-    <div class="form-group">
+        <div class="form-group">
             <label for="amount">환급 금액 *</label>
-        <input type="number" id="amount" th:field="*{amount}" placeholder="최소 10,000원부터 가능">
-        <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="field-error">오류</p>
-        <small class="form-help">최소 환급 금액은 10,000원입니다.</small>
+            <input type="number" id="amount" th:field="*{amount}" placeholder="최소 10,000원부터 가능">
+            <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="field-error">오류</p>
+            <small class="form-help">최소 환급 금액은 10,000원입니다.</small>
         </div>
 
         <div class="form-group">

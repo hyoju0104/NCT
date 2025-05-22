@@ -53,6 +53,7 @@ public class RegisterController {
     @GetMapping("/kind")
     public void registerKind(){}
 
+    
     @GetMapping("/user")
     public String registerUserForm(Model model) {
         model.addAttribute("user", new User());
@@ -62,7 +63,8 @@ public class RegisterController {
     @PostMapping("/user")
     public String processUserJoin(
             @ModelAttribute("user") User user,
-            BindingResult result
+            BindingResult result,
+            RedirectAttributes redirectAttributes
     ) {
         userValidator.validate(user, result);
 
@@ -70,9 +72,13 @@ public class RegisterController {
             return "register/user";
         }
 
-        userService.register(user);
-        return "redirect:/login";
-
+        redirectAttributes.addFlashAttribute("result", userService.register(user));
+        return "redirect:/register/registerOk";
+    }
+    
+    @GetMapping("/registerOk")
+    public String registerOk() {
+        return "register/registerOk";
     }
 
     

@@ -175,4 +175,14 @@ public class UserServiceImpl implements UserService {
         userRepository.updatePaidAt(userId);
     }
 
+    @Override
+    public void updateRentalCnt() {
+        userRepository.resetRentalCnt();
+    }
+
+    @Override
+    public void updatePlan() {
+        userRepository.resetPlan();
+    }
+
 }

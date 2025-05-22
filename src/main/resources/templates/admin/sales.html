@@ -41,22 +41,33 @@
 				</div>
 				<div class="card-content">
 					<h4 class="card-title">총 매출</h4>
-					<p class="card-value">₩12,450,000</p>
-					<p class="card-change positive">+12.3% 전월 대비</p>
+					<p class="card-value">
+						<span th:text="${T(java.lang.String).format('%,d', totalRevenue)}">0</span> 원
+					</p>
+					<p class="card-change positive"
+					   th:classappend="${revenueChange >= 0} ? 'positive' : 'negative'"
+					   th:text="${T(java.lang.String).format('%+.1f%% 전월 대비', revenueChange)}">
+						0.0% 전월 대비
+					</p>
 				</div>
 			</div>
 
 			<div class="summary-card">
 				<div class="card-icon rentals">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+						 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 						<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
 						<line x1="7" y1="7" x2="7.01" y2="7"></line>
 					</svg>
 				</div>
 				<div class="card-content">
-					<h4 class="card-title">대여 건수</h4>
-					<p class="card-value">368건</p>
-					<p class="card-change positive">+5.2% 전월 대비</p>
+					<h4 class="card-title">전체 대여 건수</h4>
+					<p class="card-value"><span th:text="${T(java.lang.String).format('%,d', totalRentals)}">0</span> 건</p>
+					<p class="card-change positive"
+					   th:classappend="${rentalChange >= 0} ? 'positive' : 'negative'"
+					   th:text="${T(java.lang.String).format('%+.1f%% 전월 대비', rentalChange)}">
+						0.0% 전월 대비
+					</p>
 				</div>
 			</div>
 		</div>

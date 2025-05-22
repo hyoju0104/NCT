@@ -13,4 +13,10 @@ public interface AdminSalesRepository {
 	// 구독별 매출
 	List<Map<String, Object>> findSalesByPlan();
 	
+	// 지정 연·월의 총 매출 합계 조회
+	Long findTotalRevenue(int year, int month);
+	
+	// 지정 연·월의 대여 건수 조회
+	Long findTotalRentals(int year, int month);
+	
 }

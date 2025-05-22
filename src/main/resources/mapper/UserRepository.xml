@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lec.spring.repository.UserRepository">
-
     <sql id="SELECT_BASE">
         SELECT id,
                auth_id        AS authId,
@@ -78,6 +77,7 @@
     <update id="addPoint">
         UPDATE user SET point = point + #{amount} WHERE id = #{id}
     </update>
+
     <update id="increaseRentalCount" parameterType="long">
         UPDATE User
         SET rental_cnt = rental_cnt + 1
@@ -123,6 +123,25 @@
         SET plan_id = #{planId},
             status_plan = 'ACTIVE'
         WHERE id = #{id}
+    </update>
+
+    <update id="resetRentalCnt">
+        UPDATE user u, plan p
+        SET u.rental_cnt = 0
+        WHERE u.paid_at IS NOT NULL
+          AND u.plan_id = p.id
+        AND MOD(DATEDIFF(NOW(), u.paid_at), 7) = 0
+        AND DATEDIFF(NOW(), u.paid_at) &lt; 28
+    </update>
+
+    <update id="resetPlan">
+        UPDATE user
+        SET plan_id = NULL,
+            status_plan = 'INACTIVE',
+            rental_cnt = 0,
+            paid_at = NULL
+        WHERE paid_at IS NOT NULL
+          AND DATEDIFF(NOW(), paid_at) = 28
     </update>
 
 </mapper>

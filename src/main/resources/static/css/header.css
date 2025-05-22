@@ -3,14 +3,13 @@
     color: inherit !important;
 }
 
-
 .logo {
     font-size: 24px;
     font-weight: 700;
     color: #222222;
     text-decoration: none;
+    margin-right: 40px;
 }
-
 
 .header {
     position: fixed;
@@ -28,15 +27,20 @@
     margin: 0 auto;
     display: flex;
     align-items: center;
-    position: relative; /* 상대적 위치 지정 */
+    justify-content: space-between; /* 로고 - 중앙 메뉴 - 우측 메뉴 */
 }
 
 .header-nav {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%); /* 정확히 중앙에 위치시키기 */
     display: flex;
     gap: 40px;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+}
+
+.header-right {
+    display: flex;
+    gap: 20px;
     align-items: center;
 }
 

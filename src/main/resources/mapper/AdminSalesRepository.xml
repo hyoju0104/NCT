@@ -25,4 +25,20 @@
         ORDER BY p.type, month
     </select>
 
+    <!-- 지정 연·월의 총 매출 합계 조회 -->
+    <select id="findTotalRevenue" resultType="long">
+        SELECT IFNULL(SUM(price), 0)
+        FROM Payment
+        WHERE YEAR (paid_at) = #{year}
+          AND MONTH (paid_at) = #{month}
+    </select>
+
+    <!-- 지정 연·월의 대여 건수 조회 -->
+    <select id="findTotalRentals" resultType="long">
+        SELECT COUNT(*)
+        FROM Rental
+        WHERE YEAR (rented_at) = #{year}
+          AND MONTH (rented_at) = #{month}
+    </select>
+
 </mapper>
