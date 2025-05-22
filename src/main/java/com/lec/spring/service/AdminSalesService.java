@@ -14,4 +14,16 @@ public interface AdminSalesService {
 	// 구독별 매출 SELECT
 	SalesByPlan getSalesByPlan();
 	
+	// 이번 달 총 매출
+	long getTotalRevenueCurrentMonth();
+	
+	// 이번 달 전체 대여 건수
+	long getTotalRentalsCurrentMonth();
+	
+	// 전월 대비 매출 증감율 (%, 소수점 첫째 자리까지)
+	double getRevenueChangePercentMonthOnMonth();
+	
+	// 전월 대비 대여 건수 증감율
+	double getRentalChangePercentMonthOnMonth();
+	
 }

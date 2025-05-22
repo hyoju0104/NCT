@@ -38,14 +38,22 @@ VALUES ('SILVER', 50000, 3),
 INSERT INTO User (user.auth_id, username, password, name, point, status_plan, status_account)
 VALUES (3, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKfe', '관리자', 0, 'ACTIVE', 'ACTIVE'),
        (1, 'user1', '$2a$10$AsdcGiiMWwG6sCu9IiNqvu5Z1G7krhWLhehijgfiqjRhHCODctw8a', '회원1', 30000, 'ACTIVE', 'INACTIVE'),
-       (1, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 0, 'INACTIVE', 'ACTIVE'),
+       (1, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 0, 'ACTIVE', 'ACTIVE'),
        (1, 'user3', '$2a$10$zT51nN0ycpAvSg5aimPoUuOIyg94ktXJzLhWHGxeJQ8iDqXB4vqRm', '회원3', 57000, 'INACTIVE', 'ACTIVE')
 ;
 
 INSERT INTO Payment (Payment.user_id, Payment.plan_id, price, paid_at)
-VALUES (2, 1, 50000, '2025-4-25'),
+VALUES (4, 3, 100000, '2024-12-10'),
        (3, 2, 70000, '2025-1-2'),
-       (4, 3, 100000, '2024-12-30')
+       (4, 3, 100000, '2025-1-10'),
+       (3, 2, 70000, '2025-2-2'),
+       (4, 3, 100000, '2025-2-10'),
+       (3, 2, 70000, '2025-3-2'),
+       (4, 3, 100000, '2025-3-10'),
+       (3, 2, 70000, '2025-4-2'),
+       (4, 3, 100000, '2025-4-10'),
+       (2, 1, 50000, '2025-4-25'),
+       (3, 2, 70000, '2025-5-2')
 ;
 
 INSERT INTO Post(Post.user_id, content, items)
