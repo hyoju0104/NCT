@@ -66,16 +66,16 @@ public class ItemController {
 
         if (principal != null) {
             Long userId = principal.getUser().getId();
-
             String status = userService.findUserStatus(userId);
-            String statusPlan = userService.findById(userId).getStatusPlan(); // statusPlan만 새로 조회
+            String statusPlan = userService.findById(userId).getStatusPlan();
 
-            model.addAttribute("accountStatus", status);     // 그대로 유지
-            model.addAttribute("statusPlan", statusPlan);    // 새로 추가
+            model.addAttribute("accountStatus", status);
+            model.addAttribute("statusPlan", statusPlan);
         } else {
-            model.addAttribute("accountStatus", "INACTIVE");
-            model.addAttribute("statusPlan", "INACTIVE");
+            model.addAttribute("accountStatus", null);
+            model.addAttribute("statusPlan", null);
         }
+
 
         return "item/detail";
     }
