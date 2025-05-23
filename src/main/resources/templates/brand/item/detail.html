@@ -65,8 +65,8 @@
     </div>
 
     <div class="action-buttons">
-        <a href="/brand/list" class="btn-outline">목록으로</a>
         <div class="right-buttons">
+            <a href="/brand/list" class="btn-outline">목록으로</a>
             <a th:href="@{'/brand/item/update/' + ${item.id}}" class="btn-outline">수정</a>
             <form th:action="@{/brand/item/delete}" method="post" class="inline-form" onsubmit="return confirm('정말 삭제하시겠습니까?')">
                 <input type="hidden" name="id" th:value="${item.id}" />
