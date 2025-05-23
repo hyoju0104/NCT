@@ -48,9 +48,20 @@ public class ItemController {
 
     @GetMapping("/category/{category}")
     public String listByCategory(@PathVariable String category, Model model) {
-        model.addAttribute("items", itemService.findByCategory(category));
+        List<Item> items = itemService.findByCategory(category);
+
+        for (Item item : items) {
+            List<ItemAttachment> attachments = itemAttachmentService.findByItemId(item.getId());
+            if (!attachments.isEmpty()) {
+                item.setAttachment(attachments.get(0));
+            }
+        }
+
+        model.addAttribute("items", items);
+        model.addAttribute("category", category);
         return "item/list";
     }
+
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id,
@@ -66,16 +77,16 @@ public class ItemController {
 
         if (principal != null) {
             Long userId = principal.getUser().getId();
-
             String status = userService.findUserStatus(userId);
-            String statusPlan = userService.findById(userId).getStatusPlan(); // statusPlan만 새로 조회
+            String statusPlan = userService.findById(userId).getStatusPlan();
 
-            model.addAttribute("accountStatus", status);     // 그대로 유지
-            model.addAttribute("statusPlan", statusPlan);    // 새로 추가
+            model.addAttribute("accountStatus", status);
+            model.addAttribute("statusPlan", statusPlan);
         } else {
-            model.addAttribute("accountStatus", "INACTIVE");
-            model.addAttribute("statusPlan", "INACTIVE");
+            model.addAttribute("accountStatus", null);
+            model.addAttribute("statusPlan", null);
         }
+
 
         return "item/detail";
     }

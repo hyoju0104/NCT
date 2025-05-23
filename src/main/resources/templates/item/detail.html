@@ -59,11 +59,10 @@
             </div>
 
             <!-- 계정 정지 메시지 -->
-            <div class="info-group" th:if="${accountStatus == 'INACTIVE'}">
-                <div class="alert alert-danger">
-                    현재 계정은 정지 상태입니다. 대여가 불가능합니다.
-                </div>
+            <div class="info-group" th:if="${accountStatus != null and accountStatus == 'INACTIVE'}">
+                <div class="alert alert-danger">현재 계정은 정지 상태입니다. 대여가 불가능합니다.</div>
             </div>
+
 
             <!-- 대여 버튼 영역 -->
             <div class="rental-action">

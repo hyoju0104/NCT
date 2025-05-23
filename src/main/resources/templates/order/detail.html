@@ -32,9 +32,15 @@
 				<p th:text="${planNullError}">요금제를 구독해 주세요.</p>
 			</div>
 			
+			<div th:if="${rentalCntError}" class="alert alert-error">
+				<p th:text="${rentalCntError}">대여 가능 횟수가 소진되었습니다.</p>
+			</div>
+			
+			
 			<input type="hidden" th:field="*{id}"/>
 			<input type="hidden" th:field="*{username}"/>
 			<input type="hidden" th:field="*{name}"/>
+			
 			
 			<!-- 사용자 정보 섹션 -->
 			<div class="order-section">
@@ -72,6 +78,15 @@
 						 th:errors="*{addressDetail}"></div>
 				</div>
 			</div>
+			
+			
+			<div class="remain-section">
+				<div>남은 횟수</div>
+				<div class="remain-count" th:text="${remainCnt}">0</div>
+				<div>총 가능 횟수</div>
+				<div class="total-count"  th:text="${totalCnt}">0</div>
+			</div>
+			
 			
 			<!-- 상품 정보 섹션 -->
 			<div class="order-section">
