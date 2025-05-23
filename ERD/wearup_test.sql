@@ -8,7 +8,6 @@ SELECT * FROM Plan;
 SELECT * FROM User;
 SELECT * FROM Payment;
 SELECT * FROM Post;
-SELECT * FROM PostAttachment;
 SELECT * FROM Comment;
 SELECT * FROM Brand;
 SELECT * FROM Item;
