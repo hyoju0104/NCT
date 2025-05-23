@@ -4,8 +4,10 @@ import com.lec.spring.config.PrincipalBrandDetails;
 import com.lec.spring.domain.Brand;
 import com.lec.spring.domain.BrandAttachment;
 import com.lec.spring.domain.BrandMypageValidator;
+import com.lec.spring.domain.Rental;
 import com.lec.spring.service.BrandAttachmentService;
 import com.lec.spring.service.BrandService;
+import com.lec.spring.service.RentalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,14 +34,16 @@ public class BrandController {
     private final BrandService brandService;
     private final PasswordEncoder passwordEncoder;
     private final BrandAttachmentService brandAttachmentService;
+    private final RentalService rentalService;
 
     @Value("${app.upload.path.brand}")
     private String uploadDirBrand;
 
-    public BrandController(BrandService brandService, PasswordEncoder passwordEncoder, BrandAttachmentService brandAttachmentService) {
+    public BrandController(BrandService brandService, PasswordEncoder passwordEncoder, BrandAttachmentService brandAttachmentService, RentalService rentalService) {
         this.brandService = brandService;
         this.passwordEncoder = passwordEncoder;
         this.brandAttachmentService = brandAttachmentService;
+        this.rentalService = rentalService;
     }
 
     @GetMapping("/mypage/detail")
@@ -153,6 +157,17 @@ public class BrandController {
         brandService.myDelete(brandId);
         return "brand/mypage/deleteOk";
     }
+
+    @GetMapping("/delivery/list")
+    public String deliveryList(@AuthenticationPrincipal PrincipalBrandDetails principal, Model model) {
+        Long brandId = principal.getBrand().getId();
+        List<Rental> rentals = rentalService.findRentalsByBrandId(brandId);
+        model.addAttribute("rentals", rentals);
+
+        System.out.println(rentals);
+        return "brand/delivery/list";
+    }
+
 
     public void showErrors(Errors errors) {
         if (errors.hasErrors()) {

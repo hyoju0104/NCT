@@ -24,6 +24,7 @@
             u.phone_num "u_phone_num",
             u.email "u_email",
             u.address "u_address",
+            u.address_detail "u_address_detail",
             u.point "u_point",
             u.provider "u_provider",
             u.provider_id "u_provider_id",
@@ -53,6 +54,7 @@
         <result column="u_phone_num" property="phoneNum"/>
         <result column="u_email" property="email"/>
         <result column="u_address" property="address"/>
+        <result column="u_address_detail" property="addressDetail"/>
         <result column="u_point" property="point"/>
         <result column="u_provider" property="provider"/>
         <result column="u_provider_id" property="providerId"/>
@@ -108,7 +110,9 @@
             u.name "u_name",
             u.phone_num "u_phone_num",
             u.email "u_email",
+            u.zipcode "u_zipcode",
             u.address "u_address",
+            u.address_detail "u_address_detail",
             u.point "u_point",
             u.provider "u_provider",
             u.provider_id "u_provider_id",
