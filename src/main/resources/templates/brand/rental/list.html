@@ -40,7 +40,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="rental : ${rentals}" th:attr="data-status=${rental.status}, data-account-status=(${rental.user.statusAccount} ? 'ACTIVE' : 'INACTIVE')">
+            <tr th:each="rental : ${rentals}"
+                th:attr="data-status=${rental.status}, data-account-status=(${rental.user.statusAccount} ? 'ACTIVE' : 'INACTIVE')">
                 <td th:text="${rental.user.username}">사용자ID</td>
                 <td th:text="${rental.item.name}">아이템명</td>
                 <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">대여일</td>

@@ -47,24 +47,6 @@ VALUES (2, 3, 100000, '2025-4-24'),
        (3, 2, 70000, '2025-4-25')
 ;
 
-INSERT INTO Post(Post.user_id, content, items)
-VALUES (2, '가나다라', '나이키바지'),
-       (3, '가나다다라', '나이키티셔츠'),
-       (4, '가나다라라', '아디다스바지')
-;
-
-INSERT INTO Comment (Comment.user_id, Comment.post_id, content)
-VALUES (2, 1, 'ㄱㄱㄱㄱㄱㅂㅂㅂ'),
-       (3, 1, 'ㄱㄱㄱㄱㄱㅂㅂㅂㅇㄹㄹ'),
-       (4, 1, 'ㄱㄱㄱㄱㄱㅂㅂㅂㄴㅇㅁㄹ'),
-       (2, 2, 'ㄱㄱㄱㄱㄱㅂㅇㄴㄹㅂㅂ'),
-       (3, 2, 'ㄱㄱㄱㄱㄱㅂㅁㄴㅇㄹㅂㅂ'),
-       (4, 2, 'ㄱㄱㄱㄱㄱㅂㅁㄴㅇㄹㅂㅂ'),
-       (2, 3, 'ㄱㄱㄱㄱㄱㅂㄴㅇㅁㅁㅂㅂ'),
-       (3, 3, 'ㄱㄱㅁㄴㅇㄱㄱㄱㅂㅂㅂ'),
-       (4, 3, 'ㄱㅁㅇㄴㄹㄱㄱㄱㄱㅂㅂㅂ')
-;
-
 INSERT INTO Brand (brand.auth_id, name, username, password, phone_num, is_actived, description)
 VALUES (2, '나이키', 'nike', 'nike123', '031-1234-4321', true, '1111'),
        (2, '아디다스', 'adidas', 'adidas123', '031-1234-5342', true, 'aaaaaa'),
@@ -101,6 +83,7 @@ VALUES (2, 1, '2025-05-10 17:40:00', 'RENTED'),
        (4, 9, '2025-03-15 17:40:00', 'OVERDUE')
 
 ;
+
 
 -- 포인트 조회 기능 확인용 샘플 데이터
 UPDATE user

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.lec.spring.repository.AdminSalesRepository">
 
-    <!-- 월별 매출 -->
+    <!-- 전체 월간 매출 -->
     <select id="findSalesByMonth" resultType="com.lec.spring.domain.SalesByMonth">
         SELECT DATE_FORMAT(paid_at, '%Y-%m') AS month,
                SUM(price)                      AS total
@@ -14,16 +14,58 @@
         ORDER BY month
     </select>
 
-    <!-- 구독 종류별 매출 -->
-    <select id="findSalesByPlan" resultType="map">
+    <!-- 전체 분기별 매출 -->
+    <select id="findSalesByQuarter" resultType="com.lec.spring.domain.SalesByMonth">
+        SELECT CONCAT(YEAR(paid_at), '-Q', QUARTER(paid_at)) AS month,
+               SUM(price)                      AS total
+        FROM Payment
+        GROUP BY month
+        ORDER BY month
+    </select>
+
+    <!-- 전체 연간 매출 -->
+    <select id="findSalesByYear" resultType="com.lec.spring.domain.SalesByMonth">
+        SELECT CAST(YEAR (paid_at) AS CHAR) AS month,
+               SUM(price)                      AS total
+        FROM Payment
+        GROUP BY month
+        ORDER BY month
+    </select>
+
+
+    <!-- 구독 종류별 월간 매출 -->
+    <select id="findSalesByPlanMonth" resultType="map">
         SELECT p.type AS planName,
-               DATE_FORMAT(paid_at, '%Y-%m') AS month,
+               DATE_FORMAT(pay.paid_at, '%Y-%m') AS month,
                SUM(pay.price)                  AS total
         FROM Payment pay, Plan p
         WHERE pay.plan_id = p.id
         GROUP BY p.type, month
         ORDER BY p.type, month
     </select>
+
+    <!-- 구독 종류별 분기 매출 -->
+    <select id="findSalesByPlanQuarter" resultType="map">
+        SELECT p.type AS planName,
+               CONCAT(YEAR(pay.paid_at), '-Q', QUARTER(pay.paid_at)) AS month,
+               SUM(pay.price)                  AS total
+        FROM Payment pay, Plan p
+        WHERE pay.plan_id = p.id
+        GROUP BY p.type, month
+        ORDER BY p.type, month
+    </select>
+
+    <!-- 구독 종류별 연간 매출 -->
+    <select id="findSalesByPlanYear" resultType="map">
+        SELECT p.type AS planName,
+               CAST(YEAR (pay.paid_at) AS CHAR) AS month,
+               SUM(pay.price)                  AS total
+        FROM Payment pay, Plan p
+        WHERE pay.plan_id = p.id
+        GROUP BY p.type, month
+        ORDER BY p.type, month
+    </select>
+
 
     <!-- 지정 연·월의 총 매출 합계 조회 -->
     <select id="findTotalRevenue" resultType="long">

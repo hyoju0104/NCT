@@ -7,11 +7,24 @@ import java.util.Map;
 
 public interface AdminSalesRepository {
 	
-	// 월별 매출
+	// 월별 전체 매출
 	List<SalesByMonth> findSalesByMonth();
 	
-	// 구독별 매출
-	List<Map<String, Object>> findSalesByPlan();
+	// 분기별 전체 매출
+	List<SalesByMonth> findSalesByQuarter();
+	
+	// 연간 전체 매출
+	List<SalesByMonth> findSalesByYear();
+	
+	// 구독별 월 매출
+	List<Map<String, Object>> findSalesByPlanMonth();
+	
+	// 구독별 분기 매출
+	List<Map<String, Object>> findSalesByPlanQuarter();
+	
+	// 구독별 연 매출
+	List<Map<String, Object>> findSalesByPlanYear();
+	
 	
 	// 지정 연·월의 총 매출 합계 조회
 	Long findTotalRevenue(int year, int month);
