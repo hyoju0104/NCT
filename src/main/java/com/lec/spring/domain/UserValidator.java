@@ -68,13 +68,5 @@ public class UserValidator implements Validator {
             }
         }
         
-        // 대여 횟수 : 0 미만이 될 수 없도록 수정
-        Integer rentalCnt = user.getRentalCnt();
-        if (rentalCnt == null) {
-            // null 일 때 기본값 0으로 대체하거나, 에러로 처리
-            user.setRentalCnt(0);
-        } else if (rentalCnt < 0) {
-            errors.rejectValue("rentalCnt", null, "대여 가능 횟수는 0 이상이어야 합니다.");
-        }
     }
 }
