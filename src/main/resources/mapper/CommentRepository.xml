@@ -10,6 +10,7 @@
         <result column="u_id" property="id"/>
         <result column="u_username" property="username"/>
         <result column="u_name" property="name"/>
+        <result column="u_status_account" property="statusAccount"/>
     </resultMap>
 
     <resultMap id="mapComment" type="com.lec.spring.domain.Comment">
@@ -28,7 +29,8 @@
                c.regdate  "c_regdate",
                u.id       "u_id",
                u.username "u_username",
-               u.name     "u_name"
+               u.name     "u_name",
+               u.status_account "u_status_account"
         FROM Comment c
              JOIN User u
                  ON c.user_id = u.id

@@ -101,8 +101,11 @@ function buildComment(result){
 		let content = comment.content.trim();
 		let regdate = comment.regdate;
 		let user_id = parseInt(comment.user.id);
-		let username = comment.user.username;
-		let name = comment.user.name;
+		// 작성자 상태 확인
+		let isDeleted = comment.user.statusAccount === 'DELETED';
+
+		let username = isDeleted ? '탈퇴한 회원입니다' : comment.user.username;
+		let name = isDeleted ? '' : comment.user.name;
 
 
 		// 삭제 버튼 여부 : 작성자 본인인 경우만 삭제 버튼 보이게 하기.

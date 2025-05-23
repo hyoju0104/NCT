@@ -90,7 +90,7 @@
 				
 				<!-- 게시글 정보 -->
 				<div class="mb-3 mt-3 clearfix">
-					<span class="float-start me-2">[[${post.user.username}]]</span>
+					<span class="float-start me-2">[[${post.user.statusAccount == 'DELETED' ? '탈퇴한 회원입니다' : post.user.username}]]</span>
 					<span class="float-end ms-4">[[${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</span>
 				</div>
 				<!-- 게시글 정보 -->
