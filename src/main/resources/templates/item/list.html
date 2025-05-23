@@ -8,8 +8,107 @@
 
 	<link rel="stylesheet" th:href="@{/css/common.css}">
 	<link rel="stylesheet" th:href="@{/css/login.css}">
+	<script th:src="@{/js/item-list.js}"></script>
 
 	<title>상품 목록</title>
+
+	<style>
+		.item-grid {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 16px;
+		}
+
+		.item-card {
+			width: calc(33.333% - 10.66px); /* 기본 3개 */
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			padding: 10px;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: #fff;
+			transition: all 0.3s ease;
+		}
+
+		.item-card.hidden {
+			display: none !important;
+		}
+
+		.item-image {
+			width: 100%;
+			height: auto;
+			object-fit: cover;
+			border-radius: 4px;
+		}
+
+		.item-name {
+			font-weight: bold;
+			margin-top: 8px;
+			text-align: center;
+			display: block;
+		}
+
+		.item-brand {
+			font-size: 0.9em;
+			color: gray;
+			text-align: center;
+		}
+
+		.availability-badge {
+			margin-top: 6px;
+			padding: 4px 8px;
+			border-radius: 4px;
+			font-size: 0.85em;
+			color: white;
+		}
+
+		.available {
+			background-color: #28a745;
+		}
+
+		.unavailable {
+			background-color: #dc3545;
+		}
+
+		.category-filter {
+			margin-bottom: 20px;
+		}
+
+		.category-btn {
+			margin-right: 10px;
+			padding: 6px 12px;
+			background-color: #eee;
+			border-radius: 4px;
+			text-decoration: none;
+			color: black;
+		}
+
+		.category-btn.active {
+			background-color: #333;
+			color: #fff;
+		}
+
+		.link-clean {
+			text-decoration: none;
+			color: inherit;
+		}
+
+		/* --------- 반응형 미디어 쿼리 추가 --------- */
+		@media screen and (max-width: 1024px) {
+			.item-card {
+				width: calc(50% - 8px); /* 태블릿: 2개씩 */
+			}
+		}
+
+		@media screen and (max-width: 600px) {
+			.item-card {
+				width: 100%; /* 모바일: 1개씩 */
+			}
+		}
+	</style>
+
 </head>
 
 <body>
@@ -31,39 +130,25 @@
 		<a href="/item/category/잡화" class="category-btn" th:classappend="${category == '잡화'} ? 'active' : ''">잡화</a>
 	</div>
 
-	<!-- 상품 테이블 -->
-	<div class="table-container">
-		<table class="item-table">
-			<thead>
-			<tr>
-				<th width="30%">상품사진</th>
-				<th width="30%">상품명</th>
-				<th width="20%">브랜드</th>
-				<th width="20%">대여 상태</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr th:each="item : ${items}">
-				<td>
-					<img th:if="${item.attachment != null}" th:src="@{'/upload/item/' + ${item.attachment.filename}}"
-						 alt="상품 이미지" class="img-thumbnail" style="height: 80px;">
-				</td>
-				<td>
-					<a th:href="@{'/item/detail/' + ${item.id}}" class="item-link" th:text="${item.name}"></a>
-				</td>
-				<td th:text="${item.brand.name}"></td>
-				<td class="availability-cell">
-                        <span class="availability-badge" th:classappend="${item.isAvailable} ? 'available' : 'unavailable'"
-							  th:text="${item.isAvailable} ? '대여가능' : '대여불가'"></span>
-				</td>
-			</tr>
-			<tr th:if="${#lists.isEmpty(items)}" class="no-hover">
-				<td colspan="3" class="empty-message">
-					등록된 상품이 없습니다
-				</td>
-			</tr>
-			</tbody>
-		</table>
+	<!-- 상품 목록 grid -->
+	<div class="item-grid">
+		<div th:each="item : ${items}" class="item-card">
+			<a th:href="@{'/item/detail/' + ${item.id}}" style="text-decoration: none; color: inherit;">
+				<img th:if="${item.attachment != null}"
+					 th:src="@{'/upload/item/' + ${item.attachment.filename}}"
+					 alt="상품 이미지"
+					 class="item-image">
+			</a>
+			<div class="item-info">
+				<a th:href="@{'/item/detail/' + ${item.id}}"
+				   class="item-name"
+				   th:text="${item.name}"></a>
+				<p class="item-brand" th:text="${item.brand.name}"></p>
+				<span class="availability-badge"
+					  th:classappend="${item.isAvailable} ? 'available' : 'unavailable'"
+					  th:text="${item.isAvailable} ? '대여가능' : '대여불가'"></span>
+			</div>
+		</div>
 	</div>
 </div>
 </body>

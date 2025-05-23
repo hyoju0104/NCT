@@ -48,9 +48,20 @@ public class ItemController {
 
     @GetMapping("/category/{category}")
     public String listByCategory(@PathVariable String category, Model model) {
-        model.addAttribute("items", itemService.findByCategory(category));
+        List<Item> items = itemService.findByCategory(category);
+
+        for (Item item : items) {
+            List<ItemAttachment> attachments = itemAttachmentService.findByItemId(item.getId());
+            if (!attachments.isEmpty()) {
+                item.setAttachment(attachments.get(0));
+            }
+        }
+
+        model.addAttribute("items", items);
+        model.addAttribute("category", category);
         return "item/list";
     }
+
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id,

@@ -2,11 +2,97 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/login.css}">
+    <script th:src="@{/js/brand-list.js}"></script>
+
 
     <title>등록한 상품 목록</title>
+
+    <style>
+        .item-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .item-card {
+            width: calc(33.333% - 10.66px);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            box-sizing: border-box;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .item-card.hidden {
+            display: none !important;
+        }
+
+        .item-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            margin-top: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .item-date {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .item-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            padding: 4px 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .btn-outline.danger {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .no-data {
+            margin-top: 40px;
+            text-align: center;
+            color: #999;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .item-card { width: calc(50% - 8px); }
+        }
+
+        @media screen and (max-width: 600px) {
+            .item-card { width: 100%; }
+        }
+    </style>
 </head>
+
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
 
@@ -18,34 +104,29 @@
         </div>
     </div>
 
-    <div class="table-container">
-        <table class="item-table">
-            <thead>
-            <tr>
-                <th width="10%">ID</th>
-                <th width="50%">상품명</th>
-                <th width="20%">등록일</th>
-                <th width="20%">관리</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="item : ${itemList}" th:if="${item != null}">
-                <td th:text="${item.id}"></td>
-                <td><a th:href="@{'/brand/item/detail/' + ${item.id}}" class="item-link" th:text="${item.name}"></a></td>
-                <td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd')}"></td>
-                <td class="action-cell">
-                    <a th:href="@{'/brand/item/update/' + ${item.id}}" class="btn-outline">수정</a>
-                    <form th:action="@{/brand/item/delete}" method="post" class="inline-form" onsubmit="return confirm('정말 삭제하시겠습니까?')">
-                        <input type="hidden" name="id" th:value="${item.id}" />
-                        <button type="submit" class="btn-outline danger">삭제</button>
-                    </form>
-                </td>
-            </tr>
-            <tr th:if="${#lists.isEmpty(itemList)}" class="no-hover">
-                <td colspan="4" class="empty-message">등록된 상품이 없습니다.</td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="item-grid">
+        <div th:each="item : ${itemList}" class="item-card">
+            <a th:href="@{'/brand/item/detail/' + ${item.id}}" style="width: 100%;">
+                <img th:if="${item.attachment != null}"
+                     th:src="@{'/upload/item/' + ${item.attachment.filename}}"
+                     alt="상품 이미지"
+                     class="item-image">
+            </a>
+            <a th:href="@{'/brand/item/detail/' + ${item.id}}" class="item-name" th:text="${item.name}"></a>
+            <div class="item-date" th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd')}"></div>
+
+            <div class="item-actions">
+                <a th:href="@{'/brand/item/update/' + ${item.id}}" class="btn-outline">수정</a>
+                <form th:action="@{/brand/item/delete}" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?')">
+                    <input type="hidden" name="id" th:value="${item.id}" />
+                    <button type="submit" class="btn-outline danger">삭제</button>
+                </form>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(itemList)}" class="no-data">
+            등록된 상품이 없습니다.
+        </div>
     </div>
 </div>
 </body>
