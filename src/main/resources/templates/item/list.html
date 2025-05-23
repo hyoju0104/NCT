@@ -45,7 +45,8 @@
 			<tbody>
 			<tr th:each="item : ${items}">
 				<td>
-					<img th:if="${item.attachment != null}" th:src="@{'/upload/item/' + ${item.attachment.filename}}" alt="상품 이미지" class="img-thumbnail" style="height: 80px;">
+					<img th:if="${item.attachment != null}" th:src="@{'/upload/item/' + ${item.attachment.filename}}"
+						 alt="상품 이미지" class="img-thumbnail" style="height: 80px;">
 				</td>
 				<td>
 					<a th:href="@{'/item/detail/' + ${item.id}}" class="item-link" th:text="${item.name}"></a>
