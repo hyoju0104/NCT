@@ -20,6 +20,11 @@ public class OrderValidator implements Validator {
         // 전화번호 검증
         if (user.getPhoneNum() == null || user.getPhoneNum().trim().isEmpty()) {
             errors.rejectValue("phoneNum", null, "전화번호는 필수입니다.");
+        } else {
+            String p = user.getPhoneNum().trim();
+            if (!p.matches("[0-9\\-]+")) {
+                errors.rejectValue("phoneNum", null, "전화번호는 숫자와 하이픈(-)만 입력 가능합니다.");
+            }
         }
 
         // 주소 검증
