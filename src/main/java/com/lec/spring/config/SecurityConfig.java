@@ -57,7 +57,6 @@ public class SecurityConfig {
         //HttpSecurity http: 보안 설정 도구. 어떤 페이지에 누가 들어올 수 있는지 설정
         http
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화
-
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(
                                 "/", "/error",

@@ -150,6 +150,14 @@
         WHERE status = 'RENTED' AND return_due_at &lt; NOW()
     </update>
 
+    <select id="countActiveRentalsByUserId" resultType="int" parameterType="long">
+        SELECT COUNT(*)
+        FROM Rental
+        WHERE user_id = #{userId}
+          AND returned_at IS NULL
+          AND status = 'RENTED'
+    </select>
+
 
 
 </mapper>

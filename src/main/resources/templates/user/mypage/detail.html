@@ -10,7 +10,11 @@
 </head>
 
 <body>
-
+<th:block th:if="${error}">
+    <script th:inline="javascript">
+        alert([[${error}]]);
+    </script>
+</th:block>
 <!-- 상단 메뉴 -->
 <th:block th:insert="~{common/header::header}"></th:block>
 

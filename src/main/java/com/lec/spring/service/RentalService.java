@@ -17,4 +17,7 @@ public interface RentalService {
     void updateOverdueStatus();                         // 연체 상태 갱신+
 
     void rentItem(Rental rental);
+
+    int countActiveRentalsByUserId(Long userId);
+
 }

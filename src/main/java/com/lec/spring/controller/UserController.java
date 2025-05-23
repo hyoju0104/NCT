@@ -121,8 +121,14 @@ public class UserController {
 	}
 	
 	@PostMapping("/withdraw")
-	public String withdraw(@AuthenticationPrincipal PrincipalUserDetails principal) {
+	public String withdraw(@AuthenticationPrincipal PrincipalUserDetails principal,RedirectAttributes redirectAttributes) {
 		Long userId = principal.getUser().getId();
+		int activeRentalCount = rentalService.countActiveRentalsByUserId(userId);
+		if (activeRentalCount > 0) {
+			redirectAttributes.addFlashAttribute("error", "대여 중인 아이템이 있어 탈퇴할 수 없습니다.");
+			return "redirect:/user/mypage/detail";  // 또는 적절한 마이페이지/에러 페이지로
+		}
+
 		userService.markAsDeleted(userId);  // status_account = 'DELETED'
 		return "redirect:/logout"; // 로그아웃으로 강제 이동
 	}

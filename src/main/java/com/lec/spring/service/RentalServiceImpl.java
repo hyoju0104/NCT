@@ -67,4 +67,9 @@ public class RentalServiceImpl implements RentalService {
         rentalRepository.save(rental); // 대여 등록
         userRepository.increaseRentalCount(rental.getUser().getId()); // ← rental_cnt 증가
     }
+
+    @Override
+    public int countActiveRentalsByUserId(Long userId) {
+        return rentalRepository.countActiveRentalsByUserId(userId);
+    }
 }
