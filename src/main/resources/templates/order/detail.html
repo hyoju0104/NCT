@@ -81,10 +81,8 @@
 			
 			
 			<div class="remain-section">
-				<div>남은 횟수</div>
-				<div class="remain-count" th:text="${remainCnt}">0</div>
-				<div>총 가능 횟수</div>
-				<div class="total-count"  th:text="${totalCnt}">0</div>
+				<input type="hidden" name="remainCnt" th:value="${remainCnt}">
+				<input type="hidden" name="totalCnt" th:value="${totalCnt}">
 			</div>
 			
 			
