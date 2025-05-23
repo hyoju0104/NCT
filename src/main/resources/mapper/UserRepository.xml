@@ -51,7 +51,9 @@
         SET name = #{name},
             phone_num = #{phoneNum},
             password = #{password},
-            address   = #{address}
+            zipcode   = #{zipcode},
+            address   = #{address},
+            address_detail = #{addressDetail}
         WHERE id = #{id}
     </update>
 
