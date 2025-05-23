@@ -5,6 +5,7 @@ import com.lec.spring.domain.User;
 import com.lec.spring.repository.BrandRepository;
 import com.lec.spring.repository.UserRepository;
 import com.lec.spring.service.BrandService;
+import com.lec.spring.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,11 +15,16 @@ import org.springframework.stereotype.Service;
 public class PrincipalService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final com.lec.spring.service.UserService userService;
+    private final UserService userService;
     private final BrandRepository brandRepository;
     private final BrandService brandService;
     
-    public PrincipalService(com.lec.spring.service.UserService userService, UserRepository userRepository, BrandRepository brandRepository, BrandService brandService) {
+    public PrincipalService(
+            UserService userService,
+            UserRepository userRepository,
+            BrandRepository brandRepository,
+            BrandService brandService
+    ) {
         this.userRepository = userRepository;
         this.userService = userService;
 	    this.brandRepository = brandRepository;
@@ -38,7 +44,7 @@ public class PrincipalService implements UserDetailsService {
             if (user.getStatusAccount().equals("DELETED")) {
                 throw new org.springframework.security.authentication.DisabledException("탈퇴한 계정입니다.");
             }
-            //PrincipalDetails : 사용자 정보 객체 > 그 안에 우리가 찾은 user 객체를 넣어서 리턴
+            // PrincipalDetails : 사용자 정보 객체 > 그 안에 우리가 찾은 user 객체를 넣어서 리턴
             PrincipalUserDetails principalUserDetails = new PrincipalUserDetails(user);
             principalUserDetails.setUserService(userService);
             return principalUserDetails;

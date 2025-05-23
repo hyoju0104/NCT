@@ -7,7 +7,6 @@ import com.lec.spring.service.ItemAttachmentService;
 import com.lec.spring.service.ItemService;
 import com.lec.spring.service.RentalService;
 import com.lec.spring.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
