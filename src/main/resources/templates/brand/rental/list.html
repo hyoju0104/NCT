@@ -29,7 +29,7 @@
             <thead>
             <tr>
                 <th>사용자ID</th>
-                <th>아이템명</th>
+                <th>상품명</th>
                 <th>대여일</th>
                 <th>반납예정일</th>
                 <th>실제반납일</th>
@@ -43,7 +43,7 @@
             <tr th:each="rental : ${rentals}"
                 th:attr="data-status=${rental.status}, data-account-status=(${rental.user.statusAccount} ? 'ACTIVE' : 'INACTIVE')">
                 <td th:text="${rental.user.username}">사용자ID</td>
-                <td th:text="${rental.item.name}">아이템명</td>
+                <td th:text="${rental.item.name}">상품명</td>
                 <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">대여일</td>
                 <td th:text="${#temporals.format(rental.returnDueAt, 'yyyy-MM-dd')}">반납예정일</td>
                 <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '-'}">-</td>
