@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 
 @Configuration // 이 클래스는 설정용
 @EnableWebSecurity // Spring Securirty 보안 기능 켬
@@ -74,9 +76,17 @@ public class SecurityConfig {
                 .formLogin(form->form //로그인화면을 어떻게 보여줄지
                         .loginPage("/login") //로그인 페이지 설정
                         .loginProcessingUrl("/login") // 아이디 비번 입력하고 로그인 버튼 누르면 /login으로 전송
-                                                      // 근데 이때 Spring Security가 이 요청을 가로채서 로그인 처리 자동으로 해줌
+                        // 근데 이때 Spring Security가 이 요청을 가로채서 로그인 처리 자동으로 해줌
                         // 권한별 리다이렉트 핸들러
                         .successHandler((request, response, authentication) -> {
+
+                            // ✅ 먼저 이전 요청 URL이 있는지 확인 (SavedRequest)
+                            SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
+                            if (savedRequest != null) {
+                                response.sendRedirect(savedRequest.getRedirectUrl());
+                                return;
+                            }
+
                             Object principal = authentication.getPrincipal();
 
                             if (principal instanceof com.lec.spring.config.PrincipalBrandDetails brandDetails) {
