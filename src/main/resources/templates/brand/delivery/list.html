@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script th:src="@{/js/delivery.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <script th:src="@{/js/delivery-list.js}"></script>
+
+
+  <title>브랜드 마이페이지 - 배송 관리</title>
+</head>
+
+<body>
+<th:block th:insert="~{common/header::header}"></th:block>
+
+<div class="rental-container">
+  <div class="section-header">
+    <h2 class="section-title">배송 관리</h2>
+  </div>
+
+  <div class="table-container">
+    <table class="rental-table">
+      <thead>
+      <tr>
+        <th>사용자ID</th>
+        <th>상품명</th>
+        <th>대여일</th>
+        <th>주소지</th>
+        <th>배송처리</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="rental : ${rentals}">
+        <td th:text="${rental.user.username}">사용자ID</td>
+        <td th:text="${rental.item.name}">상품명</td>
+        <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">대여일</td>
+        <td th:text="${rental.user.address + ', ' + rental.user.addressDetail}">주소지</td>
+        <td>
+          <form onsubmit="return false;">
+            <button type="button" onclick="completeDelivery(this)">배송처리</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

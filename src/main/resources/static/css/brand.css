@@ -558,6 +558,7 @@ button {
     color: white;
 }
 
+
 /* 모바일 최적화 */
 @media (max-width: 480px) {
     .wide-container {
@@ -585,4 +586,6 @@ button {
     .products-grid {
         grid-template-columns: 1fr;
     }
+
+
 }
