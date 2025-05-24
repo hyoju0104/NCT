@@ -271,6 +271,23 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<Post> findByUserId(Long userId) {
-		return postRepository.findByUserId(userId);
+		List<Post> posts =  postRepository.findByUserId(userId);
+		
+		for (Post post : posts) {
+			// 1. 특정 게시물의 모든 첨부파일 조회
+			List<PostAttachment> attachments = postAttachmentRepository.findByPostId(post.getId());
+			
+			if (attachments != null && !attachments.isEmpty()) {
+				// 2. id 가 가장 작은 대표 이미지 선정
+				PostAttachment representative = attachments.stream()
+						.min(Comparator.comparing(PostAttachment::getId))
+						.orElse(attachments.get(0));
+				
+				// fileList 에 세팅
+				post.setFileList(Collections.singletonList(representative));
+			}
+		}
+		
+		return posts;
 	}
 }

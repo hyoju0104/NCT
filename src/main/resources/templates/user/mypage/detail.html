@@ -130,37 +130,34 @@
         </div>
     </section>
     
-    <!-- 7. 내가 작성한 게시물 목록 -->
+    <!-- 7. 내가 작성한 게시물 목록 (이미지 그리드) -->
     <section class="info-section">
         <h2 class="section-title">내가 작성한 게시물</h2>
-        <div class="table-container">
-            <table class="my-post-table">
-                <thead>
-                <tr>
-                    <th>제목</th>
-                    <th>작성일시</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="post, iterStat : ${myPosts}">
-                    <td>
-                        <a th:href="@{/post/detail/{id}(id=${post.id})}"
-                           th:text="'게시물 ' + ${iterStat.count}">
-                            게시물 1
-                        </a>
-                    </td>
-                    <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">
-                        2025-05-20 16:00
-                    </td>
-                </tr>
-                <tr th:if="${#lists.isEmpty(myPosts)}" class="no-hover">
-                    <td colspan="2" class="empty-message">작성한 게시물이 없습니다.</td>
-                </tr>
-                </tbody>
-            </table>
+        
+        <!-- 게시물이 없을 때 -->
+        <div th:if="${#lists.isEmpty(myPosts)}" class="empty-message">
+            작성한 게시물이 없습니다.
+        </div>
+        
+        <!-- 게시물이 있을 때 -->
+        <div class="post-grid" th:if="!${#lists.isEmpty(myPosts)}">
+            <div class="post-item" th:each="post : ${myPosts}">
+                <a th:href="@{/post/detail/{id}(id=${post.id})}">
+                    <!-- 첨부파일이 하나라도 있으면 -->
+                    <img th:if="${!#lists.isEmpty(post.fileList)}"
+                         th:src="@{'/upload/post/' + ${post.fileList[0].filename}}"
+                         th:alt="${post.fileList[0].sourcename}"
+                         class="post-img"/>
+                    <!-- 첨부파일이 없으면 대체 텍스트 -->
+                    <div th:if="${#lists.isEmpty(post.fileList)}"
+                         class="no-image">
+                        이미지 없음
+                    </div>
+                </a>
+            </div>
         </div>
     </section>
-
+    
     <!-- 8. 계정 상태 -->
     <section class="info-section">
         <h2 class="section-title">계정 관리</h2>
