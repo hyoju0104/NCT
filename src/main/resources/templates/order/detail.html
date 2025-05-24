@@ -61,13 +61,13 @@
 				
 				<div class="form-group" data-type="zipcode">
 					<label th:for="zipcode">우편번호</label>
-					<input type="text" th:field="*{zipcode}" readonly>
+					<input type="text" th:field="*{zipcode}" readonly class="readonly-input">
 					<button type="button" onclick="searchAddress()">주소 찾기</button>
 				</div>
 				
 				<div class="form-group">
 					<label th:for="address">주소</label>
-					<input type="text" th:field="*{address}" readonly>
+					<input type="text" th:field="*{address}" readonly class="readonly-input">
 				</div>
 				
 				<div class="form-group">

@@ -18,12 +18,12 @@
 		<h2>회원정보 수정</h2>
 		<p class="subheading">WEAR UP TO LEVEL UP</p>
 		
-		<form th:action="@{/user/mypage/update}" th:object="${user}" method="post" onsubmit="combineAddress(this)">
+		<form th:action="@{/user/mypage/update}" th:object="${user}" method="post">
 			<input type="hidden" th:field="*{id}"/>
 			
 			<!-- ✅ 글로벌 에러 메시지 출력 -->
 			<div th:if="${#fields.hasGlobalErrors()}" class="alert alert-error">
-				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}" class="field-error"></p>
 			</div>
 			
 			<!-- 아이디 (readonly) -->
@@ -36,54 +36,54 @@
 			<div class="form-group">
 				<label for="name">이름 *</label>
 				<input type="text" id="name" th:field="*{name}">
-				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="field-error"></div>
 			</div>
 			
 			<!-- 비밀번호 -->
 			<div class="form-group">
 				<label for="password">비밀번호 *</label>
 				<input type="password" id="password" th:field="*{password}">
-				<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+				<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="field-error"></div>
 			</div>
 			
 			<!-- 비밀번호 확인 -->
 			<div class="form-group">
 				<label for="rePassword">비밀번호 확인 *</label>
 				<input type="password" id="rePassword" th:field="*{rePassword}">
-				<div th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}"></div>
+				<div th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}" class="field-error"></div>
 			</div>
 			
 			<!-- 이메일 -->
 			<div class="form-group">
 				<label for="email">이메일</label>
-				<input type="email" id="email" th:field="*{email}">
+				<input type="email" id="email" th:field="*{email}" class="field-error">
 			</div>
 			
 			<!-- 전화번호 -->
 			<div class="form-group">
 				<label for="phoneNum">전화번호</label>
 				<input type="tel" id="phoneNum" th:field="*{phoneNum}">
-				<div th:if="${#fields.hasErrors('phoneNum')}" th:errors="*{phoneNum}"></div>
+				<div th:if="${#fields.hasErrors('phoneNum')}" th:errors="*{phoneNum}" class="field-error"></div>
 			</div>
 			
 			<!-- 우편번호 -->
 			<div class="form-group" data-type="zipcode">
 				<label th:for="zipcode">우편번호</label>
-				<input type="text" th:field="*{zipcode}" placeholder="우편번호" readonly>
-				<button type="button" onclick="execDaumPostcode()">주소 수정</button>
+				<input type="text" th:field="*{zipcode}" placeholder="우편번호" readonly class="readonly-input">
+				<button type="button" onclick="searchAddress()">주소 수정</button>
 				<div th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" class="field-error"></div>
 			</div>
 			
 			<!-- 주소 -->
 			<div class="form-group">
 				<label for="address">주소</label>
-				<input type="text" id="address" th:field="*{address}" placeholder="주소를 입력하세요" readonly>
+				<input type="text" id="address" th:field="*{address}" placeholder="주소를 입력하세요" readonly class="readonly-input">
 			</div>
 			
 			<!-- 상세주소 -->
 			<div class="form-group">
-				<label for="detailAddress">상세주소</label>
-				<input type="text" id="detailAddress" th:field="*{addressDetail}" placeholder="상세주소를 입력하세요">
+				<label for="addressDetail">상세주소</label>
+				<input type="text" id="addressDetail" th:field="*{addressDetail}" placeholder="상세주소를 입력하세요">
 			</div>
 			
 			
@@ -94,28 +94,10 @@
 			<p><a th:href="@{/user/mypage/detail}">마이페이지로 돌아가기</a></p>
 		</div>
 	</div>
+	
 	<!-- 카카오 주소검색 스크립트 -->
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-		function execDaumPostcode() {
-			new daum.Postcode({
-				oncomplete: function (data) {
-					document.getElementById('zipcode').value = data.zonecode;
-					document.getElementById('address').value = data.address;
-				}
-			}).open();
-		}
-
-		function combineAddress(form) {
-			const zip = form.zipcode.value;
-			const addr = form.address.value;
-			const detail = form.detailAddress.value.trim();
-			form.address.value = detail
-				? '[' + zip + '] ' + addr + ' ' + detail
-				: '[' + zip + '] ' + addr;
-		}
+	<script th:src="@{/js/address.js}"></script>
 	
-	
-	</script>
 </body>
 </html>
