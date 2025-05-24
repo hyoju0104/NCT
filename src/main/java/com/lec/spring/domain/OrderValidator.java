@@ -31,6 +31,9 @@ public class OrderValidator implements Validator {
         if (user.getAddress() == null || user.getAddress().trim().isEmpty()) {
             errors.rejectValue("address", null, "주소지는 필수입니다.");
         }
+        if (user.getAddressDetail() == null || user.getAddressDetail().trim().isEmpty()) {
+            errors.rejectValue("addressDetail", null, "주소지는 필수입니다.");
+        }
         
     }
 }

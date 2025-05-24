@@ -118,12 +118,18 @@ public class OrderController {
 		orderValidator.validate(user, result);
 		if (result.hasErrors()) {
 			if (result.hasFieldErrors("phoneNum")) {
-				model.addAttribute("error_phoneNum", result.getFieldError("phoneNum").getDefaultMessage());
+				model.addAttribute("error_phoneNum",
+						result.getFieldError("phoneNum").getDefaultMessage());
 			}
 			if (result.hasFieldErrors("address")) {
-				model.addAttribute("error_address", result.getFieldError("address").getDefaultMessage());
+				model.addAttribute("error_address",
+						result.getFieldError("address").getDefaultMessage());
 			}
-
+			if (result.hasFieldErrors("addressDetail")) {
+				model.addAttribute("error_addressDetail",
+						result.getFieldError("addressDetail").getDefaultMessage());
+			}
+		
 			// 다시 상품 정보 세팅
 			Item item = itemService.detail(id);
 			model.addAttribute("item", item);

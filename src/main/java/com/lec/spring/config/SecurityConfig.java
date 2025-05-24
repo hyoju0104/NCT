@@ -66,7 +66,10 @@ public class SecurityConfig {
                                 "/css/**", "/js/**", "/images/**", "/upload/**", "/common/**",
                                 "/post/list", "/post/detail/**",
                                 "/comment/**",
-                                "/item/**", "/item/detail/**", "/item/list/category/**"
+                                "/item/**", "/item/detail/**", "/item/list/category/**",
+                                
+                                // DevTools PWA 메타파일 경로
+                                "/.well-known/**", "/appspecific/**"
                         ).permitAll()
                         .requestMatchers("/brand/**").hasAuthority("BRAND")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")

@@ -73,9 +73,7 @@
 				<div class="form-group">
 					<label for="addressDetail">상세주소</label>
 					<input type="text" th:field="*{addressDetail}" placeholder="상세주소를 입력하세요">
-					<div class="field-error" id="addressDetail"
-						 th:if="${#fields.hasErrors('addressDetail')}"
-						 th:errors="*{addressDetail}"></div>
+					<div class="field-error" id="addressDetail" th:errors="*{addressDetail}"></div>
 				</div>
 			</div>
 			
