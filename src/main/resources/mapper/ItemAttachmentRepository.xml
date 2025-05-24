@@ -12,23 +12,27 @@
         <result column="filename" property="filename"/>
     </resultMap>
 
+    <!-- 첨부파일 저장 -->
     <insert id="save" parameterType="com.lec.spring.domain.ItemAttachment">
         INSERT INTO ItemAttachment (item_id, sourcename, filename)
         VALUES (#{itemId}, #{sourcename}, #{filename})
     </insert>
 
+    <!-- 특정 상품 ID에 해당하는 첨부파일 목록 조회 -->
     <select id="findByItemId" resultMap="ItemAttachment">
         SELECT id, item_id, sourcename, filename
         FROM ItemAttachment
         WHERE item_id = #{itemId}
     </select>
 
+    <!-- 첨부파일 ID로 첨부파일 조회 -->
     <select id="findById" resultMap="ItemAttachment">
         SELECT id, item_id, sourcename, filename
         FROM ItemAttachment
         WHERE id = #{id}
     </select>
 
+    <!-- 첨부파일 삭제 쿼리 -->
     <delete id="deleteById" parameterType="com.lec.spring.domain.ItemAttachment">
         DELETE FROM ItemAttachment
         WHERE id = #{id}

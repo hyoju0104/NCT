@@ -1,6 +1,13 @@
+// 문서 로딩 완료 후 실행
 document.addEventListener('DOMContentLoaded', function () {
+
+    // 모든 상품 카드 요소를 배열로 가져옴
     const cards = Array.from(document.querySelectorAll('.item-card'));
-    const perLoad = 9; // 3개씩 3행씩 로드
+
+    // 한 번에 보여줄 카드 수 (3행 × 3열 = 9개)
+    const perLoad = 9;
+
+    // 현재까지 화면에 로딩된 카드 수
     let loadedCount = 0;
 
     // 처음에 perLoad개만 표시

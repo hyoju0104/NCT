@@ -28,14 +28,19 @@ public class ItemAttachmentController {
 
     @PostMapping("/delete")
     public String delete(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
+
+        // 첨부파일 정보 조회
         ItemAttachment attachment = itemAttachmentService.findById(id);
 
+        // 첨부파일이 존재하면 삭제 처리
         if (attachment != null) {
             File file = new File(System.getProperty("user.dir") + "/" + uploadDirItem + "/" + attachment.getFilename());
             if (file.exists()) file.delete();
 
+            // DB에서 첨부파일 삭제
             itemAttachmentService.deleteById(id);
 
+            // 상품 정보 다시 조회하여 flashAttribute로 전달
             Item item = itemService.detail(attachment.getItemId());
             redirectAttributes.addFlashAttribute("item", item);
             redirectAttributes.addFlashAttribute("attachment", null);

@@ -33,6 +33,8 @@ public class BrandServiceImpl implements BrandService {
         this.itemRepository = itemRepository;
     }
 
+    // 브랜드 회원가입 처리
+    // 비밀번호 암호화 후 저장, BRAND 권한 부여
     @Override
     public int register(Brand brand) {
         brand.setUsername(brand.getUsername());
@@ -49,38 +51,46 @@ public class BrandServiceImpl implements BrandService {
         return 1;
     }
 
+    // ID 중복 여부 확인
     @Override
     public boolean isExist(String username) {
         return findByUsername(username) != null;
     }
 
+    // username 으로 브랜드 정보 조회
     @Override
     public Brand findByUsername(String username) {
         System.out.println("brandRepository.findByUsername(username) : " + brandRepository.findByUsername(username));
         return brandRepository.findByUsername(username);
     }
 
+    // 브랜드 ID로 권한 목록 조회
     @Override
     public List<Authority> selectAuthoritiesById(Long id) {
         Brand brand = brandRepository.findById(id);
         return authorityRepository.findByUser(brand);
     }
 
+    // ID 로 브랜드 조회
     @Override
     public Brand selectById(Long id) {
         return brandRepository.findById(id);
     }
 
+    // 마이페이지 상세 정보 조회
     @Override
     public Brand myDetail(Long id) {
         return brandRepository.findById(id);
     }
 
+    // 브랜드 정보 수정
     @Override
     public int myUpdate(Brand brand) {
         return brandRepository.update(brand);
     }
 
+    // 브랜드 탈퇴 처리
+    // 상품 정보 상태 (is_actived) 비활성화 처리
     @Override
     public int myDelete(Long id) {
         itemRepository.markAllItemsAsNotExistByBrandId(id);

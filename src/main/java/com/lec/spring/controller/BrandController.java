@@ -36,6 +36,7 @@ public class BrandController {
     private final BrandAttachmentService brandAttachmentService;
     private final RentalService rentalService;
 
+    // 업로드 디렉토리 설정값 주입
     @Value("${app.upload.path.brand}")
     private String uploadDirBrand;
 
@@ -46,6 +47,7 @@ public class BrandController {
         this.rentalService = rentalService;
     }
 
+    // 마이페이지 상세보기
     @GetMapping("/mypage/detail")
     public String mypageDetail(@AuthenticationPrincipal PrincipalBrandDetails principal, Model model) {
         Long brandId = principal.getBrand().getId();
@@ -58,6 +60,7 @@ public class BrandController {
         return "brand/mypage/detail";
     }
 
+    // 마이페이지 수정
     @GetMapping("/mypage/update")
     public String myUpdate(@AuthenticationPrincipal PrincipalBrandDetails principal, Model model) {
         Long brandId = principal.getBrand().getId();
@@ -69,6 +72,7 @@ public class BrandController {
         return "brand/mypage/update";
     }
 
+    // 마이페이지 수정 처리
     @PostMapping("/mypage/update")
     public String myUpdateOk(
             @RequestParam(required = false) MultipartFile logo,
@@ -98,6 +102,7 @@ public class BrandController {
         Long brandId = principal.getBrand().getId();
         brand.setId(brandId);
 
+        // 비밀번호 변경 처리
         if (password != null && !password.isBlank()) {
             brand.setPassword(passwordEncoder.encode(password));
         } else {
@@ -105,8 +110,10 @@ public class BrandController {
             brand.setPassword(current.getPassword());
         }
 
+        // 브랜드 정보 업데이트
         brandService.myUpdate(brand);
 
+        // 로고 이미지 변경 처리
         if (logo != null && !logo.isEmpty()) {
 
             List<BrandAttachment> beforeImg = brandAttachmentService.findByBrandId(brandId);
@@ -151,6 +158,7 @@ public class BrandController {
         return "/brand/mypage/updateOk";
     }
 
+    // 브랜드 탈퇴 처리
     @PostMapping("/mypage/delete")
     public String myDeleteOk(@AuthenticationPrincipal PrincipalBrandDetails principal) {
         Long brandId = principal.getBrand().getId();
@@ -158,6 +166,7 @@ public class BrandController {
         return "brand/mypage/deleteOk";
     }
 
+    // 배송 관리
     @GetMapping("/delivery/list")
     public String deliveryList(@AuthenticationPrincipal PrincipalBrandDetails principal, Model model) {
         Long brandId = principal.getBrand().getId();

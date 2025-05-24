@@ -57,12 +57,13 @@
         <association property="brand" resultMap="mapBrand"/>
     </resultMap>
 
-
+    <!-- ID로 Item 조회 -->
     <select id="findById" resultMap="mapItem">
         <include refid="SELECT_BASE"/>
         AND i.id = #{id}
     </select>
 
+    <!-- 상품을 사용 불가 상태로 전환 -->
     <update id="markAsUnavailable" parameterType="long" flushCache="true">
         UPDATE Item
         SET
@@ -70,6 +71,7 @@
         WHERE id = #{id}
     </update>
 
+    <!-- 브랜드 ID로 해당 브랜드의 모든 상품 조회 -->
     <select id="findByBrandId" resultMap="mapItem">
         <include refid="SELECT_BASE"/>
         AND i.brand_id = #{brandId}
@@ -77,12 +79,14 @@
         ORDER BY i.id DESC
     </select>
 
+    <!-- 존재하는 모든 상품 조회 -->
     <select id="findAll" resultMap="mapItem">
         <include refid="SELECT_BASE"/>
         AND i.is_exist = true
         ORDER BY i.id DESC
     </select>
 
+    <!-- 카테고리별 상품 필터링 -->
     <select id="findByCategory" parameterType="string" resultMap="mapItem">
         <include refid="SELECT_BASE"/>
         AND i.is_exist = true
@@ -90,6 +94,7 @@
         ORDER BY i.id DESC
     </select>
 
+    <!-- 상품 정보 수정 -->
     <update id="update" parameterType="com.lec.spring.domain.Item" flushCache="true">
         UPDATE Item
         SET name = #{name},
@@ -101,6 +106,7 @@
         WHERE id = #{id}
     </update>
 
+    <!-- 상품 삭제 (is_exist → false 처리) -->
     <update id="markAsNotExist" parameterType="com.lec.spring.domain.Item" flushCache="true">
         UPDATE Item
         SET
@@ -108,17 +114,18 @@
         WHERE id = #{id}
     </update>
 
+    <!-- 상품의 사용 가능 여부 지정 -->
     <update id="setAvailable" parameterType="map">
         UPDATE Item
         SET is_available = #{isAvailable}
         WHERE id = #{itemId}
     </update>
 
+    <!-- 특정 브랜드의 모든 상품을 비활성화 상태로 전환 -->
     <update id="markAllItemsAsNotExistByBrandId" parameterType="com.lec.spring.domain.Item" flushCache="true">
         UPDATE Item
         SET is_exist = false
         WHERE brand_id = #{brandId}
     </update>
-
 
 </mapper>

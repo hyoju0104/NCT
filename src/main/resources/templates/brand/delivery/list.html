@@ -15,6 +15,7 @@
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
 
+<!-- 전체 배송관리 영역 컨테이너 -->
 <div class="rental-container">
   <div class="section-header">
     <h2 class="section-title">배송 관리</h2>
@@ -32,6 +33,8 @@
       </tr>
       </thead>
       <tbody>
+
+      <!-- 서버에서 전달된 대여 목록(rentals)을 순회하며 출력 -->
       <tr th:each="rental : ${rentals}">
         <td th:text="${rental.user.username}">사용자ID</td>
         <td th:text="${rental.item.name}">상품명</td>
