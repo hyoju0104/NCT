@@ -35,6 +35,7 @@ public class SecurityConfig {
     private CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     
     private final LoginFailureHandler loginFailureHandler;
+    private final LoginSuccessHandler loginSuccessHandler;
 
 
     //비밀번호 암호화
@@ -51,6 +52,12 @@ public class SecurityConfig {
     // AuthenticationManager : 인증 처리 관리자. 로그인 시도 시 유효한 사용자인지, ID&PW 일치하는지 확인
     // AuthenticationConfiguration config : Spring Security가 내부적으로 가지고 있는 로그인 설정 정보들이 모여있음
     // 그 안에 이미 만들어진 AuthenticationManager가 들어있음 > 그걸 꺼내서 @Bean 으로 등록
+    
+    // 순환참조를 막기 위해 static(정적)으로 선언
+    @Bean
+    public static HttpSessionRequestCache httpSessionRequestCache() {
+        return new HttpSessionRequestCache();
+    }
 
 
     @Bean
@@ -60,6 +67,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화
                 .authorizeHttpRequests(auth->auth
+                        // 누구나 접근 가능
                         .requestMatchers(
                                 "/", "/error",
                                 "/login", "/register/**",
@@ -71,58 +79,29 @@ public class SecurityConfig {
                                 // DevTools PWA 메타파일 경로
                                 "/.well-known/**", "/appspecific/**"
                         ).permitAll()
+                        
+                        // 특정 권한을 가진 계정만 접근 가능
                         .requestMatchers("/brand/**").hasAuthority("BRAND")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/user/withdraw").authenticated()
-                        .anyRequest().authenticated() // 그 외 모든 주소는 로그인한 사람만 접근
+                        
+                        // 그 외 모든 주소는 로그인한 사람만 접근 가능
+                        .anyRequest().authenticated()
                 )   // authorizeHttpRequests
 
+                
                 .formLogin(form->form // 로그인화면을 어떻게 보여줄지
                         .loginPage("/login") // 로그인 페이지 설정
-                        .loginProcessingUrl("/login") // 아이디 비번 입력하고 로그인 버튼 누르면 /login으로 전송
-                        // 근데 이때 Spring Security가 이 요청을 가로채서 로그인 처리 자동으로 해줌
-                        // 권한별 리다이렉트 핸들러
+                        .loginProcessingUrl("/login") // 아이디 비번 입력하고 로그인 버튼 누르면 /login 으로 전송
+                                                      // 근데 이때 Spring Security가 이 요청을 가로채서 로그인 처리 자동으로 해줌
+                                                      // 권한별 리다이렉트 핸들러
+                        // 로그인 실패 시 처리할 핸들러
                         .failureHandler(loginFailureHandler)
-                        .successHandler((request, response, authentication) -> {
-
-                            // ✅ 먼저 이전 요청 URL이 있는지 확인 (SavedRequest)
-                            SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
-                            if (savedRequest != null) {
-                                response.sendRedirect(savedRequest.getRedirectUrl());
-                                return;
-                            }
-
-                            Object principal = authentication.getPrincipal();
-
-                            if (principal instanceof com.lec.spring.config.PrincipalBrandDetails brandDetails) {
-                                Brand brand = brandDetails.getBrand();
-                                HttpSession session = request.getSession();
-                                session.setAttribute("brandId", brand.getId());
-                                session.setAttribute("brandUsername", brand.getUsername());
-                            }
-
-                            // USER 계정이면 세션에 userId 저장
-                            if (principal instanceof PrincipalUserDetails principalUserDetails) {
-                                User user = principalUserDetails.getUser();
-                                HttpSession session = request.getSession();
-                                session.setAttribute("userId", user.getId());
-                                session.setAttribute("username", user.getUsername());
-                            }
-
-                            boolean isBrand = authentication.getAuthorities().stream()
-                                    .anyMatch(a -> a.getAuthority().equals("BRAND"));
-                            boolean isAdmin = authentication.getAuthorities().stream()
-                                    .anyMatch(a -> a.getAuthority().equals("ADMIN"));
-
-                            if (isBrand) {
-                                response.sendRedirect("/brand/list");
-                            } else if (isAdmin) {
-                                response.sendRedirect("/admin/sales");
-                            } else {
-                                response.sendRedirect("/post/list");
-                            }
-                        })
-                        .permitAll() // 위에서 설정한 로그인 관련 URL들은 로그인 안해도 누구나 볼수있게
+                        // 로그인 성공 시 처리할 핸들러
+                        .successHandler(loginSuccessHandler)
+                        // 위에서 설정한 로그인 관련 URL 들은 로그인 안해도 누구나 접근 가능
+                        .permitAll()
+                        
                 ) // formLogin
 
 
@@ -155,8 +134,8 @@ public class SecurityConfig {
                                         .userService(principalOauth2UserService)
                                 )
                                 .successHandler(customOAuth2SuccessHandler)
-
                 ); // oauth2Login, 메소드 체이닝 끝
+        
         return http.build(); // 지금까지 설정한 모든 보안 규칙을 하나로 묶어 스프링에 넘겨줌
 
     }//SecurityFilterChain
