@@ -51,7 +51,7 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	
-	// 목록
+	// 전체 게시글 목록 가져오기
 	@Override
 	public List<Post> list() {
 		List<Post> posts = postRepository.findAll();
@@ -82,9 +82,9 @@ public class PostServiceImpl implements PostService {
 		return posts;
 	}
 	
+	// 게시글 작성
 	@Override
 	public int write(Post post, Map<String, MultipartFile> files) {
-		
 		// 현재 로그인한 작성자 정보
 		User user = U.getLoggedUser();
 		
@@ -100,12 +100,10 @@ public class PostServiceImpl implements PostService {
 		addFiles(files, post.getId());
 		
 		return cnt;
-		
 	}
 	
 	// 특정 글(id)에 첨부파일(들)(files) 추가
 	private void addFiles(Map<String, MultipartFile> files, Long id) {
-		
 		if (files == null) return;
 		
 		for (Map.Entry<String, MultipartFile> e : files.entrySet()) {
@@ -126,14 +124,11 @@ public class PostServiceImpl implements PostService {
 				file.setPostId(id);    // FK 설정 (게시물 id)
 				postAttachmentRepository.save(file);    // INSERT
 			}
-			
 		}
-		
 	}
 	
 	// 물리적으로 서버에 파일 저장. 중복된 파일명은 rename 처리
 	private PostAttachment upload(MultipartFile multipartFile) {
-		
 		PostAttachment attachment = null;
 		
 		// 담긴 파일이 없으면 pass
@@ -167,7 +162,6 @@ public class PostServiceImpl implements PostService {
 			else {  // 확장자가 없는 경우
 				fileName += "_" + System.currentTimeMillis();
 			}
-			
 		}
 		
 		// 저장될 파일명
@@ -196,9 +190,9 @@ public class PostServiceImpl implements PostService {
 				.build();
 		
 		return attachment;
-		
 	}
 	
+	// 특정 게시글 상세 조회
 	@Override
 	public Post detail(Long id) {
 		Post post = postRepository.findById(id);
@@ -212,7 +206,6 @@ public class PostServiceImpl implements PostService {
 				User user = postRepository.findUserById(post.getId());
 				post.setUser(user);
 			}
-//			System.out.println(post.getUser().getUsername());
 			
 			// Post 에 첨부파일 세팅
 			post.setFileList(fileList); // 템플릿 엔진에서 받아서 view 생성
@@ -221,6 +214,7 @@ public class PostServiceImpl implements PostService {
 		return post;
 	}
 	
+	// 특정 게시글 수정하기
 	@Override
 	public int update(Post post, Map<String, MultipartFile> files, Long[] delfile) {
 		int result = 0;
@@ -245,7 +239,6 @@ public class PostServiceImpl implements PostService {
 	
 	// 특정 첨부파일을 물리적으로 삭제
 	private void delFile(PostAttachment file) {
-		
 		String saveDir = new File(uploadDir).getAbsolutePath();
 		
 		File f = new File(saveDir, file.getFilename());
@@ -256,9 +249,7 @@ public class PostServiceImpl implements PostService {
 			else System.out.println("삭제 실패");
 		}
 		else System.out.println("파일이 존재하지 않습니다.");
-		
 	}
-	
 	
 	@Override
 	@Transactional

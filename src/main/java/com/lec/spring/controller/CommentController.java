@@ -25,6 +25,7 @@ public class CommentController {
 		return result;
 	}
 	
+	// 특정 글의 댓글 작성
 	@PostMapping("/write")
 	public QryResult write(
 			@RequestParam("post_id") Long postId,

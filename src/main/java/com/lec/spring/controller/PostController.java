@@ -38,10 +38,6 @@ public class PostController {
 		this.postAttachmentValidator = postAttachmentValidator;
 	}
 	
-	private static final List<String> IMAGE_MIME_TYPES = Arrays.asList(
-			"image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp"
-	);
-	
 	
 	@InitBinder("post")
 	public void initBinder(WebDataBinder binder){

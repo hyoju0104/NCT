@@ -27,11 +27,13 @@ public class PostAttachmentServiceImpl implements PostAttachmentService {
 	}
 	
 	
+	// 특정 게시글에 연결된 첨부파일 가져오기
 	@Override
 	public PostAttachment findById(Long id) {
 		return attachmentRepository.findById(id);
 	}
 	
+	// 특정 첨부파일 삭제
 	@Override
 	public void deleteAttachment(Long id) {
 		PostAttachment attachment = attachmentRepository.findById(id);
@@ -49,6 +51,7 @@ public class PostAttachmentServiceImpl implements PostAttachmentService {
 		}
 	}
 	
+	// 특정 게시글에 연결된 모든 첨부파일 삭제
 	@Transactional  // 하나의 트랜잭션으로 묶기 (모두 다 commit 되거나 rollback 되거나)
 	@Override
 	public void deleteByPostId(Long postId) {

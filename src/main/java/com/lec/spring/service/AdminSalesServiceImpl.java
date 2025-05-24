@@ -137,6 +137,7 @@ public class AdminSalesServiceImpl implements AdminSalesService {
 	}
 	
 	
+	// 증감율 계산 메소드
 	private double calcChangePercent(long previous, long current) {
 		if (previous == 0) {
 			return current == 0 ? 0.0 : 100.0;

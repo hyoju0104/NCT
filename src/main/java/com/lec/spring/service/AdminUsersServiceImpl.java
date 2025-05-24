@@ -42,6 +42,7 @@ public class AdminUsersServiceImpl implements AdminUsersService {
 		return adminUsersRepository.findInactiveUsers();
 	}
 	
+	
 	@Override
 	@Transactional
 	public void releaseSuspension(Long userId) {

@@ -23,9 +23,10 @@ public class CommentServiceImpl implements CommentService {
 		System.out.println("✅ CommentService() 생성");
 	}
 	
+	
+	// 특정 게시글의 댓글 가져오기
 	@Override
 	public QryCommentList list(Long postId) {
-		
 		QryCommentList list = new QryCommentList();
 		
 		List<Comment> comments = commentRepository.findByPost(postId);
@@ -35,12 +36,11 @@ public class CommentServiceImpl implements CommentService {
 		list.setStatus("OK");
 		
 		return list;
-		
 	}
 	
+	// 댓글 작성
 	@Override
 	public QryResult write(Long postId, Long userId, String content) {
-		
 		User user = userRepository.findById(userId);
 		Comment comment = Comment.builder()
 				.user(user)
@@ -57,12 +57,11 @@ public class CommentServiceImpl implements CommentService {
 				.build();
 		
 		return result;
-		
 	}
 	
+	// 댓글 삭제
 	@Override
 	public QryResult delete(Long id) {
-		
 		int cnt = commentRepository.deleteById(id);
 		String status = "FAIL";
 		
