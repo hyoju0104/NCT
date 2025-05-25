@@ -30,6 +30,7 @@
         <result column="b_is_actived" property="isActived"/>
     </resultMap>
 
+    <!-- username 으로 브랜드 정보 조회 -->
     <select id="findByUsername" resultMap="mapBrand">
         <include refid="SELECT_BASE"/>
         <where>
@@ -37,12 +38,13 @@
         </where>
     </select>
 
-
+    <!-- 브랜드 등록 (회원가입) -->
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Brand" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO Brand(auth_id, name, username, password, phone_num, description, is_actived)
         VALUES (2, #{name}, #{username}, #{password}, #{phoneNum}, #{description}, true)
     </insert>
 
+    <!-- 브랜드 정보 수정 -->
     <update id="update" parameterType="com.lec.spring.domain.Brand">
         UPDATE Brand
         SET phone_num = #{phoneNum},
@@ -51,11 +53,13 @@
         WHERE id = #{id}
     </update>
 
+    <!-- ID로 브랜드 조회 -->
     <select id="findById" parameterType="long" resultMap="mapBrand">
         <include refid="SELECT_BASE"/>
           WHERE b.id = #{id}
-</select>
+    </select>
 
+    <!-- 브랜드 비활성화 (탈퇴 처리) -->
     <update id="deactivate" parameterType="long">
         UPDATE Brand SET is_actived = false WHERE id = #{id}
     </update>

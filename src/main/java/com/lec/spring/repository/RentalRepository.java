@@ -26,7 +26,7 @@ public interface RentalRepository {
     // 연체 상태 자동 갱신
     int updateOverdue();
 
-    //탈퇴시 대여중 있는지 검사할때 필요
+    // 탈퇴시 대여중 있는지 검사할때 필요
     int countActiveRentalsByUserId(Long userId);
 
 }

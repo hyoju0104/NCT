@@ -13,7 +13,7 @@ public interface BrandRepository {
     // Brand 정보 저장
     int save(Brand brand);
 
-    //
+    // 브랜드 ID 로 삭제 (비활성화)
     int delete(Long id);
 
     // 브랜드 id 조회

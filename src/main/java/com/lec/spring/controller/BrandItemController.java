@@ -40,12 +40,14 @@ public class BrandItemController {
         this.itemAttachmentService = itemAttachmentService;
     }
 
+    // 상품 등록 폼으로 이동
     @GetMapping("/item/write")
     public String write(Model model) {
-        model.addAttribute("item", new Item());
+        model.addAttribute("item", new Item());     // 빈 Item 객체 전달
         return "brand/item/write";
     }
 
+    // 상품 등록 처리
     @PostMapping("/item/write")
     public String writeOk(@ModelAttribute("item") Item item,
                           BindingResult result,
@@ -54,16 +56,20 @@ public class BrandItemController {
                           RedirectAttributes redirectAttributes,
                           Model model) {
 
+        // 상품 유효성 검사
         new BrandItemValidator().validate(item, result);
 
+        // 이미지 없을 경우 오류 처리
         if (itemImage == null || itemImage.isEmpty()) {
             model.addAttribute("error_file", "상품 이미지는 필수입니다.");
             result.reject("error_file");
         }
 
+        // 브랜드 정보 및 존재 여부 설정
         item.setBrand(principal.getBrand());
         item.setIsExist(true);
 
+        // 유효성 에러 발생 시 폼으로 복귀
         if (result.hasErrors()) {
             for (FieldError error : result.getFieldErrors()) {
                 model.addAttribute("error_" + error.getField(), error.getDefaultMessage());
