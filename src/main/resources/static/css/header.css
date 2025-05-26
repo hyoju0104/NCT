@@ -60,3 +60,19 @@
     height: 24px;
     cursor: pointer;
 }
+
+/* 기본은 한 줄 */
+.user-info {
+    white-space: nowrap;
+}
+
+/* 화면이 작아질 때는 줄바꿈 */
+@media screen and (max-width: 768px) {
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;  /* 오른쪽 정렬 (선택사항) */
+        white-space: normal;    /* 줄바꿈 허용 */
+        text-align: right;
+    }
+}

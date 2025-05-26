@@ -34,14 +34,16 @@
 
 			<!-- 우측 메뉴 -->
 			<div class="header-right">
-				<div sec:authorize="hasAuthority('USER')" class="nav-link no-hover">
-					<span sec:authentication="name"></span>
-					(<span sec:authentication="principal.user.name"></span>)
+				<div sec:authorize="hasAuthority('USER')" class="nav-link no-hover user-info">
+					<span class="username" sec:authentication="name"></span>
+					<span class="detail-name">(<span sec:authentication="principal.user.name"></span>)</span>
 				</div>
-				<div sec:authorize="hasAuthority('BRAND')" class="nav-link no-hover">
-					<span sec:authentication="name"></span>
-					(<span sec:authentication="principal.brand.name"></span>)
+
+				<div sec:authorize="hasAuthority('BRAND')" class="nav-link no-hover user-info">
+					<span class="username" sec:authentication="name"></span>
+					<span class="detail-name">(<span sec:authentication="principal.brand.name"></span>)</span>
 				</div>
+
 				<a sec:authorize="isAnonymous()" th:href="@{/login}" class="nav-link" id="login">로그인</a>
 				<a sec:authorize="isAnonymous()" th:href="@{/register/kind}" class="nav-link" id="register">회원가입</a>
 				<a sec:authorize="hasAnyAuthority('USER', 'BRAND', 'ADMIN')" th:href="@{/logout}" class="nav-link" id="logout">로그아웃</a>
