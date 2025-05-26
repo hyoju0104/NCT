@@ -36,7 +36,7 @@
                 <th>상태</th>
                 <th>반납 처리</th>
                 <th>정지 처리</th>
-                <th>계정 상태</th>
+                <th>정지 여부</th>
             </tr>
             </thead>
             <tbody>
@@ -73,7 +73,7 @@
                 <td>
                     <span class="account-badge" th:classappend="${rental.user.statusAccount == 'INACTIVE'} ? 'inactive' : 'active'">
                         <span th:if="${rental.user.statusAccount == 'INACTIVE'}">정지됨</span>
-                        <span th:if="${rental.user.statusAccount != 'INACTIVE'}">정상</span>
+                        <span th:if="${rental.user.statusAccount != 'INACTIVE'}"> </span>
                     </span>
                 </td>
             </tr>
