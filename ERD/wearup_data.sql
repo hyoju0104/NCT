@@ -39,10 +39,10 @@ VALUES ('SILVER', 50000, 3),
 INSERT INTO User (user.auth_id, user.plan_id, username, password, name, point, status_plan, status_account, paid_at, rental_cnt)
 VALUES (3, NULL, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKfe', '관리자', 0, 'ACTIVE', 'ACTIVE', '2025-4-24', 0),
        (1, 1, 'user1', '$2a$10$AsdcGiiMWwG6sCu9IiNqvu5Z1G7krhWLhehijgfiqjRhHCODctw8a', '회원1', 30000, 'ACTIVE', 'INACTIVE', '2025-4-24', 2),
-       (1, 2, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 0, 'ACTIVE', 'ACTIVE', '2025-5-1', 3),
-       (1, NULL, 'user3', '$2a$10$zT51nN0ycpAvSg5aimPoUuOIyg94ktXJzLhWHGxeJQ8iDqXB4vqRm', '회원3', 57000, 'INACTIVE', 'ACTIVE', '2025-4-24', 0),
-       (1, NULL, 'user4', '$2a$10$3E9ibPMOysRko4WHfCxTw.Ls4PjNnjSHL.LygIf4dotmxDWDABsmW', '회원4', 57000, 'INACTIVE', 'ACTIVE', '2025-4-24', 0),
-       (1, 2, 'user5', '$2a$10$vOSMP1HQscvvuTlNtoPwfOwnjjzVPkaFHMsd750ntn2v0icuAqjuC', '회원5', 57000, 'ACTIVE', 'ACTIVE', '2025-4-24', 0)
+       (1, 2, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 98700, 'ACTIVE', 'ACTIVE', '2025-5-1', 3),
+       (1, NULL, 'user3', '$2a$10$zT51nN0ycpAvSg5aimPoUuOIyg94ktXJzLhWHGxeJQ8iDqXB4vqRm', '회원3', 0, 'INACTIVE', 'ACTIVE', NULL, 0),
+       (1, NULL, 'user4', '$2a$10$3E9ibPMOysRko4WHfCxTw.Ls4PjNnjSHL.LygIf4dotmxDWDABsmW', '회원4', 0, 'INACTIVE', 'ACTIVE', NULL, 0),
+       (1, 2, 'user5', '$2a$10$vOSMP1HQscvvuTlNtoPwfOwnjjzVPkaFHMsd750ntn2v0icuAqjuC', '회원5', 0, 'ACTIVE', 'ACTIVE', '2025-4-24', 1)
 ;
 
 INSERT INTO Brand (brand.auth_id, name, username, password, phone_num, is_actived, description)
