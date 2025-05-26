@@ -83,21 +83,21 @@ public class AdminController {
 		return "admin/users";
 	}
 	
-	// 2-1) 구독 종류별 회원수 pie chart 출력
+	// 2-1) 구독 종류별 회원 수 pie chart 출력
 	@GetMapping("/users/plan-data")
 	@ResponseBody
 	public List<Map<String, Object>> usersPlanData() {
 		return adminUsersService.getUsersByPlan();
 	}
 	
-	// 2-2) 대여 상태별 회원 수
+	// 2-2) 대여 상태별 회원 수 pie chart 출력
 	@GetMapping("/users/status-data")
 	@ResponseBody
 	public List<Map<String, Object>> usersStatusData() {
 		return adminUsersService.getUsersByStatus();
 	}
 	
-	// 2-3) 브랜드별 대여 건수
+	// 2-3) 브랜드별 대여 건수 pie chart 출력
 	@GetMapping("/users/brand-data")
 	@ResponseBody
 	public List<Map<String, Object>> usersBrandData() {
