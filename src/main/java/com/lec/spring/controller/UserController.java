@@ -59,18 +59,18 @@ public class UserController {
 	
 	@GetMapping("/mypage/detail")
 	public void showMyPage(
-			@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, //로그인한 사용자 정보 가져오기
+			@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, // 로그인한 사용자 정보 가져오기
 			Model model //뷰에 데이터 넘기기 위함
 	) {
-		//로그인한 사용자 정보 가져오기
+		// 로그인한 사용자 정보 가져오기
 		Long id = principalUserDetails.getUser().getId();
 		User user = userService.findById(id);
-		//사용자의 구독 정보 설정(silver,gold,vip << Plan)
+		// 사용자의 구독 정보 설정(silver,gold,vip << Plan)
 		if (user.getPlanId() != null) {
 			Plan plan = planRepository.findByPlanId(user.getPlanId());
 			user.setPlan(plan);
 		} else {
-			user.setPlan(new Plan()); //NPE방지
+			user.setPlan(new Plan()); // NPE 방지
 		}
 		
 		Plan plan = user.getPlan();
@@ -85,7 +85,7 @@ public class UserController {
 			};
 		}
 		
-		//Payment 정보 가져오기
+		// Payment 정보 가져오기
 		Payment payment = paymentService.findLatestByUserId(user.getId());
 		// 💡 payment가 null일 수도 있으니 확인 후 model에 추가
 		if (payment != null) {
@@ -104,7 +104,7 @@ public class UserController {
 		List<Rental> rentals = rentalService.findAllByUserId(id);
 		model.addAttribute("rentals", rentals);
 		
-		//대여할때마다 -1씩 카운트
+		// 대여할 때마다 -1씩 카운트
 		model.addAttribute("totalCnt", totalCnt);
 		int usedCnt = user.getRentalCnt();
 		int remainingCnt = totalCnt - usedCnt;
@@ -112,10 +112,8 @@ public class UserController {
 		model.addAttribute("usedCnt", usedCnt);
 		model.addAttribute("remainingCnt", remainingCnt);
 		
-		
 		List<Post> myPosts = postService.findByUserId(user.getId());
 		model.addAttribute("myPosts", myPosts);
-		
 		
 		model.addAttribute("user", user);
 	}
@@ -147,14 +145,12 @@ public class UserController {
 	public String updateSubmit(@ModelAttribute("user") @Valid User user,
 	                           BindingResult result,
 	                           Model model) {
-		
 		if (result.hasErrors()) {
 			return "user/mypage/update";
 		}
 		
 		userService.updateUserInfo(user);
 		return "redirect:/user/mypage/detail";
-		
 	}
 	
 	

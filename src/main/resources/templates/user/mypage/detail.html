@@ -38,9 +38,14 @@
             <span class="info-label">이메일:</span>
             <span class="info-value" th:text="${user.email}">email@example.com</span>
         </div>
-        <div class="info-item" th:if="${user.address}">
+        <div class="info-item" th:if="${user.address != null or user.addressDetail != null}">
             <span class="info-label">주소:</span>
-            <span class="info-value" th:text="${user.address}">서울시 강남구...</span>
+            <span class="info-value"
+                  th:text="${'[' + user.zipcode + '] '
+                            + (user.address ?: '') + ', '
+                            + (user.addressDetail ?: '')}">
+                서울시 강남구...
+            </span>
         </div>
         <div class="info-item" th:if="${user.phoneNum}">
             <span class="info-label">전화번호:</span>

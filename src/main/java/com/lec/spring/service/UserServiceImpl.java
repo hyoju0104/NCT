@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int register(User user){
-        //비밀번호 암호화
+        // 비밀번호 암호화
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // 기본 권한은 ROLE_USER
@@ -79,7 +79,8 @@ public class UserServiceImpl implements UserService {
         user.setStatusAccount("ACTIVE");
         user.setPoint(0);
         user.setRentalCnt(0);
-        //DB에 사용자 저장
+        
+        // DB에 사용자 저장
         int result = userRepository.save(user);
         System.out.println("INSERT result = " + result);  // 추가: insert가 되었는지 확인
         System.out.println("user.getId() = " + user.getId()); // 추가: 키가 들어왔는지 확인

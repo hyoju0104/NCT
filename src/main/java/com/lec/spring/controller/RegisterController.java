@@ -36,7 +36,12 @@ public class RegisterController {
     private final BrandAttachmentService brandAttachmentService;
     private final UserValidator userValidator;
 
-    public RegisterController(UserService userService, BrandService brandService, BrandAttachmentService brandAttachmentService, UserValidator userValidator) {
+    public RegisterController(
+            UserService userService,
+            BrandService brandService,
+            BrandAttachmentService brandAttachmentService,
+            UserValidator userValidator
+    ) {
         this.userService = userService;
         this.brandService = brandService;
         this.brandAttachmentService = brandAttachmentService;

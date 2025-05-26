@@ -40,10 +40,10 @@
     </select>
 
     <insert id="save" parameterType="com.lec.spring.domain.User" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (auth_id, username, password, name, email, phone_num, address, point, status_plan,
-                          status_account, rental_cnt)
-        VALUES (1, #{username}, #{password}, #{name}, #{email}, #{phoneNum}, #{address}, #{point}, #{statusPlan},
-                #{statusAccount}, #{rentalCnt})
+        INSERT INTO user (auth_id, username, password, name, email, phone_num, zipcode, address, address_detail,
+                          point, status_plan, status_account, rental_cnt)
+        VALUES (1, #{username}, #{password}, #{name}, #{email}, #{phoneNum}, #{zipcode}, #{address}, #{addressDetail},
+                #{point}, #{statusPlan}, #{statusAccount}, #{rentalCnt})
     </insert>
 
     <update id="updateUserInfo" parameterType="com.lec.spring.domain.User">
