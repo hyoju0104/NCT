@@ -1674,9 +1674,7 @@ hr {
 /* 플랜 배지 */
 .plan-badge {
     position: absolute;
-    top: 12px;
-    right: -30px;
-    transform: rotate(45deg);
+    left: -30px;
     background-color: #1976d2;
     color: white;
     padding: 5px 40px;
