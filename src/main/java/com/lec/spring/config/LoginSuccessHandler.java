@@ -14,13 +14,26 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     
-    // HttpSessionRequestCache는 new로 써도 되고, 빈으로 등록해도 됩니다.
     private final HttpSessionRequestCache requestCache;
+    
+    /** 실제 우리 서비스 내부에 만든(허용할) URL 패턴들 */
+    private static final List<String> ALLOWED_URLS = List.of(
+            "/.well-known", "/appspecific",
+            "/login", "/register",
+            "/css/", "/js/", "/images/", "/upload/", "/common/",
+            "/post/list", "/post/detail", "/comment/",
+            "/item/list", "/item/detail", "/item/list/category",
+            "/brand/", "/admin/", "/user/withdraw"
+    );
     
     @Override
     public void onAuthenticationSuccess(
@@ -28,42 +41,75 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             HttpServletResponse response,
             Authentication authentication
     ) throws IOException, ServletException {
-        // 1) 이전 요청 URL이 있는지 확인
-        SavedRequest savedRequest = requestCache.getRequest(request, response);
-        if (savedRequest != null) {
-            response.sendRedirect(savedRequest.getRedirectUrl());
-            return;
+        // 1) 저장된 요청이 있으면 꺼내서 Path만 추출
+        SavedRequest saved = requestCache.getRequest(request, response);
+        String savedRedirect = null;
+        boolean invalidSavedRequest = false;
+        if (saved != null) {
+            String fullUrl = saved.getRedirectUrl();
+            String path;
+            try {
+                path = new URL(fullUrl).getPath();
+            } catch (MalformedURLException e) {
+                path = "";
+            }
+            // 2) Path가 허용 목록에 없으면 잘못된 접근 플래그
+            boolean allowed = ALLOWED_URLS.stream().anyMatch(path::startsWith);
+            if (allowed) {
+                savedRedirect = fullUrl;
+            } else {
+                invalidSavedRequest = true;
+            }
         }
         
-        Object principal = authentication.getPrincipal();
+        // 3) 세션에 브랜드/유저 정보 저장
         HttpSession session = request.getSession();
-        
-        // 2) BRAND 계정 처리
-        if (principal instanceof com.lec.spring.config.PrincipalBrandDetails brandDetails) {
-            Brand brand = brandDetails.getBrand();
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof PrincipalBrandDetails bd) {
+            Brand brand = bd.getBrand();
             session.setAttribute("brandId", brand.getId());
             session.setAttribute("brandUsername", brand.getUsername());
         }
-        
-        // 3) USER 계정 처리
-        if (principal instanceof com.lec.spring.config.PrincipalUserDetails userDetails) {
-            User user = userDetails.getUser();
+        if (principal instanceof PrincipalUserDetails ud) {
+            User user = ud.getUser();
             session.setAttribute("userId", user.getId());
             session.setAttribute("username", user.getUsername());
         }
         
-        // 4) 권한별 기본 리다이렉트
-        boolean isBrand = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("BRAND"));
+        // 4) 권한별 기본 URL 정하기
         boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ADMIN"));
-        
-        if (isBrand) {
-            response.sendRedirect("/brand/list");
-        } else if (isAdmin) {
-            response.sendRedirect("/admin/sales");
+                .anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+        boolean isBrand = authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("BRAND"));
+        String defaultUrl;
+        if (isAdmin) {
+            defaultUrl = request.getContextPath() + "/admin/sales";
+        } else if (isBrand) {
+            defaultUrl = request.getContextPath() + "/brand/list";
         } else {
-            response.sendRedirect("/post/list");
+            defaultUrl = request.getContextPath() + "/post/list";
+        }
+        
+        // 5) 잘못된 저장된 요청이면 alert + 기본 URL로 이동
+        if (invalidSavedRequest) {
+            response.setContentType("text/html;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
+                out.println("<!DOCTYPE html><html><head><meta charset='UTF-8'></head><body>");
+                out.println("<script>");
+                out.println("  alert('잘못된 접근 경로입니다. 메인 페이지로 이동합니다.');");
+                out.println("  location.replace('" + defaultUrl + "');");
+                out.println("</script>");
+                out.println("</body></html>");
+                out.flush();
+            }
+            return;
+        }
+        
+        // 6) 저장된 요청이 유효하면 그 URL로, 아니면 기본 URL로
+        if (savedRedirect != null) {
+            response.sendRedirect(savedRedirect);
+        } else {
+            response.sendRedirect(defaultUrl);
         }
     }
 }
