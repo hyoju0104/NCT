@@ -23,6 +23,40 @@ body {
     display: none !important;
 }
 
+
+
+/* 네비게이션에 계정명 스타일 */
+.user-name {
+    color: #666666;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 12px;
+}
+
+
+/* readonly 입력 필드 스타일 */
+.readonly-input {
+    background-color: #f8f9fa !important;
+    color: #666666 !important;
+    cursor: not-allowed;
+}
+
+.readonly-input:focus {
+    border-color: #e0e0e0 !important;
+    background-color: #f8f9fa !important;
+}
+
+
+/* 필수 항목 표시 개선 */
+.form-group label::after {
+    content: '';
+}
+
+.form-group label[for] {
+    position: relative;
+}
+
+
 /* 테이블 스타일 */
 .table-container {
     overflow-x: auto;
@@ -425,6 +459,31 @@ hr {
     display: flex;
     gap: 10px;
 }
+
+
+
+.register-link {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.register-link p {
+    text-align: center;
+    color: #888888;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: #222222;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
 
 /* 공통 컨테이너 스타일 */
 .container {

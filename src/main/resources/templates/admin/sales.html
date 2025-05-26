@@ -41,7 +41,7 @@
 					</svg>
 				</div>
 				<div class="card-content">
-					<h4 class="card-title">총 매출</h4>
+					<h4 class="card-title">이번 달 총 매출</h4>
 					<p class="card-value">
 						<span th:text="${T(java.lang.String).format('%,d', totalRevenue)}">0</span> 원
 					</p>
@@ -62,7 +62,7 @@
 					</svg>
 				</div>
 				<div class="card-content">
-					<h4 class="card-title">전체 대여 건수</h4>
+					<h4 class="card-title">이번 달 총 대여 건수</h4>
 					<p class="card-value"><span th:text="${T(java.lang.String).format('%,d', totalRentals)}">0</span> 건</p>
 					<p class="card-change positive"
 					   th:classappend="${rentalChange >= 0} ? 'positive' : 'negative'"
