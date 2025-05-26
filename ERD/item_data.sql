@@ -48,7 +48,10 @@ VALUES (1, '상품1', '상의', true, 'A', true, '상품1 입니다.'),
        (1, '상품47', '하의', true, 'B', true, '상품47 입니다.'),
        (2, '상품48', '아우터', false, 'C', true, '상품48 입니다.'),
        (1, '상품49', '신발', true, 'A', true, '상품49 입니다.'),
-       (2, '상품50', '잡화', false, 'B', true, '상품50 입니다.');
+       (2, '상품50', '잡화', false, 'B', true, '상품50 입니다.'),
+       (3, '상품51', '잡화', true, 'A', true, '상품51 입니다.'),
+       (3, '상품52', '잡화', false, 'A', true, '상품52 입니다.')
+;
 
 
 INSERT INTO ItemAttachment(item_id, sourcename, filename)
@@ -101,5 +104,7 @@ VALUES (1, 'item2.png', '245c1a47-1f8f-452c-b023-22edcf335630_item2.png'),
        (47, 'item5.png', 'be1d8b66-db9a-48b6-b5d2-3e9e17cc37a5_item5.png'),
        (48, 'item4.png', 'd704dd9e-cd09-45f4-9450-49075c011667_item4.png'),
        (49, 'item3.png', '4a3fc2b2-774e-4519-876c-df5d4049b113_item3.png'),
-       (50, 'item1.png', '92495f77-385c-412b-a5c1-5867bf792cfe_item1.png')
+       (50, 'item1.png', '92495f77-385c-412b-a5c1-5867bf792cfe_item1.png'),
+       (51, 'item7.png', 'd9fdb8de-1b1a-4408-b61c-06747d12e57a_item7.png'),
+       (52, 'item8.png', 'c1a15017-8f3d-46b0-80fe-6ccdd4287994_item8.png')
 ;
