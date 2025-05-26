@@ -11,7 +11,9 @@
 	<header class="header">
 		<div class="header-content">
 			<!-- 좌측 로고 -->
-			<a th:href="@{/post/list}" class="logo">WearUp</a>
+			<a th:href="@{/post/list}" sec:authorize="!hasAnyAuthority('BRAND', 'ADMIN')" class="logo">WearUp</a>
+			<a th:href="@{/brand/list}" sec:authorize="hasAuthority('BRAND')" class="logo">WearUp <small>for Brand</small></a>
+			<a th:href="@{/admin/sales}" sec:authorize="hasAuthority('ADMIN')" class="logo">WearUp <small>for Admin</small></a>
 
 			<!-- 중앙 메뉴 -->
 			<nav class="header-nav">
