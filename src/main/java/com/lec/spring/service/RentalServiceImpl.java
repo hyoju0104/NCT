@@ -25,17 +25,6 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    @Transactional
-    public int createRental(Rental rental) {
-        return rentalRepository.save(rental);
-    }
-
-    @Override
-    public Rental findRentalById(Long id) {
-        return rentalRepository.findById(id);
-    }
-
-    @Override
     public List<Rental> findAllByUserId(Long userId) {
         return rentalRepository.findAllByUserId(userId);
     }
