@@ -65,12 +65,6 @@
 .user-info {
     white-space: nowrap;
 }
-.nav-link.active {
-    background-color: black;
-    color: white !important;
-    border-radius: 6px;
-    padding: 6px 12px;
-}
 
 
 /* 화면이 작아질 때는 줄바꿈 */
