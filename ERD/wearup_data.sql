@@ -23,6 +23,7 @@ ALTER TABLE Rental AUTO_INCREMENT = 1;
 DELETE FROM Brand;
 ALTER TABLE Brand AUTO_INCREMENT = 1;
 
+
 INSERT INTO Authority(grade)
 VALUES ('USER'),
        ('BRAND'),
@@ -40,11 +41,6 @@ VALUES (3, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKf
        (1, 'user1', '$2a$10$AsdcGiiMWwG6sCu9IiNqvu5Z1G7krhWLhehijgfiqjRhHCODctw8a', '회원1', 30000, 'ACTIVE', 'INACTIVE', '2025-4-24', 2),
        (1, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 0, 'ACTIVE', 'ACTIVE', '2025-5-1', 3),
        (1, 'user3', '$2a$10$zT51nN0ycpAvSg5aimPoUuOIyg94ktXJzLhWHGxeJQ8iDqXB4vqRm', '회원3', 57000, 'INACTIVE', 'ACTIVE', '2025-4-24', 0)
-;
-
-INSERT INTO Payment (Payment.user_id, Payment.plan_id, price, paid_at)
-VALUES (2, 3, 100000, '2025-4-24'),
-       (3, 2, 70000, '2025-4-25')
 ;
 
 INSERT INTO Brand (brand.auth_id, name, username, password, phone_num, is_actived, description)
