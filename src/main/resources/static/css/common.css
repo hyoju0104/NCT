@@ -1822,6 +1822,29 @@ hr {
     color: #6c757d !important;
 }
 
+.comment-delete-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 8px;
+    background-color: #ffeeee;
+    border: 1px solid #ffcccc;
+    border-radius: 15px;
+    color: #d32f2f;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comment-delete-btn:hover {
+    background-color: #ffdddd;
+    color: #b71c1c;
+    border-color: #ffaaaa;
+}
+
+
+
 
 /* 반응형 조정 - 모바일에서도 세련된 디자인 유지 */
 @media (max-width: 992px) {
