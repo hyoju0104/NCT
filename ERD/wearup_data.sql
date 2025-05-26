@@ -44,29 +44,14 @@ VALUES (3, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKf
 ;
 
 INSERT INTO Brand (brand.auth_id, name, username, password, phone_num, is_actived, description)
-VALUES (2, '나이키', 'nike', 'nike123', '031-1234-4321', true, '1111'),
-       (2, '아디다스', 'adidas', 'adidas123', '031-1234-5342', true, 'aaaaaa'),
-       (2, '뉴발란스', 'newbalance', 'newbalance123', '031-1234-6757', false, 'bbbbbbbb'),
-       (2, '브랜드1', 'brand1', '$2a$10$.PNEhmDp8ns/piR3D4XfL.OdEbDj.i2Sxf9rnOZogm6YsJU2N0XcS', '1234567890', true,
-        'test1'),
-       (2, '브랜드2', 'brand2', '$2a$10$aHXnS/n5WQKbQ2rGzXtt2eFYzpING1w62o7AZzwhj4yKmUBsUQMfi', '1234567890', true, '')
+VALUES (2, 'brand1', 'sample1', '$2a$10$ERbfOD26AaB.4gk0hadqy.AzoAMGGp8bJhO2EJ0ZZHERWOqTHfb4q', '031-1234-5678', true, 'brand1 입니다.'),
+       (2, 'brand2', 'sample2', '$2a$10$giSgQ5AavEa1wHyqlKv9DOXm71fAuDY6gvxxgCTHzOMi9moeuV096', '02-1111-2222', true, 'brand2 입니다.')
 ;
 
-INSERT INTO Item(Item.brand_id, name, category, is_available, item_status, is_exist, description)
-VALUES (1, 'brand1-바지1', '하의', true, 'A', true, '"brand1" 브랜드의 "바지1" 상품입니다.'),
-       (1, 'brand1-긴팔1', '상의', false, 'B', true, '"brand1" 브랜드의 "긴팔1" 상품입니다.'),
-       (1, 'brand1-신발1', '신발', true, 'A', true, '"brand1" 브랜드의 "신발1" 상품입니다.'),
-       (1, 'brand1-신발2', '신발', true, 'C', true, '"brand1" 브랜드의 "신발2" 상품입니다'),
-       (1, 'brand1-신발3', '신발', true, 'B', true, '"brand1" 브랜드의 "신발3" 상품입니다'),
-       (1, 'brand1-잡화1', '잡화', true, 'C', true, '"brand1" 브랜드의 "잡화1" 상품입니다'),
-       (2, 'brand2-잡화1', '잡화', false, 'B', true, '"brand2" 브랜드의 "잡화1" 상품입니다'),
-       (2, 'brand2-바지1', '하의', false, 'A', true, '"brand2" 브랜드의 "바지1" 상품입니다'),
-       (2, 'brand2-아우터1', '아우터', true, 'C', true, '"brand2" 브랜드의 "아우터1" 상품입니다.'),
-       (2, 'brand2-긴팔1', '상의', false, 'B', true, '"brand2" 브랜드의 "긴팔1" 상품입니다'),
-       (3, 'brand3-아우터1', '아우터', true, 'B', false, '"brand3" 브랜드의 "아우터1" 상품입니다'),
-       (3, 'brand3-잡화1', '잡화', true, 'B', false, '"brand3" 브랜드의 "잡화1" 상품입니다')
+INSERT INTO Brandattachment(brand_id, sourcename, filename)
+VALUES (1, 'face01.png', '6737b830-9b99-468f-8541-db39519b6ddf_face01.png'),
+       (2, 'face02.png', '462a2e1d-1c11-4608-bd64-a71bedb0ba17_face02.png')
 ;
-
 
 -- 포인트 조회 기능 확인용 샘플 데이터
 UPDATE user

@@ -4,8 +4,8 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -494,
-    "scrollLeft": -169.0193,
+    "scrollTop": -1215,
+    "scrollLeft": -291.0193,
     "zoomLevel": 0.85,
     "show": 511,
     "database": 4,
@@ -2968,42 +2968,5 @@
     "indexEntities": {},
     "indexColumnEntities": {},
     "memoEntities": {}
-  },
-  "lww": {
-    "fMWYlrmTK7OcEyxCUC0f1": [
-      "tableColumnEntities",
-      1747793415345,
-      -1,
-      {
-        "name": 1747793420601,
-        "comment": 1747793423404,
-        "dataType": 1747793453105
-      }
-    ],
-    "o1VV2ENVcBakWWBF4h8ZT": [
-      "tableColumnEntities",
-      1747793415361,
-      -1,
-      {
-        "name": 1747793433214,
-        "dataType": 1747793458115,
-        "comment": 1747793467175
-      }
-    ],
-    "bVjM6K8GgG9DjClbOlhRD": [
-      "tableColumnEntities",
-      1747793415375,
-      1747793417079,
-      {}
-    ],
-    "7__FOchqytNGfuRgXRQgF": [
-      "tableColumnEntities",
-      -1,
-      -1,
-      {
-        "dataType": 1747793455900,
-        "comment": 1747793464789
-      }
-    ]
   }
 }
