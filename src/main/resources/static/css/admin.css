@@ -191,6 +191,7 @@
     width: 100%;
     height: 250px;
     margin: auto;
+    padding: 0;
 }
 
 /* 차트 중앙 라벨 */
@@ -199,14 +200,22 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 600;
+    color: #666666;
     text-align: center;
     pointer-events: none;
-    white-space: pre-line;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #666666;
-    font-weight: 500;
 }
+
 
 /* 섹션 헤더 */
 .section-header {
@@ -286,9 +295,47 @@
 /* 데이터 없을 때 */
 .no-data td {
     text-align: center;
+    vertical-align: middle;
     padding: 40px 20px;
     color: #888888;
     font-style: italic;
+}
+/* 상태별 텍스트 색상 */
+.overdue-days {
+    color: #f44336;
+    font-weight: 600;
+}
+
+.rental-status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 60px;
+    display: inline-block;
+}
+
+.rental-status.overdue {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.rental-status.returned {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.rental-status.rented {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+/* 사용자 ID 스타일 */
+.user-id {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #333333;
 }
 
 /* 반응형 조정 */
@@ -300,8 +347,19 @@
     .chart-section {
         min-height: 350px;
     }
+    .chart-card {
+        width: 100%;
+        max-width: 400px; /* 추가: 최대 너비 제한 */
+        margin: 0 auto; /* 추가: 카드 자체 중앙 정렬 */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* 추가: 카드 내용 중앙 정렬 */
+    }
     .charts-grid {
         grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+        gap: 24px;
     }
 
     .chart-card:last-child {
@@ -324,14 +382,40 @@
     }
     .charts-grid {
         grid-template-columns: 1fr;
+        justify-items: center;
+        align-items: center;
+        place-items: center;
+        gap: 24px;
+        width: 100%;
     }
 
+    .chart-card {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto; /* 추가: 완전한 중앙 정렬 */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* 추가: 카드 내용 중앙 정렬 */
+    }
     .chart-card:last-child {
         grid-column: auto;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    .chart-title {
+        text-align: center;
+        width: 100%;
     }
 
+    .chart-wrapper {
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .data-table {
         font-size: 13px;
+        min-width: 600px;
     }
 
     .data-table th,
