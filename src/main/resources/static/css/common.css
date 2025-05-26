@@ -1813,6 +1813,14 @@ hr {
     border-color: #b71c1c;
 }
 
+/*브랜드 대여목록에서 조회된 데이터 없을 떄 중앙정렬 */
+.text-center {
+    text-align: center !important;
+}
+
+.text-secondary {
+    color: #6c757d !important;
+}
 
 
 /* 반응형 조정 - 모바일에서도 세련된 디자인 유지 */
