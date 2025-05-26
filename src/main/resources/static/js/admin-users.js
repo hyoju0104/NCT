@@ -22,9 +22,9 @@ Chart.register({
 		lines.forEach((line, i) => {
 			// 줄 간격 = fontSize * 1.2
 			const offset = (i - (lines.length - 1) / 2) * (fontSize * 1.2);
-			ctx.fillText(line, x, y + offset);
-		});
-		ctx.restore();
+		ctx.fillText(line, x, y + offset);
+	});
+ctx.restore();
 	}
 });
 
@@ -97,7 +97,7 @@ $(function() {
 		if (list.length === 0) {
 			// 데이터가 없으면 안내 문구
 			$tb.append(
-				$('<tr>').append(
+				$('<tr class="no-data">').append(
 					$('<td colspan="6">').text('정지된 회원이 없습니다')
 				)
 			);
@@ -106,24 +106,41 @@ $(function() {
 
 		list.forEach(r => {
 			const $tr = $('<tr>');
-			$tr.append(`<td>${r.userId}</td>`);
+
+			// ID (사용자 ID 스타일 적용)
+			$tr.append(`<td><span class="user-id">${r.userId}</span></td>`);
+
+			// 사용자 계정명
 			$tr.append(`<td>${r.username}</td>`);
+
+			// 상품명
 			$tr.append(`<td>${r.itemName}</td>`);
-			$tr.append(`<td>${r.overdueDate}일</td>`);
-			$tr.append(`<td>${r.status}</td>`);
+
+			// 초과일 (빨간색으로 강조)
+			$tr.append(`<td><span class="overdue-days">${r.overdueDate}일</span></td>`);
+
+			// 반납 상태 (상태별 배지 스타일)
+			const statusClass = r.status.toLowerCase();
+			$tr.append(`<td><span class="rental-status ${statusClass}">${r.status}</span></td>`);
+
+			// 정지 해제 버튼
 			$tr.append(
 				$('<td>').append(
-					$('<button>정지 해제</button>').click(() => {
-						$.post(`/admin/users/${r.userId}/release`)
-							.done(() => {
-								alert('정지 해제 완료');
-								location.reload();
-							});
+					$('<button class="unban-btn">정지 해제</button>').click(() => {
+						if (confirm('정말로 정지를 해제하시겠습니까?')) {
+							$.post(`/admin/users/${r.userId}/release`)
+								.done(() => {
+									alert('정지 해제 완료');
+									location.reload();
+								})
+								.fail(() => {
+									alert('정지 해제에 실패했습니다. 다시 시도해주세요.');
+								});
+						}
 					})
 				)
 			);
 			$tb.append($tr);
 		});
 	});
-
 });
