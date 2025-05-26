@@ -165,7 +165,8 @@
         FROM Rental
         WHERE user_id = #{userId}
           AND returned_at IS NULL
-          AND status = 'RENTED'
+          AND status IN ('RENTED', 'OVERDUE')
     </select>
+
 
 </mapper>
