@@ -66,8 +66,7 @@
     <!-- 상품을 사용 불가 상태로 전환 -->
     <update id="markAsUnavailable" parameterType="long" flushCache="true">
         UPDATE Item
-        SET
-            is_available = false
+        SET is_available = false
         WHERE id = #{id}
     </update>
 

@@ -24,7 +24,7 @@
                status_plan    AS statusPlan,
                status_account AS statusAccount,
                rental_cnt     AS rentalCnt
-        FROM user
+        FROM User
         WHERE 1 = 1
     </sql>
 
@@ -40,14 +40,14 @@
     </select>
 
     <insert id="save" parameterType="com.lec.spring.domain.User" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (auth_id, username, password, name, email, phone_num, zipcode, address, address_detail,
+        INSERT INTO User (auth_id, username, password, name, email, phone_num, zipcode, address, address_detail,
                           point, status_plan, status_account, rental_cnt)
         VALUES (1, #{username}, #{password}, #{name}, #{email}, #{phoneNum}, #{zipcode}, #{address}, #{addressDetail},
                 #{point}, #{statusPlan}, #{statusAccount}, #{rentalCnt})
     </insert>
 
     <update id="updateUserInfo" parameterType="com.lec.spring.domain.User">
-        UPDATE user
+        UPDATE User
         SET name = #{name},
             phone_num = #{phoneNum},
             password = #{password},
@@ -58,26 +58,26 @@
     </update>
 
     <update id="updateUserPlanId">
-        UPDATE user
+        UPDATE User
         SET plan_id = #{planId}
         WHERE id = #{id}
     </update>
 
     <update id="updatePaidAt" parameterType="long">
-        UPDATE user
+        UPDATE User
         SET paid_at = NOW()
         WHERE id = #{id}
     </update>
 
     <update id="refundPoint">
-        UPDATE user
+        UPDATE User
         SET point = point - #{amount}
         WHERE id = #{id}
           AND point >= #{amount}
     </update>
 
     <update id="addPoint">
-        UPDATE user SET point = point + #{amount} WHERE id = #{id}
+        UPDATE User SET point = point + #{amount} WHERE id = #{id}
     </update>
 
     <update id="increaseRentalCount" parameterType="long">
@@ -95,13 +95,13 @@
 
     <!-- 회원 상태(status_account) 복구 -->
     <update id="updateStatusAccount">
-        UPDATE user
+        UPDATE User
         SET status_account = #{status}
         WHERE id = #{userId}
     </update>
 
     <select id="findStatusAccountById" resultType="string">
-        SELECT status_account FROM user WHERE id = #{id}
+        SELECT status_account FROM User WHERE id = #{id}
     </select>
 
     <!-- 주소 수정 전용 -->
@@ -121,14 +121,14 @@
     </update>
 
     <update id="updateStatusPlan">
-        UPDATE user
+        UPDATE User
         SET plan_id = #{planId},
             status_plan = 'ACTIVE'
         WHERE id = #{id}
     </update>
 
     <update id="resetRentalCnt">
-        UPDATE user u, plan p
+        UPDATE User u, Plan p
         SET u.rental_cnt = 0
         WHERE u.paid_at IS NOT NULL
           AND u.plan_id = p.id
@@ -137,7 +137,7 @@
     </update>
 
     <update id="resetPlan">
-        UPDATE user
+        UPDATE User
         SET plan_id = NULL,
             status_plan = 'INACTIVE',
             rental_cnt = 0,

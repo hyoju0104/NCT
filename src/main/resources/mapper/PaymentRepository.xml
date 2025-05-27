@@ -8,13 +8,13 @@
     <!-- userId 기준으로 가장 최신 결제 1개 가져오기 -->
     <select id="findLatestByUserId" resultType="com.lec.spring.domain.Payment">
         SELECT *
-        FROM payment
+        FROM Payment
         WHERE user_id = #{userId}
         ORDER BY paid_at DESC
         LIMIT 1
     </select>
     <insert id="save" parameterType="com.lec.spring.domain.Payment">
-        INSERT INTO payment (user_id, plan_id, price,paid_at)
+        INSERT INTO Payment (user_id, plan_id, price, paid_at)
         VALUES (#{userId}, #{planId}, #{price},NOW())
     </insert>
 </mapper>
