@@ -8,10 +8,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.lec.spring.repository")
 @SpringBootApplication
 @EnableScheduling
-public class NctApplication {
+public class WearupApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NctApplication.class, args);
+        SpringApplication.run(WearupApplication.class, args);
     }
 
 }
