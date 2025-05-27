@@ -14,9 +14,9 @@ spring:
   # MySQL 등 spring-jdbc 사용 시 아래 정보 없으면 서버 가동 시 에러
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${HOSTNAME}:${PORT}/${DATABASE}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: ${USERNAME}
-    password: ${PASSWORD}
+    url: jdbc:mysql://${rds.hostname}:${rds.port}/${rds.db.name}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${rds.username}
+    password: ${rds.password}
 
   security:
     #OAuth2 client
