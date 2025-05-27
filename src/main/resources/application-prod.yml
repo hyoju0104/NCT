@@ -14,15 +14,11 @@ spring:
   # MySQL 등 spring-jdbc 사용 시 아래 정보 없으면 서버 가동 시 에러
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/wearup?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: nct200
-    password: 1234
+    url: jdbc:mysql://${HOSTNAME}:${PORT}/${DATABASE}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${USERNAME}
+    password: ${PASSWORD}
 
   security:
-    user:
-      name: user
-      password: 1234
-
     #OAuth2 client
     oauth2:
       client:
