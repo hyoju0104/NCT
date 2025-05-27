@@ -45,7 +45,7 @@ public class User {
 
 	private String statusAccount;
 	
-	private Integer rentalCnt = 0;
+	private Integer rentalCnt;
 
 	private Plan plan;
 
