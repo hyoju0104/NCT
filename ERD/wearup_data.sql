@@ -36,8 +36,8 @@ VALUES ('SILVER', 50000, 3),
        ('VIP', 100000, 10)
 ;
 
-INSERT INTO User (user.auth_id, user.plan_id, username, password, name, point, status_plan, status_account, paid_at, rental_cnt)
-VALUES (3, NULL, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKfe', '관리자', 0, 'ACTIVE', 'ACTIVE', '2025-4-24', 0),
+INSERT INTO User (User.auth_id, User.plan_id, username, password, name, point, status_plan, status_account, paid_at, rental_cnt)
+VALUES (3, NULL, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKfe', '관리자', 0, 'ACTIVE', 'ACTIVE', NULL, 0),
        (1, 1, 'user1', '$2a$10$AsdcGiiMWwG6sCu9IiNqvu5Z1G7krhWLhehijgfiqjRhHCODctw8a', '회원1', 30000, 'ACTIVE', 'INACTIVE', '2025-4-24', 2),
        (1, 2, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 98700, 'ACTIVE', 'ACTIVE', '2025-5-1', 3),
        (1, NULL, 'user3', '$2a$10$zT51nN0ycpAvSg5aimPoUuOIyg94ktXJzLhWHGxeJQ8iDqXB4vqRm', '회원3', 0, 'INACTIVE', 'ACTIVE', NULL, 0),
@@ -45,19 +45,19 @@ VALUES (3, NULL, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWK
        (1, 2, 'user5', '$2a$10$vOSMP1HQscvvuTlNtoPwfOwnjjzVPkaFHMsd750ntn2v0icuAqjuC', '회원5', 0, 'ACTIVE', 'ACTIVE', '2025-4-24', 1)
 ;
 
-INSERT INTO Brand (brand.auth_id, name, username, password, phone_num, is_actived, description)
+INSERT INTO Brand (Brand.auth_id, name, username, password, phone_num, is_actived, description)
 VALUES (2, '브랜드1', 'brand1', '$2a$10$LJQ8kSeSfv2anNw8yFYOkejXXY78jd8KT9eQyP2rfI5fo9.FrHe0e', '031-1234-5678', true, 'brand1 입니다.'),
        (2, '브랜드2', 'brand2', '$2a$10$6H6Ff0AGq8PN6lI.1PFa5O.m6DMLo6nd.ZNyc9zzedruNF8SjKfd2', '02-1111-2222', true, 'brand2 입니다.'),
        (2, '브랜드3', 'brand3', '$2a$10$w8sCZyjvga4hxJYLlq3aSOzHGkwQmwEpDu87bUDdgD6CJv5kfhXpC', '02-1111-2222', true, 'brand3 입니다.')
 ;
 
-INSERT INTO Brandattachment(brand_id, sourcename, filename)
+INSERT INTO BrandAttachment(brand_id, sourcename, filename)
 VALUES (1, 'face01.png', '6737b830-9b99-468f-8541-db39519b6ddf_face01.png'),
        (2, 'face02.png', '462a2e1d-1c11-4608-bd64-a71bedb0ba17_face02.png')
 ;
 
 -- 포인트 조회 기능 확인용 샘플 데이터
-UPDATE user
+UPDATE User
 SET point = 30000
 WHERE username = 'user5';
 
