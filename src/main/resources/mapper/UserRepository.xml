@@ -51,6 +51,7 @@
         SET name = #{name},
             phone_num = #{phoneNum},
             password = #{password},
+            email = #{email},
             zipcode   = #{zipcode},
             address   = #{address},
             address_detail = #{addressDetail}
