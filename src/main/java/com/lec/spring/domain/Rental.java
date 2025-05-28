@@ -23,4 +23,13 @@ public class Rental {
     private Item item;
     private String itemName;  // item 테이블에서 join 으로 받아올 상품명
 
+    private Boolean delivered;
+
+    public Boolean getDelivered() {
+        return delivered;
+    }
+
+    public void setDelivered(Boolean delivered) {
+        this.delivered = delivered;
+    }
 }

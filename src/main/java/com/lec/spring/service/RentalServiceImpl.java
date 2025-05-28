@@ -61,4 +61,9 @@ public class RentalServiceImpl implements RentalService {
     public int countActiveRentalsByUserId(Long userId) {
         return rentalRepository.countActiveRentalsByUserId(userId);
     }
+
+    @Override
+    public int completeDelivery(Long rentalId) {
+        return rentalRepository.updateDelivered(rentalId);
+    }
 }

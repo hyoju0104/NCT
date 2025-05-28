@@ -173,8 +173,14 @@ public class BrandController {
         List<Rental> rentals = rentalService.findRentalsByBrandId(brandId);
         model.addAttribute("rentals", rentals);
 
-        System.out.println(rentals);
         return "brand/delivery/list";
+    }
+
+    @PostMapping("/delivery/complete")
+    @ResponseBody
+    public String completeDelivery(@RequestParam Long rentalId) {
+        int result = rentalService.completeDelivery(rentalId);
+        return result > 0 ? "OK" : "FAIL";
     }
 
 

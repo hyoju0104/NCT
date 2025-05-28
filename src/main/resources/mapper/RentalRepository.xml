@@ -6,8 +6,8 @@
 <mapper namespace="com.lec.spring.repository.RentalRepository">
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.Rental" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO Rental (user_id, item_id, rented_at, return_due_at, status)
-        VALUES (#{user.id}, #{item.id}, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), #{status})
+        INSERT INTO Rental (user_id, item_id, rented_at, return_due_at, status, delivered)
+        VALUES (#{user.id}, #{item.id}, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), #{status}, false)
     </insert>
 
     <sql id="SELECT_BASE">
@@ -17,6 +17,7 @@
             r.return_due_at "r_return_due_at",
             r.returned_at "r_returned_at",
             r.status "r_status",
+            r.delivered "r_delivered",
             u.id "u_id",
             u.username "u_username",
             u.password "u_password",
@@ -82,6 +83,7 @@
         <result column="r_return_due_at" property="returnDueAt"/>
         <result column="r_returned_at" property="returnedAt"/>
         <result column="r_status" property="status"/>
+        <result column="r_delivered" property="delivered"/>
         <association property="user" resultMap="mapUser"/>
         <association property="item" resultMap="mapItem"/>
     </resultMap>
@@ -107,6 +109,7 @@
             r.return_due_at "r_return_due_at",
             r.returned_at "r_returned_at",
             r.status "r_status",
+            r.delivered "r_delivered",
             u.id "u_id",
             u.username "u_username",
             u.password "u_password",
@@ -168,5 +171,10 @@
           AND status IN ('RENTED', 'OVERDUE')
     </select>
 
+    <update id="updateDelivered">
+        UPDATE rental
+        SET delivered = TRUE
+        WHERE id = #{rentalId}
+    </update>
 
 </mapper>

@@ -60,9 +60,11 @@
           <form class="delivery-form" onsubmit="return false;">
             <button type="button"
                     class="delivery-btn action-btn complete"
-                    onclick="completeDelivery(this)"
-                    th:data-rental-id="${rental.id}">
-              배송완료
+                    th:data-rental-id="${rental.id}"
+                    th:disabled="${rental.delivered}"
+                    th:text="${rental.delivered ? '배송완료' : '배송완료'}"
+                    th:classappend="${rental.delivered ? ' disabled-btn' : ''}"
+                    onclick="completeDelivery(this)">
             </button>
           </form>
         </td>

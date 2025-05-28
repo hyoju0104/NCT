@@ -22,4 +22,6 @@ public interface RentalService {
     // 유저의 현재 대여중인 상품 개수 조회
     int countActiveRentalsByUserId(Long userId);
 
+    // 배송완료 처리
+    int completeDelivery(Long rentalId);
 }

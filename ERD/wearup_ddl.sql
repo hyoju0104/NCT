@@ -125,6 +125,7 @@ CREATE TABLE Rental
     return_due_at DATETIME                               NOT NULL,
     returned_at   DATETIME                               NULL,
     status        VARCHAR(50)                            NOT NULL DEFAULT 'RENTED',
+    delivered     BOOLEAN                                NOT NULL DEFAULT false,
     PRIMARY KEY (id)
 );
 

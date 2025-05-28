@@ -29,4 +29,6 @@ public interface RentalRepository {
     // 탈퇴시 대여중 있는지 검사할때 필요
     int countActiveRentalsByUserId(Long userId);
 
+    // 배송완료 처리
+    int updateDelivered(Long rentalId);
 }
