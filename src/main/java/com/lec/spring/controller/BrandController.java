@@ -155,7 +155,7 @@ public class BrandController {
         model.addAttribute("result", resultUpdate);
         model.addAttribute("brand", brand);
 
-        return "/brand/mypage/updateOk";
+        return "brand/mypage/updateOk";
     }
 
     // 브랜드 탈퇴 처리
