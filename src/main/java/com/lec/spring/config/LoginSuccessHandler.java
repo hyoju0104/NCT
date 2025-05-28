@@ -28,9 +28,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     /** 실제 우리 서비스 내부에 만든(허용할) URL 패턴들 */
     private static final List<String> ALLOWED_URLS = List.of(
             "/.well-known", "/appspecific",
-            "/login", "/register",
+            "/login", "/register/kind", "/register/user", "/register/brand",
             "/css/", "/js/", "/images/", "/upload/", "/common/",
-            "/post/list", "/post/detail", "/comment/",
+            "/post/list", "/post/detail", "/post/write", "/comment/",
             "/user/mypage/detail", "/user/mypage/point",
             "/item/list", "/item/detail", "/item/list/category",
             "/brand/", "/admin/", "/user/withdraw"

@@ -60,11 +60,6 @@ public class PostController {
 		binder.addValidators(new PostValidator());
 	}
 	
-	@InitBinder("postForm")
-	public void initBinder2(WebDataBinder binder) {
-		binder.addValidators(postAttachmentValidator);
-	}
-	
 	@ModelAttribute("post")
 	public Post getPost(@RequestParam(value = "id", required = false) Long id) {
 		if (id != null) {
@@ -112,15 +107,7 @@ public class PostController {
 				.filter(f -> !f.isEmpty())
 				.collect(Collectors.toList());
 		
-		// 3-3) 전체 용량 검사 (1000 MB = 1000L * 1024 * 1024 bytes)
-		long totalSize = fileList.stream()
-				.mapToLong(MultipartFile::getSize)
-				.sum();
-		if (totalSize > 1000L * 1024 * 1024) {
-			result.rejectValue("fileList", "첨부파일의 총 용량은 최대 1000MB 입니다.");
-		}
-		
-		// 3-4) 이미치 최소 1개 존재 여부 검증
+		// 3-3) 이미치 최소 1개 존재 여부 검증
 		if (fileList.isEmpty()) {
 			result.rejectValue("fileList", "1개 이상의 이미지를 등록해주세요.");
 		}
@@ -146,7 +133,7 @@ public class PostController {
 			redirectAttributes.addFlashAttribute("items", post.getItems());
 			redirectAttributes.addFlashAttribute("fileList", post.getFileList());
 			
-			return "post/write";  // GET
+			return "redirect:/post/write";  // GET
 		}
 		
 		// 5. 저장
