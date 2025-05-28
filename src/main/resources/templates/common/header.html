@@ -5,6 +5,8 @@
 
 <th:block th:fragment="header">
 
+	<!-- Font Awesome CDN 추가 -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 	<link th:href="@{/css/header.css}" rel="stylesheet"/>
 
 	<!-- 상단 메뉴 -->
@@ -17,21 +19,46 @@
 
 			<!-- 중앙 메뉴 -->
 			<nav class="header-nav">
-				<a sec:authorize="!hasAnyAuthority('BRAND', 'ADMIN')" th:href="@{/post/list}" class="nav-link">피드</a>
-				<a sec:authorize="!hasAnyAuthority('BRAND', 'ADMIN')" th:href="@{/item/list}" class="nav-link">아이템</a>
-
-				<a sec:authorize="hasAuthority('USER')" th:href="@{/post/write}" class="nav-link">업로드</a>
-				<a sec:authorize="hasAuthority('USER')" th:href="@{/user/mypage/detail}" class="nav-link">마이페이지</a>
-
-
-				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">상품 관리</a>
-				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/rental/list}" class="nav-link">대여 관리</a>
-				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/delivery/list}" class="nav-link">배송 관리</a>
-				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">마이페이지</a>
-
-
-				<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/sales}" class="nav-link">매출 관리</a>
-				<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/users}" class="nav-link">회원 관리</a>
+				<a sec:authorize="!hasAnyAuthority('BRAND', 'ADMIN')" th:href="@{/post/list}" class="nav-link">
+					<span class="nav-icon"><i class="fas fa-home"></i></span>
+					<span class="nav-text">피드</span>
+				</a>
+				<a sec:authorize="!hasAnyAuthority('BRAND', 'ADMIN')" th:href="@{/item/list}" class="nav-link">
+					<span class="nav-icon"><i class="fas fa-tshirt"></i></span>
+					<span class="nav-text">아이템</span>
+				</a>
+				<a sec:authorize="hasAuthority('USER')" th:href="@{/post/write}" class="nav-link">
+					<span class="nav-icon"><i class="fas fa-plus"></i></span>
+					<span class="nav-text">업로드</span>
+				</a>
+				<a sec:authorize="hasAuthority('USER')" th:href="@{/user/mypage/detail}" class="nav-link">
+					<span class="nav-icon"><i class="fas fa-user"></i></span>
+					<span class="nav-text">마이페이지</span>
+				</a>
+				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/list}" class="nav-link">
+					<span class="nav-icon"><i class="fas fa-box"></i></span>
+					<span class="nav-text">상품 관리</span>
+				</a>
+				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/rental/list}" class="nav-link">
+					<span class="nav-icon"><i class="fas fa-exchange-alt"></i></span>
+					<span class="nav-text">대여 관리</span>
+				</a>
+				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/delivery/list}" class="nav-link">
+					<span class="nav-icon"><i class="fas fa-truck"></i></span>
+					<span class="nav-text">배송 관리</span>
+				</a>
+				<a sec:authorize="hasAuthority('BRAND')" th:href="@{/brand/mypage/detail}" class="nav-link">
+					<span class="nav-icon"><i class="fas fa-user-cog"></i></span>
+					<span class="nav-text">마이페이지</span>
+				</a>
+				<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/sales}" class="nav-link">
+					<span class="nav-icon"><i class="fas fa-chart-line"></i></span>
+					<span class="nav-text">매출 관리</span>
+				</a>
+				<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/users}" class="nav-link">
+					<span class="nav-icon"><i class="fas fa-users"></i></span>
+					<span class="nav-text">회원 관리</span>
+				</a>
 			</nav>
 
 			<!-- 우측 메뉴 -->

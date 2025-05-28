@@ -29,26 +29,31 @@
 			<div class="form-group">
 				<label for="username">아이디 *</label>
 				<input type="text" id="username" name="username">
+				<div th:if="${error_username}" class="field-error" th:text="${error_username}"></div>
 			</div>
 			
 			<div class="form-group">
 				<label for="password">비밀번호 *</label>
 				<input type="password" id="password" name="password">
+				<div th:if="${error_password}" class="field-error" th:text="${error_password}"></div>
 			</div>
 			
 			<div class="form-group">
 				<label for="rePassword">비밀번호 확인 *</label>
 				<input type="password" id="rePassword" name="rePassword">
+				<div th:if="${error_rePassword}" class="field-error" th:text="${error_rePassword}"></div>
 			</div>
 			
 			<div class="form-group">
 				<label for="name">브랜드명 *</label>
 				<input type="text" id="name" name="name">
+				<div th:if="${error_name}" class="field-error" th:text="${error_name}"></div>
 			</div>
 			
 			<div class="form-group">
 				<label for="phoneNum">대표 전화번호 *</label>
 				<input type="tel" id="phoneNum" name="phoneNum">
+				<div th:if="${error_phoneNum}" class="field-error" th:text="${error_phoneNum}"></div>
 			</div>
 			
 			<div class="form-group">

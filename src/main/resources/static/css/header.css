@@ -76,6 +76,18 @@
     white-space: nowrap;
 }
 
+/* 기본적으로 아이콘 숨기기 */
+.nav-icon {
+    display: none;
+}
+
+/* 아이콘 스타일 */
+.nav-icon i {
+    color: #222222;
+    font-size: 18px;
+}
+
+
 
 /* 화면이 작아질 때는 줄바꿈 */
 @media screen and (max-width: 768px) {
@@ -85,5 +97,31 @@
         align-items: flex-end;  /* 오른쪽 정렬 (선택사항) */
         white-space: normal;    /* 줄바꿈 허용 */
         text-align: right;
+    }
+    .nav-text {
+        display: none;
+    }
+
+    .nav-icon {
+        display: inline-block;
+    }
+
+    .header-nav {
+        gap: 25px; /* 아이콘 간격 조정 */
+    }
+
+    /* 로고도 간단하게 */
+    .logo small {
+        display: none;
+    }
+
+    /* 아이콘 호버 효과 */
+    .nav-link:hover .nav-icon i {
+        color: #666666;
+    }
+
+    /* active 상태일 때 아이콘 색상 */
+    .nav-link.active .nav-icon i {
+        color: #ffffff;
     }
 }

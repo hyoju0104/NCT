@@ -19,7 +19,7 @@
 	<!-- 게시글 렌더링 -->
 	<div class="container my-4">
 		<div class="row g-4">
-			<div class="col-md-4 col-sm-6 post-card" th:each="post, stat : ${posts}" th:attr="data-index=${stat.index}">
+			<div class="col-lg-4 col-md-6 col-sm-6 post-card" th:each="post, stat : ${posts}" th:attr="data-index=${stat.index}">
 				<a th:href="@{'/post/detail/' + ${post.id}}"
 				   class="card position-relative text-decoration-none text-dark">
 					
