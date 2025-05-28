@@ -6,10 +6,10 @@
 	<link rel="stylesheet" th:href="@{/css/common.css}">
 	<link rel="stylesheet" th:href="@{/css/user.css}">
 	
-	<title>마이페이지</title>
+	<title>WEARUP</title>
 </head>
 
-<body>
+<body style="margin-top: 0">
 	<th:block th:if="${error}">
 		<script th:inline="javascript">
 			alert([[${error}]]);
@@ -22,8 +22,8 @@
 	<main class="mypage-container">
 		
 		<!-- 0. 정지된 계정 표시 -->
-		<div class="text-center text-secondary no-hover error-message"
-			 th:if="${user.statusAccount == 'INACTIVE'}">
+		<div th:if="${user.statusAccount == 'INACTIVE'}"
+			 class="text-center no-hover error-message" style="margin-bottom: 10px">
 			현재 정지된 계정입니다.
 		</div>
 		
