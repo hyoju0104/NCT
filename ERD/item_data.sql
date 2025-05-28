@@ -108,8 +108,3 @@ VALUES (1, 'item2.png', '245c1a47-1f8f-452c-b023-22edcf335630_item2.png'),
        (51, 'item7.png', 'd9fdb8de-1b1a-4408-b61c-06747d12e57a_item7.png'),
        (52, 'item8.png', 'c1a15017-8f3d-46b0-80fe-6ccdd4287994_item8.png')
 ;
-
-UPDATE ItemAttachment
-SET sourcename = 'resized_cherry_heels.png',
-    filename = 'resized_cherry_heels.png'
-WHERE item_id = 49;
