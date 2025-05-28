@@ -80,7 +80,7 @@ public class BrandItemController {
                 model.addAttribute("selectedFileName", itemImage.getOriginalFilename());
             }
 
-            return "/brand/item/write";
+            return "brand/item/write";
         }
 
         // DB 저장
