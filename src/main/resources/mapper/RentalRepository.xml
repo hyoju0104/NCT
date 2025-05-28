@@ -172,7 +172,7 @@
     </select>
 
     <update id="updateDelivered">
-        UPDATE rental
+        UPDATE Rental
         SET delivered = TRUE
         WHERE id = #{rentalId}
     </update>
