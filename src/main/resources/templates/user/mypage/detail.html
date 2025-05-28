@@ -15,10 +15,17 @@
 			alert([[${error}]]);
 		</script>
 	</th:block>
+	
 	<!-- 상단 메뉴 -->
 	<th:block th:insert="~{common/header::header}"></th:block>
 	
 	<main class="mypage-container">
+		
+		<!-- 0. 정지된 계정 표시 -->
+		<div class="text-center text-secondary no-hover error-message"
+			 th:if="${user.statusAccount == 'INACTIVE'}">
+			현재 정지된 계정입니다.
+		</div>
 		
 		<!-- 1. 내정보 -->
 		<section class="info-section">
