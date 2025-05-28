@@ -1,174 +1,191 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    
-    <link rel="stylesheet" th:href="@{/css/common.css}">
-    <link rel="stylesheet" th:href="@{/css/user.css}">
-
-    <title>마이페이지</title>
+	<meta charset="UTF-8">
+	
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+	<link rel="stylesheet" th:href="@{/css/user.css}">
+	
+	<title>마이페이지</title>
 </head>
 
 <body>
-<th:block th:if="${error}">
-    <script th:inline="javascript">
-        alert([[${error}]]);
-    </script>
-</th:block>
-<!-- 상단 메뉴 -->
-<th:block th:insert="~{common/header::header}"></th:block>
-
-<main class="mypage-container">
-    <!-- 1. 내정보 -->
-    <section class="info-section">
-        <h2 class="section-title">내정보</h2>
-        <div class="info-item">
-            <span class="info-label">아이디:</span>
-            <span class="info-value" th:text="${user.username}">username</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">이름:</span>
-            <span class="info-value" th:text="${user.name}">name</span>
-        </div>
-        <div class="info-item" th:if="${user.email}">
-            <span class="info-label">이메일:</span>
-            <span class="info-value" th:text="${user.email}">email@example.com</span>
-        </div>
-        <div class="info-item" th:if="${user.address != null or user.addressDetail != null}">
-            <span class="info-label">주소:</span>
-            <span class="info-value"
-                  th:text="${'[' + user.zipcode + '] '
+	<th:block th:if="${error}">
+		<script th:inline="javascript">
+			alert([[${error}]]);
+		</script>
+	</th:block>
+	<!-- 상단 메뉴 -->
+	<th:block th:insert="~{common/header::header}"></th:block>
+	
+	<main class="mypage-container">
+		
+		<!-- 1. 내정보 -->
+		<section class="info-section">
+			<h2 class="section-title">내정보</h2>
+			
+			<div class="info-item">
+				<span class="info-label">아이디:</span>
+				<span class="info-value" th:text="${user.username}">username</span>
+			</div>
+			
+			<div class="info-item">
+				<span class="info-label">이름:</span>
+				<span class="info-value" th:text="${user.name}">name</span>
+			</div>
+			
+			<div class="info-item">
+				<span class="info-label">이메일:</span>
+				<span class="info-value" th:if="${user.email}" th:text="${user.email}">email@example.com</span>
+				<span class="info-value" th:unless="${user.email}">-</span>
+			</div>
+			
+			<div class="info-item">
+				<span class="info-label">주소:</span>
+				<span class="info-value"
+					  th:if="${user.address != null or user.addressDetail != null}"
+					  th:text="${'[' + user.zipcode + '] '
                             + (user.address ?: '') + ', '
                             + (user.addressDetail ?: '')}">
                 서울시 강남구...
             </span>
-        </div>
-        <div class="info-item" th:if="${user.phoneNum}">
-            <span class="info-label">전화번호:</span>
-            <span class="info-value" th:text="${user.phoneNum}">010-0000-0000</span>
-        </div>
-        <form method="get" th:action="@{/user/mypage/update}">
-            <button type="submit" class="login-btn">정보 수정</button>
-        </form>
-    </section>
-
-    <!-- 2. 구독정보 -->
-    <section class="info-section">
-        <h2 class="section-title">구독정보</h2>
-        <div class="info-item">
-            <span class="info-label">등급:</span>
-            <span class="info-value" th:text="${user.plan.type}">silver</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">구독시작일:</span>
-            <span class="info-value" th:text="${#temporals.format(paidAt, 'yyyy-MM-dd')}">2025-05-01</span>
-        </div>
-        <div class="info-item">
-            <span class="info-label">구독만료일:</span>
-            <span class="info-value" th:text="${#temporals.format(expiredAt, 'yyyy-MM-dd')}">2025-06-01</span>
-        </div>
-        <form method="get" th:action="@{/user/payment}">
-            <button type="submit" class="login-btn">구독 정보 수정</button>
-        </form>
-    </section>
-
-    <!-- 3. 포인트 -->
-    <section class="info-section">
-        <h2 class="section-title">포인트</h2>
-        <div class="info-item">
-            <span class="info-label">현재 보유 포인트:</span>
-            <span class="info-value highlight" th:text="${user.point}"></span>
-        </div>
-        <form method="get" th:action="@{/user/mypage/point}">
-            <input type="hidden" name="amount" th:value="0">
-            <button type="submit" class="login-btn">포인트 반환하기</button>
-        </form>
-    </section>
-
-    <!-- 5. 대여 상품 목록 -->
-    <section class="info-section">
-        <h2 class="section-title">대여 상품 목록</h2>
-        <div class="table-container">
-            <table class="rental-table">
-                <thead>
-                <tr>
-                    <th>상품명</th>
-                    <th>대여일</th>
-                    <th>반납 예정일</th>
-                    <th>반납일</th>
-                    <th>상태</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="rental : ${rentals}">
-                    <td th:text="${rental.item.name}">코트</td>
-                    <td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">2025-05-10</td>
-                    <td th:text="${#temporals.format(rental.returnDueAt, 'yyyy-MM-dd')}">2025-05-17</td>
-                    <td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '미반납'}"></td>
-                    <td class="status-cell">
+				<span class="info-value" th:unless="${user.address != null}">-</span>
+			</div>
+			
+			<div class="info-item">
+				<span class="info-label">전화번호:</span>
+				<span class="info-value" th:if="${user.phoneNum}" th:text="${user.phoneNum}">010-0000-0000</span>
+				<span class="info-value" th:unless="${user.phoneNum}">-</span>
+			</div>
+			
+			<form method="get" th:action="@{/user/mypage/update}">
+				<button type="submit" class="login-btn">정보 수정</button>
+			</form>
+		</section>
+		
+		<!-- 2. 구독정보 -->
+		<section class="info-section">
+			<h2 class="section-title">구독정보</h2>
+			<div class="info-item">
+				<span class="info-label">등급:</span>
+				<span class="info-value" th:if="${user.plan.type}" th:text="${user.plan.type}"></span>
+				<span class="info-value" th:unless="${user.plan.type}">-</span>
+			</div>
+			<div class="info-item">
+				<span class="info-label">구독시작일:</span>
+				<span class="info-value" th:if="${paidAt}"
+					  th:text="${#temporals.format(paidAt, 'yyyy-MM-dd')}"></span>
+				<span class="info-value" th:unless="${paidAt}">-</span>
+			</div>
+			<div class="info-item">
+				<span class="info-label">구독만료일:</span>
+				<span class="info-value" th:if="${expriedAt}"
+					  th:text="${#temporals.format(expiredAt, 'yyyy-MM-dd')}"></span>
+				<span class="info-value" th:unless="${expriedAt}">-</span>
+			</div>
+			<form method="get" th:action="@{/user/payment}">
+				<button type="submit" class="login-btn">구독 정보 수정</button>
+			</form>
+		</section>
+		
+		<!-- 3. 포인트 -->
+		<section class="info-section">
+			<h2 class="section-title">포인트</h2>
+			<div class="info-item">
+				<span class="info-label">현재 보유 포인트:</span>
+				<span class="info-value highlight" th:text="${user.point}"></span>
+			</div>
+			<form method="get" th:action="@{/user/mypage/point}">
+				<input type="hidden" name="amount" th:value="0">
+				<button type="submit" class="login-btn">포인트 반환하기</button>
+			</form>
+		</section>
+		
+		<!-- 5. 대여 상품 목록 -->
+		<section class="info-section">
+			<h2 class="section-title">대여 상품 목록</h2>
+			<div class="table-container">
+				<table class="rental-table">
+					<thead>
+					<tr>
+						<th>상품명</th>
+						<th>대여일</th>
+						<th>반납 예정일</th>
+						<th>반납일</th>
+						<th>상태</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:unless="${#lists.isEmpty(rentals)}" th:each="rental : ${rentals}">
+						<td th:text="${rental.item.name}">코트</td>
+						<td th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">2025-05-10</td>
+						<td th:text="${#temporals.format(rental.returnDueAt, 'yyyy-MM-dd')}">2025-05-17</td>
+						<td th:text="${rental.returnedAt != null ? #temporals.format(rental.returnedAt, 'yyyy-MM-dd') : '미반납'}"></td>
+						<td class="status-cell">
                         <span class="status-badge" th:text="${rental.status}"
-                              th:classappend="${rental.status == 'RENTED' ? 'rented' : (rental.status == 'RETURNED' ? 'returned' : '')}">RENTED</span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- 6. 남은 대여 가능 횟수 -->
-    <section class="info-section">
-        <h2 class="section-title">대여 가능 횟수</h2>
-        <div class="rental-count-wrapper">
-            <div class="rental-count-item">
-                <span class="count-label">남은 횟수</span>
-                <span class="count-value remaining" th:text="${remainingCnt}">2</span>
-            </div>
-            <div class="rental-count-divider">/</div>
-            <div class="rental-count-item">
-                <span class="count-label">총 가능 횟수</span>
-                <span class="count-value total" th:text="${totalCnt ?: 0}">10</span>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 7. 내가 작성한 게시물 목록 (이미지 그리드) -->
-    <section class="info-section">
-        <h2 class="section-title">내가 작성한 게시물</h2>
-        
-        <!-- 게시물이 없을 때 -->
-        <div th:if="${#lists.isEmpty(myPosts)}" class="empty-message">
-            작성한 게시물이 없습니다.
-        </div>
-        
-        <!-- 게시물이 있을 때 -->
-        <div class="post-grid" th:if="!${#lists.isEmpty(myPosts)}">
-            <div class="post-item" th:each="post : ${myPosts}">
-                <a th:href="@{/post/detail/{id}(id=${post.id})}">
-                    <!-- 첨부파일이 하나라도 있으면 -->
-                    <img th:if="${!#lists.isEmpty(post.fileList)}"
-                         th:src="@{'/upload/post/' + ${post.fileList[0].filename}}"
-                         th:alt="${post.fileList[0].sourcename}"
-                         class="post-img"/>
-                    <!-- 첨부파일이 없으면 대체 텍스트 -->
-                    <div th:if="${#lists.isEmpty(post.fileList)}"
-                         class="no-image">
-                        이미지 없음
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 8. 계정 상태 -->
-    <section class="info-section">
-        <h2 class="section-title">계정 관리</h2>
-        <form th:action="@{/user/withdraw}" method="post" onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
-            <button type="submit" class="login-btn danger">탈퇴하기</button>
-        </form>
-    </section>
-
-
-</main>
-
+							  th:classappend="${rental.status == 'RENTED' ? 'rented' : (rental.status == 'RETURNED' ? 'returned' : '')}">RENTED</span>
+						</td>
+					</tr>
+					<tr th:if="${#lists.isEmpty(rentals)}">
+						<td th:colspan="5" class="empty-state">대여 기록이 없습니다.</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+		
+		<!-- 6. 남은 대여 가능 횟수 -->
+		<section class="info-section">
+			<h2 class="section-title">대여 가능 횟수</h2>
+			<div class="rental-count-wrapper">
+				<div class="rental-count-item">
+					<span class="count-label">남은 횟수</span>
+					<span class="count-value remaining" th:text="${remainingCnt}">2</span>
+				</div>
+				<div class="rental-count-divider">/</div>
+				<div class="rental-count-item">
+					<span class="count-label">총 가능 횟수</span>
+					<span class="count-value total" th:text="${totalCnt ?: 0}">10</span>
+				</div>
+			</div>
+		</section>
+		
+		<!-- 7. 내가 작성한 게시물 목록 (이미지 그리드) -->
+		<section class="info-section">
+			<h2 class="section-title">내가 작성한 게시물</h2>
+			
+			<!-- 게시물이 없을 때 -->
+			<div th:if="${#lists.isEmpty(myPosts)}" class="empty-message">
+				작성한 게시물이 없습니다.
+			</div>
+			
+			<!-- 게시물이 있을 때 -->
+			<div class="post-grid" th:if="!${#lists.isEmpty(myPosts)}">
+				<div class="post-item" th:each="post : ${myPosts}">
+					<a th:href="@{/post/detail/{id}(id=${post.id})}">
+						<!-- 첨부파일이 하나라도 있으면 -->
+						<img th:if="${!#lists.isEmpty(post.fileList)}"
+							 th:src="@{'/upload/post/' + ${post.fileList[0].filename}}"
+							 th:alt="${post.fileList[0].sourcename}"
+							 class="post-img"/>
+						<!-- 첨부파일이 없으면 대체 텍스트 -->
+						<div th:if="${#lists.isEmpty(post.fileList)}"
+							 class="no-image">
+							이미지 없음
+						</div>
+					</a>
+				</div>
+			</div>
+		</section>
+		
+		<!-- 8. 계정 상태 -->
+		<section class="info-section">
+			<h2 class="section-title">계정 관리</h2>
+			<form th:action="@{/user/withdraw}" method="post" onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
+				<button type="submit" class="login-btn danger">탈퇴하기</button>
+			</form>
+		</section>
+	
+	</main>
 </body>
 </html>
