@@ -42,7 +42,7 @@
             i.is_exist "i_is_exist",
             i.created_at "i_created_at"
         FROM Rental r
-                 JOIN user u ON r.user_id = u.id
+                 JOIN User u ON r.user_id = u.id
                  JOIN Item i ON r.item_id = i.id
     </sql>
 
@@ -138,7 +138,7 @@
             b.phone_num "b_phone_num",
             b.description "b_description"
         FROM Rental r
-        JOIN user u ON r.user_id = u.id
+        JOIN User u ON r.user_id = u.id
         JOIN Item i ON r.item_id = i.id
         JOIN Brand b ON i.brand_id = b.id
         WHERE b.id = #{brandId}

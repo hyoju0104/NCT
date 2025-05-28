@@ -7,18 +7,20 @@
 
     <!-- authId로 Authority 1건 조회 -->
     <select id="findByGrade" resultType="com.lec.spring.domain.Authority">
-        SELECT id,grade FROM authority WHERE grade=#{grade}
+        SELECT id,grade
+        FROM Authority
+        WHERE grade = #{grade}
     </select>
     <select id="findByUser" resultType="com.lec.spring.domain.Authority">
         SELECT
             id,
             grade
-        FROM authority
+        FROM Authority
         WHERE id = #{authId}
     </select>
 
     <update id="addAuthority">
-        UPDATE user
+        UPDATE User
         SET auth_id = #{authId}
         WHERE id = #{userId}
     </update>
