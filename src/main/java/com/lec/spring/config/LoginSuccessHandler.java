@@ -31,6 +31,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             "/login", "/register",
             "/css/", "/js/", "/images/", "/upload/", "/common/",
             "/post/list", "/post/detail", "/comment/",
+            "/user/mypage/detail", "/user/mypage/point",
             "/item/list", "/item/detail", "/item/list/category",
             "/brand/", "/admin/", "/user/withdraw"
     );
