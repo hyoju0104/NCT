@@ -9,7 +9,7 @@
     <select id="findByGrade" resultType="com.lec.spring.domain.Authority">
         SELECT id,grade
         FROM Authority
-        WHERE grade=#{grade}
+        WHERE grade = #{grade}
     </select>
     <select id="findByUser" resultType="com.lec.spring.domain.Authority">
         SELECT

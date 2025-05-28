@@ -69,8 +69,8 @@ spring:
   servlet:
     multipart:
       # 파일 크기 제한 설정
-      max-file-size: 5MB      # default = 1MB
-      max-request-size: 10MB  #default = 10MB
+      max-file-size: 1000MB      # default = 1MB
+      max-request-size: 1000MB  #default = 10MB
 
   # MyBatis 매퍼(mapper) 파일(*.xml) 위치 설정
 # src/main/resources 이하의 경로 지정
@@ -86,5 +86,3 @@ app:
       post: upload/post
       item: upload/item
       brand: upload/brand
-
-
