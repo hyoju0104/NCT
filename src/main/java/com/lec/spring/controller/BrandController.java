@@ -178,8 +178,9 @@ public class BrandController {
 
     @PostMapping("/delivery/complete")
     @ResponseBody
-    public String completeDelivery(@RequestParam Long rentalId) {
+    public String completeDelivery(@RequestParam("rentalId") Long rentalId) {
         int result = rentalService.completeDelivery(rentalId);
+        System.out.println(">>> rentalId = " + rentalId);
         return result > 0 ? "OK" : "FAIL";
     }
 

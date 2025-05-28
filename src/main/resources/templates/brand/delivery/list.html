@@ -2,78 +2,76 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-	<meta charset="UTF-8">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-	<script th:src="@{/js/delivery.js}"></script>
-	<link rel="stylesheet" th:href="@{/css/common.css}">
-	<link rel="stylesheet" th:href="@{/css/brand.css}">
-	<script th:src="@{/js/delivery-list.js}"></script>
-	<title>WEARUP for Brand</title>
+  <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <link rel="stylesheet" th:href="@{/css/brand.css}">
+  <script th:src="@{/js/delivery-list.js}"></script>
+  <title>브랜드 마이페이지 - 배송 관리</title>
 </head>
 
 <body>
-	<th:block th:insert="~{common/header::header}"></th:block>
-	
-	<!-- 전체 배송관리 영역 컨테이너 -->
-	<div class="delivery-container">
-		<div class="section-header">
-			<h2 class="section-title">배송 관리</h2>
-			<div class="delivery-summary">
-				<span class="summary-text">총 <span class="summary-count"
-												   th:text="${#lists.size(rentals)}">0</span>건</span>
-			</div>
-		</div>
-		
-		<div class="table-container">
-			<table class="delivery-table">
-				<thead>
-				<tr>
-					<th style="text-align: center">사용자ID</th>
-					<th style="text-align: center">상품명</th>
-					<th style="text-align: center">대여일</th>
-					<th style="text-align: center">주소지</th>
-					<th class="action-column" style="text-align: center">배송처리</th>
-				</tr>
-				</thead>
-				<tbody>
-				<!-- 배송 대기 목록이 없을 때 -->
-				<tr th:if="${#lists.isEmpty(rentals)}" class="no-data-row">
-					<td colspan="5" class="no-data-cell">
-						<div class="empty-state">
-							<i class="empty-icon">📦</i>
-							<p class="empty-message">배송 대기 중인 상품이 없습니다.</p>
-						</div>
-					</td>
-				</tr>
-				
-				<!-- 서버에서 전달된 대여 목록(rentals)을 순회하며 출력 -->
-				<tr th:each="rental : ${rentals}" class="delivery-row">
-					<td class="user-id" th:text="${rental.user.username}">사용자ID</td>
-					<td class="item-name" th:text="${rental.item.name}">상품명</td>
-					<td class="rental-date" th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">대여일</td>
-					<td class="address-cell">
-						<div class="address-info">
-							<span class="address-main" th:text="${rental.user.address}">주소</span>
-							<span class="address-detail" th:text="${rental.user.addressDetail}">상세주소</span>
-						</div>
-					</td>
-					<td class="action-cell">
-						<form class="delivery-form" onsubmit="return false;">
-							<button type="button"
-									class="delivery-btn action-btn complete"
-									th:data-rental-id="${rental.id}"
-									th:disabled="${rental.delivered}"
-									th:text="${rental.delivered ? '배송완료' : '배송완료'}"
-									th:classappend="${rental.delivered ? ' disabled-btn' : ''}"
-									onclick="completeDelivery(this)">
-							</button>
-						</form>
-					</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+<th:block th:insert="~{common/header::header}"></th:block>
+
+<!-- 전체 배송관리 영역 컨테이너 -->
+<div class="delivery-container">
+  <div class="section-header">
+    <h2 class="section-title">배송 관리</h2>
+    <div class="delivery-summary">
+      <span class="summary-text">총 <span class="summary-count" th:text="${#lists.size(rentals)}">0</span>건</span>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="delivery-table">
+      <thead>
+      <tr>
+        <th style="text-align: center">사용자ID</th>
+        <th style="text-align: center">상품명</th>
+        <th style="text-align: center">대여일</th>
+        <th style="text-align: center">주소지</th>
+        <th class="action-column" style="text-align: center">배송처리</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- 배송 대기 목록이 없을 때 -->
+      <tr th:if="${#lists.isEmpty(rentals)}" class="no-data-row">
+        <td colspan="5" class="no-data-cell">
+          <div class="empty-state">
+            <i class="empty-icon">📦</i>
+            <p class="empty-message">배송 대기 중인 상품이 없습니다.</p>
+          </div>
+        </td>
+      </tr>
+
+      <!-- 서버에서 전달된 대여 목록(rentals)을 순회하며 출력 -->
+      <tr th:each="rental : ${rentals}" class="delivery-row">
+        <td class="user-id" th:text="${rental.user.username}">사용자ID</td>
+        <td class="item-name" th:text="${rental.item.name}">상품명</td>
+        <td class="rental-date" th:text="${#temporals.format(rental.rentedAt, 'yyyy-MM-dd')}">대여일</td>
+        <td class="address-cell">
+          <div class="address-info">
+            <span class="address-main" th:text="${rental.user.address}">주소</span>
+            <span class="address-detail" th:text="${rental.user.addressDetail}">상세주소</span>
+          </div>
+        </td>
+        <td class="action-cell">
+          <form class="delivery-form" onsubmit="return false;">
+            <button type="button"
+                    class="delivery-btn action-btn complete"
+                    th:data-rental-id="${rental.id}"
+                    th:disabled="${rental.delivered}"
+                    th:text="${rental.delivered ? '배송완료' : '배송완료'}"
+                    th:classappend="${rental.delivered ? ' disabled-btn' : ''}"
+                    onclick="completeDelivery(this)">
+            </button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 </body>
 </html>
