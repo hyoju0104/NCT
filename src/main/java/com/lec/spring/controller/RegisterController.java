@@ -97,16 +97,49 @@ public class RegisterController {
             HttpServletRequest request, //사용자가 보낸 모든 요청 직접 확인할 수 있는 객체(rePassword 값 꺼내쓰려고)
             RedirectAttributes redirectAttributes //회원가입 실패 시 다시 회원가입 페이지로 돌아갈 때 이유를 같이 보내기 위해 사용
     ) {
-        // 1. 비밀번호 일치 확인
+        // 1. 입력값 검증
+        boolean hasError  = false;
+        
+        // 1-1) 아이디 필수 입력
+        if (brand.getUsername() == null || brand.getUsername().trim().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error_username", "아이디는 필수입니다.");
+            hasError = true;
+        }
+        // 1-2) 아이디 중복 확인
+        if (brandService.isExist(brand.getUsername())) {
+            redirectAttributes.addFlashAttribute("error_username", "이미 사용 중인 아이디입니다.");
+            hasError = true;
+        }
+        // 1-3) 비밀번호 필수 입력
+        if (brand.getPassword() == null || brand.getPassword().trim().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error_password", "비밀번호는 필수입니다.");
+            hasError = true;
+        }
+        // 1-4) 비밀번호 일치 확인
         String rePassword = request.getParameter("rePassword");
         if (!brand.getPassword().equals(rePassword)) {
-            redirectAttributes.addAttribute("error", "password");
-            return "redirect:/register/brand";
+            redirectAttributes.addFlashAttribute("error_rePassword", "비밀번호가 일치하지 않습니다.");
+            hasError = true;
         }
-
-        // 2. 아이디 중복 확인
-        if (brandService.isExist(brand.getUsername())) {
-            redirectAttributes.addAttribute("error", "exist");
+        // 1-5) 브랜드명 필수 입력
+        if (brand.getName() == null || brand.getName().trim().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error_name", "브랜드명은 필수입니다.");
+            hasError = true;
+        }
+        // 1-6) 대표전화번호 필수 입력
+        if (brand.getPhoneNum() == null || brand.getPhoneNum().trim().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error_phoneNum", "전화번호는 필수입니다.");
+            hasError = true;
+        }
+        
+        // 2. 검증 실패 시 리다이렉트
+        if (hasError) {
+            redirectAttributes.addFlashAttribute("username", brand.getUsername());
+            redirectAttributes.addFlashAttribute("password", brand.getPassword());
+            redirectAttributes.addFlashAttribute("rePassword", brand.getRePassword());
+            redirectAttributes.addFlashAttribute("name", brand.getName());
+            redirectAttributes.addFlashAttribute("phoneNum", brand.getPhoneNum());
+            
             return "redirect:/register/brand";
         }
 
