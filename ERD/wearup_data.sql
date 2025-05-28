@@ -36,12 +36,12 @@ VALUES ('SILVER', 50000, 3),
        ('VIP', 100000, 10)
 ;
 
-INSERT INTO User (User.auth_id, User.plan_id, username, password, name, point, status_plan, status_account, paid_at, rental_cnt)
-VALUES (3, NULL, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKfe', '관리자', 0, 'INACTIVE', 'ACTIVE', NULL, 0),
-       (1, 1, 'user1', '$2a$10$AsdcGiiMWwG6sCu9IiNqvu5Z1G7krhWLhehijgfiqjRhHCODctw8a', '회원1', 30000, 'ACTIVE', 'INACTIVE', '2025-4-24', 2),
-       (1, 2, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', 98700, 'ACTIVE', 'ACTIVE', '2025-5-1', 3),
-       (1, NULL, 'user3', '$2a$10$zT51nN0ycpAvSg5aimPoUuOIyg94ktXJzLhWHGxeJQ8iDqXB4vqRm', '회원3', 0, 'INACTIVE', 'ACTIVE', NULL, 0),
-       (1, NULL, 'user4', '$2a$10$3E9ibPMOysRko4WHfCxTw.Ls4PjNnjSHL.LygIf4dotmxDWDABsmW', '회원4', 0, 'INACTIVE', 'ACTIVE', NULL, 0)
+INSERT INTO User (User.auth_id, User.plan_id, username, password, name, zipcode, address, address_detail, phone_num, point, status_plan, status_account, paid_at, rental_cnt)
+VALUES (3, NULL, 'admin', '$2a$10$.JN4oKC7Nr6oR8NgYxX3fOvtAn3OOURyYPNDf4Y/E5hfWKhblkKfe', '관리자', NULL, NULL, NULL, NULL, 0, 'INACTIVE', 'ACTIVE', NULL, 0),
+       (1, 1, 'user1', '$2a$10$AsdcGiiMWwG6sCu9IiNqvu5Z1G7krhWLhehijgfiqjRhHCODctw8a', '회원1', '63534', '제주특별자치도 서귀포시 가가로 14', '101호', '010-1111-1111', 30000, 'ACTIVE', 'INACTIVE', '2025-4-24', 2),
+       (1, 2, 'user2', '$2a$10$5e2fLl7OQKtTpGQyIlvbMuI8.eyKlVu1qfRuHlC/QyIcLvdPgh48O', '회원2', '13480', '경기 성남시 분당구 대왕판교로 477', '1층', '010-2222-2222', 98700, 'ACTIVE', 'ACTIVE', '2025-5-1', 3),
+       (1, NULL, 'user3', '$2a$10$zT51nN0ycpAvSg5aimPoUuOIyg94ktXJzLhWHGxeJQ8iDqXB4vqRm', '회원3', '07761', '서울 강서구 가로공원로 172', '103동 1101호', '010-3333-3333', 0, 'INACTIVE', 'ACTIVE', NULL, 0),
+       (1, NULL, 'user4', '$2a$10$3E9ibPMOysRko4WHfCxTw.Ls4PjNnjSHL.LygIf4dotmxDWDABsmW', '회원4', '08200', '서울 구로구 안양천동자전거길 525', '503호', '010-4444-4444', 0, 'INACTIVE', 'ACTIVE', NULL, 0)
 ;
 
 INSERT INTO Brand (Brand.auth_id, name, username, password, phone_num, is_actived, description)
