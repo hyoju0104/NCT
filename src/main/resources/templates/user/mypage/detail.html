@@ -30,10 +30,6 @@
             <span class="info-label">이름:</span>
             <span class="info-value" th:text="${user.name}">name</span>
         </div>
-        <div class="info-item">
-            <span class="info-label">비밀번호:</span>
-            <span class="info-value">********</span>
-        </div>
         <div class="info-item" th:if="${user.email}">
             <span class="info-label">이메일:</span>
             <span class="info-value" th:text="${user.email}">email@example.com</span>
