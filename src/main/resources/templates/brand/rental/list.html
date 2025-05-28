@@ -72,9 +72,9 @@
                     </form>
                 </td>
                 <td>
-                    <span class="account-badge" th:classappend="${rental.user.statusAccount == 'INACTIVE'} ? 'inactive' : 'active'">
+                    <span class="account-badge" th:classappend="${rental.user.statusAccount == 'INACTIVE'} ? 'inactive' : ''">
                         <span th:if="${rental.user.statusAccount == 'INACTIVE'}">정지됨</span>
-                        <span th:if="${rental.user.statusAccount != 'INACTIVE'}"> </span>
+                        <span th:unless="${rental.user.statusAccount == 'INACTIVE'}">-</span>
                     </span>
                 </td>
             </tr>
