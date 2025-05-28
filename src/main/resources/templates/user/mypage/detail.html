@@ -79,9 +79,9 @@
 			</div>
 			<div class="info-item">
 				<span class="info-label">구독만료일:</span>
-				<span class="info-value" th:if="${expriedAt}"
+				<span class="info-value" th:if="${expiredAt}"
 					  th:text="${#temporals.format(expiredAt, 'yyyy-MM-dd')}"></span>
-				<span class="info-value" th:unless="${expriedAt}">-</span>
+				<span class="info-value" th:unless="${expiredAt}">-</span>
 			</div>
 			<form method="get" th:action="@{/user/payment}">
 				<button type="submit" class="login-btn">구독 정보 수정</button>
