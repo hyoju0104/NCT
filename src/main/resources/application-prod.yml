@@ -23,14 +23,6 @@ spring:
     oauth2:
       client:
         registration:
-          google:
-            client-id: ${GOOGLE_CLIENT_ID}   # 클라이언트 ID
-            client-secret: ${GOOGLE_CLIENT_SECRET}  # 클라이언트 보안 비밀번호
-            scope: # 접근할 수 있는 사용자 프로필 정보. ※ 설정되어 있지 않으면 LoadUser() 는 호출되지 않는다
-              - ${GOOGLE_SCOPE_PROFILE}
-              - ${GOOGLE_SCOPE_EMAIL}
-
-
           naver:
             client-id: ${NAVER_CLIENT_ID}
             client-secret: ${NAVER_CLIENT_SECRET}
