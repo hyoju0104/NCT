@@ -144,7 +144,12 @@ public class PostController {
 	
 	@RequestMapping("/detail/{id}")
 	public String detail(@PathVariable Long id, Model model) {
-		model.addAttribute("post", postService.detail(id));
+		Post post = postService.detail(id);
+		System.out.println("🔍 작성자 ID = " + post.getUser().getId());
+		System.out.println("🔍 작성자 Username = " + post.getUser().getUsername());
+		model.addAttribute("writerId", post.getUser().getId());
+		model.addAttribute("writerUsername", post.getUser().getUsername());
+		model.addAttribute("post", post);
 		return "post/detail";
 	}
 	
@@ -244,8 +249,23 @@ public class PostController {
 	
 	
 	@PostMapping("/delete")
-	public String delete(Long id, Model model){
-		model.addAttribute("result", postService.deleteById(id));
+	public String delete(
+			Long id,
+			@AuthenticationPrincipal PrincipalUserDetails principal,
+			RedirectAttributes redirectAttributes,
+			Model model
+	){
+		Post post = postService.detail(id);
+		
+		// 현재 로그인한 사용자가 작성자가 아닌 경우 리다이렉트
+		if (!post.getUser().getId().equals(principal.getUser().getId())){
+			redirectAttributes.addFlashAttribute("error", "작성자만 삭제할 수 있습니다.");
+			return "redirect:/post/detail/" + id;
+		}
+		
+		int result = postService.deleteById(id);
+		model.addAttribute("result", result);
+		
 		return "post/deleteOk";
 	}
 	

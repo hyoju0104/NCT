@@ -2,6 +2,16 @@ $(function () {
 
     // 글 [삭제] 버튼
     $("#btnDel").click(function () {
+        const writerId = parseInt($("#user").val());
+        console.log("writer_id =", writerId);
+        const loginId = parseInt(logged_id);
+        console.log("logged_id =", logged_id);
+
+        if (writerId !== loginId) {
+            alert("본인이 작성한 게시글만 삭제할 수 있습니다.")
+            return;
+        }
+
         confirm("삭제하시겠습니까?") && $("form[name='frmDelete']").submit();
     });
 

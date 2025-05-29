@@ -8,11 +8,6 @@
 	history.back();
 </script>
 
-<script th:inline="javascript">
-	// 익명 사용자(anonymous) 상태에서도 존재하는 전역 변수로 선언
-	var logged_id = null;
-</script>
-
 <th:block th:if="${post}">
 	<head>
 		<meta charset="utf-8">
@@ -37,15 +32,15 @@
 				
 				<!-- 작성자와 게시글 정보 전달 -->
 				<input type="hidden" id="id" th:value="${post.id}">
-				<input type="hidden" id="user" th:value="${post.user.id}">
+				<input type="hidden" id="user" th:value="${writerId}">
 				<!-- 작성자와 게시글 정보 전달 -->
 				
 				
-				<!-- 삭제 기능 -->
+				<!-- 첨부파일 삭제 기능 -->
 				<form name="frmDelete" th:action="@{/post/delete}" method="post">
 					<input type="hidden" name="id" id="postId" th:value="${post.id}">
 				</form>
-				<!-- 삭제 기능 -->
+				<!-- 첨부파일 삭제 기능 -->
 				
 				
 				<!-- 이미지 슬라이드 (Carousel) -->
@@ -90,28 +85,33 @@
 				
 				<!-- 게시글 정보 -->
 				<div class="mb-3 mt-3 clearfix">
-					<span class="float-start me-2">[[${post.user.statusAccount == 'DELETED' ? '탈퇴한 회원입니다' : post.user.username}]]</span>
+					<span class="float-start me-2">
+						[[${post.user.statusAccount == 'DELETED' ? '탈퇴한 회원입니다' : writerUsername}]]
+					</span>
 					<span class="float-end ms-4">[[${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</span>
 				</div>
 				<!-- 게시글 정보 -->
 				
 				
+				<script th:inline="javascript">
+					var logged_id = null;
+				</script>
+				
 				<!-- 하단 링크 -->
 				<!-- (1) 로그인한 user 전용 버튼 -->
 				<th:block sec:authorize="isAuthenticated()" th:with="logged_user=${#authentication.principal.user}">
-					
 					<script th:inline="javascript">
 						logged_id = [[${logged_user.id}]];
 					</script>
 					
 					<div class="d-flex">
 						<a class="btn btn-outline-dark" th:href="@{'/post/update/' + ${post.id}}"
-						   th:if="${logged_user.id == post.user.id}">수정</a>
+						   th:if="${logged_user.id == writerId}">수정</a>
 						
 						<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
 						
 						<button type="button" class="btn btn-outline-danger ms-2" id="btnDel"
-								th:if="${logged_user.id == post.user.id}">삭제
+								th:if="${logged_user.id == writerId}">삭제
 						</button>
 						
 						<a class="btn btn-outline-dark ms-2" th:href="@{/post/write}"
@@ -124,6 +124,7 @@
 					<a class="btn btn-outline-dark ms-2" th:href="@{/post/list(page=${session.page})}">목록</a>
 				</div>
 				<!-- 하단 링크 -->
+				
 				
 				<!-- 댓글 -->
 				<th:block th:insert="~{post/comment::comment}"></th:block>
