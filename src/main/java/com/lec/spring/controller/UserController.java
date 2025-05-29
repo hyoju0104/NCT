@@ -62,13 +62,13 @@ public class UserController {
 			@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, // 로그인한 사용자 정보 가져오기
 			Model model //뷰에 데이터 넘기기 위함
 	) {
-		// 로그인한 사용자 정보 가져오기
+		//로그인한 사용자의 인증 정보 기반으로 ID 추출
 		Long id = principalUserDetails.getUser().getId();
-		User user = userService.findById(id);
-		// 사용자의 구독 정보 설정(silver,gold,vip << Plan)
+		User user = userService.findById(id); //해당 ID로 DB에서 사용자 전체 정보를 조회,
 		if (user.getPlanId() != null) {
+			//유저의 planid를 기준으로 플랜 정보를 조회해
 			Plan plan = planRepository.findByPlanId(user.getPlanId());
-			user.setPlan(plan);
+			user.setPlan(plan); //유저 객체에 Plan 객체를 주입하여
 		} else {
 			user.setPlan(new Plan()); // NPE 방지
 		}
