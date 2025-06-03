@@ -10,18 +10,18 @@ DELETE FROM Post;
 ALTER TABLE Post AUTO_INCREMENT = 1;
 DELETE FROM Attachment;
 ALTER TABLE Attachment AUTO_INCREMENT = 1;
-DELETE FROM BrandAttachment;
-ALTER TABLE BrandAttachment AUTO_INCREMENT = 1;
-DELETE FROM ItemAttachment;
-ALTER TABLE ItemAttachment AUTO_INCREMENT = 1;
 DELETE FROM Comment;
 ALTER TABLE Comment AUTO_INCREMENT = 1;
 DELETE FROM Item;
 ALTER TABLE Item AUTO_INCREMENT = 1;
+DELETE FROM ItemAttachment;
+ALTER TABLE ItemAttachment AUTO_INCREMENT = 1;
 DELETE FROM Rental;
 ALTER TABLE Rental AUTO_INCREMENT = 1;
 DELETE FROM Brand;
 ALTER TABLE Brand AUTO_INCREMENT = 1;
+DELETE FROM BrandAttachment;
+ALTER TABLE BrandAttachment AUTO_INCREMENT = 1;
 
 
 INSERT INTO Authority(grade)
@@ -51,13 +51,6 @@ VALUES (2, '브랜드1', 'brand1', '$2a$10$LJQ8kSeSfv2anNw8yFYOkejXXY78jd8KT9eQy
 ;
 
 INSERT INTO BrandAttachment(brand_id, sourcename, filename)
-VALUES (1, 'face01.png', 'a73abd51-605f-4e9a-bbc4-2f2d0ad1a225_브랜드 로고_1_나이키.png'),
-       (2, 'face02.png', '93b7ecbf-f855-4a6d-9a72-547b9aa03784_브랜드 로고_2_Supreme.png')
+VALUES (1, '브랜드 로고_1_나이키.png', 'a73abd51-605f-4e9a-bbc4-2f2d0ad1a225_브랜드 로고_1_나이키.png'),
+       (2, '브랜드 로고_2_Supreme.png', '93b7ecbf-f855-4a6d-9a72-547b9aa03784_브랜드 로고_2_Supreme.png')
 ;
-
--- 포인트 조회 기능 확인용 샘플 데이터
-UPDATE User
-SET point = 30000
-WHERE username = 'user5';
-
-UPDATE User SET point = 30000 WHERE id = 7;

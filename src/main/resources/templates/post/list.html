@@ -46,7 +46,7 @@
 						<!-- 게시글 정보 -->
 						<div class="card-footer text-muted">
 							<small>
-								<span th:text="${post.user.statusAccount == 'DELETED' ? '탈퇴한 회원입니다' : post.user.username}">작성자</span>·
+								<span th:text="${post.user.statusAccount == 'DELETED' ? '탈퇴한 회원입니다' : post.user.username}">작성자</span> ·
 								<span th:text="${#temporals.format(post.createdAt,'yyyy-MM-dd')}">YYYY-MM-DD</span>
 																				 · 댓글 <span
 									th:text="${#lists.isEmpty(post.commentList) ? 0 : post.commentList.size()}">0</span>
