@@ -29,6 +29,8 @@ VALUES (1, '더뮤지엄비지터 21FW 러브 바시티 자켓', '의류', TRUE,
        (3, '느와르라르메스', '의류', FALSE, 'A', TRUE, '유니크한 디자인의 자켓으로 도회적이면서도 세련된 느낌을 줍니다.'),
        (3, '플루크 오버핏 데님 셔켓 FDJ101', '의류', TRUE, 'B', TRUE, '오버핏 실루엣이 멋스러운 데님 셔켓으로 캐주얼 룩에 제격입니다.'),
        (3, '도영 반팔', '의류', TRUE, 'C', TRUE, '편안한 착용감의 반팔 티셔츠로 다양한 스타일에 매치하기 좋습니다.')
+;
+
 INSERT INTO Item (Item.brand_id, name, category, is_available, item_status, is_exist, description)
 VALUES (1, 'Supreme Utility Bag Black', '잡화', true, 'A', true, 'Supreme Utility Bag Black 입니다.'),
        (2, 'Arsenal 2024/25 Home Jersey Better Scarlet White', '상의', false, 'B', true, 'Arsenal 2024/25 Home Jersey Better Scarlet White 입니다.'),
@@ -52,27 +54,6 @@ VALUES (1, 'Supreme Utility Bag Black', '잡화', true, 'A', true, 'Supreme Util
        (2, '47 Brand LA Dodgers Clean Up Royal', '잡화', false, 'B', true, '47 Brand LA Dodgers Clean Up Royal 입니다.')
 ;
 
-INSERT INTO ItemAttachment(item_id, sourcename, filename)
-VALUES (1, 'item1.png', '92495f77-385c-412b-a5c1-5867bf792cfe_item1.png'),
-       (2, 'item2.png', '245c1a47-1f8f-452c-b023-22edcf335630_item2.png'),
-       (3, 'item3.png', '4a3fc2b2-774e-4519-876c-df5d4049b113_item3.png'),
-       (4, 'item4.png', 'd704dd9e-cd09-45f4-9450-49075c011667_item4.png'),
-       (5, 'item5.png', 'be1d8b66-db9a-48b6-b5d2-3e9e17cc37a5_item5.png'),
-       (6, 'item6.png', '5bbaa18e-ee99-4973-87ac-7f29516f05c8_item6.png'),
-       (7, 'item7.png', 'd9fdb8de-1b1a-4408-b61c-06747d12e57a_item7.png'),
-       (8, 'item8.png', 'c1a15017-8f3d-46b0-80fe-6ccdd4287994_item8.png'),
-       (9, 'item9.png', '81b910db-f88e-4962-9ba4-2405c0ffbe6b_item9.png'),
-       (10, 'item10.png', '849d9893-1bb3-43f8-8c3f-9ce170fdf0ac_item10.png'),
-       (11, 'item11.png', '6afbdcc2-22de-427c-b1cb-92b36fc47996_item11.png'),
-       (12, 'item12.png', '232b5314-f104-4de8-ab20-66543b5d3943_item12.png'),
-       (13, 'item13.png', '036ea3c9-bd21-47ed-a951-4089f6bee24f_item13.png'),
-       (14, 'item14.png', '82e02fb1-ef17-48ce-860d-a97c91ad704e_item14.png'),
-       (15, 'item15.png', '715a1d80-ed2f-40c0-90c4-67919f941c45_item15.png'),
-       (16, 'item16.png', '2583ae15-e02f-479b-9ee0-a31b512688df_item16.png'),
-       (17, 'item17.png', '789f71dd-daf7-41bd-8336-10c3875b81db_item17.png'),
-       (18, 'item18.png', '56367c8a-3f62-4d08-858d-7415c38e6763_item18.png'),
-       (19, 'item19.png', '084a3de1-eecc-4a8d-8c0b-baff09de9de6_item19.png'),
-       (20, 'item20.png', 'bd48e167-ee2a-4a56-8744-dd8cb28f332a_item20.png')
 INSERT INTO ItemAttachment (item_id, sourcename, filename)
 VALUES (1,  'post001.png',  'post001.png'),
        (2,  'post002.jpg',  'post002.jpg'),
@@ -103,5 +84,25 @@ VALUES (1,  'post001.png',  'post001.png'),
        (27, 'post204.png',  'post204.png'),
        (28, 'post205.png',  'post205.png'),
        (29, 'post206.png',  'post206.png'),
-       (30, 'post207.png',  'post207.png')
+       (30, 'post207.png',  'post207.png'),
+       (31, 'item1.png', '92495f77-385c-412b-a5c1-5867bf792cfe_item1.png'),
+       (32, 'item2.png', '245c1a47-1f8f-452c-b023-22edcf335630_item2.png'),
+       (33, 'item3.png', '4a3fc2b2-774e-4519-876c-df5d4049b113_item3.png'),
+       (34, 'item4.png', 'd704dd9e-cd09-45f4-9450-49075c011667_item4.png'),
+       (35, 'item5.png', 'be1d8b66-db9a-48b6-b5d2-3e9e17cc37a5_item5.png'),
+       (36, 'item6.png', '5bbaa18e-ee99-4973-87ac-7f29516f05c8_item6.png'),
+       (37, 'item7.png', 'd9fdb8de-1b1a-4408-b61c-06747d12e57a_item7.png'),
+       (38, 'item8.png', 'c1a15017-8f3d-46b0-80fe-6ccdd4287994_item8.png'),
+       (39, 'item9.png', '81b910db-f88e-4962-9ba4-2405c0ffbe6b_item9.png'),
+       (40, 'item10.png', '849d9893-1bb3-43f8-8c3f-9ce170fdf0ac_item10.png'),
+       (41, 'item11.png', '6afbdcc2-22de-427c-b1cb-92b36fc47996_item11.png'),
+       (42, 'item12.png', '232b5314-f104-4de8-ab20-66543b5d3943_item12.png'),
+       (43, 'item13.png', '036ea3c9-bd21-47ed-a951-4089f6bee24f_item13.png'),
+       (44, 'item14.png', '82e02fb1-ef17-48ce-860d-a97c91ad704e_item14.png'),
+       (45, 'item15.png', '715a1d80-ed2f-40c0-90c4-67919f941c45_item15.png'),
+       (46, 'item16.png', '2583ae15-e02f-479b-9ee0-a31b512688df_item16.png'),
+       (47, 'item17.png', '789f71dd-daf7-41bd-8336-10c3875b81db_item17.png'),
+       (48, 'item18.png', '56367c8a-3f62-4d08-858d-7415c38e6763_item18.png'),
+       (49, 'item19.png', '084a3de1-eecc-4a8d-8c0b-baff09de9de6_item19.png'),
+       (50, 'item20.png', 'bd48e167-ee2a-4a56-8744-dd8cb28f332a_item20.png')
 ;
