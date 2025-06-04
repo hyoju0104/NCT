@@ -1,4 +1,4 @@
-INSERT INTO Item (brand_id, name, category, is_available, item_status, is_exist, description)
+INSERT INTO Item (Item.brand_id, name, category, is_available, item_status, is_exist, description)
 VALUES (1, '더뮤지엄비지터 21FW 러브 바시티 자켓', '의류', TRUE, 'A', TRUE, '포근한 보온감과 세련된 디자인을 갖춘 자켓입니다.'),
        (1, '엠제이드가방', '가방', FALSE, 'B', TRUE, '캐주얼한 룩에 포인트를 줄 수 있는 멋스러운 가방입니다.'),
        (1, 'LETQ STUDIO Puffy mini dress, black', '의류', TRUE, 'C', TRUE, '볼륨감 있는 실루엣이 돋보이는 블랙 미니 드레스입니다.'),
