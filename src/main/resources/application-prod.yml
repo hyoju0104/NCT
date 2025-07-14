@@ -4,7 +4,7 @@ server:
 spring:
   application:
     name: WEARUP
-
+  
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html

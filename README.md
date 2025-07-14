@@ -63,8 +63,8 @@
 ### 0. 사전 준비
 
 - Java 17 이상 설치
-- MySQL 8 이상 설치 및 DB 생성
-- AWS S3, RDS, OAuth2 연동 설정 필요
+- MySQL 8 이상 설치 및 `wearup` 데이터베이스 생성
+- (선택) Kakao, Naver OAuth2 연동 설정
 
 
 ### 1. 레포지토리 클론
@@ -74,33 +74,20 @@ git clone https://github.com/hyoju0104/WEARUP.git
 cd WEARUP
 ```
 
-### 2. application.yml 작성
-src/main/resources/application.yml 파일을 생성하고 아래 내용을 참고하여 환경을 설정해 주세요:
 
-```yml
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/wearup?serverTimezone=Asia/Seoul
-    username: root
-    password: yourpassword
-  jpa:
-    hibernate:
-      ddl-auto: none
+### 2.  application-prod.yml 수정
+`src/main/resources/application-prod.yml` 파일에서 아래 항목들의 `${...}` 부분을 실제 값으로 교체해 주세요:
 
-oauth:
-  kakao:
-    client-id: your-client-id
-    redirect-uri: http://localhost:8080/login/oauth2/code/kakao
-```
+- DB 접속 정보 (${rds.hostname}, ${rds.username}, ${rds.password} 등)
+- (선택) Kakao, Naver OAuth2 설정 값
+
 
 ### 3. 프로젝트 실행
 ```bash
-# Gradle 빌드
 ./gradlew build
-
-# Spring Boot 실행
 ./gradlew bootRun
 ```
+
 
 ### 4. 웹 접속
 ```http://localhost:8080```

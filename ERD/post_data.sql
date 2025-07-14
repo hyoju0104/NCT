@@ -1,4 +1,3 @@
--- 1) Post 50건 삽입 (user_id: 2~4)
 INSERT INTO Post (user_id, content, items, created_at)
 VALUES (2, '자켓을 입고 새벽 공원 산책을 다녀왔는데, 가볍고 따뜻한 느낌이 정말 좋았어요.', '더뮤지엄비지터 21FW 러브 바시티 자켓', '2025-05-01 06:15:00'),
        (2, '엠제이드 가방을 매고 출근길에 나섰더니, 캐주얼한 옷차림에도 포인트가 되어 만족스러웠습니다.', '엠제이드 가방', '2025-05-03 09:00:00'),
@@ -33,7 +32,6 @@ VALUES (2, '자켓을 입고 새벽 공원 산책을 다녀왔는데, 가볍고 
 ;
 
 
--- 2) Attachment 50건 삽입 (각 포스트 대표 이미지)
 INSERT INTO Attachment (post_id, sourcename, filename)
 VALUES (1, 'post001.png', 'post001.png'),
        (2, 'post002.png', 'post002.png'),
