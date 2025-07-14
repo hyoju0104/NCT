@@ -7,7 +7,7 @@
 > **📅 프로젝트 기간**: 2025.05.15 ~ 2025.06.05  
 > **👥 팀명**: NCT200  
 
----
+<br>
 
 ## 📌 프로젝트 개요
 
@@ -18,9 +18,9 @@
 - 🧾 **주요 기능**:
   - 브랜드의 상품 등록 및 재고 관리
   - 사용자의 구독 서비스 기반 렌탈/반납
-  - 관리자 매출 관리, 사용자 포인트 환급, 결제 조회 등
+  - 관리자 매출 관리, 사용자 포인트 환급, 결제 조회 등 
 
----
+<br>
 
 ## 🛠 사용 기술 스택
 
@@ -30,9 +30,9 @@
 | **Backend** | Java 17, Spring Boot 3, Spring Security, MyBatis, RestTemplate |
 | **Database** | MySQL, RDS (AWS) |
 | **CI/CD & Infra** | EC2, 자동화 스크립트, GitHub |
-| **기타** | OAuth2, org.json, Scheduler, JSoup, Validator, Lombok |
+| **기타** | OAuth2, org.json, Scheduler, JSoup, Validator, Lombok | 
 
----
+<br>
 
 ## 🧩 주요 기능 요약
 
@@ -44,9 +44,9 @@
 - 📊 **관리자용 매출 집계 및 회원 관리**
 - 🏠 **주소 검색 (다음 API 활용)**
 - 🖥 **반응형 UI 전반 스타일링**
-- 🛠 **EC2 서버 배포 및 RDS 연동**
+- 🛠 **EC2 서버 배포 및 RDS 연동** 
 
----
+<br>
 
 ## 👨‍👩‍👧‍👦 팀원 및 담당 업무
 
@@ -56,20 +56,51 @@
 | **이현정** | 피드(CRUD), 관리자 기능, 권한 기반 페이지 제어, 다음 주소 API, EC2+RDS 배포, GitHub 관리 |
 | **최해훈** |  브랜드 회원가입/상품 CRUD, 대여 서비스, 상태 변경/배송 관리, Scheduler 동기화 로직 |
 
----
+<br>
 
 ## 📝 실행 방법
 
+### 0. 사전 준비
+
+- Java 17 이상 설치
+- MySQL 8 이상 설치 및 DB 생성
+- AWS S3, RDS, OAuth2 연동 설정 필요
+
+
+### 1. 레포지토리 클론
+
 ```bash
-# 1. 레포지토리 클론
 git clone https://github.com/hyoju0104/WEARUP.git
 cd WEARUP
+```
 
-# 2. 백엔드 프로젝트 실행 (Gradle)
+### 2. application.yml 작성
+src/main/resources/application.yml 파일을 생성하고 아래 내용을 참고하여 환경을 설정해 주세요:
+
+```yml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/wearup?serverTimezone=Asia/Seoul
+    username: root
+    password: yourpassword
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+oauth:
+  kakao:
+    client-id: your-client-id
+    redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+```
+
+### 3. 프로젝트 실행
+```bash
+# Gradle 빌드
 ./gradlew build
+
+# Spring Boot 실행
 ./gradlew bootRun
+```
 
-# 3. application.yml 환경설정 필요 (DB, OAuth, AWS 등)
-
-# 4. 접속
-http://localhost:8080
+### 4. 웹 접속
+```http://localhost:8080```
